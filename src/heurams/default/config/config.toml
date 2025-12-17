@@ -1,0 +1,29 @@
+# [调试] 将更改保存到文件
+persist_to_file = 1
+
+# [调试] 覆写时间, 设为 -1 以禁用
+daystamp_override = -1
+timestamp_override = -1
+
+# [调试] 一键通过
+quick_pass = 0
+
+# 对于每个项目的默认新记忆原子数量
+tasked_number = 8
+
+# UTC 时间戳修正 仅用于 UNIX 日时间戳的生成修正, 单位为秒
+timezone_offset = +28800 # 中国标准时间 (UTC+8)
+
+[puzzles] # 谜题默认配置
+
+[puzzles.mcq]
+max_riddles_num = 2
+
+[puzzles.cloze]
+min_denominator = 3
+
+[paths] # 相对于工作目录而言 或绝对路径
+nucleon_dir = "./data/nucleon"
+electron_dir = "./data/electron"
+orbital_dir = "./data/orbital"
+cache_dir = "./data/cache"

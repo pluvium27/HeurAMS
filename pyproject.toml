@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "heurams"
+version = "0.4.0"
+description = "Heuristic Assisted Memory Scheduler"
+license = {file = "LICENSE"}
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Education",
+    "Intended Audience :: Education",
+]
+keywords = ["spaced-repetition", "memory", "learning", "tui", "textual", "flashcards", "education"]
+dependencies = [
+    "bidict==0.23.1",
+    "playsound==1.2.2",
+    "textual==5.3.0",
+    "toml==0.10.2",
+]
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
