@@ -16,7 +16,7 @@ logger = get_logger(__name__)
 class AtomRegister_runtime(TypedDict):
     locked: bool  # 只读锁定标识符
     min_rate: int  # 最低评分
-    newact: bool # 新激活
+    newact: bool  # 新激活
 
 
 class AtomRegister(TypedDict):
@@ -68,9 +68,9 @@ class Atom:
             self.registry[key] = value
             logger.debug("键 '%s' 已链接, 触发 do_eval", key)
             self.do_eval()
-            if key == 'electron':
-                if self.registry['electron'].is_activated() == 0:
-                    self.registry['runtime']['newact'] = True
+            if key == "electron":
+                if self.registry["electron"].is_activated() == 0:
+                    self.registry["runtime"]["newact"] = True
         else:
             logger.error("尝试链接不受支持的键: '%s'", key)
             raise ValueError("不受支持的原子元数据链接操作")
@@ -104,7 +104,10 @@ class Atom:
         """
         if self.registry["runtime"]["locked"]:
             logger.debug(f"允许总评分: {self.registry['runtime']['min_rate']}")
-            self.registry["electron"].revisor(self.registry["runtime"]["min_rate"], is_new_activation=self.registry["runtime"]["newact"])
+            self.registry["electron"].revisor(
+                self.registry["runtime"]["min_rate"],
+                is_new_activation=self.registry["runtime"]["newact"],
+            )
         else:
             logger.debug("禁止总评分")
 
