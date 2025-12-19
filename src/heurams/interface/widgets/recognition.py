@@ -1,19 +1,16 @@
-from textual.reactive import reactive
-from textual.widgets import (
-    Markdown,
-    Label,
-    Static,
-    Button,
-)
-from textual.containers import Center
-from textual.widget import Widget
-from typing import Dict
-import heurams.kernel.particles as pt
 import re
-from .base_puzzle_widget import BasePuzzleWidget
-from typing import TypedDict, List
+from typing import Dict, List, TypedDict
+
+from textual.containers import Center
 from textual.message import Message
+from textual.reactive import reactive
+from textual.widget import Widget
+from textual.widgets import Button, Label, Markdown, Static
+
+import heurams.kernel.particles as pt
 from heurams.services.logger import get_logger
+
+from .base_puzzle_widget import BasePuzzleWidget
 
 logger = get_logger(__name__)
 

@@ -1,14 +1,17 @@
+import json
+import pathlib
+import typing
+from typing import TypedDict
+
+import bidict
+import toml
+
+from heurams.context import config_var
+from heurams.services.logger import get_logger
+
 from .electron import Electron
 from .nucleon import Nucleon
 from .orbital import Orbital
-from typing import TypedDict
-import pathlib
-import typing
-import toml
-import json
-import bidict
-from heurams.context import config_var
-from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 

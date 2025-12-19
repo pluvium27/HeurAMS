@@ -1,17 +1,17 @@
-from textual.widgets import (
-    Label,
-    Button,
-)
-from textual.widget import Widget
-import heurams.kernel.particles as pt
-import heurams.kernel.puzzles as pz
-from .base_puzzle_widget import BasePuzzleWidget
 import copy
 import random
+from typing import TypedDict
+
 from textual.containers import Container
 from textual.message import Message
+from textual.widget import Widget
+from textual.widgets import Button, Label
+
+import heurams.kernel.particles as pt
+import heurams.kernel.puzzles as pz
 from heurams.services.logger import get_logger
-from typing import TypedDict
+
+from .base_puzzle_widget import BasePuzzleWidget
 
 logger = get_logger(__name__)
 

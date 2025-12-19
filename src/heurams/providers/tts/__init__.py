@@ -1,6 +1,7 @@
+from heurams.services.logger import get_logger
+
 from .base import BaseTTS
 from .edge_tts import EdgeTTS
-from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 

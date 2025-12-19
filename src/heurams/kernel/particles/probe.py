@@ -1,5 +1,6 @@
-from heurams.context import config_var
 import pathlib
+
+from heurams.context import config_var
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)

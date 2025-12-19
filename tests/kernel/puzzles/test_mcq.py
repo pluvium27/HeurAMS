@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import MagicMock, call, patch
 
 from heurams.kernel.puzzles.mcq import MCQPuzzle
 

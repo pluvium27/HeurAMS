@@ -1,7 +1,8 @@
 # 音频服务
+from typing import Callable
+
 from heurams.context import config_var
 from heurams.providers.audio import providers as prov
-from typing import Callable
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)

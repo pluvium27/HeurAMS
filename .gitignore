@@ -11,8 +11,6 @@ electron/test.toml
 build/
 dist/
 old/
-
-# Project specific directories
 # config/
 data/cache/
 data/electron/

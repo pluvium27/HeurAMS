@@ -1,22 +1,15 @@
 #!/usr/bin/env python3
-from textual.app import ComposeResult
-from textual.widgets import (
-    Header,
-    Footer,
-    Label,
-    Button,
-    Static,
-    ProgressBar,
-)
-from textual.containers import ScrollableContainer, Horizontal
-from textual.containers import ScrollableContainer
-from textual.screen import Screen
 import pathlib
+
+from textual.app import ComposeResult
+from textual.containers import Horizontal, ScrollableContainer
+from textual.screen import Screen
+from textual.widgets import Button, Footer, Header, Label, ProgressBar, Static
+from textual.worker import get_current_worker
 
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
-from textual.worker import get_current_worker
 
 
 class SyncScreen(Screen):

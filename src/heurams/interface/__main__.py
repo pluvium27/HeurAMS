@@ -1,10 +1,12 @@
 from textual.app import App
 from textual.widgets import Button
+
+from heurams.services.logger import get_logger
+
+from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
 from .screens.nucreator import NucleonCreatorScreen
 from .screens.precache import PrecachingScreen
-from .screens.about import AboutScreen
-from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -66,11 +68,11 @@ def is_subdir(parent, child):
         return 0
 
 
-# 开发模式
-from heurams.context import rootdir, workdir, config_var
-from pathlib import Path
-from heurams.context import rootdir
 import os
+from pathlib import Path
+
+# 开发模式
+from heurams.context import config_var, rootdir, workdir
 
 if is_subdir(Path(rootdir), Path(os.getcwd())):
     os.chdir(Path(rootdir) / ".." / "..")

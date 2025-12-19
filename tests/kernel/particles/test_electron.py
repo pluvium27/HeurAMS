@@ -1,9 +1,9 @@
-import unittest
-from unittest.mock import patch, MagicMock
 import sys
+import unittest
+from unittest.mock import MagicMock, patch
 
-from heurams.kernel.particles.electron import Electron
 from heurams.kernel.algorithms import algorithms
+from heurams.kernel.particles.electron import Electron
 
 
 class TestElectron(unittest.TestCase):

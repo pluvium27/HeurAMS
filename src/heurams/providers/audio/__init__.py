@@ -1,7 +1,7 @@
 # 音频播放器, 必须基于文件操作
-from . import termux_audio
-from . import playsound_audio
 from heurams.services.logger import get_logger
+
+from . import playsound_audio, termux_audio
 
 logger = get_logger(__name__)
 

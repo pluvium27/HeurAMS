@@ -1,15 +1,16 @@
-import unittest
-from unittest.mock import patch, MagicMock
+import json
 import pathlib
 import tempfile
-import toml
-import json
+import unittest
+from unittest.mock import MagicMock, patch
 
+import toml
+
+from heurams.context import ConfigContext
 from heurams.kernel.particles.atom import Atom, atom_registry
 from heurams.kernel.particles.electron import Electron
 from heurams.kernel.particles.nucleon import Nucleon
 from heurams.kernel.particles.orbital import Orbital
-from heurams.context import ConfigContext
 from heurams.services.config import ConfigFile
 
 

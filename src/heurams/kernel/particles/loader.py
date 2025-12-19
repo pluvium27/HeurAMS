@@ -1,11 +1,14 @@
-from .nucleon import Nucleon
-from .electron import Electron
-import heurams.services.hasher as hasher
-import pathlib
-import toml
 import json
+import pathlib
 from copy import deepcopy
+
+import toml
+
+import heurams.services.hasher as hasher
 from heurams.services.logger import get_logger
+
+from .electron import Electron
+from .nucleon import Nucleon
 
 logger = get_logger(__name__)
 

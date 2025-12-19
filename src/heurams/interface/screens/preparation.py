@@ -1,21 +1,15 @@
 #!/usr/bin/env python3
 from textual.app import ComposeResult
-from textual.widgets import (
-    Header,
-    Footer,
-    Label,
-    Static,
-    Button,
-    Markdown,
-)
 from textual.containers import ScrollableContainer
+from textual.reactive import reactive
 from textual.screen import Screen
-from heurams.context import config_var
+from textual.widget import Widget
+from textual.widgets import Button, Footer, Header, Label, Markdown, Static
+
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
-from textual.reactive import reactive
-from textual.widget import Widget
+from heurams.context import config_var
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)

@@ -1,6 +1,8 @@
-from .base import BasePuzzle
 import random
+
 from heurams.services.logger import get_logger
+
+from .base import BasePuzzle
 
 logger = get_logger(__name__)
 

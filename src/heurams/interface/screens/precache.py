@@ -1,22 +1,15 @@
 #!/usr/bin/env python3
-from textual.app import ComposeResult
-from textual.widgets import (
-    Header,
-    Footer,
-    Label,
-    Button,
-    Static,
-    ProgressBar,
-)
-from textual.containers import ScrollableContainer, Horizontal
-from textual.containers import ScrollableContainer
-from textual.screen import Screen
 import pathlib
+
+from textual.app import ComposeResult
+from textual.containers import Horizontal, ScrollableContainer
+from textual.screen import Screen
+from textual.widgets import Button, Footer, Header, Label, ProgressBar, Static
+from textual.worker import get_current_worker
 
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
-from textual.worker import get_current_worker
 
 
 class PrecachingScreen(Screen):
@@ -96,7 +89,7 @@ class PrecachingScreen(Screen):
 
     def precache_by_text(self, text: str):
         """预缓存单段文本的音频"""
-        from heurams.context import rootdir, workdir, config_var
+        from heurams.context import config_var, rootdir, workdir
 
         cache_dir = pathlib.Path(config_var.get()["paths"]["cache_dir"])
         cache_dir.mkdir(parents=True, exist_ok=True)
@@ -166,7 +159,7 @@ class PrecachingScreen(Screen):
 
     def precache_all_files(self):
         """预缓存所有文件"""
-        from heurams.context import rootdir, workdir, config_var
+        from heurams.context import config_var, rootdir, workdir
 
         nucleon_path = pathlib.Path(config_var.get()["paths"]["nucleon_dir"])
         nucleon_files = [
@@ -220,7 +213,8 @@ class PrecachingScreen(Screen):
             # 清空缓存
             try:
                 import shutil
-                from heurams.context import rootdir, workdir, config_var
+
+                from heurams.context import config_var, rootdir, workdir
 
                 shutil.rmtree(
                     f"{config_var.get()["paths"]["cache_dir"]}", ignore_errors=True

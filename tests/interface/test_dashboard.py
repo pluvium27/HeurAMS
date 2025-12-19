@@ -2,17 +2,18 @@
 """
 DashboardScreen 的测试, 包括单元测试和 pilot 测试.
 """
-import unittest
-import tempfile
 import pathlib
+import tempfile
 import time
-from unittest.mock import patch, MagicMock
+import unittest
+from unittest.mock import MagicMock, patch
+
 from textual.pilot import Pilot
 
 from heurams.context import ConfigContext
-from heurams.services.config import ConfigFile
 from heurams.interface.__main__ import HeurAMSApp
 from heurams.interface.screens.dashboard import DashboardScreen
+from heurams.services.config import ConfigFile
 
 
 class TestDashboardScreenUnit(unittest.TestCase):
@@ -66,7 +67,7 @@ class TestDashboardScreenUnit(unittest.TestCase):
         result = screen.compose()
         widgets = list(result)
         # 检查是否包含 Header 和 Footer
-        from textual.widgets import Header, Footer
+        from textual.widgets import Footer, Header
 
         header_present = any(isinstance(w, Header) for w in widgets)
         footer_present = any(isinstance(w, Footer) for w in widgets)

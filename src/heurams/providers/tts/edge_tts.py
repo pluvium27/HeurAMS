@@ -1,7 +1,10 @@
-from .base import BaseTTS
 import pathlib
+
 import edge_tts
+
 from heurams.services.logger import get_logger
+
+from .base import BaseTTS
 
 logger = get_logger(__name__)
 

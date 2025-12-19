@@ -1,13 +1,11 @@
-from textual.widgets import (
-    Label,
-    Static,
-    Button,
-)
-from textual.containers import ScrollableContainer, Horizontal
-from textual.widget import Widget
-import heurams.kernel.particles as pt
-from .base_puzzle_widget import BasePuzzleWidget
+from textual.containers import Horizontal, ScrollableContainer
 from textual.message import Message
+from textual.widget import Widget
+from textual.widgets import Button, Label, Static
+
+import heurams.kernel.particles as pt
+
+from .base_puzzle_widget import BasePuzzleWidget
 
 
 class BasicEvaluation(BasePuzzleWidget):

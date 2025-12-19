@@ -1,16 +1,16 @@
 # 单项选择题
-from textual.widgets import (
-    Label,
-    Button,
-)
-from textual.containers import ScrollableContainer, Container
+from typing import TypedDict
+
+from textual.containers import Container, ScrollableContainer
 from textual.widget import Widget
+from textual.widgets import Button, Label
+
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
-from .base_puzzle_widget import BasePuzzleWidget
-from typing import TypedDict
 from heurams.services.hasher import hash
 from heurams.services.logger import get_logger
+
+from .base_puzzle_widget import BasePuzzleWidget
 
 logger = get_logger(__name__)
 

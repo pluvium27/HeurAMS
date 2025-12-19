@@ -1,6 +1,7 @@
 import heurams.kernel.particles as pt
-from .states import PhaserState, ProcessionState
 from heurams.services.logger import get_logger
+
+from .states import PhaserState, ProcessionState
 
 logger = get_logger(__name__)
 
