@@ -17,7 +17,7 @@ from heurams.services.config import ConfigFile
 
 
 class TestDashboardScreenUnit(unittest.TestCase):
-    """DashboardScreen 的单元测试（不启动完整应用）."""
+    """DashboardScreen 的单元测试(不启动完整应用)."""
 
     def setUp(self):
         """在每个测试之前运行, 设置临时目录和配置."""

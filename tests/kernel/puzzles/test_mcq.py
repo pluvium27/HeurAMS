@@ -48,7 +48,7 @@ class TestMCQPuzzle(unittest.TestCase):
         # 模拟 random.sample 返回前两个映射项
         mock_sample.side_effect = [
             [("q1", "a1"), ("q2", "a2")],  # 选择问题
-            ["j1", "j2", "j3"],  # 为每个问题选择干扰项（实际调用两次）
+            ["j1", "j2", "j3"],  # 为每个问题选择干扰项(实际调用两次)
         ]
         puzzle.refresh()
 
@@ -59,7 +59,7 @@ class TestMCQPuzzle(unittest.TestCase):
         self.assertEqual(puzzle.answer, ["a1", "a2"])
         # 检查 options 列表
         self.assertEqual(len(puzzle.options), 2)
-        # 每个选项列表应包含 4 个选项（正确答案 + 3 个干扰项）
+        # 每个选项列表应包含 4 个选项(正确答案 + 3 个干扰项)
         self.assertEqual(len(puzzle.options[0]), 4)
         self.assertEqual(len(puzzle.options[1]), 4)
         # random.shuffle 应被调用

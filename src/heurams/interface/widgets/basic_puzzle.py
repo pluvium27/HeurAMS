@@ -49,7 +49,7 @@ class BasicEvaluation(BasePuzzleWidget):
         # 显示主要内容
         yield Label(self.atom.registry["nucleon"]["content"], id="main")
 
-        # 显示评估说明（可选）
+        # 显示评估说明(可选)
         yield Static("请评估你对这个内容的记忆程度: ", classes="instruction")
 
         # 按钮容器

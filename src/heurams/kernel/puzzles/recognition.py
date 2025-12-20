@@ -16,5 +16,5 @@ class RecognitionPuzzle(BasePuzzle):
         super().__init__()
 
     def refresh(self):
-        logger.debug("RecognitionPuzzle.refresh（空实现）")
+        logger.debug("RecognitionPuzzle.refresh(空实现)")
         pass

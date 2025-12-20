@@ -116,7 +116,7 @@ class MCQPuzzle(BasePuzzleWidget):
 
                 self.screen.rating = rating  # type: ignore
                 self.handler(rating)
-                # 重置输入（如果回答错误）
+                # 重置输入(如果回答错误)
                 if not is_correct:
                     self.inputlist = []
                     self.refresh_buttons()
@@ -127,7 +127,7 @@ class MCQPuzzle(BasePuzzleWidget):
                 self.update_display()
 
     def refresh_buttons(self):
-        """刷新按钮显示（用于题目切换）"""
+        """刷新按钮显示(用于题目切换)"""
         # 移除所有选项按钮
         logger.debug("刷新按钮")
         self.cursor += 1

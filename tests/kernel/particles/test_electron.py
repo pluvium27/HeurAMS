@@ -27,7 +27,7 @@ class TestElectron(unittest.TestCase):
         self.assertEqual(electron.algo, algorithms["supermemo2"])
         self.assertIn(electron.algo, electron.algodata)
         self.assertIsInstance(electron.algodata[electron.algo], dict)
-        # 检查默认值（排除动态字段）
+        # 检查默认值(排除动态字段)
         defaults = electron.algo.defaults
         for key, value in defaults.items():
             if key == "last_modify":

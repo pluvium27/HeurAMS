@@ -9,7 +9,7 @@ logger = get_logger(__name__)
 class Electron:
     """电子: 记忆分析元数据及算法"""
 
-    def __init__(self, ident: str, algodata: dict = {}, algo_name: str = "supermemo2"):
+    def __init__(self, ident: str, algodata: dict = {}, algo_name: str = "SM-2"):
         """初始化电子对象 (记忆数据)
 
         Args:
