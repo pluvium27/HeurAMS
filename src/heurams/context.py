@@ -36,8 +36,8 @@ if pathlib.Path(workdir / "config" / "config_dev.toml").exists():
     print("使用开发设置")
     logger.debug("使用开发设置")
     config_var: ContextVar[ConfigFile] = ContextVar(
-    "config_var", default=ConfigFile(workdir / "config" / "config_dev.toml")
-)
+        "config_var", default=ConfigFile(workdir / "config" / "config_dev.toml")
+    )
 # runtime_var: ContextVar = ContextVar('runtime_var', default=dict()) # 运行时共享数据
 
 

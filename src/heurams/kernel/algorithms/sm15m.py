@@ -10,15 +10,25 @@ MIT 许可证
 import datetime
 import json
 import os
-from typing import TypedDict
 import pathlib
+from typing import TypedDict
+
 from heurams.context import config_var
-from heurams.kernel.algorithms.sm15m_calc import (MAX_AF, MIN_AF, NOTCH_AF,
-                                                  RANGE_AF, RANGE_REPETITION,
-                                                  SM, THRESHOLD_RECALL, Item)
+from heurams.kernel.algorithms.sm15m_calc import (
+    MAX_AF,
+    MIN_AF,
+    NOTCH_AF,
+    RANGE_AF,
+    RANGE_REPETITION,
+    SM,
+    THRESHOLD_RECALL,
+    Item,
+)
 
 # 全局状态文件路径
-_GLOBAL_STATE_FILE = os.path.expanduser(pathlib.Path(config_var.get()['paths']['global_dir']) / 'sm15m_global_state.json')
+_GLOBAL_STATE_FILE = os.path.expanduser(
+    pathlib.Path(config_var.get()["paths"]["global_dir"]) / "sm15m_global_state.json"
+)
 
 
 def _get_global_sm():

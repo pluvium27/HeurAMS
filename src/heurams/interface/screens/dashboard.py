@@ -4,8 +4,7 @@ import pathlib
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import (Button, Footer, Header, Label, ListItem, ListView,
-                             Static)
+from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
 
 import heurams.services.timer as timer
 import heurams.services.version as version
@@ -28,6 +27,7 @@ class DashboardScreen(Screen):
             Label(f'欢迎使用 "潜进" 启发式辅助记忆调度器', classes="title-label"),
             Label(f"当前 UNIX 日时间戳: {timer.get_daystamp()}"),
             Label(f'时区修正: UTC+{config_var.get()["timezone_offset"] / 3600}'),
+            Label(f"使用算法: {config_var.get()['algorithm']['default']}"),
             Label("选择待学习或待修改的记忆单元集:", classes="title-label"),
             ListView(id="union-list", classes="union-list-view"),
             Label(

@@ -1,9 +1,9 @@
 from textual.app import App
 from textual.widgets import Button
 
-from heurams.services.logger import get_logger
 from heurams.context import config_var
 from heurams.interface import HeurAMSApp
+from heurams.services.logger import get_logger
 
 from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen

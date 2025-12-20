@@ -86,8 +86,8 @@ class Atom:
         # eval 环境设置
         def eval_with_env(s: str):
             default = config_var.get()["puzzles"]
-            payload = self.registry['nucleon'].payload
-            metadata = self.registry['nucleon'].metadata
+            payload = self.registry["nucleon"].payload
+            metadata = self.registry["nucleon"].metadata
             eval_value = eval(s)
             if isinstance(eval_value, (int, float)):
                 ret = str(eval_value)
@@ -117,10 +117,11 @@ class Atom:
                         logger.debug("发现 eval 表达式: '%s'", data[5:])
                         return modifier(data[5:])
                 return data
+
         try:
-            traverse(self.registry['nucleon'].payload, eval_with_env)
-            traverse(self.registry['nucleon'].metadata, eval_with_env)
-            traverse(self.registry['orbital'], eval_with_env)
+            traverse(self.registry["nucleon"].payload, eval_with_env)
+            traverse(self.registry["nucleon"].metadata, eval_with_env)
+            traverse(self.registry["orbital"], eval_with_env)
         except Exception as e:
             ret = f"此 eval 实例发生错误: {e}"
             logger.warning(ret)
