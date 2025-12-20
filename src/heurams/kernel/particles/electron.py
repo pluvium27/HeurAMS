@@ -9,7 +9,7 @@ logger = get_logger(__name__)
 class Electron:
     """电子: 记忆分析元数据及算法"""
 
-    def __init__(self, ident: str, algodata: dict = {}, algo_name: str = "SM-2"):
+    def __init__(self, ident: str, algodata: dict = {}, algo_name: str = ""):
         """初始化电子对象 (记忆数据)
 
         Args:
@@ -17,6 +17,8 @@ class Electron:
             algodata: 算法数据字典, 包含算法的各项参数和设置
             algo: 使用的算法模块标识
         """
+        if algo_name == "":
+            algo_name = config_var.get()['algorithm']['default']
         logger.debug(
             "创建 Electron 实例, ident: '%s', algo_name: '%s', algodata: %s", ident, algo_name, algodata
         )

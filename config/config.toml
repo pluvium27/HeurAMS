@@ -19,6 +19,9 @@ timezone_offset = +28800 # 中国标准时间 (UTC+8)
 [interface.memorizor]
 autovoice = true # 自动语音播放, 仅限于 recognition 组件
 
+[algorithm]
+default = "SM-2" # 主要算法; 可选项: SM-2, SM-15M, FSRS
+
 [puzzles] # 谜题默认配置
 
 [puzzles.mcq]
@@ -30,6 +33,7 @@ min_denominator = 3
 [paths] # 相对于配置文件的 ".." (即工作目录) 而言 或绝对路径
 nucleon_dir = "./data/nucleon"
 electron_dir = "./data/electron"
+global_dir = "./data/global" # 全局数据路径, SM-15 等算法需要
 orbital_dir = "./data/orbital"
 cache_dir = "./data/cache"
 template_dir = "./data/template"
