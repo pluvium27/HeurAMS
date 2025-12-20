@@ -68,7 +68,7 @@ def load_electron(path: pathlib.Path, fmt="json") -> dict:
         logger.debug("JSON 解析成功, keys: %s", list(dictdata.keys()))
         dic = dict()
         for item, attr in dictdata.items():
-            logger.debug("处理电子项目: %s", item)
+            logger.debug("处理电子项目: %s, %s", item, attr)
             dic[item] = Electron(item, attr)
         logger.debug("load_electron 完成, 加载了 %d 个 Electron 对象", len(dic))
         return dic
