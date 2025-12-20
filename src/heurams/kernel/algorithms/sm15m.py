@@ -2,8 +2,9 @@
 SM-15 接口兼容实现, 基于 SM-15 算法的逆向工程
 全局状态保存在文件中, 项目状态通过 algodata 字典传递
 
-基于: https://github.com/kazuaki/sm.js
-原始 CoffeeScript 代码: (c) 2014 Kazuaki Tanida (MIT 许可证)
+基于: https://github.com/slaypni/sm.js
+原始 CoffeeScript 代码: (c) 2014 Kazuaki Tanida
+MIT 许可证
 """
 
 import datetime

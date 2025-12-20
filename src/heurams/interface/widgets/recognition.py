@@ -49,6 +49,10 @@ class Recognition(BasePuzzleWidget):
         self.alia = alia
 
     def compose(self):
+        from heurams.context import config_var
+        autovoice = config_var.get()['interface']['memorizor']['autovoice']
+        if autovoice:
+            self.screen.action_play_voice() # type: ignore
         cfg: RecognitionConfig = self.atom.registry["orbital"]["puzzles"][self.alia]
         delim = self.atom.registry["nucleon"].metadata["formation"]["delimiter"]
         replace_dict = {

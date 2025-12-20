@@ -14,6 +14,11 @@ scheduled_num = 8
 # UTC 时间戳修正 仅用于 UNIX 日时间戳的生成修正, 单位为秒
 timezone_offset = +28800 # 中国标准时间 (UTC+8)
 
+[interface]
+
+[interface.memorizor]
+autovoice = true # 自动语音播放, 仅限于 recognition 组件
+
 [puzzles] # 谜题默认配置
 
 [puzzles.mcq]
@@ -33,6 +38,9 @@ template_dir = "./data/template"
 audio = "playsound" # 可选项: playsound(通用), termux(仅用于支持 Android Termux), mpg123(TODO)
 tts = "edgetts" # 可选项: edgetts
 llm = "openai" # 可选项: openai
+
+[providers.tts.edgetts] # EdgeTTS 设置
+voice = "zh-CN-XiaoxiaoNeural" # 可选项: zh-CN-YunjianNeural (男声), zh-CN-XiaoxiaoNeural (女声)
 
 [providers.llm.openai] # 与 OpenAI 相容的语言模型接口服务设置
 url = ""

@@ -61,7 +61,6 @@ class MCQPuzzle(BasePuzzleWidget):
         self.puzzle.refresh()
 
     def compose(self):
-        self.atom.registry["nucleon"].do_eval()
         setting: Setting = self.atom.registry["nucleon"].metadata["orbital"]["puzzles"][
             self.alia
         ]

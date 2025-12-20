@@ -46,14 +46,14 @@ class MemScreen(Screen):
     ) -> None:
         super().__init__(name, id, classes)
         self.atoms = atoms
+        for i in self.atoms:
+            i.do_eval()
         self.phaser = Phaser(atoms)
         # logger.debug(self.phaser.state)
         self.procession: Procession = self.phaser.current_procession()  # type: ignore
         self.atom: pt.Atom = self.procession.current_atom
         # logger.debug(self.phaser.state)
         # self.procession.forward(1)
-        for i in atoms:
-            i.do_eval()
 
     def on_mount(self):
         self.load_puzzle()
@@ -144,8 +144,21 @@ class MemScreen(Screen):
         self.atom.lock(1)
 
     def action_play_voice(self):
+        self.run_worker(self.play_voice, exclusive=True, thread=True)
+
+    def play_voice(self):
         """朗读当前内容"""
-        pass
+        from heurams.services.audio_service import play_by_path
+        from pathlib import Path
+        from heurams.services.hasher import get_md5
+        path = Path(config_var.get()['paths']["cache_dir"])
+        path = path / f"{get_md5(self.atom.registry['nucleon'].metadata["formation"]["tts_text"])}.wav"
+        if path.exists():
+            play_by_path(path)
+        else:
+            from heurams.services.tts_service import convertor
+            convertor(self.atom.registry['nucleon'].metadata["formation"]["tts_text"], path)
+            play_by_path(path)
 
     def action_toggle_dark(self):
         self.app.action_toggle_dark()

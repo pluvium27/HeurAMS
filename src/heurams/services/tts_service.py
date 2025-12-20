@@ -2,12 +2,12 @@
 from typing import Callable
 
 from heurams.context import config_var
-from heurams.providers.tts import TTSs
+from heurams.providers.tts import providers as prov
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
-convert: Callable = TTSs[config_var.get().get("tts_provider")]
+convertor: Callable = prov[config_var.get()["services"]["tts"]].convert
 logger.debug(
-    "TTS服务初始化完成, 使用 provider: %s", config_var.get().get("tts_provider")
+    "TTS服务初始化完成, 使用 provider: %s", config_var.get()["services"]["tts"]
 )

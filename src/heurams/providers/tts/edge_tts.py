@@ -3,6 +3,7 @@ import pathlib
 import edge_tts
 
 from heurams.services.logger import get_logger
+from heurams.context import config_var
 
 from .base import BaseTTS
 
@@ -18,7 +19,7 @@ class EdgeTTS(BaseTTS):
         try:
             communicate = edge_tts.Communicate(
                 text,
-                "zh-CN-YunjianNeural",
+                config_var.get()['providers']['tts']['edgetts']["voice"],
             )
             logger.debug("EdgeTTS 通信对象创建成功, 正在保存音频")
             communicate.save_sync(str(path))

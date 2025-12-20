@@ -1,5 +1,5 @@
 """
-基于: https://github.com/kazuaki/sm.js
+基于: https://github.com/slaypni/sm.js
 原始 CoffeeScript 代码: (c) 2014 Kazuaki Tanida
 MIT 许可证
 

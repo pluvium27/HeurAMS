@@ -49,54 +49,6 @@ class Nucleon:
     def __hash__(self):
         return hash(self.ident)
 
-    def do_eval(self):
-        """
-        执行并以结果替换当前单元的所有 eval 语句
-        TODO: 带有限制的 eval, 异步/多线程执行避免堵塞
-        """
-        logger.debug("Nucleon.do_eval 开始")
-
-        # eval 环境设置
-        def eval_with_env(s: str):
-            try:
-                nucleon = self
-                eval_value = eval(s)
-                if isinstance(eval_value, (int, float)):
-                    ret = str(eval_value)
-                else:
-                    ret = eval_value
-                logger.debug(
-                    "eval 执行成功: '%s' -> '%s'",
-                    s,
-                    str(ret)[:50] + "..." if len(ret) > 50 else ret,
-                )
-            except Exception as e:
-                ret = f"此 eval 实例发生错误: {e}"
-                logger.warning("eval 执行错误: '%s' -> %s", s, e)
-            return ret
-
-        def traverse(data, modifier):
-            if isinstance(data, dict):
-                for key, value in data.items():
-                    data[key] = traverse(value, modifier)
-                return data
-            elif isinstance(data, list):
-                for i, item in enumerate(data):
-                    data[i] = traverse(item, modifier)
-                return data
-            elif isinstance(data, tuple):
-                return tuple(traverse(item, modifier) for item in data)
-            else:
-                if isinstance(data, str):
-                    if data.startswith("eval:"):
-                        logger.debug("发现 eval 表达式: '%s'", data[5:])
-                        return modifier(data[5:])
-                return data
-
-        traverse(self.payload, eval_with_env)
-        traverse(self.metadata, eval_with_env)
-        logger.debug("Nucleon.do_eval 完成")
-
     @staticmethod
     def placeholder():
         """生成一个占位原子核"""

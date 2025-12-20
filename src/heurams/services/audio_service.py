@@ -9,5 +9,5 @@ logger = get_logger(__name__)
 
 play_by_path: Callable = prov[config_var.get()["services"]["audio"]].play_by_path
 logger.debug(
-    "音频服务初始化完成, 使用 provider: %s", config_var.get()["services"]["audio"]
+    "音频服务初始化完成, 使用 Provider: %s", config_var.get()["services"]["audio"]
 )
