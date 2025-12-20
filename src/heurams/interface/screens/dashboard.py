@@ -1,26 +1,20 @@
 #!/usr/bin/env python3
+import pathlib
+
 from textual.app import ComposeResult
-from textual.widgets import (
-    Header,
-    Footer,
-    Label,
-    ListView,
-    ListItem,
-    Button,
-    Static,
-)
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
+from textual.widgets import (Button, Footer, Header, Label, ListItem, ListView,
+                             Static)
 
-from heurams.kernel.particles import *
-from heurams.context import *
-import heurams.services.version as version
 import heurams.services.timer as timer
-from .preparation import PreparationScreen
-from .about import AboutScreen
+import heurams.services.version as version
+from heurams.context import *
+from heurams.kernel.particles import *
 from heurams.services.logger import get_logger
 
-import pathlib
+from .about import AboutScreen
+from .preparation import PreparationScreen
 
 logger = get_logger(__name__)
 
@@ -51,8 +45,8 @@ class DashboardScreen(Screen):
         res = dict()
         filestem = pathlib.Path(filename).stem
         res[0] = f"{filename}\0"
-        from heurams.kernel.particles.loader import load_electron
         import heurams.kernel.particles as pt
+        from heurams.kernel.particles.loader import load_electron
 
         electron_file_path = pathlib.Path(config_var.get()["paths"]["electron_dir"]) / (
             filestem + ".json"

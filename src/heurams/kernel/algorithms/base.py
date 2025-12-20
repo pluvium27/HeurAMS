@@ -1,5 +1,6 @@
-import heurams.services.timer as timer
 from typing import TypedDict
+
+import heurams.services.timer as timer
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)

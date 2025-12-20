@@ -82,7 +82,7 @@ python -m heurams.interface
 
 ## 配置
 
-配置文件位于 `config/config.toml`（相对于工作目录）. 如果不存在, 会使用内置的默认配置. 
+配置文件位于 `config/config.toml`(相对于工作目录). 如果不存在, 会使用内置的默认配置. 
 
 ## 项目结构
 

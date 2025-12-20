@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
 """
-DashboardScreen 的测试, 包括单元测试和 pilot 测试. 
+DashboardScreen 的测试, 包括单元测试和 pilot 测试.
 """
-import unittest
-import tempfile
 import pathlib
+import tempfile
 import time
-from unittest.mock import patch, MagicMock
+import unittest
+from unittest.mock import MagicMock, patch
+
 from textual.pilot import Pilot
 
 from heurams.context import ConfigContext
-from heurams.services.config import ConfigFile
 from heurams.interface.__main__ import HeurAMSApp
 from heurams.interface.screens.dashboard import DashboardScreen
+from heurams.services.config import ConfigFile
 
 
 class TestDashboardScreenUnit(unittest.TestCase):
-    """DashboardScreen 的单元测试（不启动完整应用）. """
+    """DashboardScreen 的单元测试(不启动完整应用)."""
 
     def setUp(self):
-        """在每个测试之前运行, 设置临时目录和配置. """
+        """在每个测试之前运行, 设置临时目录和配置."""
         # 创建临时目录用于测试数据
         self.temp_dir = tempfile.TemporaryDirectory()
         self.temp_path = pathlib.Path(self.temp_dir.name)
@@ -53,12 +54,12 @@ class TestDashboardScreenUnit(unittest.TestCase):
         self.config_ctx.__enter__()
 
     def tearDown(self):
-        """在每个测试之后清理. """
+        """在每个测试之后清理."""
         self.config_ctx.__exit__(None, None, None)
         self.temp_dir.cleanup()
 
     def test_compose(self):
-        """测试 compose 方法返回正确的部件. """
+        """测试 compose 方法返回正确的部件."""
         screen = DashboardScreen()
         # 手动调用 compose 并收集部件
         from textual.app import ComposeResult
@@ -66,7 +67,7 @@ class TestDashboardScreenUnit(unittest.TestCase):
         result = screen.compose()
         widgets = list(result)
         # 检查是否包含 Header 和 Footer
-        from textual.widgets import Header, Footer
+        from textual.widgets import Footer, Header
 
         header_present = any(isinstance(w, Header) for w in widgets)
         footer_present = any(isinstance(w, Footer) for w in widgets)
@@ -84,7 +85,7 @@ class TestDashboardScreenUnit(unittest.TestCase):
         self.assertEqual(list_view.__class__.__name__, "ListView")
 
     def test_item_desc_generator(self):
-        """测试 item_desc_generator 函数. """
+        """测试 item_desc_generator 函数."""
         screen = DashboardScreen()
         # 模拟一个文件名
         filename = "test.toml"
@@ -100,10 +101,10 @@ class TestDashboardScreenUnit(unittest.TestCase):
 
 @unittest.skip("Pilot 测试需要进一步配置, 暂不运行")
 class TestDashboardScreenPilot(unittest.TestCase):
-    """使用 Textual Pilot 的集成测试. """
+    """使用 Textual Pilot 的集成测试."""
 
     def setUp(self):
-        """配置临时目录和配置. """
+        """配置临时目录和配置."""
         self.temp_dir = tempfile.TemporaryDirectory()
         self.temp_path = pathlib.Path(self.temp_dir.name)
 
@@ -134,7 +135,7 @@ class TestDashboardScreenPilot(unittest.TestCase):
         self.temp_dir.cleanup()
 
     def test_dashboard_loads_with_pilot(self):
-        """使用 Pilot 测试 DashboardScreen 加载. """
+        """使用 Pilot 测试 DashboardScreen 加载."""
         with patch("heurams.interface.__main__.environment_check"):
             app = HeurAMSApp()
             # 注意: Pilot 在 Textual 6.9.0 中的用法可能不同

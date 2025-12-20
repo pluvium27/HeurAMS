@@ -1,21 +1,15 @@
 #!/usr/bin/env python3
+from pathlib import Path
+
+import toml
 from textual.app import ComposeResult
-from textual.widgets import (
-    Header,
-    Footer,
-    Label,
-    Input,
-    Select,
-    Button,
-    Markdown,
-)
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
+from textual.widgets import (Button, Footer, Header, Input, Label, Markdown,
+                             Select)
 
-from heurams.services.version import ver
-import toml
-from pathlib import Path
 from heurams.context import config_var
+from heurams.services.version import ver
 
 
 class NucleonCreatorScreen(Screen):
@@ -27,6 +21,7 @@ class NucleonCreatorScreen(Screen):
 
     def search_templates(self):
         from pathlib import Path
+
         from heurams.context import config_var
 
         template_dir = Path(config_var.get()["paths"]["template_dir"])

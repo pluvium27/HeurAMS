@@ -1,8 +1,10 @@
 # mcq.py
-from .base import BasePuzzle
 import random
-from typing import List, Dict, Optional, Union
+from typing import Dict, List, Optional, Union
+
 from heurams.services.logger import get_logger
+
+from .base import BasePuzzle
 
 logger = get_logger(__name__)
 

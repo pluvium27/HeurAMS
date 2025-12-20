@@ -1,6 +1,7 @@
 import heurams.kernel.particles as pt
-from .states import PhaserState, ProcessionState
 from heurams.services.logger import get_logger
+
+from .states import PhaserState, ProcessionState
 
 logger = get_logger(__name__)
 
@@ -51,7 +52,7 @@ class Procession:
             self.queue.append(atom)
             logger.debug("原子已追加到队列, 新队列长度=%d", len(self.queue))
         else:
-            logger.debug("原子未追加（重复或队列长度<=1）")
+            logger.debug("原子未追加(重复或队列长度<=1)")
 
     def __len__(self):
         length = len(self.queue) - self.cursor

@@ -1,9 +1,9 @@
-import unittest
-from unittest.mock import patch, MagicMock
 import sys
+import unittest
+from unittest.mock import MagicMock, patch
 
-from heurams.kernel.particles.electron import Electron
 from heurams.kernel.algorithms import algorithms
+from heurams.kernel.particles.electron import Electron
 
 
 class TestElectron(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestElectron(unittest.TestCase):
         self.assertEqual(electron.algo, algorithms["supermemo2"])
         self.assertIn(electron.algo, electron.algodata)
         self.assertIsInstance(electron.algodata[electron.algo], dict)
-        # 检查默认值（排除动态字段）
+        # 检查默认值(排除动态字段)
         defaults = electron.algo.defaults
         for key, value in defaults.items():
             if key == "last_modify":

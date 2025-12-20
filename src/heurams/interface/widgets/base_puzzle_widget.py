@@ -1,6 +1,8 @@
 from typing import Iterable
+
 from textual.app import ComposeResult
 from textual.widget import Widget
+
 import heurams.kernel.particles as pt
 
 

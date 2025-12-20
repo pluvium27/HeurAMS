@@ -1,7 +1,9 @@
 # mcq.py
-from .base import BasePuzzle
 import random
+
 from heurams.services.logger import get_logger
+
+from .base import BasePuzzle
 
 logger = get_logger(__name__)
 
@@ -14,5 +16,5 @@ class RecognitionPuzzle(BasePuzzle):
         super().__init__()
 
     def refresh(self):
-        logger.debug("RecognitionPuzzle.refresh（空实现）")
+        logger.debug("RecognitionPuzzle.refresh(空实现)")
         pass

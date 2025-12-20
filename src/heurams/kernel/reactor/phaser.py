@@ -1,9 +1,10 @@
 # 移相器类定义
 
 import heurams.kernel.particles as pt
-from .states import PhaserState, ProcessionState
-from .procession import Procession
 from heurams.services.logger import get_logger
+
+from .procession import Procession
+from .states import PhaserState, ProcessionState
 
 logger = get_logger(__name__)
 

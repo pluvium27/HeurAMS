@@ -45,7 +45,7 @@ def setup_logging(
     # 创建formatter
     formatter = logging.Formatter(log_format, date_format)
 
-    # 创建文件handler（使用RotatingFileHandler防止日志过大）
+    # 创建文件handler(使用RotatingFileHandler防止日志过大)
     file_handler = logging.handlers.RotatingFileHandler(
         filename=log_path,
         maxBytes=max_bytes,
@@ -55,7 +55,7 @@ def setup_logging(
     file_handler.setFormatter(formatter)
     file_handler.setLevel(log_level)
 
-    # 配置root logger - 设置为 WARNING 级别（只记录重要信息）
+    # 配置root logger - 设置为 WARNING 级别(只记录重要信息)
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.WARNING)  # 这里改为 WARNING
 
@@ -63,7 +63,7 @@ def setup_logging(
     for handler in root_logger.handlers[:]:
         root_logger.removeHandler(handler)
 
-    # 创建自己的应用logger（单独设置DEBUG级别）
+    # 创建自己的应用logger(单独设置DEBUG级别)
     app_logger = logging.getLogger("heurams")
     app_logger.setLevel(log_level)  # 保持DEBUG级别
     app_logger.addHandler(file_handler)
@@ -146,7 +146,7 @@ def exception(msg: str, *args, **kwargs) -> None:
     get_logger().exception(msg, *args, **kwargs)
 
 
-# 初始化日志系统（硬编码配置）
+# 初始化日志系统(硬编码配置)
 setup_logging()
 
 

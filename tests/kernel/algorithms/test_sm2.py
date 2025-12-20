@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from heurams.kernel.algorithms.sm2 import SM2Algorithm
 
@@ -94,7 +94,7 @@ class TestSM2Algorithm(unittest.TestCase):
         SM2Algorithm.revisor(algodata, feedback=5, is_new_activation=True)
         self.assertEqual(algodata[SM2Algorithm.algo_name]["rept"], 0)
         self.assertEqual(algodata[SM2Algorithm.algo_name]["efactor"], 2.5)
-        # interval 应为 1（因为 rept=0）
+        # interval 应为 1(因为 rept=0)
         self.assertEqual(algodata[SM2Algorithm.algo_name]["interval"], 1)
 
     def test_revisor_efactor_calculation(self):

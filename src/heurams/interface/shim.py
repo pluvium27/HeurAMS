@@ -1,10 +1,11 @@
 """Kernel 操作辅助函数库"""
 
 import random
+from typing import TypedDict
+
+import heurams.interface.widgets as pzw
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
-import heurams.interface.widgets as pzw
-from typing import TypedDict
 
 staging = {}  # 细粒度缓存区, 是 ident -> quality 的封装
 

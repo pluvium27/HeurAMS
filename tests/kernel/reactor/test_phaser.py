@@ -1,10 +1,10 @@
 import unittest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import MagicMock, Mock, patch
 
-from heurams.kernel.reactor.phaser import Phaser
-from heurams.kernel.reactor.states import PhaserState, ProcessionState
 from heurams.kernel.particles.atom import Atom
 from heurams.kernel.particles.electron import Electron
+from heurams.kernel.reactor.phaser import Phaser
+from heurams.kernel.reactor.states import PhaserState, ProcessionState
 
 
 class TestPhaser(unittest.TestCase):

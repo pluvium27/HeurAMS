@@ -1,8 +1,10 @@
+import random
+
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as puz
-import random
-from .states import PhaserState
 from heurams.services.logger import get_logger
+
+from .states import PhaserState
 
 
 class Fission:

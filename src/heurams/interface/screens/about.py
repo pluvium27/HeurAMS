@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
 from textual.app import ComposeResult
-from textual.widgets import (
-    Header,
-    Footer,
-    Label,
-    Static,
-    Button,
-    Markdown,
-)
-from textual.containers import ScrollableContainer, ScrollableContainer
+from textual.containers import ScrollableContainer
 from textual.screen import Screen
+from textual.widgets import Button, Footer, Header, Label, Markdown, Static
 
 import heurams.services.version as version
 from heurams.context import *

@@ -1,13 +1,11 @@
-from textual.widgets import (
-    Label,
-    Static,
-    Button,
-)
-from textual.containers import ScrollableContainer, Horizontal
-from textual.widget import Widget
-import heurams.kernel.particles as pt
-from .base_puzzle_widget import BasePuzzleWidget
+from textual.containers import Horizontal, ScrollableContainer
 from textual.message import Message
+from textual.widget import Widget
+from textual.widgets import Button, Label, Static
+
+import heurams.kernel.particles as pt
+
+from .base_puzzle_widget import BasePuzzleWidget
 
 
 class BasicEvaluation(BasePuzzleWidget):
@@ -51,7 +49,7 @@ class BasicEvaluation(BasePuzzleWidget):
         # 显示主要内容
         yield Label(self.atom.registry["nucleon"]["content"], id="main")
 
-        # 显示评估说明（可选）
+        # 显示评估说明(可选)
         yield Static("请评估你对这个内容的记忆程度: ", classes="instruction")
 
         # 按钮容器

@@ -1,8 +1,9 @@
-from .states import PhaserState, ProcessionState
-from .procession import Procession
+from heurams.services.logger import get_logger
+
 from .fission import Fission
 from .phaser import Phaser
-from heurams.services.logger import get_logger
+from .procession import Procession
+from .states import PhaserState, ProcessionState
 
 logger = get_logger(__name__)
 

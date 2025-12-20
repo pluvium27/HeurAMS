@@ -1,8 +1,5 @@
-from textual.widgets import (
-    Label,
-    Button,
-)
 from textual.widget import Widget
+from textual.widgets import Button, Label
 
 
 class Placeholder(Widget):

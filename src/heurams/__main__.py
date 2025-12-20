@@ -1,4 +1,4 @@
-prompt =  """HeurAMS 已经被成功地安装在系统中.
+prompt = """HeurAMS 已经被成功地安装在系统中.
 但 HeurAMS 被设计为一个带有辅助记忆调度器功能的软件包, 无法直接被执行, 但可被其他 Python 程序调用.
 若您想启动内置的基本用户界面,
  请运行 python -m heurams.interface,
