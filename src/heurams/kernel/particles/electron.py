@@ -9,7 +9,7 @@ logger = get_logger(__name__)
 class Electron:
     """电子: 记忆分析元数据及算法"""
 
-    def __init__(self, ident: str, algodata: dict = {}, algo_name: str = "SM-2"):
+    def __init__(self, ident: str, algodata: dict = {}, algo_name: str = ""):
         """初始化电子对象 (记忆数据)
 
         Args:
@@ -17,19 +17,21 @@ class Electron:
             algodata: 算法数据字典, 包含算法的各项参数和设置
             algo: 使用的算法模块标识
         """
+        if algo_name == "":
+            algo_name = config_var.get()['algorithm']['default']
         logger.debug(
-            "创建 Electron 实例, ident: '%s', algo_name: '%s'", ident, algo_name
+            "创建 Electron 实例, ident: '%s', algo_name: '%s', algodata: %s", ident, algo_name, algodata
         )
         self.algodata = algodata
         self.ident = ident
         self.algo = algorithms[algo_name]
         logger.debug("使用的算法类: %s", self.algo.__name__)
 
-        if self.algo not in self.algodata.keys():
+        if self.algo.algo_name not in self.algodata.keys():
             self.algodata[self.algo.algo_name] = {}
             logger.debug("算法键 '%s' 不存在, 已创建空字典", self.algo)
         if not self.algodata[self.algo.algo_name]:
-            logger.debug("算法数据为空, 使用默认值初始化")
+            logger.debug(f"算法数据为空, 使用默认值初始化{self.algodata[self.algo.algo_name]}")
             self._default_init(self.algo.defaults)
         else:
             logger.debug("算法数据已存在, 跳过默认初始化")

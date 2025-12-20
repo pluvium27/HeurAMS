@@ -2,21 +2,23 @@
 SM-15 接口兼容实现, 基于 SM-15 算法的逆向工程
 全局状态保存在文件中, 项目状态通过 algodata 字典传递
 
-基于: https://github.com/kazuaki/sm.js
-原始 CoffeeScript 代码: (c) 2014 Kazuaki Tanida (MIT 许可证)
+基于: https://github.com/slaypni/sm.js
+原始 CoffeeScript 代码: (c) 2014 Kazuaki Tanida
+MIT 许可证
 """
 
 import datetime
 import json
 import os
 from typing import TypedDict
-
+import pathlib
+from heurams.context import config_var
 from heurams.kernel.algorithms.sm15m_calc import (MAX_AF, MIN_AF, NOTCH_AF,
                                                   RANGE_AF, RANGE_REPETITION,
                                                   SM, THRESHOLD_RECALL, Item)
 
 # 全局状态文件路径
-_GLOBAL_STATE_FILE = os.path.expanduser("~/.sm15_global_state.json")
+_GLOBAL_STATE_FILE = os.path.expanduser(pathlib.Path(config_var.get()['paths']['global_dir']) / 'sm15m_global_state.json')
 
 
 def _get_global_sm():

@@ -15,8 +15,10 @@ old/
 data/cache/
 data/electron/
 data/nucleon/
-!data/nucleon/test*
+data/global/
+!data/nucleon/TEST*
 data/orbital/
+config/config_dev.toml
 AGENTS.md
 
 # Byte-compiled / optimized / DLL files

@@ -39,7 +39,9 @@ class PrecachingScreen(Screen):
         self.desc = desc
         for i in nucleons:
             i: pt.Nucleon
-            i.do_eval()
+            atom = pt.Atom()
+            atom.link("nucleon", i)
+            atom.do_eval()
         # print("完成 EVAL")
 
     def compose(self) -> ComposeResult:
@@ -95,11 +97,9 @@ class PrecachingScreen(Screen):
         cache_dir.mkdir(parents=True, exist_ok=True)
         cache_file = cache_dir / f"{hasher.get_md5(text)}.wav"
         if not cache_file.exists():
-            try:  # TODO: 调用模块消除tts耦合
-                import edge_tts as tts
-
-                communicate = tts.Communicate(text, "zh-CN-XiaoxiaoNeural")
-                communicate.save_sync(str(cache_file))
+            try:
+                from heurams.services.tts_service import convertor
+                convertor(text, cache_file)
                 return 1
             except Exception as e:
                 print(f"预缓存失败 '{text}': {e}")
@@ -178,7 +178,9 @@ class PrecachingScreen(Screen):
         self.total = len(nu)
         for i in nu:
             i: pt.Nucleon
-            i.do_eval()
+            atom = pt.Atom()
+            atom.link("nucleon", i)
+            atom.do_eval()
         return self.precache_by_list(nu)
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

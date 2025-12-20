@@ -74,7 +74,7 @@ class DashboardScreen(Screen):
                 is_activated = 1
             nextdate = min(nextdate, i.nextdate())
         res[1] = f"下一次复习: {nextdate}\n"
-        res[1] += f"{is_due if "需要复习" else "当前无需复习"}"
+        res[1] += f"{"需要复习" if is_due else "当前无需复习"}"
         if not is_activated:
             res[1] = "  尚未激活"
         return res
