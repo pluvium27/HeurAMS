@@ -30,6 +30,7 @@
 - 自然语音: 集成微软神经网络文本转语音 (TTS) 技术
 - 多种谜题类型: 选择题 (MCQ)、填空题 (Cloze)、识别题 (Recognition)
 - 动态内容生成: 支持宏驱动的模板系统, 根据上下文动态生成题目
+- 云同步支持: 通过 WebDAV 协议同步数据到远程服务器
 
 ### 实用用户界面
 - 响应式 Textual 框架构建的跨平台 TUI 界面
@@ -82,7 +83,23 @@ python -m heurams.interface
 
 ## 配置
 
-配置文件位于 `config/config.toml`(相对于工作目录). 如果不存在, 会使用内置的默认配置. 
+配置文件位于 `config/config.toml`(相对于工作目录). 如果不存在, 会使用内置的默认配置.
+
+### 同步配置
+同步功能支持 WebDAV 协议，可在配置文件的 `[sync.webdav]` 段进行配置：
+```toml
+[sync.webdav]
+enabled = false
+url = ""                    # WebDAV 服务器地址
+username = ""               # 用户名
+password = ""               # 密码
+remote_path = "/heurams/"   # 远程路径
+sync_mode = "bidirectional" # 同步模式: bidirectional/upload_only/download_only
+conflict_strategy = "newer" # 冲突策略: newer/ask/keep_both
+verify_ssl = true           # SSL 证书验证
+```
+
+启用同步后，可通过应用内的同步工具进行数据备份和恢复。 
 
 ## 项目结构
 
@@ -104,6 +121,7 @@ graph TB
         Timer[时间服务]
         AudioService[音频服务]
         TTSService[TTS服务]
+        SyncService[同步服务]
         OtherServices[其他服务]
     end
 
@@ -156,7 +174,8 @@ src/heurams/
 │   ├── logger.py            # 日志系统
 │   ├── timer.py             # 时间服务
 │   ├── audio_service.py     # 音频播放抽象
-│   └── tts_service.py       # 文本转语音抽象
+│   ├── tts_service.py       # 文本转语音抽象
+│   └── sync_service.py      # WebDAV 同步服务
 ├── kernel/                  # 核心业务逻辑
 │   ├── algorithms/          # 间隔重复算法 (FSRS, SM2)
 │   ├── particles/           # 数据模型 (Atom, Electron, Nucleon, Orbital)

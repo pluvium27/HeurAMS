@@ -31,7 +31,8 @@ class AboutScreen(Screen):
 
 特别感谢:
 
-- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SuperMemo-2 算法
+- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论
+- [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 实现
 - [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 文献参考
 
 # 参与贡献

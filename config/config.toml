@@ -49,3 +49,13 @@ voice = "zh-CN-XiaoxiaoNeural" # 可选项: zh-CN-YunjianNeural (男声), zh-CN-
 [providers.llm.openai] # 与 OpenAI 相容的语言模型接口服务设置
 url = ""
 key = ""
+
+[sync.webdav] # WebDAV 同步设置
+enabled = false
+url = ""
+username = ""
+password = ""
+remote_path = "/heurams/"
+sync_mode = "bidirectional"  # bidirectional/upload_only/download_only
+conflict_strategy = "newer"  # newer/ask/keep_both
+verify_ssl = true

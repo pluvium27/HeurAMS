@@ -32,7 +32,8 @@ try:
 except Exception as e:
     print("未能加载自定义用户配置")
     logger.warning("未能加载自定义用户配置, 错误: %s", e)
-if pathlib.Path(rootdir / "default" / "config" / "config_dev.toml").exists():
+if pathlib.Path(workdir / "config" / "config_dev.toml").exists():
+    print("使用开发设置")
     logger.debug("使用开发设置")
     config_var: ContextVar[ConfigFile] = ContextVar(
     "config_var", default=ConfigFile(workdir / "config" / "config_dev.toml")
