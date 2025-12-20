@@ -17,7 +17,7 @@ timezone_offset = +28800 # 中国标准时间 (UTC+8)
 [interface]
 
 [interface.memorizor]
-autovoice = false # 自动语音播放, 仅限于 recognition 组件
+autovoice = true # 自动语音播放, 仅限于 recognition 组件
 
 [puzzles] # 谜题默认配置
 
