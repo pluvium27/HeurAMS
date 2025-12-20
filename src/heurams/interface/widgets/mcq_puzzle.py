@@ -65,7 +65,13 @@ class MCQPuzzle(BasePuzzleWidget):
             self.alia
         ]
         logger.debug(f"Puzzle Setting: {setting}")
-        current_options = self.puzzle.options[len(self.inputlist)]
+        logger.debug(f"WIRED INDEX: {len(self.inputlist)}")
+        if len(self.inputlist) > len(self.puzzle.options):
+            logger.debug("ERR IDX")
+            logger.debug(self.inputlist)
+            logger.debug(self.puzzle.options)
+        else:
+            current_options = self.puzzle.options[len(self.inputlist)]
         yield Label(setting["primary"], id="sentence")
         yield Label(self.puzzle.wording[len(self.inputlist)], id="puzzle")
         yield Label(f"当前输入: {self.inputlist}", id="inputpreview")

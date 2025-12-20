@@ -72,7 +72,8 @@ class Recognition(BasePuzzleWidget):
         primary = cfg["primary"]
 
         with Center():
-            yield Static(f"[dim]{cfg['top_dim']}[/]")
+            for i in cfg['top_dim']:
+                yield Static(f"[dim]{i}[/]")
             yield Label("")
 
         for old, new in replace_dict.items():
