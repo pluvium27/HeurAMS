@@ -148,16 +148,24 @@ class MemScreen(Screen):
 
     def play_voice(self):
         """朗读当前内容"""
-        from heurams.services.audio_service import play_by_path
         from pathlib import Path
+
+        from heurams.services.audio_service import play_by_path
         from heurams.services.hasher import get_md5
-        path = Path(config_var.get()['paths']["cache_dir"])
-        path = path / f"{get_md5(self.atom.registry['nucleon'].metadata["formation"]["tts_text"])}.wav"
+
+        path = Path(config_var.get()["paths"]["cache_dir"])
+        path = (
+            path
+            / f"{get_md5(self.atom.registry['nucleon'].metadata["formation"]["tts_text"])}.wav"
+        )
         if path.exists():
             play_by_path(path)
         else:
             from heurams.services.tts_service import convertor
-            convertor(self.atom.registry['nucleon'].metadata["formation"]["tts_text"], path)
+
+            convertor(
+                self.atom.registry["nucleon"].metadata["formation"]["tts_text"], path
+            )
             play_by_path(path)
 
     def action_toggle_dark(self):

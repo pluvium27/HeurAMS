@@ -3,7 +3,7 @@ from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
-ver = "0.4.2"
+ver = "0.4.3"
 stage = "prototype"
 codename = "fledge"  # 雏鸟, 0.4.x 版本
 

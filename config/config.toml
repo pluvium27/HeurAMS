@@ -42,6 +42,7 @@ template_dir = "./data/template"
 audio = "playsound" # 可选项: playsound(通用), termux(仅用于支持 Android Termux), mpg123(TODO)
 tts = "edgetts" # 可选项: edgetts
 llm = "openai" # 可选项: openai
+sync = "webdav" # 可选项: 留空, webdav
 
 [providers.tts.edgetts] # EdgeTTS 设置
 voice = "zh-CN-XiaoxiaoNeural" # 可选项: zh-CN-YunjianNeural (男声), zh-CN-XiaoxiaoNeural (女声)
@@ -49,3 +50,12 @@ voice = "zh-CN-XiaoxiaoNeural" # 可选项: zh-CN-YunjianNeural (男声), zh-CN-
 [providers.llm.openai] # 与 OpenAI 相容的语言模型接口服务设置
 url = ""
 key = ""
+
+[providers.sync.webdav] # WebDAV 同步设置
+url = ""
+username = ""
+password = ""
+remote_path = "/heurams/"
+verify_ssl = true
+
+[sync]

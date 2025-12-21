@@ -89,7 +89,7 @@ class TestDashboardScreenUnit(unittest.TestCase):
         screen = DashboardScreen()
         # 模拟一个文件名
         filename = "test.toml"
-        result = screen.item_desc_generator(filename)
+        result = screen.analyser(filename)
         self.assertIsInstance(result, dict)
         self.assertIn(0, result)
         self.assertIn(1, result)

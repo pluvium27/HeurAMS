@@ -99,6 +99,7 @@ class PrecachingScreen(Screen):
         if not cache_file.exists():
             try:
                 from heurams.services.tts_service import convertor
+
                 convertor(text, cache_file)
                 return 1
             except Exception as e:
