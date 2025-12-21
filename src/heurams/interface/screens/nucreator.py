@@ -5,7 +5,8 @@ import toml
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Input, Label, Markdown, Select
+from textual.widgets import (Button, Footer, Header, Input, Label, Markdown,
+                             Select)
 
 from heurams.context import config_var
 from heurams.services.version import ver

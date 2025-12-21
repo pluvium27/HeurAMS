@@ -4,7 +4,8 @@ import pathlib
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
+from textual.widgets import (Button, Footer, Header, Label, ListItem, ListView,
+                             Static)
 
 import heurams.services.timer as timer
 import heurams.services.version as version

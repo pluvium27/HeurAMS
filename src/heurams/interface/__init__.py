@@ -40,7 +40,7 @@ class HeurAMSApp(App):
         ("1", "app.push_screen('dashboard')", "仪表盘"),
         ("2", "app.push_screen('precache_all')", "缓存管理器"),
         ("3", "app.push_screen('nucleon_creator')", "创建新单元"),
-        ("4", "app.push_screen('synctool')", "同步工具"),
+        # ("4", "app.push_screen('synctool')", "同步工具"),
         ("0", "app.push_screen('about')", "版本信息"),
     ]
     SCREENS = {

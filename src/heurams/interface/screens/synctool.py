@@ -65,7 +65,7 @@ class SyncScreen(Screen):
     def update_ui_from_config(self):
         """更新 UI 显示配置信息"""
         try:
-            sync_cfg: dict = config_var.get()['providers']['sync']['webdav']
+            sync_cfg: dict = config_var.get()["providers"]["sync"]["webdav"]
             # 更新服务器 URL
             url = sync_cfg.get("url", "未配置")
             url_widget = self.query_one("#server_url")

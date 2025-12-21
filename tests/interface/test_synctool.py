@@ -10,12 +10,8 @@ from unittest.mock import MagicMock, Mock, patch
 
 from heurams.context import ConfigContext
 from heurams.services.config import ConfigFile
-from heurams.services.sync_service import (
-    ConflictStrategy,
-    SyncConfig,
-    SyncMode,
-    SyncService,
-)
+from heurams.services.sync_service import (ConflictStrategy, SyncConfig,
+                                           SyncMode, SyncService)
 
 
 class TestSyncServiceUnit(unittest.TestCase):
@@ -206,7 +202,8 @@ class TestSyncServiceUnit(unittest.TestCase):
             mock_config.data = config_data
             mock_config_var.get.return_value = mock_config
 
-            from heurams.services.sync_service import create_sync_service_from_config
+            from heurams.services.sync_service import \
+                create_sync_service_from_config
 
             service = create_sync_service_from_config()
 
