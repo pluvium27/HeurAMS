@@ -20,6 +20,7 @@ data/global/
 data/orbital/
 config/config_dev.toml
 AGENTS.md
+*.log.1
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

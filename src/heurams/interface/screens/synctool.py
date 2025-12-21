@@ -20,7 +20,6 @@ class SyncScreen(Screen):
     def __init__(self, nucleons: list = [], desc: str = ""):
         super().__init__(name=None, id=None, classes=None)
         self.sync_service = None
-        self.sync_config = {}
         self.is_syncing = False
         self.is_paused = False
         self.log_messages = []
@@ -30,35 +29,29 @@ class SyncScreen(Screen):
         yield Header(show_clock=True)
         with ScrollableContainer(id="sync_container"):
             # 标题和连接状态
-            yield Static("WebDAV 同步工具", classes="title")
+            yield Static("同步工具", classes="title")
             yield Static("", id="status_label", classes="status")
 
             # 配置信息
-            yield Static("服务器配置", classes="section_title")
+            yield Static(f"同步协议: {config_var.get()['services']['sync']}")
+            yield Static("服务器配置:", classes="section_title")
             with Horizontal(classes="config_info"):
-                yield Static("URL:", classes="config_label")
+                yield Static("远程服务器:", classes="config_label")
                 yield Static("", id="server_url", classes="config_value")
             with Horizontal(classes="config_info"):
                 yield Static("远程路径:", classes="config_label")
                 yield Static("", id="remote_path", classes="config_value")
-            with Horizontal(classes="config_info"):
-                yield Static("同步模式:", classes="config_label")
-                yield Static("", id="sync_mode", classes="config_value")
 
-            # 控制按钮
-            yield Static("控制面板", classes="section_title")
             with Horizontal(classes="control_buttons"):
                 yield Button("测试连接", id="test_connection", variant="primary")
                 yield Button("开始同步", id="start_sync", variant="success")
                 yield Button("暂停", id="pause_sync", variant="warning", disabled=True)
                 yield Button("取消", id="cancel_sync", variant="error", disabled=True)
 
-            # 进度显示
             yield Static("同步进度", classes="section_title")
             yield ProgressBar(id="progress_bar", show_percentage=True, total=100)
             yield Static("", id="progress_label", classes="progress_text")
 
-            # 日志输出
             yield Static("同步日志", classes="section_title")
             yield Static("", id="log_output", classes="log_output")
 
@@ -66,49 +59,21 @@ class SyncScreen(Screen):
 
     def on_mount(self):
         """挂载时初始化状态"""
-        self.load_config()
         self.update_ui_from_config()
         self.log_message("同步工具已启动")
-
-    def load_config(self):
-        """从配置文件加载同步设置"""
-        try:
-            from heurams.context import config_var
-
-            config_data = config_var.get().data
-            self.sync_config = config_data.get("sync", {}).get("webdav", {})
-
-            # 创建同步服务实例
-            from heurams.services.sync_service import create_sync_service_from_config
-
-            self.sync_service = create_sync_service_from_config()
-
-        except Exception as e:
-            self.log_message(f"加载配置失败: {e}", is_error=True)
-            self.sync_config = {}
 
     def update_ui_from_config(self):
         """更新 UI 显示配置信息"""
         try:
+            sync_cfg: dict = config_var.get()['providers']['sync']['webdav']
             # 更新服务器 URL
-            url = self.sync_config.get("url", "未配置")
+            url = sync_cfg.get("url", "未配置")
             url_widget = self.query_one("#server_url")
-            url_widget.update(url if url else "未配置")  # type: ignore
-
+            url_widget.update(url)  # type: ignore
             # 更新远程路径
-            remote_path = self.sync_config.get("remote_path", "/heurams/")
+            remote_path = sync_cfg.get("remote_path", "/")
             path_widget = self.query_one("#remote_path")
             path_widget.update(remote_path)  # type: ignore
-
-            # 更新同步模式
-            sync_mode = self.sync_config.get("sync_mode", "bidirectional")
-            mode_widget = self.query_one("#sync_mode")
-            mode_map = {
-                "bidirectional": "双向同步",
-                "upload_only": "仅上传",
-                "download_only": "仅下载",
-            }
-            mode_widget.update(mode_map.get(sync_mode, sync_mode))  # type: ignore
 
             # 更新状态标签
             status_widget = self.query_one("#status_label")

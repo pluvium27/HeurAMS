@@ -42,6 +42,7 @@ template_dir = "./data/template"
 audio = "playsound" # 可选项: playsound(通用), termux(仅用于支持 Android Termux), mpg123(TODO)
 tts = "edgetts" # 可选项: edgetts
 llm = "openai" # 可选项: openai
+sync = "webdav" # 可选项: 留空, webdav
 
 [providers.tts.edgetts] # EdgeTTS 设置
 voice = "zh-CN-XiaoxiaoNeural" # 可选项: zh-CN-YunjianNeural (男声), zh-CN-XiaoxiaoNeural (女声)
@@ -50,12 +51,11 @@ voice = "zh-CN-XiaoxiaoNeural" # 可选项: zh-CN-YunjianNeural (男声), zh-CN-
 url = ""
 key = ""
 
-[sync.webdav] # WebDAV 同步设置
-enabled = false
+[providers.sync.webdav] # WebDAV 同步设置
 url = ""
 username = ""
 password = ""
 remote_path = "/heurams/"
-sync_mode = "bidirectional"  # bidirectional/upload_only/download_only
-conflict_strategy = "newer"  # newer/ask/keep_both
 verify_ssl = true
+
+[sync]
