@@ -11,7 +11,7 @@ class Lict(UserList): #TODO: 优化同步(惰性同步), 当前性能为 O(n)
     - 键名一定唯一, 且仅能为字符串
     - 值一定是引用对象
     - 不使用并发
-    - 不在乎列表顺序语义和列表索引查找, 因此 sort, index 等功能不可用
+    - 不在乎列表顺序语义(严格按键名字符序排列)和列表索引查找, 因此外部的 sort, index 等功能不可用
     - append 的元组中, 表示键名的元素不能重复, 否则会导致覆盖行为
     """
     def __init__(self, initlist = None, initdict = None):
@@ -20,9 +20,11 @@ class Lict(UserList): #TODO: 优化同步(惰性同步), 当前性能为 O(n)
             initlist = list(initdict.items())
         super().__init__(initlist=initlist)
         self._sync_based_on_list()
+        self.data.sort()
     
     def _sync_based_on_dict(self):
         self.data = list(self.dicted_data.items())
+        self.data.sort()
 
     def _sync_based_on_list(self):
         self.dicted_data = {}
@@ -52,7 +54,10 @@ class Lict(UserList): #TODO: 优化同步(惰性同步), 当前性能为 O(n)
         else:
             super().__delitem__(i)
             self._sync_based_on_list()
-    
+
+    def __contains__(self, item):
+        return (item in self.data or item in self.keys() or item in self.values())
+
     def append(self, item: Any) -> None:
         if item != (item[0], item[1]):
             raise NotImplementedError
@@ -60,14 +65,15 @@ class Lict(UserList): #TODO: 优化同步(惰性同步), 当前性能为 O(n)
         self._sync_based_on_list()
     
     def insert(self, i: int, item: Any) -> None:
-        if item != (item[0], item[1]):
+        if item != (item[0], item[1]): # 确保 item 是遵从限制的元组
             raise NotImplementedError
         super().insert(i, item)
         self._sync_based_on_list()
     
     def pop(self, i: int = -1) -> Any:
-        super().pop(i)
+        res = super().pop(i)
         self._sync_based_on_list()
+        return res
     
     def remove(self, item: Any) -> None:
         if isinstance(item, str):
@@ -92,4 +98,19 @@ class Lict(UserList): #TODO: 优化同步(惰性同步), 当前性能为 O(n)
     
     def reverse(self):
         raise NotImplementedError
+
+    def keys(self):
+        return self.dicted_data.keys()
     
+    def values(self):
+        return self.dicted_data.values()
+    
+    def items(self):
+        return self.data
+
+    def keys_equal_with(self, other):
+        return self.key_equality(self, other)
+
+    @classmethod
+    def key_equality(cls, a, b):
+        return a.keys() == b.keys()
