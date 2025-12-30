@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from heurams.kernel.puzzles.cloze import ClozePuzzle
+from heurams.kernel.evaluators.cloze import ClozePuzzle
 
 
 class TestClozePuzzle(unittest.TestCase):

@@ -116,7 +116,7 @@ class SM2Algorithm(BaseAlgorithm):
         return result
 
     @classmethod
-    def rate(cls, algodata):
+    def get_rating(cls, algodata):
         efactor = algodata[cls.algo_name]["efactor"]
         logger.debug("SM2.rate: efactor=%f", efactor)
         return str(efactor)

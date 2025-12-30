@@ -5,7 +5,7 @@ from typing import TypedDict
 
 import heurams.interface.widgets as pzw
 import heurams.kernel.particles as pt
-import heurams.kernel.puzzles as pz
+import heurams.kernel.evaluators as pz
 
 staging = {}  # 细粒度缓存区, 是 ident -> quality 的封装
 

@@ -1,44 +1,56 @@
+from functools import reduce
 from pathlib import Path
 import heurams.kernel.particles as pt
 import toml
 import json
-from .lict import Lict
+from ...utils.lict import Lict
 from .refvar import RefVar
 
 class Repo():
     file_mapping = {
-        "orbital": "orbital.toml",
+        "schedule": "schedule.toml",
         "payload": "payload.toml",
         "algodata": "algodata.json",
         "manifest": "manifest.toml",
-        "formation": "formation.toml",
+        "typedef": "typedef.toml",
     }
 
     type_mapping = {
-        "orbital": "dict",
+        "schedule": "dict",
         "payload": "lict",
         "algodata": "lict",
         "manifest": "dict",
-        "formation": "dict",
+        "typedef": "dict",
     }
 
     default_save_list = ["algodata"]
 
-    def __init__(self, orbital, payload, manifest, formation, algodata, source = None) -> None:
-        self.orbital: pt.Orbital = orbital
-        self.payload: Lict = payload
+    def __init__(self, schedule: dict, payload: Lict, manifest: dict, typedef: dict, algodata: Lict, source = None) -> None:
+        self.schedule: dict = schedule
         self.manifest: dict = manifest
-        self.formation: dict = formation
+        self.typedef: dict = typedef
+        self.payload: Lict = payload
         self.algodata: Lict = algodata
         self.source: Path | None = source # 若存在, 指向 repo 所在 dir
         self.database = {
-            "orbital": self.orbital,
+            "schedule": self.schedule,
             "payload": self.payload,
             "manifest": self.manifest,
-            "formation": self.formation,
+            "typedef": self.typedef,
             "algodata": self.algodata,
             "source": self.source,
         }
+        self.generate_particles_data()
+
+    def generate_particles_data(self):
+        self.nucleonic_data_lict = Lict(list(map(self._attach(self.typedef), self.payload)))
+        self.electronic_data_lict = self.algodata
+
+    @staticmethod
+    def _attach(value):
+        def inner(x):
+            return (x, value)
+        return inner
 
     def __len__(self):
         return len(self.payload)
@@ -70,11 +82,11 @@ class Repo():
     @classmethod
     def create_new_repo(cls, source = None):
         default_database = {
-            "orbital": {"puzzles": {}, "schedule": {}},
-            "payload": [],
-            "algodata": [],
+            "schedule": {},
+            "payload": Lict([]),
+            "algodata": Lict([]),
             "manifest": {},
-            "formation": {"annotation": {}, "unified": {}},
+            "typedef": {},
             "source": source
         }
         return Repo(**default_database)

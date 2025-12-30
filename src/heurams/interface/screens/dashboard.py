@@ -61,7 +61,7 @@ class DashboardScreen(Screen):
         Returns:
             dict: 包含显示文本的字典，键为行号
         """
-        from heurams.kernel.particles.loader import load_electron, load_nucleon
+        from heurams.kernel.repository.particle_loader import load_electron, load_nucleon
 
         result = {}
         filestem = pathlib.Path(filename).stem

@@ -2,12 +2,12 @@ import random
 
 from heurams.services.logger import get_logger
 
-from .base import BasePuzzle
+from .base import BaseEvaluator
 
 logger = get_logger(__name__)
 
 
-class ClozePuzzle(BasePuzzle):
+class ClozePuzzle(BaseEvaluator):
     """填空题谜题生成器
 
     Args:

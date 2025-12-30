@@ -98,7 +98,7 @@ class TestElectron(unittest.TestCase):
         electron = Electron("test_electron")
         with patch.object(electron.algo, "rate") as mock_rate:
             mock_rate.return_value = "good"
-            result = electron.get_rate()
+            result = electron.get_rating()
             mock_rate.assert_called_once_with(electron.algodata)
             self.assertEqual(result, "good")
 

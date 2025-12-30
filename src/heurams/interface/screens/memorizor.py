@@ -8,7 +8,7 @@ from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
 
 import heurams.kernel.particles as pt
-import heurams.kernel.puzzles as pz
+import heurams.kernel.evaluators as pz
 from heurams.context import config_var
 from heurams.kernel.reactor import *
 from heurams.services.logger import get_logger

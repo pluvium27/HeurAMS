@@ -174,7 +174,7 @@ class TestSM2Algorithm(unittest.TestCase):
     def test_rate(self):
         """测试 rate 方法"""
         algodata = {SM2Algorithm.algo_name: {"efactor": 2.7}}
-        self.assertEqual(SM2Algorithm.rate(algodata), "2.7")
+        self.assertEqual(SM2Algorithm.get_rating(algodata), "2.7")
 
     def test_nextdate(self):
         """测试 nextdate 方法"""

@@ -1,20 +1,20 @@
 """
-Puzzle 模块 - 谜题生成系统
+Evaluator 模块 - 生成评估模块
 
-提供多种类型的谜题生成器, 支持从字符串、字典等数据源导入题目
+提供多种类型的辅助评估生成器, 支持从字符串、字典等数据源导入题目
 """
 
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
-from .base import BasePuzzle
+from .base import BaseEvaluator
 from .cloze import ClozePuzzle
 from .mcq import MCQPuzzle
 from .recognition import RecognitionPuzzle
 
 __all__ = [
-    "BasePuzzle",
+    "BaseEvaluator",
     "ClozePuzzle",
     "MCQPuzzle",
     "RecognitionPuzzle",
@@ -24,12 +24,12 @@ puzzles = {
     "mcq": MCQPuzzle,
     "cloze": ClozePuzzle,
     "recognition": RecognitionPuzzle,
-    "base": BasePuzzle,
+    "base": BaseEvaluator,
 }
 
 
 @staticmethod
-def create_by_dict(config_dict: dict) -> BasePuzzle:
+def create_by_dict(config_dict: dict) -> BaseEvaluator:
     """
     根据配置字典创建谜题
 

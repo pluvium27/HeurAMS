@@ -10,7 +10,6 @@ class BaseAlgorithm:
     algo_name = "BaseAlgorithm"
 
     class AlgodataDict(TypedDict):
-        efactor: float
         real_rept: int
         rept: int
         interval: int
@@ -52,7 +51,7 @@ class BaseAlgorithm:
         return 1
 
     @classmethod
-    def rate(cls, algodata) -> str:
+    def get_rating(cls, algodata) -> str:
         """获取评分信息"""
         logger.debug(
             "BaseAlgorithm.rate 被调用, algodata keys: %s",
@@ -68,3 +67,12 @@ class BaseAlgorithm:
             list(algodata.keys()) if algodata else [],
         )
         return -1
+
+    @classmethod
+    def check_integrity(cls, algodata):
+        try:
+            cls.AlgodataDict(**algodata[cls.algo_name])
+            return 1
+        except:
+            return 0
+    

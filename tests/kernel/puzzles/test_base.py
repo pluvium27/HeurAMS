@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 
-from heurams.kernel.puzzles.base import BasePuzzle
+from heurams.kernel.evaluators.base import BasePuzzle
 
 
 class TestBasePuzzle(unittest.TestCase):
