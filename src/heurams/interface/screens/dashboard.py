@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+"""仪表盘界面
+"""
 import pathlib
 
 from textual.app import ComposeResult
@@ -187,7 +188,7 @@ class DashboardScreen(Screen):
         button_id = event.button.id
 
         if button_id == "new_nucleon_button":
-            from .nucreator import NucleonCreatorScreen
+            from .repocreator import NucleonCreatorScreen
 
             new_screen = NucleonCreatorScreen()
             self.app.push_screen(new_screen)

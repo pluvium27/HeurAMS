@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+"""记忆准备界面
+"""
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.reactive import reactive
@@ -130,7 +131,7 @@ class PreparationScreen(Screen):
                         if left_new >= 0:
                             atoms_to_provide.append(i)
             logger.debug(f"ATP: {atoms_to_provide}")
-            from .memorizor import MemScreen
+            from .memoqueue import MemScreen
 
             memscreen = MemScreen(atoms_to_provide)
             self.app.push_screen(memscreen)

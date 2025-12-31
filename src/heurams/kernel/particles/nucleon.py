@@ -1,38 +1,36 @@
 from heurams.services.logger import get_logger
-
+from copy import deepcopy
+from heurams.utils.evalizor import Evalizer
 logger = get_logger(__name__)
 
 class Nucleon:
-    """原子核: 带有运行时隔离的半只读材料元数据容器
+    """原子核: 带有运行时隔离的模板化只读材料元数据容器
     """
 
     def __init__(self, ident, payload, common):
         self.ident = ident
-        self.payload = payload
-        self.common = common
-        self.rtlayer = dict() # 运行时层
+        env = {
+            "payload": payload
+        }
+        self.evalizer = Evalizer(environment=env)
+        self.data = self.evalizer(deepcopy((payload | common)))
 
     def __getitem__(self, key):
         if key == "ident":
             return self.ident
-        merged = self.rtlayer | self.payload | self.common
-        return merged[key]
+        return self.data[key]
             
     def __setitem__(self, key, value):
-        if key == "ident":
-            raise AttributeError("ident 应为只读")
-        else:
-            self.rtlayer[key] = value
-
+        raise AttributeError("应为只读")
+        
     def __delitem__(self, key):
-        raise AttributeError("Nucleon 包含的数据被设计为无法删除")
+        raise AttributeError("应为只读")
 
     def __iter__(self):
-        merged = self.rtlayer | self.payload | self.common
-        return iter(merged)
+        return iter(self.data)
 
     def __contains__(self, key):
-        return key in (self.rtlayer | self.payload | self.common)
+        return key in (self.data)
     
     def get(self, key, default=None):
         if key in self:
@@ -40,12 +38,10 @@ class Nucleon:
         return default
     
     def __len__(self):
-        return len(self.rtlayer | self.payload | self.common)
+        return len(self.data)
 
     def __repr__(self):
-        return f"""RUNTIME:{repr(self.rtlayer)}
-        PAYLOAD:{repr(self.payload)}
-        COMMON:{repr(self.common)}"""
+        return repr(self.data)
 
     @staticmethod
     def create_on_nucleonic_data(nucleonic_data: tuple):

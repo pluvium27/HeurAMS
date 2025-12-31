@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+"""队列式记忆工作界面
+"""
 from enum import Enum, auto
 
 from textual.app import ComposeResult

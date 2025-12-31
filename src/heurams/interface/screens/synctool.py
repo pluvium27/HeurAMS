@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+"""同步工具界面
+"""
 import pathlib
 import time
 

@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+"""缓存工具界面
+"""
 import pathlib
 
 from textual.app import ComposeResult

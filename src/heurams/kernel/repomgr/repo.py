@@ -43,7 +43,7 @@ class Repo():
         self.generate_particles_data()
 
     def generate_particles_data(self):
-        self.nucleonic_data_lict = Lict(list(map(self._attach(self.typedef), self.payload)))
+        self.nucleonic_data_lict = Lict(initlist=list(map(self._attach(self.typedef), self.payload)))
         self.electronic_data_lict = self.algodata
 
     @staticmethod

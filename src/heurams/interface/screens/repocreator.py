@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+"""仓库创建向导界面
+"""
 from pathlib import Path
 
 import toml

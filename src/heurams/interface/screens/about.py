@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+"""关于界面
+"""
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen

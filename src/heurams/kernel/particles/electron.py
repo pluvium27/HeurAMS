@@ -7,13 +7,6 @@ import heurams.kernel.algorithms as algolib
 from copy import deepcopy
 logger = get_logger(__name__)
 
-class QueryType(TypedDict):
-    is_due: bool
-    is_activated: bool
-    rating: int
-    nextdate: int
-    lastdate: int
-
 class Electron:
     """电子: 单算法支持的记忆数据包装"""
 
@@ -30,9 +23,8 @@ class Electron:
         self.algodata = algodata
         self.ident = ident
         self.algo: algolib.BaseAlgorithm = algorithms[algo_name]
-        self.query = dict()
 
-        if self.algo.check_integrity(self.algodata):
+        if not self.algo.check_integrity(self.algodata):
             self.algodata[self.algo.algo_name] = deepcopy(self.algo.defaults)
 
     def activate(self):
