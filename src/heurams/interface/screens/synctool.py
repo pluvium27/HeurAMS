@@ -1,5 +1,5 @@
-"""同步工具界面
-"""
+"""同步工具界面"""
+
 import pathlib
 import time
 

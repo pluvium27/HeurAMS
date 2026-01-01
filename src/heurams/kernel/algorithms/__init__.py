@@ -1,8 +1,8 @@
 from heurams.services.logger import get_logger
 
+from .base import BaseAlgorithm
 from .sm2 import SM2Algorithm
 from .sm15m import SM15MAlgorithm
-from .base import BaseAlgorithm
 
 logger = get_logger(__name__)
 

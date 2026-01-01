@@ -1,5 +1,5 @@
-"""仪表盘界面
-"""
+"""仪表盘界面"""
+
 import pathlib
 
 from textual.app import ComposeResult
@@ -62,7 +62,8 @@ class DashboardScreen(Screen):
         Returns:
             dict: 包含显示文本的字典，键为行号
         """
-        from heurams.kernel.repository.particle_loader import load_electron, load_nucleon
+        from heurams.kernel.repository.particle_loader import (load_electron,
+                                                               load_nucleon)
 
         result = {}
         filestem = pathlib.Path(filename).stem

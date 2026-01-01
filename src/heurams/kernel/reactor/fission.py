@@ -1,7 +1,7 @@
 import random
 
-import heurams.kernel.particles as pt
 import heurams.kernel.evaluators as puz
+import heurams.kernel.particles as pt
 from heurams.services.logger import get_logger
 
 from .states import PhaserState

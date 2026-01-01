@@ -4,8 +4,8 @@ import random
 from typing import TypedDict
 
 import heurams.interface.widgets as pzw
-import heurams.kernel.particles as pt
 import heurams.kernel.evaluators as pz
+import heurams.kernel.particles as pt
 
 staging = {}  # 细粒度缓存区, 是 ident -> quality 的封装
 

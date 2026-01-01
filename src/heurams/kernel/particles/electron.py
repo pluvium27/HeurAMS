@@ -1,11 +1,13 @@
+from copy import deepcopy
 from typing import TypedDict
+
+import heurams.kernel.algorithms as algolib
 import heurams.services.timer as timer
-from heurams.context import config_var
 from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
-import heurams.kernel.algorithms as algolib
-from copy import deepcopy
+
 logger = get_logger(__name__)
+
 
 class Electron:
     """电子: 单算法支持的记忆数据包装"""
@@ -89,11 +91,11 @@ class Electron:
     def __len__(self):
         """仅返回当前算法的配置数量"""
         return len(self.algodata[self.algo.algo_name])
-    
+
     @staticmethod
     def create_on_electonic_data(electronic_data: tuple, algo_name: str = ""):
         _data = electronic_data
         ident = _data[0]
         algodata = _data[1]
         ident = ident
-        return Electron(ident, algodata, algo_name)      
+        return Electron(ident, algodata, algo_name)

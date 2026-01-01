@@ -1,5 +1,5 @@
-"""缓存工具界面
-"""
+"""缓存工具界面"""
+
 import pathlib
 
 from textual.app import ComposeResult

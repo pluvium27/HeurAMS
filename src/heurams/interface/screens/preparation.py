@@ -1,5 +1,5 @@
-"""记忆准备界面
-"""
+"""记忆准备界面"""
+
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.reactive import reactive

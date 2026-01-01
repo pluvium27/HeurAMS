@@ -5,7 +5,6 @@ from typing import TypedDict
 
 import toml
 
-from heurams.context import config_var
 from heurams.services.logger import get_logger
 
 from .electron import Electron
@@ -19,10 +18,12 @@ class AtomRegister_runtime(TypedDict):
     min_rate: int  # 最低评分
     new_activation: bool  # 新激活
 
+
 class AtomRegister(TypedDict):
     nucleon: Nucleon
     electron: Electron
     runtime: AtomRegister_runtime
+
 
 class Atom:
     """
@@ -39,10 +40,10 @@ class Atom:
         "new_activation": False,
     }
 
-    def __init__(self, nucleon_obj = None, electron_obj = None, orbital_obj = None):
-        self.ident = nucleon_obj["ident"] # type: ignore
+    def __init__(self, nucleon_obj=None, electron_obj=None, orbital_obj=None):
+        self.ident = nucleon_obj["ident"]  # type: ignore
         self.registry: AtomRegister = {  # type: ignore
-            "ident": nucleon_obj["ident"], # type: ignore
+            "ident": nucleon_obj["ident"],  # type: ignore
             "nucleon": nucleon_obj,
             "electron": electron_obj,
             "orbital": orbital_obj,
@@ -53,7 +54,7 @@ class Atom:
             self.registry["runtime"]["new_activation"] = True
 
     def init_runtime(self):
-        self.registry['runtime'] = AtomRegister_runtime(**self.default_runtime)
+        self.registry["runtime"] = AtomRegister_runtime(**self.default_runtime)
 
     def minimize(self, rating):
         """效果等同于 self.registry['runtime']['min_rate'] = min(rating, self.registry['runtime']['min_rate'])

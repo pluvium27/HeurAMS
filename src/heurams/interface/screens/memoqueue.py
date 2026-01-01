@@ -1,5 +1,5 @@
-"""队列式记忆工作界面
-"""
+"""队列式记忆工作界面"""
+
 from enum import Enum, auto
 
 from textual.app import ComposeResult
@@ -8,8 +8,8 @@ from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
 
-import heurams.kernel.particles as pt
 import heurams.kernel.evaluators as pz
+import heurams.kernel.particles as pt
 from heurams.context import config_var
 from heurams.kernel.reactor import *
 from heurams.services.logger import get_logger
