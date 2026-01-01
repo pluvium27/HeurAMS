@@ -12,6 +12,7 @@ import heurams.services.timer as timer
 import heurams.services.version as version
 from heurams.context import *
 from heurams.kernel.particles import *
+from heurams.kernel.repolib import *
 from heurams.services.logger import get_logger
 
 from .about import AboutScreen
@@ -32,9 +33,10 @@ class DashboardScreen(Screen):
         classes: str | None = None,
     ) -> None:
         super().__init__(name, id, classes)
-        self.nextdates = {}
-        self.texts = {}
-        self.stay_enabled = {}
+        self.repostat = {}
+        self.title2dirname = {}
+        self.title2repo = {}
+        self._load_data()
 
     def compose(self) -> ComposeResult:
         """组合界面组件"""
@@ -44,119 +46,86 @@ class DashboardScreen(Screen):
             Label(f"当前 UNIX 日时间戳: {timer.get_daystamp()}"),
             Label(f'时区修正: UTC+{config_var.get()["timezone_offset"] / 3600}'),
             Label(f"使用算法: {config_var.get()['algorithm']['default']}"),
-            Label("选择待学习或待修改的记忆单元集:", classes="title-label"),
-            ListView(id="union-list", classes="union-list-view"),
+            Label("选择待学习或待修改的仓库:", classes="title-label"),
+            ListView(id="repo-list", classes="repo-list-view"),
             Label(
                 f'"潜进" 启发式辅助记忆调度器 | 版本 {version.ver} '
-                f"{version.codename.capitalize()} 2025"
             ),
         )
         yield Footer()
 
-    def analyser(self, filename: str) -> dict:
-        """分析文件状态以生成显示文本
+    def _load_data(self):
+        self.repo_dirs = Repo.probe_vaild_repos_in_dir(Path(config_var.get()['paths']['data']) / 'repo')
+        for repo_dir in self.repo_dirs:
+            repo = Repo.create_from_repodir(repo_dir)
+            self._analyse_repo(repo)
 
-        Args:
-            filename: 要分析的文件名
-
-        Returns:
-            dict: 包含显示文本的字典，键为行号
-        """
-        from heurams.kernel.repository.particle_loader import (load_electron,
-                                                               load_nucleon)
-
-        result = {}
-        filestem = pathlib.Path(filename).stem
-
-        # 构建电子文件路径
-        electron_dir = config_var.get()["paths"]["electron_dir"]
-        electron_file_path = pathlib.Path(electron_dir) / f"{filestem}.json"
-
-        logger.debug(f"电子文件路径: {electron_file_path}")
-
-        # 确保电子文件存在
-        if not electron_file_path.exists():
-            electron_file_path.touch()
-            electron_file_path.write_text("{}")
-
-        # 加载电子数据
-        electron_dict = load_electron(path=electron_file_path)
-        logger.debug(f"电子数据: {electron_dict}")
-
-        # 分析电子状态
+    def _analyse_repo(self, repo: Repo):
+        dirname = repo.source.name # type: ignore
+        title = repo.manifest["title"]
         is_due = 0
-        is_activated = 0
-        nextdate = 0x3F3F3F3F
-
-        for electron in electron_dict.values():
-            logger.debug(f"{electron}, 是否到期: {electron.is_due()}")
-
-            if electron.is_due():
-                is_due = 1
+        unit_sum = len(repo)
+        activated_sum = 0
+        nextdate = 0x3f3f3f3f
+        is_unfinished = (unit_sum > activated_sum)
+        for i in repo.ident_index:
+            nucleon = pt.Nucleon.create_on_nucleonic_data(nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i))
+            electron = pt.Electron.create_on_electonic_data(electronic_data=repo.electronic_data_lict.get_itemic_unit(i))
             if electron.is_activated():
-                is_activated = 1
-            nextdate = min(nextdate, electron.nextdate())
-
-        # 检查是否需要更多复习
-        nucleon_dir = config_var.get()["paths"]["nucleon_dir"]
-        nucleon_path = pathlib.Path(nucleon_dir) / f"{filestem}.toml"
-        nucleon_count = len(load_nucleon(nucleon_path))
-        electron_count = len(electron_dict)
-        is_more = not (electron_count >= nucleon_count)
-
-        logger.debug(f"是否需要更多复习: {is_more}")
-
-        # 更新状态
-        self.nextdates[filename] = nextdate
-        self.stay_enabled[filename] = is_due or is_more
-
-        # 构建返回结果
-        result[0] = f"{filename}\0"
-
-        if not is_activated:
-            result[1] = "  尚未激活"
-        else:
-            status_text = "需要复习" if is_due else "当前无需复习"
-            result[1] = f"下一次复习: {nextdate}\n{status_text}"
-
-        return result
+                activated_sum += 1
+                if electron.is_due():
+                    is_due = 1
+                nextdate = min(nextdate, electron.nextdate())
+        if is_unfinished:
+            nextdate = min(nextdate, timer.get_daystamp())
+        need_to_study = is_due or is_unfinished
+        prompt = f"{title}\0\n  进度: {activated_sum}/{unit_sum}\n  {"需要学习" if need_to_study else "无需操作"}"
+        stat = {
+            "is_due": is_due,
+            "unit_sum": unit_sum,
+            "title": title,
+            "activated_sum": activated_sum,
+            "nextdate": nextdate,
+            "is_unfinished": is_unfinished,
+            "need_to_study": need_to_study,
+            "prompt": prompt,
+            "dirname": dirname,
+        }
+        self.repostat[dirname] = stat
+        self.title2dirname[title] = dirname
+        self.title2repo[title] = repo
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""
-        union_list_widget = self.query_one("#union-list", ListView)
-        probe = probe_all(0)
-
-        # 分析所有文件
-        for file in probe["nucleon"]:
-            self.texts[file] = self.analyser(file)
+        repo_list_widget = self.query_one("#repo-list", ListView)
 
         # 按下次复习时间排序
-        nucleon_files = sorted(
-            probe["nucleon"],
-            key=lambda f: self.nextdates[f],
+        repodirs = sorted(
+            self.repo_dirs,
+            key=lambda f: self.repostat[f.name]['nextdate'],
             reverse=True,
         )
-
+        repotitles = map(lambda f: self.repostat[f.name]['title'], repodirs)
         # 填充列表
-        if not probe["nucleon"]:
-            union_list_widget.append(
+        if not repodirs:
+            repo_list_widget.append(
                 ListItem(
                     Static(
-                        "在 ./nucleon/ 中未找到任何内容源数据文件。\n"
-                        "请放置文件后重启应用，或者新建空的单元集。"
+                        "在 ./data/repo/ 中未找到任何仓库.\n"
+                        "请导入仓库后重启应用, 或者新建空的仓库."
                     )
                 )
             )
-            union_list_widget.disabled = True
+            repo_list_widget.disabled = True
             return
 
-        for file in nucleon_files:
-            text = self.texts[file]
-            list_item = ListItem(Label(f"{text[0]}\n{text[1]}"))
-            union_list_widget.append(list_item)
+        for repotitle in repotitles:
+            prompt = self.repostat[self.title2dirname[repotitle]]['prompt']
+            list_item = ListItem(Label(prompt))
+            repo_list_widget.append(list_item)
 
-            if not self.stay_enabled[file]:
-                list_item.disabled = True
+            #if not self.stay_enabled[repodir]:
+            #    list_item.disabled = True
 
     def on_list_view_selected(self, event) -> None:
         """处理列表项选择事件"""
@@ -166,32 +135,25 @@ class DashboardScreen(Screen):
         selected_label = event.item.query_one(Label)
         label_text = str(selected_label.renderable)
 
-        if "未找到任何 .toml 文件" in label_text:
+        if "未找到任何仓库" in label_text:
             return
 
         # 提取文件名
-        selected_filename = pathlib.Path(label_text.partition("\0")[0].replace("*", ""))
-
-        # 构建文件路径
-        nucleon_dir = config_var.get()["paths"]["nucleon_dir"]
-        electron_dir = config_var.get()["paths"]["electron_dir"]
-
-        nucleon_file_path = pathlib.Path(nucleon_dir) / selected_filename
-        electron_file_path = (
-            pathlib.Path(electron_dir) / f"{selected_filename.stem}.json"
-        )
+        selected_repotitle = label_text.partition("\0")[0].replace("*", "")
+        selected_repo = self.title2repo[label_text.partition("\0")[0].replace("*", "")]
+        
 
         # 跳转到准备屏幕
-        self.app.push_screen(PreparationScreen(nucleon_file_path, electron_file_path))
+        self.app.push_screen(PreparationScreen(selected_repo, self.repostat[self.title2dirname[selected_repotitle]]))
 
     def on_button_pressed(self, event) -> None:
         """处理按钮点击事件"""
         button_id = event.button.id
 
         if button_id == "new_nucleon_button":
-            from .repocreator import NucleonCreatorScreen
+            from .repocreator import RepoCreatorScreen
 
-            new_screen = NucleonCreatorScreen()
+            new_screen = RepoCreatorScreen()
             self.app.push_screen(new_screen)
 
         elif button_id == "precache_all_button":

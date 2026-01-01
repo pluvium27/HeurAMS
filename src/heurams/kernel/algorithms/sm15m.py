@@ -20,7 +20,7 @@ from heurams.kernel.algorithms.sm15m_calc import (MAX_AF, MIN_AF, NOTCH_AF,
 
 # 全局状态文件路径
 _GLOBAL_STATE_FILE = os.path.expanduser(
-    pathlib.Path(config_var.get()["paths"]["global_dir"]) / "sm15m_global_state.json"
+    pathlib.Path(config_var.get()["paths"]["data"])  / 'global' / "sm15m_global_state.json"
 )
 
 

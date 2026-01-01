@@ -52,6 +52,9 @@ class Lict(UserList):  # TODO: 优化同步(惰性同步), 当前性能为 O(n)
         else:
             return super().__getitem__(i)
 
+    def get_itemic_unit(self, i):
+        return (i, self.dicted_data[i])
+
     def __setitem__(self, i, item):
         if isinstance(i, str):
             self.dicted_data[i] = item
@@ -80,6 +83,15 @@ class Lict(UserList):  # TODO: 优化同步(惰性同步), 当前性能为 O(n)
         self._sync_based_on_list()
         if self.forced_order:
             self.data.sort()
+
+    def append_new(self, item: Any):
+        if item != (item[0], item[1]):
+            raise NotImplementedError
+        if item[0] not in self:
+            super().append(item)
+            self._sync_based_on_list()
+            if self.forced_order:
+                self.data.sort()
 
     def insert(self, i: int, item: Any) -> None:
         if item != (item[0], item[1]):  # 确保 item 是遵从限制的元组

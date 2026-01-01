@@ -13,9 +13,9 @@ from heurams.context import config_var
 from heurams.services.version import ver
 
 
-class NucleonCreatorScreen(Screen):
+class RepoCreatorScreen(Screen):
     BINDINGS = [("q", "go_back", "返回")]
-    SUB_TITLE = "单元集创建向导"
+    SUB_TITLE = "仓库创建向导"
 
     def __init__(self) -> None:
         super().__init__(name=None, id=None, classes=None)

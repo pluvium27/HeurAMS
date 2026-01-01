@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 from heurams.kernel.particles.atom import Atom
 from heurams.kernel.particles.electron import Electron
-from heurams.kernel.reactor.phaser import Phaser
+from heurams.kernel.reactor.procession import Phaser
 from heurams.kernel.reactor.states import PhaserState, ProcessionState
 
 

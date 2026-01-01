@@ -41,7 +41,9 @@ class Nucleon:
         return len(self.data)
 
     def __repr__(self):
-        return repr(self.data)
+        from pprint import pformat
+        s = pformat(self.data, indent=4)
+        return s
 
     @staticmethod
     def create_on_nucleonic_data(nucleonic_data: tuple):

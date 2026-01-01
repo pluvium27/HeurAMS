@@ -8,7 +8,7 @@ from heurams.services.logger import get_logger
 from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
 from .screens.precache import PrecachingScreen
-from .screens.repocreator import NucleonCreatorScreen
+from .screens.repocreator import RepoCreatorScreen
 
 logger = get_logger(__name__)
 

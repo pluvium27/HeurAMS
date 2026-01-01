@@ -31,13 +31,11 @@ max_riddles_num = 2
 min_denominator = 3
 
 [paths] # 相对于配置文件的 ".." (即工作目录) 而言 或绝对路径
-nucleon_dir = "./data/nucleon"
-electron_dir = "./data/electron"
-global_dir = "./data/global" # 全局数据路径, SM-15 等算法需要
-orbital_dir = "./data/orbital"
-cache_dir = "./data/cache"
-template_dir = "./data/template"
-
+data = "./data"
+cache = "./data/cache"
+config = "./data/config"
+global = "./data/global"
+repo = "./data/repo"
 [services] # 定义服务到提供者的映射
 audio = "playsound" # 可选项: playsound(通用), termux(仅用于支持 Android Termux), mpg123(TODO)
 tts = "edgetts" # 可选项: edgetts

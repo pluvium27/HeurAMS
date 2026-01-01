@@ -21,13 +21,18 @@ class Electron:
             algo_name: 使用的算法模块标识
         """
         if algo_name == "":
-            algo_name = "sm-2"
+            algo_name = "SM-2"
         self.algodata = algodata
         self.ident = ident
         self.algo: algolib.BaseAlgorithm = algorithms[algo_name]
 
         if not self.algo.check_integrity(self.algodata):
             self.algodata[self.algo.algo_name] = deepcopy(self.algo.defaults)
+
+    def __repr__(self):
+        from pprint import pformat
+        s = pformat(self.algodata, indent=4)
+        return s
 
     def activate(self):
         """激活此电子"""

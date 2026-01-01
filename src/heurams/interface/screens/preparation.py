@@ -12,6 +12,7 @@ import heurams.services.hasher as hasher
 from heurams.context import *
 from heurams.context import config_var
 from heurams.services.logger import get_logger
+from heurams.kernel.repolib import *
 
 logger = get_logger(__name__)
 
@@ -29,24 +30,19 @@ class PreparationScreen(Screen):
 
     scheduled_num = reactive(config_var.get()["scheduled_num"])
 
-    def __init__(self, nucleon_file: pathlib.Path, electron_file: pathlib.Path) -> None:
+    def __init__(self, repo: Repo, repostat: dict) -> None:
         super().__init__(name=None, id=None, classes=None)
-        self.nucleon_file = nucleon_file
-        self.electron_file = electron_file
-        self.nucleons_with_orbital = pt.load_nucleon(self.nucleon_file)
-        self.electrons = pt.load_electron(self.electron_file)
+        self.repo = repo
+        self.repostat = repostat
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
         with ScrollableContainer(id="vice_container"):
-            yield Label(f"准备就绪: [b]{self.nucleon_file.stem}[/b]\n")
+            yield Label(f"准备就绪: [b]{self.repostat['title']}[/b]\n")
             yield Label(
-                f"内容源文件: {config_var.get()['paths']['nucleon_dir']}/[b]{self.nucleon_file.name}[/b]"
+                f"仓库路径: {config_var.get()['paths']['data']}/repo/[b]{self.repostat['dirname']}[/b]"
             )
-            yield Label(
-                f"元数据文件: {config_var.get()['paths']['electron_dir']}/[b]{self.electron_file.name}[/b]"
-            )
-            yield Label(f"\n单元数量: {len(self.nucleons_with_orbital)}\n")
+            yield Label(f"\n单元数量: {len(self.repo)}\n")
             yield Label(f"单次记忆数量: {self.scheduled_num}", id="schnum_label")
 
             yield Button(
@@ -76,10 +72,9 @@ class PreparationScreen(Screen):
 
     def _get_full_content(self):
         content = ""
-        for nucleon, orbital in self.nucleons_with_orbital:
-            nucleon: pt.Nucleon
-            # print(nucleon.payload)
-            content += " - " + nucleon["content"] + "  \n"
+        for i in self.repo.ident_index:
+            n = pt.Nucleon.create_on_nucleonic_data(nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i))
+            content += f"- {n['content']}  \n"
         return content
 
     def action_go_back(self):

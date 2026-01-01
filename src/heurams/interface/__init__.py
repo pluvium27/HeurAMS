@@ -7,11 +7,10 @@ from heurams.services.logger import get_logger
 from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
 from .screens.precache import PrecachingScreen
-from .screens.repocreator import NucleonCreatorScreen
+from .screens.repocreator import RepoCreatorScreen
 from .screens.synctool import SyncScreen
 
 logger = get_logger(__name__)
-
 
 def environment_check():
     from pathlib import Path
@@ -39,13 +38,13 @@ class HeurAMSApp(App):
         ("d", "toggle_dark", "切换色调"),
         ("1", "app.push_screen('dashboard')", "仪表盘"),
         ("2", "app.push_screen('precache_all')", "缓存管理器"),
-        ("3", "app.push_screen('nucleon_creator')", "创建新单元"),
+        ("3", "app.push_screen('nucleon_creator')", "创建新仓库"),
         # ("4", "app.push_screen('synctool')", "同步工具"),
         ("0", "app.push_screen('about')", "版本信息"),
     ]
     SCREENS = {
         "dashboard": DashboardScreen,
-        "nucleon_creator": NucleonCreatorScreen,
+        "repo_creator": RepoCreatorScreen,
         "precache_all": PrecachingScreen,
         "synctool": SyncScreen,
         "about": AboutScreen,

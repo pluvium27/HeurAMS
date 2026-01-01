@@ -1,6 +1,7 @@
 import json
 from functools import reduce
 from pathlib import Path
+from typing import TypedDict
 
 import toml
 
@@ -8,6 +9,10 @@ import heurams.kernel.particles as pt
 
 from ...utils.lict import Lict
 
+class RepoManifest(TypedDict):
+    title: str
+    author: str
+    desc: str
 
 class Repo:
     file_mapping = {
@@ -38,7 +43,7 @@ class Repo:
         source=None,
     ) -> None:
         self.schedule: dict = schedule
-        self.manifest: dict = manifest
+        self.manifest: RepoManifest = manifest # type: ignore
         self.typedef: dict = typedef
         self.payload: Lict = payload
         self.algodata: Lict = algodata
@@ -60,8 +65,11 @@ class Repo:
                 self._nucleonic_proc,
                 self.payload))
         )
-        self.electronic_data_lict = self.algodata
         self.orbitic_data = self.schedule
+        self.ident_index = self.nucleonic_data_lict.keys()
+        for i in self.ident_index:
+            self.algodata.append_new((i, {}))
+        self.electronic_data_lict = self.algodata
 
     def _nucleonic_proc(self, unit):
         ident = unit[0]
@@ -77,6 +85,11 @@ class Repo:
 
     def __len__(self):
         return len(self.payload)
+
+    def __repr__(self):
+        from pprint import pformat
+        s = pformat(self.database, indent=4)
+        return s
 
     def persist_to_repodir(
         self, save_list: list | None = None, source: Path | None = None
@@ -151,3 +164,12 @@ class Repo:
             return 1
         except:
             return 0
+
+    @classmethod
+    def probe_vaild_repos_in_dir(cls, folder: Path):
+        lst = list()
+        for i in folder.iterdir():
+            if i.is_dir():
+                if cls.check_repodir(i):
+                    lst.append(i)
+        return lst
