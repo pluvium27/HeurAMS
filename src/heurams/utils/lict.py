@@ -1,9 +1,10 @@
 
 from collections import UserList
-from typing import Any
+from typing import Any, Iterator
 
 class Lict(UserList): #TODO: 优化同步(惰性同步), 当前性能为 O(n)
     """"列典" 对象  
+
     同时兼容字典和列表大多数 API, 两边数据同步的容器  
     列表数据是 dictobj.items() 的格式  
     支持根据字典或列表初始化
@@ -12,24 +13,32 @@ class Lict(UserList): #TODO: 优化同步(惰性同步), 当前性能为 O(n)
     - 值一定是引用对象
     - 不使用并发
     - 不在乎列表顺序语义(严格按键名字符序排列)和列表索引查找, 因此外部的 sort, index 等功能不可用
-    - append 的元组中, 表示键名的元素不能重复, 否则会导致覆盖行为
+    - append 的元组中, 表示键名的元素不能重复, 否则会导致覆盖行为  
+    
+    只有在 Python 3.7+ 中, forced_order 行为才能被取消.
     """
-    def __init__(self, initlist = None, initdict = None):
+    def __init__(self, initlist: list | None = None, initdict: dict | None = None, forced_order = True):
         self.dicted_data = {}
         if initdict != None:
             initlist = list(initdict.items())
         super().__init__(initlist=initlist)
+        self.forced_order = forced_order
         self._sync_based_on_list()
-        self.data.sort()
+        if self.forced_order:
+            self.data.sort()
     
     def _sync_based_on_dict(self):
         self.data = list(self.dicted_data.items())
-        self.data.sort()
+        if self.forced_order:
+            self.data.sort()
 
     def _sync_based_on_list(self):
         self.dicted_data = {}
         for i in self.data:
             self.dicted_data[i[0]] = i[1]
+
+    def __iter__(self) -> Iterator:
+        return self.data.__iter__()
 
     def __getitem__(self, i):
         if isinstance(i, str):

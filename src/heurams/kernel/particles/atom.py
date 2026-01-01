@@ -40,6 +40,7 @@ class Atom:
     }
 
     def __init__(self, nucleon_obj = None, electron_obj = None, orbital_obj = None):
+        self.ident = nucleon_obj["ident"] # type: ignore
         self.registry: AtomRegister = {  # type: ignore
             "ident": nucleon_obj["ident"], # type: ignore
             "nucleon": nucleon_obj,

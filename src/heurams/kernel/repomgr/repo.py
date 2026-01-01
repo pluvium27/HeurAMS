@@ -4,7 +4,6 @@ import heurams.kernel.particles as pt
 import toml
 import json
 from ...utils.lict import Lict
-from .refvar import RefVar
 
 class Repo():
     file_mapping = {
@@ -45,11 +44,18 @@ class Repo():
     def generate_particles_data(self):
         self.nucleonic_data_lict = Lict(initlist=list(map(self._attach(self.typedef), self.payload)))
         self.electronic_data_lict = self.algodata
+        self.orbitic_data = self.schedule
 
     @staticmethod
     def _attach(value):
         def inner(x):
             return (x, value)
+        return inner
+
+    @staticmethod
+    def _merge(value):
+        def inner(x):
+            return map(x, value)
         return inner
 
     def __len__(self):
@@ -104,7 +110,7 @@ class Repo():
                 else:
                     raise ValueError(f"不支持的文件类型: {filename}")
                 if cls.type_mapping[keyname] == "lict":
-                    database[keyname] = Lict(loaded.items())
+                    database[keyname] = Lict(list(loaded.items()))
                 elif cls.type_mapping[keyname] == "dict":
                     database[keyname] = loaded
                 else:
