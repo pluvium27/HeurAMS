@@ -146,26 +146,6 @@ class DashboardScreen(Screen):
         # 跳转到准备屏幕
         self.app.push_screen(PreparationScreen(selected_repo, self.repostat[self.title2dirname[selected_repotitle]]))
 
-    def on_button_pressed(self, event) -> None:
-        """处理按钮点击事件"""
-        button_id = event.button.id
-
-        if button_id == "new_nucleon_button":
-            from .repocreator import RepoCreatorScreen
-
-            new_screen = RepoCreatorScreen()
-            self.app.push_screen(new_screen)
-
-        elif button_id == "precache_all_button":
-            from .precache import PrecachingScreen
-
-            precache_screen = PrecachingScreen()
-            self.app.push_screen(precache_screen)
-
-        elif button_id == "about_button":
-            about_screen = AboutScreen()
-            self.app.push_screen(about_screen)
-
     def action_quit_app(self) -> None:
         """退出应用程序"""
         self.app.exit()

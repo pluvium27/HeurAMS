@@ -1,9 +1,5 @@
-import json
-import pathlib
-import typing
 from typing import TypedDict
 
-import toml
 
 from heurams.services.logger import get_logger
 
@@ -22,6 +18,7 @@ class AtomRegister_runtime(TypedDict):
 class AtomRegister(TypedDict):
     nucleon: Nucleon
     electron: Electron
+    orbital: dict
     runtime: AtomRegister_runtime
 
 
@@ -99,3 +96,8 @@ class Atom:
         if key == "ident":
             raise AttributeError("应为只读")
         self.registry[key] = value
+
+    def __repr__(self):
+        from pprint import pformat
+        s = pformat(self.registry, indent=4)
+        return s

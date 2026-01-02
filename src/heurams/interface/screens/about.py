@@ -20,7 +20,7 @@ class AboutScreen(Screen):
 
 版本 {version.ver} {version.stage.capitalize()}
   
-开发代号: {version.codename.capitalize()}  
+开发代号: {version.codename.capitalize()} {version.codename_cn} 
 
 一个基于启发式算法的开放源代码记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
 

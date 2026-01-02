@@ -47,8 +47,6 @@ class MemScreen(Screen):
     ) -> None:
         super().__init__(name, id, classes)
         self.atoms = atoms
-        for i in self.atoms:
-            i.do_eval()
         self.phaser = Phaser(atoms)
         # logger.debug(self.phaser.state)
         self.procession: Procession = self.phaser.current_procession()  # type: ignore

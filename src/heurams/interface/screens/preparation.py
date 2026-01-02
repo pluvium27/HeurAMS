@@ -84,9 +84,9 @@ class PreparationScreen(Screen):
         from ..screens.precache import PrecachingScreen
 
         lst = list()
-        for i in self.nucleons_with_orbital:
-            lst.append(i[0])
-        precache_screen = PrecachingScreen(lst)
+        for i in self.repo.ident_index:
+            lst.append(pt.Nucleon.create_on_nucleonic_data(self.repo.nucleonic_data_lict.get_itemic_unit(i)))
+        precache_screen = PrecachingScreen(nucleons=lst, desc=self.repo.manifest["title"])
         self.app.push_screen(precache_screen)
 
     def action_quit_app(self):
@@ -97,38 +97,27 @@ class PreparationScreen(Screen):
         logger.debug("按下按钮")
         if event.button.id == "start_memorizing_button":
             atoms = list()
-            for nucleon, orbital in self.nucleons_with_orbital:
-                atom = pt.Atom(nucleon.ident)
-                atom.link("nucleon", nucleon)
-                try:
-                    atom.link("electron", self.electrons[nucleon.ident])
-                except KeyError:
-                    atom.link("electron", pt.Electron(nucleon.ident))
-                atom.link("orbital", orbital)
-                atom.link("nucleon_fmt", "toml")
-                atom.link("electron_fmt", "json")
-                atom.link("orbital_fmt", "toml")
-                atom.link("nucleon_path", self.nucleon_file)
-                atom.link("electron_path", self.electron_file)
-                atom.link("orbital_path", None)
-                atoms.append(atom)
+            for i in self.repo.ident_index:
+                n = pt.Nucleon.create_on_nucleonic_data(nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i))
+                e = pt.Electron.create_on_electonic_data(electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i))
+                a = pt.Atom(n, e, self.repo.orbitic_data)
+                atoms.append(a)
+
             atoms_to_provide = list()
             left_new = self.scheduled_num
             for i in atoms:
                 i: pt.Atom
-                if i.registry["electron"].is_due():
-                    atoms_to_provide.append(i)
+                if i.registry['electron'].is_activated():
+                    if i.registry["electron"].is_due():
+                        atoms_to_provide.append(i)
                 else:
-                    if i.registry["electron"].is_activated():
-                        pass
-                    else:
-                        left_new -= 1
-                        if left_new >= 0:
-                            atoms_to_provide.append(i)
-            logger.debug(f"ATP: {atoms_to_provide}")
+                    left_new -= 1
+                    if left_new >= 0:
+                        atoms_to_provide.append(i)
             from .memoqueue import MemScreen
 
             memscreen = MemScreen(atoms_to_provide)
             self.app.push_screen(memscreen)
+
         elif event.button.id == "precache_button":
             self.action_precache()

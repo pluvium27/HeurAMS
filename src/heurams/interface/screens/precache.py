@@ -38,12 +38,6 @@ class PrecachingScreen(Screen):
         self.precache_worker = None
         self.cancel_flag = 0
         self.desc = desc
-        for i in nucleons:
-            i: pt.Nucleon
-            atom = pt.Atom()
-            atom.link("nucleon", i)
-            atom.do_eval()
-        # print("完成 EVAL")
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -94,7 +88,7 @@ class PrecachingScreen(Screen):
         """预缓存单段文本的音频"""
         from heurams.context import config_var, rootdir, workdir
 
-        cache_dir = pathlib.Path(config_var.get()["paths"]["cache_dir"])
+        cache_dir = pathlib.Path(config_var.get()["paths"]["data"]) / 'cache'
         cache_dir.mkdir(parents=True, exist_ok=True)
         cache_file = cache_dir / f"{hasher.get_md5(text)}.wav"
         if not cache_file.exists():
@@ -110,10 +104,8 @@ class PrecachingScreen(Screen):
 
     def precache_by_nucleon(self, nucleon: pt.Nucleon):
         """依据 Nucleon 缓存"""
-        # print(nucleon.metadata['formation']['tts_text'])
-        ret = self.precache_by_text(nucleon.metadata["formation"]["tts_text"])
+        ret = self.precache_by_text(nucleon["tts_text"])
         return ret
-        # print(f"TTS 缓存: {nucleon.metadata['formation']['tts_text']}")
 
     def precache_by_list(self, nucleons: list):
         """依据 Nucleons 列表缓存"""
@@ -122,7 +114,7 @@ class PrecachingScreen(Screen):
             worker = get_current_worker()
             if worker and worker.is_cancelled:  # 函数在worker中执行且已被取消
                 return False
-            text = nucleon.metadata["formation"]["tts_text"]
+            text = nucleon["tts_text"]
             # self.current_item = text[:30] + "..." if len(text) > 50 else text
             # print(text)
             self.processed += 1
@@ -152,38 +144,26 @@ class PrecachingScreen(Screen):
         # print(f"返回 {ret}")
         return ret
 
-    def precache_by_filepath(self, path: pathlib.Path):
-        """预缓存单个文件的所有内容"""
-        lst = list()
-        for i in pt.load_nucleon(path):
-            lst.append(i[0])
-        return self.precache_by_list(lst)
-
     def precache_all_files(self):
         """预缓存所有文件"""
         from heurams.context import config_var, rootdir, workdir
+        from heurams.kernel.repolib import Repo
 
-        nucleon_path = pathlib.Path(config_var.get()["paths"]["nucleon_dir"])
-        nucleon_files = [
-            f for f in nucleon_path.iterdir() if f.suffix == ".toml"
-        ]  # TODO: 解耦合
+        repo_path = pathlib.Path(config_var.get()["paths"]["data"]) / 'repo'
+        repo_dirs = Repo.probe_vaild_repos_in_dir(repo_path)
+        repos = map(Repo.create_from_repodir, repo_dirs)
 
         # 计算总项目数
         self.total = 0
-        nu = list()
-        for file in nucleon_files:
+        nucleon_list = list()
+        for repo in repos:
             try:
-                for i in pt.load_nucleon(file):
-                    nu.append(i[0])
+                for i in repo.ident_index:
+                    nucleon_list.append(pt.Nucleon.create_on_nucleonic_data(repo.nucleonic_data_lict.get_itemic_unit(i)))
             except:
                 continue
-        self.total = len(nu)
-        for i in nu:
-            i: pt.Nucleon
-            atom = pt.Atom()
-            atom.link("nucleon", i)
-            atom.do_eval()
-        return self.precache_by_list(nu)
+        self.total = len(nucleon_list)
+        return self.precache_by_list(nucleon_list)
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         event.stop()
@@ -221,7 +201,7 @@ class PrecachingScreen(Screen):
                 from heurams.context import config_var, rootdir, workdir
 
                 shutil.rmtree(
-                    f"{config_var.get()["paths"]["cache_dir"]}", ignore_errors=True
+                    f"{config_var.get()["paths"]["data"]}/'cache'", ignore_errors=True
                 )
                 self.update_status("已清空", "音频缓存已清空", 0)
             except Exception as e:

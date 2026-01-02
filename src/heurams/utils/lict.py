@@ -52,8 +52,8 @@ class Lict(UserList):  # TODO: 优化同步(惰性同步), 当前性能为 O(n)
         else:
             return super().__getitem__(i)
 
-    def get_itemic_unit(self, i):
-        return (i, self.dicted_data[i])
+    def get_itemic_unit(self, ident):
+        return (ident, self.dicted_data[ident])
 
     def __setitem__(self, i, item):
         if isinstance(i, str):

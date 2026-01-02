@@ -5,6 +5,7 @@ logger = get_logger(__name__)
 
 ver = "0.5.0"
 stage = "prototype"
-codename = "fulcrom"  # 支点
+codename = "fulcrom"
+codename_cn = "支点"
 
 logger.info("HeurAMS 版本: %s (%s), 阶段: %s", ver, codename, stage)

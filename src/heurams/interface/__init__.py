@@ -38,7 +38,7 @@ class HeurAMSApp(App):
         ("d", "toggle_dark", "切换色调"),
         ("1", "app.push_screen('dashboard')", "仪表盘"),
         ("2", "app.push_screen('precache_all')", "缓存管理器"),
-        ("3", "app.push_screen('nucleon_creator')", "创建新仓库"),
+        ("3", "app.push_screen('repo_creator')", "创建新仓库"),
         # ("4", "app.push_screen('synctool')", "同步工具"),
         ("0", "app.push_screen('about')", "版本信息"),
     ]

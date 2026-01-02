@@ -13,12 +13,15 @@ class Nucleon:
         self.ident = ident
         env = {"payload": payload}
         self.evalizer = Evalizer(environment=env)
-        self.data = self.evalizer(deepcopy((payload | common)))
+        self.data: dict = self.evalizer(deepcopy((payload | common))) # type: ignore
 
     def __getitem__(self, key):
-        if key == "ident":
-            return self.ident
-        return self.data[key]
+        if isinstance(key, str):
+            if key == "ident":
+                return self.ident
+            return self.data[key]
+        else:
+            raise AttributeError
 
     def __setitem__(self, key, value):
         raise AttributeError("应为只读")
