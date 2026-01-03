@@ -41,9 +41,9 @@ class MemScreen(Screen):
     def __init__(
         self,
         phaser: Phaser,
-        name = None,
-        id = None,
-        classes = None,
+        name=None,
+        id=None,
+        classes=None,
     ) -> None:
         super().__init__(name, id, classes)
         self.phaser = phaser
@@ -59,7 +59,7 @@ class MemScreen(Screen):
     def update_state(self):
         """更新状态机"""
         self.procession: Procession = self.phaser.current_procession()  # type: ignore
-        self.atom: pt.Atom = self.procession.current_atom # type: ignore
+        self.atom: pt.Atom = self.procession.current_atom  # type: ignore
 
     def on_mount(self):
         self.mount_puzzle()
@@ -69,14 +69,12 @@ class MemScreen(Screen):
         try:
             self.fission = self.procession.get_fission()
             puzzle = self.fission.get_current_puzzle()
-            # logger.debug(puzzle_debug)
-            return shim.puzzle2widget[puzzle["puzzle"]]( # type: ignore
-                atom=self.atom, alia=puzzle["alia"] # type: ignore
+            return shim.puzzle2widget[puzzle["puzzle"]](  # type: ignore
+                atom=self.atom, alia=puzzle["alia"]  # type: ignore
             )
         except (KeyError, StopIteration, AttributeError) as e:
             logger.debug(f"调度展开出错: {e}")
             return Static(f"无法生成谜题 {e}")
-        # logger.debug(shim.puzzle2widget[puzzle_debug["puzzle"]])
 
     def _get_progress_text(self):
         s = f"阶段: {self.procession.phase.name}\n"
@@ -117,32 +115,28 @@ class MemScreen(Screen):
         from heurams.services.audio_service import play_by_path
         from heurams.services.hasher import get_md5
 
-        path = Path(config_var.get()["paths"]['data']) / 'cache' / 'voice'
-        path = (
-            path
-            / f"{get_md5(self.atom.registry['nucleon']["tts_text"])}.wav"
-        )
+        path = Path(config_var.get()["paths"]["data"]) / "cache" / "voice"
+        path = path / f"{get_md5(self.atom.registry['nucleon']["tts_text"])}.wav"
         if path.exists():
             play_by_path(path)
         else:
             from heurams.services.tts_service import convertor
-            convertor(
-                self.atom.registry["nucleon"]["tts_text"], path
-            )
+
+            convertor(self.atom.registry["nucleon"]["tts_text"], path)
             play_by_path(path)
 
     def watch_rating(self, old_rating, new_rating) -> None:
-        self.update_state() # 刷新状态
-        if self.procession == None: # 已经完成记忆
+        self.update_state()  # 刷新状态
+        if self.procession == None:  # 已经完成记忆
             return
-        if new_rating == -1: # 安全值
+        if new_rating == -1:  # 安全值
             return
-        forwards = 1 if new_rating >= 4 else 0 # 准许前进
+        forwards = 1 if new_rating >= 4 else 0  # 准许前进
         self.rating = -1
         logger.debug(f"试图前进: {"允许" if forwards else "禁止"}")
         if forwards:
             ret = self.procession.forward(1)
-            if ret == 0: # 若结束了此次队列
+            if ret == 0:  # 若结束了此次队列
                 self.update_state()
                 if self.procession.phase == PhaserState.FINISHED:  # 若所有队列都结束了
                     logger.debug(f"记忆进程结束")

@@ -63,8 +63,7 @@ class Procession(Machine):
         logger.debug("Procession 进入 FINISHED 状态")
 
     def forward(self, step=1):
-        """将记忆原子指针向前移动并依情况更新原子(返回 1)或完成队列(返回 0)
-        """
+        """将记忆原子指针向前移动并依情况更新原子(返回 1)或完成队列(返回 0)"""
         logger.debug("Procession.forward: step=%d, 当前 cursor=%d", step, self.cursor)
         self.cursor += step
         if self.cursor >= len(self.queue):
@@ -84,8 +83,7 @@ class Procession(Machine):
         return 0
 
     def append(self, atom=None):
-        """追加(回忆失败的)原子(默认为当前原子)到队列末端
-        """
+        """追加(回忆失败的)原子(默认为当前原子)到队列末端"""
         if atom is None:
             atom = self.current_atom
         logger.debug("Procession.append: atom=%s", atom.ident if atom else "None")
@@ -118,10 +116,11 @@ class Procession(Machine):
         return empty
 
     def get_fission(self):
-        return Fission(atom=self.current_atom, phase_state=self.phase) # type: ignore
+        return Fission(atom=self.current_atom, phase_state=self.phase)  # type: ignore
 
     def __repr__(self):
         from heurams.services.textproc import truncate
+
         dic = [
             {
                 "Type": "Procession",
@@ -129,7 +128,7 @@ class Procession(Machine):
                 "State": self.state,
                 "Progress": f"{self.cursor + 1} / {len(self.queue)}",
                 "Queue": list(map(lambda f: truncate(f.ident), self.queue)),
-                "Current Atom": self.current_atom.ident, # type: ignore
+                "Current Atom": self.current_atom.ident,  # type: ignore
             }
         ]
-        return str(tabu(dic, headers="keys")) + '\n'
+        return str(tabu(dic, headers="keys")) + "\n"

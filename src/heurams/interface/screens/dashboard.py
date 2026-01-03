@@ -14,6 +14,8 @@ from heurams.kernel.particles import *
 from heurams.kernel.repolib import *
 from heurams.services.logger import get_logger
 
+import heurams.kernel.particles as pt
+from pathlib import Path
 from .about import AboutScreen
 from .preparation import PreparationScreen
 
@@ -42,7 +44,9 @@ class DashboardScreen(Screen):
         yield Header(show_clock=True)
         yield ScrollableContainer(
             Label('欢迎使用 "潜进" 启发式辅助记忆调度器', classes="title-label"),
-            Label(f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()["timezone_offset"] / 3600})"),
+            Label(
+                f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()["timezone_offset"] / 3600})"
+            ),
             Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
             Label("选择待学习或待修改的项目:", classes="title-label"),
             ListView(id="repo-list", classes="repo-list-view"),

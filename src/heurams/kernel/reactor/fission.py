@@ -20,7 +20,7 @@ class Fission:
             phase_state.value if isinstance(phase_state, PhaserState) else phase_state
         )
 
-        self.orbital_schedule = atom.registry['orbital']["phases"][phase_value]  # type: ignore
+        self.orbital_schedule = atom.registry["orbital"]["phases"][phase_value]  # type: ignore
         self.orbital_puzzles = atom.registry["nucleon"]["puzzles"]
 
         self.puzzles = list()
@@ -34,7 +34,6 @@ class Fission:
                     {
                         "puzzle": puz.puzzles[self.orbital_puzzles[item]["__origin__"]],
                         "alia": item,
-                        "finished": 0,
                     }
                 )
                 possibility -= 1
@@ -44,7 +43,6 @@ class Fission:
                     {
                         "puzzle": puz.puzzles[self.orbital_puzzles[item]["__origin__"]],
                         "alia": item,
-                        "finished": 0,
                     }
                 )
 
@@ -53,7 +51,7 @@ class Fission:
     def get_puzzles(self):
         return self.puzzles
 
-    def get_current_puzzle(self, forward = 0):
+    def get_current_puzzle(self, forward=0):
         if forward:
             if len(self.puzzles) <= self.cursor + 1:
                 return 0
@@ -61,7 +59,6 @@ class Fission:
             return self.puzzles[self.cursor]
         else:
             return self.puzzles[self.cursor]
-            
 
     def check_passed(self):
         for i in self.puzzles:

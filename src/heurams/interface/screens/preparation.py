@@ -128,6 +128,7 @@ class PreparationScreen(Screen):
                         atoms_to_provide.append(i)
             from .memoqueue import MemScreen
             import heurams.kernel.reactor as rt
+
             pheser = rt.Phaser(atoms_to_provide)
             memscreen = MemScreen(pheser)
             self.app.push_screen(memscreen)

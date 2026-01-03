@@ -13,9 +13,11 @@ class Nucleon:
 
     def __init__(self, ident, payload, common):
         self.ident = ident
-        env = {"payload": payload,
-               "default": config_var.get()['puzzles'],
-               "nucleon": (payload | common)}
+        env = {
+            "payload": payload,
+            "default": config_var.get()["puzzles"],
+            "nucleon": (payload | common),
+        }
         self.evalizer = Evalizer(environment=env)
         self.data: dict = self.evalizer(deepcopy((payload | common)))  # type: ignore
 

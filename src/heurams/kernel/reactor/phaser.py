@@ -130,12 +130,13 @@ class Phaser(Machine):
     def __repr__(self):
         from heurams.services.textproc import truncate
         from tabulate import tabulate as tabu
+
         lst = [
             {
                 "Type": "Phaser",
                 "State": self.state,
                 "Processions": list(map(lambda f: (f.name_), self.processions)),
-                "Current Procession": "None" if not self.current_procession() else self.current_procession().name_, # type: ignore
+                "Current Procession": "None" if not self.current_procession() else self.current_procession().name_,  # type: ignore
             },
         ]
-        return str(tabu(lst, headers="keys")) + '\n'
+        return str(tabu(lst, headers="keys")) + "\n"

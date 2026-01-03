@@ -54,7 +54,7 @@ class MCQPuzzle(BasePuzzleWidget):
         self._load()
 
     def _load(self):
-        cfg = self.atom.registry["orbital"]["puzzles"][self.alia]
+        cfg = self.atom.registry["nucleon"]["puzzles"][self.alia]
         self.puzzle = pz.MCQPuzzle(
             cfg["mapping"], cfg["jammer"], int(cfg["max_riddles_num"]), cfg["prefix"]
         )

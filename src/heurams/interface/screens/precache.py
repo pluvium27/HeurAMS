@@ -12,7 +12,8 @@ import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
 
-cache_dir = pathlib.Path(config_var.get()["paths"]["data"]) / "cache" / 'voice'
+cache_dir = pathlib.Path(config_var.get()["paths"]["data"]) / "cache" / "voice"
+
 
 class PrecachingScreen(Screen):
     """预缓存音频文件屏幕
@@ -204,9 +205,7 @@ class PrecachingScreen(Screen):
 
                 from heurams.context import config_var, rootdir, workdir
 
-                shutil.rmtree(
-                    cache_dir, ignore_errors=True
-                )
+                shutil.rmtree(cache_dir, ignore_errors=True)
                 self.update_status("已清空", "音频缓存已清空", 0)
             except Exception as e:
                 self.update_status("错误", f"清空缓存失败: {e}")
