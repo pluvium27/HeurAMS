@@ -22,7 +22,7 @@ class Lict(UserList):  # TODO: 优化同步(惰性同步), 当前性能为 O(n)
         self,
         initlist: list | None = None,
         initdict: dict | None = None,
-        forced_order=True,
+        forced_order=False,
     ):
         self.dicted_data = {}
         if initdict != None:

@@ -126,12 +126,15 @@ class Phaser(Machine):
         logger.debug("所有 Procession 已完成, 状态设置为 FINISHED")
         return None
 
-    @property
-    def state(self):
-        """获取当前状态值"""
-        current_state = self.get_model_state(self)
-        # 将字符串状态转换为PhaserState枚举
-        for phase in PhaserState:
-            if phase.value == current_state:
-                return phase
-        return PhaserState.UNSURE
+    def __repr__(self):
+        from heurams.services.textproc import truncate
+        from tabulate import tabulate as tabu
+        lst = [
+            {
+                "Type": "Phaser",
+                "State": self.state,
+                "Processions": list(map(lambda f: (f.name_), self.processions)),
+                "Current Procession": "None" if not self.current_procession() else self.current_procession().name_, # type: ignore
+            },
+        ]
+        return str(tabu(lst, headers="keys")) + '\n'

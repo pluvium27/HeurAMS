@@ -1,6 +1,7 @@
 import heurams.kernel.particles as pt
 from heurams.services.logger import get_logger
 from transitions import Machine
+from tabulate import tabulate as tabu
 
 from .states import PhaserState, ProcessionState
 
@@ -10,19 +11,19 @@ logger = get_logger(__name__)
 class Procession(Machine):
     """队列: 标识单次记忆流程"""
 
-    def __init__(self, atoms: list, phase_state: PhaserState, name: str = ""):
+    def __init__(self, atoms: list, phase_state: PhaserState, name_: str = ""):
         logger.debug(
             "Procession.__init__: 原子数量=%d, phase=%s, name='%s'",
             len(atoms),
             phase_state.value,
-            name,
+            name_,
         )
-
+        self.current_atom: pt.Atom | None
         self.atoms = atoms
         self.queue = atoms.copy()
         self.current_atom = atoms[0] if atoms else None
         self.cursor = 0
-        self.name = name
+        self.name_ = name_
         self.phase = phase_state
 
         states = [
@@ -61,9 +62,10 @@ class Procession(Machine):
         logger.debug("Procession 进入 FINISHED 状态")
 
     def forward(self, step=1):
+        """将记忆原子指针向前移动并依情况更新原子(返回 1)或完成队列(返回 0)
+        """
         logger.debug("Procession.forward: step=%d, 当前 cursor=%d", step, self.cursor)
         self.cursor += step
-
         if self.cursor >= len(self.queue):
             if self.state != ProcessionState.FINISHED.value:
                 self.finish()  # 触发状态转换
@@ -78,10 +80,11 @@ class Procession(Machine):
                 self.current_atom.ident if self.current_atom else "None",
             )
             return 1  # 成功
-
         return 0
 
     def append(self, atom=None):
+        """追加(回忆失败的)原子(默认为当前原子)到队列末端
+        """
         if atom is None:
             atom = self.current_atom
         logger.debug("Procession.append: atom=%s", atom.ident if atom else "None")
@@ -113,15 +116,16 @@ class Procession(Machine):
         logger.debug("Procession.is_empty: %s", empty)
         return empty
 
-    @property
-    def state(self):
-        """获取当前状态值"""
-        return self.get_model_state(self)
-
-    @state.setter
-    def state(self, value):
-        """设置状态值"""
-        if value == ProcessionState.RUNNING.value:
-            self.restart()
-        elif value == ProcessionState.FINISHED.value:
-            self.finish()
+    def __repr__(self):
+        from heurams.services.textproc import truncate
+        dic = [
+            {
+                "Type": "Procession",
+                "Name": self.name_,
+                "State": self.state,
+                "Progress": f"{self.cursor + 1} / {len(self.queue)}",
+                "Queue": list(map(lambda f: truncate(f.ident), self.queue)),
+                "Current Atom": self.current_atom.ident, # type: ignore
+            }
+        ]
+        return str(tabu(dic, headers="keys")) + '\n'
