@@ -42,10 +42,9 @@ class DashboardScreen(Screen):
         yield Header(show_clock=True)
         yield ScrollableContainer(
             Label('欢迎使用 "潜进" 启发式辅助记忆调度器', classes="title-label"),
-            Label(f"当前 UNIX 日时间戳: {timer.get_daystamp()}"),
-            Label(f'时区修正: UTC+{config_var.get()["timezone_offset"] / 3600}'),
-            Label(f"使用算法: {config_var.get()['algorithm']['default']}"),
-            Label("选择待学习或待修改的仓库:", classes="title-label"),
+            Label(f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()["timezone_offset"] / 3600})"),
+            Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
+            Label("选择待学习或待修改的项目:", classes="title-label"),
             ListView(id="repo-list", classes="repo-list-view"),
             Label(f'"潜进" 启发式辅助记忆调度器 | 版本 {version.ver} '),
         )

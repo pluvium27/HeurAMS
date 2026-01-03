@@ -28,7 +28,7 @@ logger = get_logger(__name__)
 class MemScreen(Screen):
     BINDINGS = [
         ("q", "pop_screen", "返回"),
-        #("p", "prev", "复习上一个"),
+        ("p", "prev", "查看上一个"),
         ("d", "toggle_dark", ""),
         ("v", "play_voice", "朗读"),
         ("0,1,2,3", "app.push_screen('about')", ""),
@@ -115,7 +115,7 @@ class MemScreen(Screen):
         from heurams.services.audio_service import play_by_path
         from heurams.services.hasher import get_md5
 
-        path = Path(config_var.get()["paths"]["cache_dir"])
+        path = Path(config_var.get()["paths"]['data']) / 'cache' / 'voice'
         path = (
             path
             / f"{get_md5(self.atom.registry['nucleon']["tts_text"])}.wav"
@@ -128,3 +128,28 @@ class MemScreen(Screen):
                 self.atom.registry["nucleon"]["tts_text"], path
             )
             play_by_path(path)
+
+    def watch_rating(self, old_rating, new_rating) -> None:
+        self.update_state() # 刷新状态
+        if self.procession == None: # 已经完成记忆
+            return
+        if new_rating == -1: # 安全值
+            return
+        forwards = 1 if new_rating >= 4 else 0 # 准许前进
+        self.rating = -1
+        logger.debug(f"试图前进: {"允许" if forwards else "禁止"}")
+        if forwards:
+            ret = self.procession.forward(1)
+            if ret == 0: # 若结束了此次队列
+                self.update_state()
+                if self.procession == 0:  # 若所有队列都结束了
+                    logger.debug(f"记忆进程结束")
+                    self.mount_finished_widget()
+                    return
+                else:
+                    logger.debug(f"建立新队列 {self.procession.phase}")
+            self.update_state()
+            self.mount_puzzle()
+        else:  # 若不通过
+            self.procession.append()
+        self.update_display()

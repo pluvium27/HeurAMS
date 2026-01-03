@@ -30,6 +30,4 @@ class Evalizer:
 
     def eval_with_env(self, s: str):
         ret = eval(s, globals(), self.env)
-        if not isinstance(ret, str):
-            ret = str(ret)
         return ret
