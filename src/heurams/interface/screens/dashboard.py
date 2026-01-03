@@ -5,8 +5,7 @@ import pathlib
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import (Button, Footer, Header, Label, ListItem, ListView,
-                             Static)
+from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
 
 import heurams.services.timer as timer
 import heurams.services.version as version
@@ -48,29 +47,33 @@ class DashboardScreen(Screen):
             Label(f"使用算法: {config_var.get()['algorithm']['default']}"),
             Label("选择待学习或待修改的仓库:", classes="title-label"),
             ListView(id="repo-list", classes="repo-list-view"),
-            Label(
-                f'"潜进" 启发式辅助记忆调度器 | 版本 {version.ver} '
-            ),
+            Label(f'"潜进" 启发式辅助记忆调度器 | 版本 {version.ver} '),
         )
         yield Footer()
 
     def _load_data(self):
-        self.repo_dirs = Repo.probe_vaild_repos_in_dir(Path(config_var.get()['paths']['data']) / 'repo')
+        self.repo_dirs = Repo.probe_vaild_repos_in_dir(
+            Path(config_var.get()["paths"]["data"]) / "repo"
+        )
         for repo_dir in self.repo_dirs:
             repo = Repo.create_from_repodir(repo_dir)
             self._analyse_repo(repo)
 
     def _analyse_repo(self, repo: Repo):
-        dirname = repo.source.name # type: ignore
+        dirname = repo.source.name  # type: ignore
         title = repo.manifest["title"]
         is_due = 0
         unit_sum = len(repo)
         activated_sum = 0
-        nextdate = 0x3f3f3f3f
-        is_unfinished = (unit_sum > activated_sum)
+        nextdate = 0x3F3F3F3F
+        is_unfinished = unit_sum > activated_sum
         for i in repo.ident_index:
-            nucleon = pt.Nucleon.create_on_nucleonic_data(nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i))
-            electron = pt.Electron.create_on_electonic_data(electronic_data=repo.electronic_data_lict.get_itemic_unit(i))
+            nucleon = pt.Nucleon.create_on_nucleonic_data(
+                nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
+            )
+            electron = pt.Electron.create_on_electonic_data(
+                electronic_data=repo.electronic_data_lict.get_itemic_unit(i)
+            )
             if electron.is_activated():
                 activated_sum += 1
                 if electron.is_due():
@@ -102,10 +105,10 @@ class DashboardScreen(Screen):
         # 按下次复习时间排序
         repodirs = sorted(
             self.repo_dirs,
-            key=lambda f: self.repostat[f.name]['nextdate'],
+            key=lambda f: self.repostat[f.name]["nextdate"],
             reverse=True,
         )
-        repotitles = map(lambda f: self.repostat[f.name]['title'], repodirs)
+        repotitles = map(lambda f: self.repostat[f.name]["title"], repodirs)
         # 填充列表
         if not repodirs:
             repo_list_widget.append(
@@ -120,11 +123,11 @@ class DashboardScreen(Screen):
             return
 
         for repotitle in repotitles:
-            prompt = self.repostat[self.title2dirname[repotitle]]['prompt']
+            prompt = self.repostat[self.title2dirname[repotitle]]["prompt"]
             list_item = ListItem(Label(prompt))
             repo_list_widget.append(list_item)
 
-            #if not self.stay_enabled[repodir]:
+            # if not self.stay_enabled[repodir]:
             #    list_item.disabled = True
 
     def on_list_view_selected(self, event) -> None:
@@ -141,10 +144,13 @@ class DashboardScreen(Screen):
         # 提取文件名
         selected_repotitle = label_text.partition("\0")[0].replace("*", "")
         selected_repo = self.title2repo[label_text.partition("\0")[0].replace("*", "")]
-        
 
         # 跳转到准备屏幕
-        self.app.push_screen(PreparationScreen(selected_repo, self.repostat[self.title2dirname[selected_repotitle]]))
+        self.app.push_screen(
+            PreparationScreen(
+                selected_repo, self.repostat[self.title2dirname[selected_repotitle]]
+            )
+        )
 
     def action_quit_app(self) -> None:
         """退出应用程序"""

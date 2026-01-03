@@ -17,27 +17,39 @@ class Procession(Machine):
             phase_state.value,
             name,
         )
-        
-        # 初始化原子队列
+
         self.atoms = atoms
         self.queue = atoms.copy()
         self.current_atom = atoms[0] if atoms else None
         self.cursor = 0
         self.name = name
         self.phase = phase_state
-        
-        # 设置transitions状态机
-        states = [{'name': ProcessionState.RUNNING.value, 'on_enter': 'on_running'},
-                  {'name': ProcessionState.FINISHED.value, 'on_enter': 'on_finished'}]
-        
-        transitions = [
-            {'trigger': 'finish', 'source': ProcessionState.RUNNING.value, 'dest': ProcessionState.FINISHED.value},
-            {'trigger': 'restart', 'source': ProcessionState.FINISHED.value, 'dest': ProcessionState.RUNNING.value}
+
+        states = [
+            {"name": ProcessionState.RUNNING.value, "on_enter": "on_running"},
+            {"name": ProcessionState.FINISHED.value, "on_enter": "on_finished"},
         ]
-        
-        Machine.__init__(self, states=states, transitions=transitions, 
-                        initial=ProcessionState.RUNNING.value)
-        
+
+        transitions = [
+            {
+                "trigger": "finish",
+                "source": ProcessionState.RUNNING.value,
+                "dest": ProcessionState.FINISHED.value,
+            },
+            {
+                "trigger": "restart",
+                "source": ProcessionState.FINISHED.value,
+                "dest": ProcessionState.RUNNING.value,
+            },
+        ]
+
+        Machine.__init__(
+            self,
+            states=states,
+            transitions=transitions,
+            initial=ProcessionState.RUNNING.value,
+        )
+
         logger.debug("Procession 初始化完成, 队列长度=%d", len(self.queue))
 
     def on_running(self):
@@ -51,7 +63,7 @@ class Procession(Machine):
     def forward(self, step=1):
         logger.debug("Procession.forward: step=%d, 当前 cursor=%d", step, self.cursor)
         self.cursor += step
-        
+
         if self.cursor >= len(self.queue):
             if self.state != ProcessionState.FINISHED.value:
                 self.finish()  # 触发状态转换
@@ -61,16 +73,19 @@ class Procession(Machine):
                 self.restart()  # 确保在RUNNING状态
             self.current_atom = self.queue[self.cursor]
             logger.debug("cursor 更新为: %d", self.cursor)
-            logger.debug("当前原子更新为: %s", self.current_atom.ident if self.current_atom else "None")
+            logger.debug(
+                "当前原子更新为: %s",
+                self.current_atom.ident if self.current_atom else "None",
+            )
             return 1  # 成功
-        
+
         return 0
 
     def append(self, atom=None):
         if atom is None:
             atom = self.current_atom
         logger.debug("Procession.append: atom=%s", atom.ident if atom else "None")
-        
+
         if not self.queue or self.queue[-1] != atom or len(self) <= 1:
             self.queue.append(atom)
             logger.debug("原子已追加到队列, 新队列长度=%d", len(self.queue))
@@ -97,12 +112,12 @@ class Procession(Machine):
         empty = len(self.queue) == 0
         logger.debug("Procession.is_empty: %s", empty)
         return empty
-    
+
     @property
     def state(self):
         """获取当前状态值"""
         return self.get_model_state(self)
-    
+
     @state.setter
     def state(self, value):
         """设置状态值"""

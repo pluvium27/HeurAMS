@@ -1,4 +1,4 @@
-class Evalizer():
+class Evalizer:
     """几乎无副作用的模板系统
 
     接受环境信息并创建一个模板解析工具, 工具传入参数支持list, dict及其嵌套

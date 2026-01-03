@@ -26,22 +26,29 @@ if pathlib.Path(workdir / "data" / "config" / "config_dev.toml").exists():
     print("使用开发设置")
     logger.debug("使用开发设置")
     config_var: ContextVar[ConfigFile] = ContextVar(
-        "config_var", default=ConfigFile(workdir / "data" / "config" / "config_dev.toml")
+        "config_var",
+        default=ConfigFile(workdir / "data" / "config" / "config_dev.toml"),
     )
 else:
     try:
         config_var: ContextVar[ConfigFile] = ContextVar(
-            "config_var", default=ConfigFile(workdir / "data" / "config" / "config.toml")
+            "config_var",
+            default=ConfigFile(workdir / "data" / "config" / "config.toml"),
         )  # 配置文件
     except Exception as e:
         input("按下回车以创建新的配置文件, 或按下 Ctrl + C 以终止程序 ")
-        (workdir / "data" / 'config').mkdir(parents=True, exist_ok=True)
-        (workdir / "data" / 'config' / 'config').unlink(missing_ok=True)
-        shutil.copy((rootdir / 'default' / 'config' / 'config.toml'), workdir / "data" / "config" / "config.toml")
+        (workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
+        (workdir / "data" / "config" / "config").unlink(missing_ok=True)
+        shutil.copy(
+            (rootdir / "default" / "config" / "config.toml"),
+            workdir / "data" / "config" / "config.toml",
+        )
     finally:
         config_var: ContextVar[ConfigFile] = ContextVar(
-            "config_var", default=ConfigFile(workdir / "data" / "config" / "config.toml")
+            "config_var",
+            default=ConfigFile(workdir / "data" / "config" / "config.toml"),
         )  # 配置文件
+
 
 class ConfigContext:
     """

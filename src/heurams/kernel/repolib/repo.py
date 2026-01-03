@@ -9,10 +9,12 @@ import heurams.kernel.particles as pt
 
 from ...utils.lict import Lict
 
+
 class RepoManifest(TypedDict):
     title: str
     author: str
     desc: str
+
 
 class Repo:
     file_mapping = {
@@ -43,7 +45,7 @@ class Repo:
         source=None,
     ) -> None:
         self.schedule: dict = schedule
-        self.manifest: RepoManifest = manifest # type: ignore
+        self.manifest: RepoManifest = manifest  # type: ignore
         self.typedef: dict = typedef
         self.payload: Lict = payload
         self.algodata: Lict = algodata
@@ -61,9 +63,7 @@ class Repo:
     def generate_particles_data(self):
 
         self.nucleonic_data_lict = Lict(
-            initlist=list(map(
-                self._nucleonic_proc,
-                self.payload))
+            initlist=list(map(self._nucleonic_proc, self.payload))
         )
         self.orbitic_data = self.schedule
         self.ident_index = self.nucleonic_data_lict.keys()
@@ -88,6 +88,7 @@ class Repo:
 
     def __repr__(self):
         from pprint import pformat
+
         s = pformat(self.database, indent=4)
         return s
 

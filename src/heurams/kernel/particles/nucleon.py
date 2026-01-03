@@ -13,7 +13,7 @@ class Nucleon:
         self.ident = ident
         env = {"payload": payload}
         self.evalizer = Evalizer(environment=env)
-        self.data: dict = self.evalizer(deepcopy((payload | common))) # type: ignore
+        self.data: dict = self.evalizer(deepcopy((payload | common)))  # type: ignore
 
     def __getitem__(self, key):
         if isinstance(key, str):
@@ -45,6 +45,7 @@ class Nucleon:
 
     def __repr__(self):
         from pprint import pformat
+
         s = pformat(self.data, indent=4)
         return s
 

@@ -99,5 +99,6 @@ class Atom:
 
     def __repr__(self):
         from pprint import pformat
+
         s = pformat(self.registry, indent=4)
         return s

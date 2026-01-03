@@ -88,7 +88,7 @@ class PrecachingScreen(Screen):
         """预缓存单段文本的音频"""
         from heurams.context import config_var, rootdir, workdir
 
-        cache_dir = pathlib.Path(config_var.get()["paths"]["data"]) / 'cache'
+        cache_dir = pathlib.Path(config_var.get()["paths"]["data"]) / "cache"
         cache_dir.mkdir(parents=True, exist_ok=True)
         cache_file = cache_dir / f"{hasher.get_md5(text)}.wav"
         if not cache_file.exists():
@@ -149,7 +149,7 @@ class PrecachingScreen(Screen):
         from heurams.context import config_var, rootdir, workdir
         from heurams.kernel.repolib import Repo
 
-        repo_path = pathlib.Path(config_var.get()["paths"]["data"]) / 'repo'
+        repo_path = pathlib.Path(config_var.get()["paths"]["data"]) / "repo"
         repo_dirs = Repo.probe_vaild_repos_in_dir(repo_path)
         repos = map(Repo.create_from_repodir, repo_dirs)
 
@@ -159,7 +159,11 @@ class PrecachingScreen(Screen):
         for repo in repos:
             try:
                 for i in repo.ident_index:
-                    nucleon_list.append(pt.Nucleon.create_on_nucleonic_data(repo.nucleonic_data_lict.get_itemic_unit(i)))
+                    nucleon_list.append(
+                        pt.Nucleon.create_on_nucleonic_data(
+                            repo.nucleonic_data_lict.get_itemic_unit(i)
+                        )
+                    )
             except:
                 continue
         self.total = len(nucleon_list)

@@ -12,6 +12,7 @@ from .screens.synctool import SyncScreen
 
 logger = get_logger(__name__)
 
+
 def environment_check():
     from pathlib import Path
 

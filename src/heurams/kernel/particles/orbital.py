@@ -1,16 +1,17 @@
-from heurams.utils.evalizor import Evalizer
-from heurams.utils.lict import Lict
+"""轨道对象"""
 
+# 似乎没有实现这个类的必要...
+# 那不妨在这儿写点文档
 
-class Orbital:
-    @classmethod
-    def create_orbital(cls, schedule: list, phase_def: dict):
-        phase_def = Lict(initdict=phase_def)  # type: ignore
-        orbital = Lict()
-        for i in schedule:
-            orbital[i] = Lict(phase_def[i])
-        return orbital
+"""
+orbital, 即轨道, 是定义队列式复习阶段流程的数据结构, 其实就是个字典, 至于为何不用typeddict, 因为懒.
 
-    @classmethod
-    def create_orbital_on_orbitic_data(cls, orbitic_data):
-        return cls.create_orbital(orbitic_data["schedule"], orbitic_data["phases"])
+orbital_example = {
+    "schedule": [列表 存储阶段(phases)名称]
+    "phases":{
+        阶段名称 = [["谜题(puzzle 现称 evaluator 评估器)名称", "概率系数 可大于1(整数部分为重复次数) 注意使用字符串包裹(toml 规范)"], ...],
+        ...
+    }
+}
+至于谜题定义 放在 nucleon['puzzles'], 这样设计是为了兼容多种不同谜题实现的记忆单元, 尽管如此, 你也可见其谜题调度方式必须是相同的.
+"""

@@ -13,20 +13,20 @@ class Phaser(Machine):
 
     def __init__(self, atoms: list[pt.Atom]) -> None:
         logger.debug("Phaser.__init__: 原子数量=%d", len(atoms))
-        
+
         new_atoms = list()
         old_atoms = list()
-        
+
         for i in atoms:
             if not i.registry["electron"].is_activated():
                 new_atoms.append(i)
             else:
                 old_atoms.append(i)
-        
+
         logger.debug("新原子数量=%d, 旧原子数量=%d", len(new_atoms), len(old_atoms))
-        
+
         self.processions = list()
-        #TODO: 改进为基于配置文件的可变复习阶段管理
+        # TODO: 改进为基于配置文件的可变复习阶段管理
         if len(old_atoms):
             self.processions.append(
                 Procession(old_atoms, PhaserState.QUICK_REVIEW, "初始复习")
@@ -42,27 +42,47 @@ class Phaser(Machine):
         self.processions.append(Procession(atoms, PhaserState.FINAL_REVIEW, "总体复习"))
         logger.debug("创建总体复习 Procession")
         logger.debug("Phaser 初始化完成, processions 数量=%d", len(self.processions))
-        
+
         # 设置transitions状态机
         states = [
-            {'name': PhaserState.UNSURE.value, 'on_enter': 'on_unsure'},
-            {'name': PhaserState.QUICK_REVIEW.value, 'on_enter': 'on_quick_review'},
-            {'name': PhaserState.RECOGNITION.value, 'on_enter': 'on_recognition'},
-            {'name': PhaserState.FINAL_REVIEW.value, 'on_enter': 'on_final_review'},
-            {'name': PhaserState.FINISHED.value, 'on_enter': 'on_finished'}
+            {"name": PhaserState.UNSURE.value, "on_enter": "on_unsure"},
+            {"name": PhaserState.QUICK_REVIEW.value, "on_enter": "on_quick_review"},
+            {"name": PhaserState.RECOGNITION.value, "on_enter": "on_recognition"},
+            {"name": PhaserState.FINAL_REVIEW.value, "on_enter": "on_final_review"},
+            {"name": PhaserState.FINISHED.value, "on_enter": "on_finished"},
         ]
-        
+
         transitions = [
-            {'trigger': 'to_unsure', 'source': '*', 'dest': PhaserState.UNSURE.value},
-            {'trigger': 'to_quick_review', 'source': '*', 'dest': PhaserState.QUICK_REVIEW.value},
-            {'trigger': 'to_recognition', 'source': '*', 'dest': PhaserState.RECOGNITION.value},
-            {'trigger': 'to_final_review', 'source': '*', 'dest': PhaserState.FINAL_REVIEW.value},
-            {'trigger': 'to_finished', 'source': '*', 'dest': PhaserState.FINISHED.value}
+            {"trigger": "to_unsure", "source": "*", "dest": PhaserState.UNSURE.value},
+            {
+                "trigger": "to_quick_review",
+                "source": "*",
+                "dest": PhaserState.QUICK_REVIEW.value,
+            },
+            {
+                "trigger": "to_recognition",
+                "source": "*",
+                "dest": PhaserState.RECOGNITION.value,
+            },
+            {
+                "trigger": "to_final_review",
+                "source": "*",
+                "dest": PhaserState.FINAL_REVIEW.value,
+            },
+            {
+                "trigger": "to_finished",
+                "source": "*",
+                "dest": PhaserState.FINISHED.value,
+            },
         ]
-        
-        Machine.__init__(self, states=states, transitions=transitions, 
-                        initial=PhaserState.UNSURE.value)
-        
+
+        Machine.__init__(
+            self,
+            states=states,
+            transitions=transitions,
+            initial=PhaserState.UNSURE.value,
+        )
+
         self.to_unsure()
 
     def on_unsure(self):
@@ -97,15 +117,15 @@ class Phaser(Machine):
                     self.to_recognition()
                 elif i.phase == PhaserState.FINAL_REVIEW:
                     self.to_final_review()
-                
+
                 logger.debug("找到未完成的 Procession: phase=%s", i.phase)
                 return i
-        
+
         # 所有Procession都已完成
         self.to_finished()
         logger.debug("所有 Procession 已完成, 状态设置为 FINISHED")
         return None
-    
+
     @property
     def state(self):
         """获取当前状态值"""

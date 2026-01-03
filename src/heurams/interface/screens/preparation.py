@@ -73,7 +73,9 @@ class PreparationScreen(Screen):
     def _get_full_content(self):
         content = ""
         for i in self.repo.ident_index:
-            n = pt.Nucleon.create_on_nucleonic_data(nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i))
+            n = pt.Nucleon.create_on_nucleonic_data(
+                nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
+            )
             content += f"- {n['content']}  \n"
         return content
 
@@ -85,8 +87,14 @@ class PreparationScreen(Screen):
 
         lst = list()
         for i in self.repo.ident_index:
-            lst.append(pt.Nucleon.create_on_nucleonic_data(self.repo.nucleonic_data_lict.get_itemic_unit(i)))
-        precache_screen = PrecachingScreen(nucleons=lst, desc=self.repo.manifest["title"])
+            lst.append(
+                pt.Nucleon.create_on_nucleonic_data(
+                    self.repo.nucleonic_data_lict.get_itemic_unit(i)
+                )
+            )
+        precache_screen = PrecachingScreen(
+            nucleons=lst, desc=self.repo.manifest["title"]
+        )
         self.app.push_screen(precache_screen)
 
     def action_quit_app(self):
@@ -98,8 +106,12 @@ class PreparationScreen(Screen):
         if event.button.id == "start_memorizing_button":
             atoms = list()
             for i in self.repo.ident_index:
-                n = pt.Nucleon.create_on_nucleonic_data(nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i))
-                e = pt.Electron.create_on_electonic_data(electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i))
+                n = pt.Nucleon.create_on_nucleonic_data(
+                    nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
+                )
+                e = pt.Electron.create_on_electonic_data(
+                    electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i)
+                )
                 a = pt.Atom(n, e, self.repo.orbitic_data)
                 atoms.append(a)
 
@@ -107,7 +119,7 @@ class PreparationScreen(Screen):
             left_new = self.scheduled_num
             for i in atoms:
                 i: pt.Atom
-                if i.registry['electron'].is_activated():
+                if i.registry["electron"].is_activated():
                     if i.registry["electron"].is_due():
                         atoms_to_provide.append(i)
                 else:
