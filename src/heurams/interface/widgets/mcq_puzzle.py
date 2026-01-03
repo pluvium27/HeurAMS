@@ -61,11 +61,7 @@ class MCQPuzzle(BasePuzzleWidget):
         self.puzzle.refresh()
 
     def compose(self):
-        setting: Setting = self.atom.registry["nucleon"].metadata["orbital"]["puzzles"][
-            self.alia
-        ]
-        logger.debug(f"Puzzle Setting: {setting}")
-        logger.debug(f"WIRED INDEX: {len(self.inputlist)}")
+        setting: Setting = self.atom.registry["nucleon"]["puzzles"][self.alia]
         if len(self.inputlist) > len(self.puzzle.options):
             logger.debug("ERR IDX")
             logger.debug(self.inputlist)

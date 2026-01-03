@@ -79,7 +79,9 @@ class MemScreen(Screen):
         # logger.debug(shim.puzzle2widget[puzzle_debug["puzzle"]])
 
     def _get_progress_text(self):
-        return f"当前进度: {self.procession.process() + 1}/{self.procession.total_length()}"
+        s = f"阶段: {self.procession.phase.name}\n"
+        s += f"当前进度: {self.procession.process() + 1}/{self.procession.total_length()}"
+        return s
 
     def update_display(self):
         """更新进度显示"""
@@ -142,7 +144,7 @@ class MemScreen(Screen):
             ret = self.procession.forward(1)
             if ret == 0: # 若结束了此次队列
                 self.update_state()
-                if self.procession == 0:  # 若所有队列都结束了
+                if self.procession.phase == PhaserState.FINISHED:  # 若所有队列都结束了
                     logger.debug(f"记忆进程结束")
                     self.mount_finished_widget()
                     return

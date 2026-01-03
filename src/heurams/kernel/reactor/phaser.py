@@ -1,4 +1,5 @@
 import heurams.kernel.particles as pt
+from heurams.kernel.particles.placeholders import AtomPlaceholder
 from heurams.services.logger import get_logger
 from transitions import Machine
 
@@ -124,7 +125,7 @@ class Phaser(Machine):
         # 所有Procession都已完成
         self.to_finished()
         logger.debug("所有 Procession 已完成, 状态设置为 FINISHED")
-        return None
+        return Procession([AtomPlaceholder()], PhaserState.FINISHED)
 
     def __repr__(self):
         from heurams.services.textproc import truncate

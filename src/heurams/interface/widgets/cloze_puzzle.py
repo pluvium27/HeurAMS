@@ -53,7 +53,7 @@ class ClozePuzzle(BasePuzzleWidget):
         self.hashmap = dict()
 
     def _load(self):
-        setting = self.atom.registry["orbital"]["puzzles"][self.alia]
+        setting = self.atom.registry["nucleon"]["puzzles"][self.alia]
         self.puzzle = pz.ClozePuzzle(
             text=setting["text"],
             delimiter=setting["delimiter"],
