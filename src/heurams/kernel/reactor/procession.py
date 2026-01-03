@@ -3,6 +3,7 @@ from heurams.services.logger import get_logger
 from transitions import Machine
 from tabulate import tabulate as tabu
 
+from .fission import Fission
 from .states import PhaserState, ProcessionState
 
 logger = get_logger(__name__)
@@ -115,6 +116,9 @@ class Procession(Machine):
         empty = len(self.queue) == 0
         logger.debug("Procession.is_empty: %s", empty)
         return empty
+
+    def get_fission(self):
+        return Fission(atom=self.current_atom, phase_state=self.phase) # type: ignore
 
     def __repr__(self):
         from heurams.services.textproc import truncate

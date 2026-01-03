@@ -1,7 +1,9 @@
 from copy import deepcopy
+from logging import config
 
 from heurams.services.logger import get_logger
 from heurams.utils.evalizor import Evalizer
+from heurams.context import config_var
 
 logger = get_logger(__name__)
 
@@ -11,7 +13,9 @@ class Nucleon:
 
     def __init__(self, ident, payload, common):
         self.ident = ident
-        env = {"payload": payload}
+        env = {"payload": payload,
+               "default": config_var.get()['puzzles'],
+               "nucleon": (payload | common)}
         self.evalizer = Evalizer(environment=env)
         self.data: dict = self.evalizer(deepcopy((payload | common)))  # type: ignore
 

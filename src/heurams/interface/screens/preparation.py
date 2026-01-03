@@ -127,8 +127,9 @@ class PreparationScreen(Screen):
                     if left_new >= 0:
                         atoms_to_provide.append(i)
             from .memoqueue import MemScreen
-
-            memscreen = MemScreen(atoms_to_provide)
+            import heurams.kernel.reactor as rt
+            pheser = rt.Phaser(atoms_to_provide)
+            memscreen = MemScreen(pheser)
             self.app.push_screen(memscreen)
 
         elif event.button.id == "precache_button":

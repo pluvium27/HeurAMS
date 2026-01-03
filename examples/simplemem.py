@@ -13,6 +13,8 @@ for i in repo.ident_index:
     e = pt.Electron.create_on_electonic_data(
         electronic_data=repo.electronic_data_lict.get_itemic_unit(i)
     )
+    print(n)
+    input()
     a = pt.Atom(n, e, repo.orbitic_data)
     alist.append(a)
     #e.activate()
@@ -20,6 +22,7 @@ for i in repo.ident_index:
     print(repr(a))
     # print(repr(e))
 print(repo)
+input()
 import heurams.kernel.reactor as rt
 ph: rt.Phaser = rt.Phaser(alist)
 print(ph)
