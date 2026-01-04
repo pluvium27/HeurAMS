@@ -3,12 +3,12 @@ import random
 
 from heurams.services.logger import get_logger
 
-from .base import BaseEvaluator
+from .base import BasePuzzle
 
 logger = get_logger(__name__)
 
 
-class RecognitionPuzzle(BaseEvaluator):
+class RecognitionPuzzle(BasePuzzle):
     """识别占位符"""
 
     def __init__(self) -> None:

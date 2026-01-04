@@ -1,3 +1,4 @@
+from click import style
 import heurams.kernel.particles as pt
 from heurams.kernel.particles.placeholders import AtomPlaceholder
 from heurams.services.logger import get_logger
@@ -27,7 +28,7 @@ class Phaser(Machine):
         logger.debug("新原子数量=%d, 旧原子数量=%d", len(new_atoms), len(old_atoms))
 
         self.processions = list()
-        # TODO: 改进为基于配置文件的可变复习阶段管理
+        # TODO: 改进为基于配置文件的可选复习阶段
         if len(old_atoms):
             self.processions.append(
                 Procession(old_atoms, PhaserState.QUICK_REVIEW, "初始复习")
@@ -111,7 +112,7 @@ class Phaser(Machine):
         for i in self.processions:
             i: Procession
             if i.state != ProcessionState.FINISHED.value:
-                # 根据当前procession的phase更新Phaser状态
+                #if i.phase == PhaserState.UNSURE: 此判断是不必要的 因为没有这种 Procession
                 if i.phase == PhaserState.QUICK_REVIEW:
                     self.to_quick_review()
                 elif i.phase == PhaserState.RECOGNITION:
@@ -139,4 +140,4 @@ class Phaser(Machine):
                 "Current Procession": "None" if not self.current_procession() else self.current_procession().name_,  # type: ignore
             },
         ]
-        return str(tabu(lst, headers="keys")) + "\n"
+        return str(tabu(tabular_data=lst, headers="keys", tablefmt="pipe")) + "\n"

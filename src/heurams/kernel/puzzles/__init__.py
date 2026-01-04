@@ -6,13 +6,13 @@ Evaluator 模块 - 生成评估模块
 
 from heurams.services.logger import get_logger
 
-from .base import BaseEvaluator
+from .base import BasePuzzle
 from .cloze import ClozePuzzle
 from .mcq import MCQPuzzle
 from .recognition import RecognitionPuzzle
 
 __all__ = [
-    "BaseEvaluator",
+    "BasePuzzle",
     "ClozePuzzle",
     "MCQPuzzle",
     "RecognitionPuzzle",
@@ -22,5 +22,5 @@ puzzles = {
     "mcq": MCQPuzzle,
     "cloze": ClozePuzzle,
     "recognition": RecognitionPuzzle,
-    "base": BaseEvaluator,
+    "base": BasePuzzle,
 }

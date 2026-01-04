@@ -8,7 +8,7 @@ from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
 
-import heurams.kernel.evaluators as pz
+import heurams.kernel.puzzles as pz
 import heurams.kernel.particles as pt
 from heurams.context import config_var
 from heurams.kernel.reactor import *
@@ -126,12 +126,15 @@ class MemScreen(Screen):
             play_by_path(path)
 
     def watch_rating(self, old_rating, new_rating) -> None:
+        if new_rating == -1:  # 安全值
+            return
+        self.fission.report(new_rating)
+    
+    def forward(self, rating):
         self.update_state()  # 刷新状态
         if self.procession == None:  # 已经完成记忆
             return
-        if new_rating == -1:  # 安全值
-            return
-        forwards = 1 if new_rating >= 4 else 0  # 准许前进
+        forwards = 1 if rating >= 4 else 0  # 准许前进
         self.rating = -1
         logger.debug(f"试图前进: {"允许" if forwards else "禁止"}")
         if forwards:

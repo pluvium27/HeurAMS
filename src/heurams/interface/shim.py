@@ -1,7 +1,7 @@
 """Kernel 操作辅助函数库"""
 
 import heurams.interface.widgets as pzw
-import heurams.kernel.evaluators as pz
+import heurams.kernel.puzzles as pz
 
 puzzle2widget = {
     pz.RecognitionPuzzle: pzw.Recognition,

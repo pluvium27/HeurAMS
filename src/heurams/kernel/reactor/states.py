@@ -12,10 +12,12 @@ class PhaserState(Enum):
     FINAL_REVIEW = "final_review"
     FINISHED = "finished"
 
-
 class ProcessionState(Enum):
-    RUNNING = "running"
+    ACTIVE = "active"
     FINISHED = "finished"
 
+class FissionState(Enum):
+    EXAMMODE = "exammode"
+    RETRONLY = "retronly"
 
 logger.debug("状态枚举定义已加载")

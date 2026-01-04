@@ -4,7 +4,7 @@ from heurams.services.logger import get_logger
 logger = get_logger(__name__)
 
 
-class BaseEvaluator:
+class BasePuzzle:
     """谜题基类"""
 
     def refresh(self):

@@ -21,27 +21,26 @@ class Procession(Machine):
         )
         self.current_atom: pt.Atom | None
         self.atoms = atoms
-        self.queue = atoms.copy()
         self.current_atom = atoms[0] if atoms else None
         self.cursor = 0
         self.name_ = name_
         self.phase = phase_state
 
         states = [
-            {"name": ProcessionState.RUNNING.value, "on_enter": "on_running"},
+            {"name": ProcessionState.ACTIVE.value, "on_enter": "on_active"},
             {"name": ProcessionState.FINISHED.value, "on_enter": "on_finished"},
         ]
 
         transitions = [
             {
                 "trigger": "finish",
-                "source": ProcessionState.RUNNING.value,
+                "source": ProcessionState.ACTIVE.value,
                 "dest": ProcessionState.FINISHED.value,
             },
             {
                 "trigger": "restart",
                 "source": ProcessionState.FINISHED.value,
-                "dest": ProcessionState.RUNNING.value,
+                "dest": ProcessionState.ACTIVE.value,
             },
         ]
 
@@ -49,14 +48,14 @@ class Procession(Machine):
             self,
             states=states,
             transitions=transitions,
-            initial=ProcessionState.RUNNING.value,
+            initial=ProcessionState.ACTIVE.value,
         )
 
-        logger.debug("Procession 初始化完成, 队列长度=%d", len(self.queue))
+        logger.debug("Procession 初始化完成, 队列长度=%d", len(self.atoms))
 
-    def on_running(self):
-        """进入RUNNING状态时的回调"""
-        logger.debug("Procession 进入 RUNNING 状态")
+    def on_active(self):
+        """进入active状态时的回调"""
+        logger.debug("Procession 进入 active 状态")
 
     def on_finished(self):
         """进入FINISHED状态时的回调"""
@@ -66,21 +65,19 @@ class Procession(Machine):
         """将记忆原子指针向前移动并依情况更新原子(返回 1)或完成队列(返回 0)"""
         logger.debug("Procession.forward: step=%d, 当前 cursor=%d", step, self.cursor)
         self.cursor += step
-        if self.cursor >= len(self.queue):
+        if self.cursor >= len(self.atoms):
             if self.state != ProcessionState.FINISHED.value:
                 self.finish()  # 触发状态转换
             logger.debug("Procession 已完成")
         else:
-            if self.state != ProcessionState.RUNNING.value:
-                self.restart()  # 确保在RUNNING状态
-            self.current_atom = self.queue[self.cursor]
+            if self.state != ProcessionState.ACTIVE.value:
+                self.restart()  # 确保在active状态
+            self.current_atom = self.atoms[self.cursor]
             logger.debug("cursor 更新为: %d", self.cursor)
             logger.debug(
                 "当前原子更新为: %s",
                 self.current_atom.ident if self.current_atom else "None",
             )
-            return 1  # 成功
-        return 0
 
     def append(self, atom=None):
         """追加(回忆失败的)原子(默认为当前原子)到队列末端"""
@@ -88,16 +85,16 @@ class Procession(Machine):
             atom = self.current_atom
         logger.debug("Procession.append: atom=%s", atom.ident if atom else "None")
 
-        if not self.queue or self.queue[-1] != atom or len(self) <= 1:
-            self.queue.append(atom)
-            logger.debug("原子已追加到队列, 新队列长度=%d", len(self.queue))
+        if not self.atoms or self.atoms[-1] != atom or len(self) <= 1:
+            self.atoms.append(atom)
+            logger.debug("原子已追加到队列, 新队列长度=%d", len(self.atoms))
         else:
             logger.debug("原子未追加(重复或队列长度<=1)")
 
     def __len__(self):
-        if not self.queue:
+        if not self.atoms:
             return 0
-        length = len(self.queue) - self.cursor
+        length = len(self.atoms) - self.cursor
         logger.debug("Procession.__len__: 剩余长度=%d", length)
         return length
 
@@ -106,17 +103,17 @@ class Procession(Machine):
         return self.cursor
 
     def total_length(self):
-        total = len(self.queue)
+        total = len(self.atoms)
         logger.debug("Procession.total_length: %d", total)
         return total
 
     def is_empty(self):
-        empty = len(self.queue) == 0
+        empty = len(self.atoms) == 0
         logger.debug("Procession.is_empty: %s", empty)
         return empty
 
     def get_fission(self):
-        return Fission(atom=self.current_atom, phase_state=self.phase)  # type: ignore
+        return Fission(atom=self.current_atom, phase=self.phase)  # type: ignore
 
     def __repr__(self):
         from heurams.services.textproc import truncate
@@ -126,9 +123,9 @@ class Procession(Machine):
                 "Type": "Procession",
                 "Name": self.name_,
                 "State": self.state,
-                "Progress": f"{self.cursor + 1} / {len(self.queue)}",
-                "Queue": list(map(lambda f: truncate(f.ident), self.queue)),
+                "Progress": f"{self.cursor + 1} / {len(self.atoms)}",
+                "Queue": list(map(lambda f: truncate(f.ident), self.atoms)),
                 "Current Atom": self.current_atom.ident,  # type: ignore
             }
         ]
-        return str(tabu(dic, headers="keys")) + "\n"
+        return str(tabu(dic, headers="keys", tablefmt='pipe')) + "\n"

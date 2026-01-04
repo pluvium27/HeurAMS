@@ -5,7 +5,7 @@ from textual.containers import Container, ScrollableContainer
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
-import heurams.kernel.evaluators as pz
+import heurams.kernel.puzzles as pz
 import heurams.kernel.particles as pt
 from heurams.services.hasher import hash
 from heurams.services.logger import get_logger

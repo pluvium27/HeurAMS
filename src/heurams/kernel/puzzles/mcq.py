@@ -4,12 +4,12 @@ from typing import Dict, List, Optional, Union
 
 from heurams.services.logger import get_logger
 
-from .base import BaseEvaluator
+from .base import BasePuzzle
 
 logger = get_logger(__name__)
 
 
-class MCQPuzzle(BaseEvaluator):
+class MCQPuzzle(BasePuzzle):
     """选择题谜题生成器
 
     该类用于生成和管理选择题谜题, 支持多个题目同时生成,

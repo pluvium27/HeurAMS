@@ -15,12 +15,7 @@ classifiers = [
     "Intended Audience :: Education",
 ]
 keywords = ["spaced-repetition", "memory", "learning", "tui", "textual", "flashcards", "education"]
-dependencies = [
-    "bidict==0.23.1",
-    "playsound==1.2.2",
-    "textual==5.3.0",
-    "toml==0.10.2",
-]
+
 readme = "README.md"
 
 [tool.setuptools.packages.find]

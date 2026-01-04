@@ -1,30 +1,30 @@
+from functools import reduce
 import random
 
-import heurams.kernel.evaluators as puz
+import heurams.kernel.puzzles as puz
 import heurams.kernel.particles as pt
 from heurams.services.logger import get_logger
 
-from .states import PhaserState
+from transitions import Machine
+from .states import FissionState, PhaserState
 
+logger = get_logger(__name__)
 
-class Fission:
+class Fission(Machine):
     """单原子调度展开器"""
 
-    def __init__(self, atom: pt.Atom, phase_state=PhaserState.RECOGNITION):
+    def __init__(self, atom: pt.Atom, phase=PhaserState.RECOGNITION):
+        self.phase = phase
         self.cursor = 0
-        self.logger = get_logger(__name__)
         self.atom = atom
-
-        # NOTE: phase 为 PhaserState 枚举实例，需要获取其value
-        phase_value = (
-            phase_state.value if isinstance(phase_state, PhaserState) else phase_state
-        )
-
-        self.orbital_schedule = atom.registry["orbital"]["phases"][phase_value]  # type: ignore
-        self.orbital_puzzles = atom.registry["nucleon"]["puzzles"]
-
+        self.current_puzzle: puz.BasePuzzle
+        # phase 为 PhaserState 枚举实例, 需要获取其value
+        phase_value = phase.value
+        orbital_schedule = atom.registry["orbital"]["phases"][phase_value]  # type: ignore
+        orbital_puzzles = atom.registry["nucleon"]["puzzles"]
         self.puzzles = list()
-        for item, possibility in self.orbital_schedule:  # type: ignore
+        self.min_ratings = []
+        for item, possibility in orbital_schedule:  # type: ignore
             self.logger.debug(f"开始处理: {item}")
             if not isinstance(possibility, float):
                 possibility = float(possibility)
@@ -32,7 +32,7 @@ class Fission:
             while possibility > 1:
                 self.puzzles.append(
                     {
-                        "puzzle": puz.puzzles[self.orbital_puzzles[item]["__origin__"]],
+                        "puzzle": puz.puzzles[orbital_puzzles[item]["__origin__"]],
                         "alia": item,
                     }
                 )
@@ -41,27 +41,55 @@ class Fission:
             if random.random() <= possibility:
                 self.puzzles.append(
                     {
-                        "puzzle": puz.puzzles[self.orbital_puzzles[item]["__origin__"]],
+                        "puzzle": puz.puzzles[orbital_puzzles[item]["__origin__"]],
                         "alia": item,
                     }
                 )
+        
+        states = [
+            {"name": FissionState.EXAMMODE.value, "on_enter": "on_exammode"},
+            {"name": FissionState.RETRONLY.value, "on_enter": "on_retronly"},
+        ]
 
-            self.logger.debug(f"orbital 项处理完成: {item}")
+        transitions = [
+            {
+                "trigger": "finish",
+                "source": FissionState.EXAMMODE.value,
+                "dest": FissionState.RETRONLY.value,
+            },
+        ]
+
+        Machine.__init__(
+            self,
+            states=states,
+            transitions=transitions,
+            initial="Evaluator_0",
+        )
 
     def get_puzzles(self):
+        if self.state == 'retronly':
+            return [puz.puzzles['recognition']]
         return self.puzzles
 
-    def get_current_puzzle(self, forward=0):
-        if forward:
-            if len(self.puzzles) <= self.cursor + 1:
-                return 0
-            self.cursor += 1
-            return self.puzzles[self.cursor]
-        else:
-            return self.puzzles[self.cursor]
+    def get_current_puzzle(self):
+        if self.state == 'retronly':
+            return puz.puzzles['recognition']
+        return self.current_puzzle
+    
+    def report(self, rating):
+        self.min_ratings[self.cursor] = min(rating, self.min_ratings[self.cursor])
+    
+    def get_quality(self):
+        if self.is_state("exammode", self):
+            return reduce(lambda x,y: min(x, y), self.min_ratings)
+        return -1
 
-    def check_passed(self):
-        for i in self.puzzles:
-            if i["finished"] == 0:
-                return 0
-        return 1
+    def forward(self, step=1):
+        """将谜题指针向前移动并依情况更新或完成"""
+        logger.debug("Procession.forward: step=%d, 当前 cursor=%d", step, self.cursor)
+        self.cursor += step
+        if self.cursor >= len(self.puzzles):
+            if self.state != 'retronly':
+                self.finish()
+        else:
+            self.current_puzzle = self.puzzles[self.cursor]
