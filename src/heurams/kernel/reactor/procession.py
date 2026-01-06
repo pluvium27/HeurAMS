@@ -8,7 +8,6 @@ from .states import PhaserState, ProcessionState
 
 logger = get_logger(__name__)
 
-
 class Procession(Machine):
     """队列: 标识单次记忆流程"""
 
@@ -115,7 +114,7 @@ class Procession(Machine):
     def get_fission(self):
         return Fission(atom=self.current_atom, phase=self.phase)  # type: ignore
 
-    def __repr__(self):
+    def __repr__(self, style="pipe", ends = "\n"):
         from heurams.services.textproc import truncate
 
         dic = [
@@ -128,4 +127,4 @@ class Procession(Machine):
                 "Current Atom": self.current_atom.ident,  # type: ignore
             }
         ]
-        return str(tabu(dic, headers="keys", tablefmt='pipe')) + "\n"
+        return str(tabu(dic, headers="keys", tablefmt=style)) + ends

@@ -7,5 +7,5 @@ puzzle2widget = {
     pz.RecognitionPuzzle: pzw.Recognition,
     pz.ClozePuzzle: pzw.ClozePuzzle,
     pz.MCQPuzzle: pzw.MCQPuzzle,
-    pz.BaseEvaluator: pzw.BasePuzzleWidget,
+    pz.BasePuzzle: pzw.BasePuzzleWidget,
 }

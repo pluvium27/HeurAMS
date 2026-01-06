@@ -27,7 +27,7 @@ logger = get_logger(__name__)
 
 class MemScreen(Screen):
     BINDINGS = [
-        ("q", "pop_screen", "返回"),
+        ("q", "go_back", "返回"),
         ("p", "prev", "查看上一个"),
         ("d", "toggle_dark", ""),
         ("v", "play_voice", "朗读"),
@@ -35,7 +35,8 @@ class MemScreen(Screen):
     ]
 
     if config_var.get()["quick_pass"]:
-        BINDINGS.append(("k", "quick_pass", "跳过"))
+        BINDINGS.append(("k", "quick_pass", "正确应答"))
+        BINDINGS.append(("f", "quick_fail", "错误应答"))
     rating = reactive(-1)
 
     def __init__(
@@ -48,6 +49,7 @@ class MemScreen(Screen):
         super().__init__(name, id, classes)
         self.phaser = phaser
         self.update_state()
+        self.fission: Fission
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -62,23 +64,43 @@ class MemScreen(Screen):
         self.atom: pt.Atom = self.procession.current_atom  # type: ignore
 
     def on_mount(self):
+        self.fission = self.procession.get_fission()
         self.mount_puzzle()
         self.update_display()
 
     def puzzle_widget(self):
         try:
-            self.fission = self.procession.get_fission()
-            puzzle = self.fission.get_current_puzzle()
+            puzzle = self.fission.get_current_puzzle_inf()
             return shim.puzzle2widget[puzzle["puzzle"]](  # type: ignore
                 atom=self.atom, alia=puzzle["alia"]  # type: ignore
             )
-        except (KeyError, StopIteration, AttributeError) as e:
+        except Exception as e:
             logger.debug(f"调度展开出错: {e}")
             return Static(f"无法生成谜题 {e}")
 
     def _get_progress_text(self):
         s = f"阶段: {self.procession.phase.name}\n"
-        s += f"当前进度: {self.procession.process() + 1}/{self.procession.total_length()}"
+        try:
+            alia = self.fission.get_current_puzzle_inf()['alia'] # type: ignore
+            s += f"谜题: {alia}\n"
+        except:
+            pass
+        try:
+            stat = self.phaser.__repr__('simple', '')
+            s += f"{stat}\n"
+        except:
+            pass
+        try:
+            stat = self.procession.__repr__('simple', '')
+            s += f"{stat}\n"
+        except:
+            pass
+        try:
+            stat = self.fission.__repr__('simple', '')
+            s += f"{stat}\n"
+        except Exception as e:
+            s = str(e)
+        #s += f"当前进度: {self.procession.process() + 1}/{self.procession.total_length()}"
         return s
 
     def update_display(self):
@@ -129,26 +151,38 @@ class MemScreen(Screen):
         if new_rating == -1:  # 安全值
             return
         self.fission.report(new_rating)
+        self.forward(new_rating)
+        self.rating = -1
     
     def forward(self, rating):
-        self.update_state()  # 刷新状态
-        if self.procession == None:  # 已经完成记忆
-            return
-        forwards = 1 if rating >= 4 else 0  # 准许前进
-        self.rating = -1
-        logger.debug(f"试图前进: {"允许" if forwards else "禁止"}")
-        if forwards:
-            ret = self.procession.forward(1)
-            if ret == 0:  # 若结束了此次队列
-                self.update_state()
-                if self.procession.phase == PhaserState.FINISHED:  # 若所有队列都结束了
-                    logger.debug(f"记忆进程结束")
-                    self.mount_finished_widget()
-                    return
-                else:
-                    logger.debug(f"建立新队列 {self.procession.phase}")
-            self.update_state()
-            self.mount_puzzle()
-        else:  # 若不通过
-            self.procession.append()
+        self.update_state()
+        allow_forward = 1 if rating >= 4 else 0
+        if allow_forward:
+            self.fission.forward()
+        if self.fission.state == 'retronly':
+            self.forward_atom(self.fission.get_quality())
+        self.update_state()
+        self.mount_puzzle()
         self.update_display()
+
+    def forward_atom(self, quality):
+        logger.debug(f"Quality: {quality}")
+        if quality <= 3:
+            self.procession.append()
+            self.update_state()  # 刷新状态
+        self.procession.forward(1)
+        self.update_state()  # 刷新状态
+        if self.procession.phase == PhaserState.FINISHED:  # 若所有队列都结束了
+            logger.debug(f"记忆进程结束")
+            self.mount_finished_widget()
+            return
+        self.fission = self.procession.get_fission()
+
+    def action_go_back(self):
+        self.app.pop_screen()
+    
+    def action_quick_pass(self):
+        self.rating = 5
+
+    def action_quick_fail(self):
+        self.rating = 3

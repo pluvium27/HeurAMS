@@ -128,7 +128,7 @@ class Phaser(Machine):
         logger.debug("所有 Procession 已完成, 状态设置为 FINISHED")
         return Procession([AtomPlaceholder()], PhaserState.FINISHED)
 
-    def __repr__(self):
+    def __repr__(self, style="pipe", ends = "\n"):
         from heurams.services.textproc import truncate
         from tabulate import tabulate as tabu
 
@@ -140,4 +140,4 @@ class Phaser(Machine):
                 "Current Procession": "None" if not self.current_procession() else self.current_procession().name_,  # type: ignore
             },
         ]
-        return str(tabu(tabular_data=lst, headers="keys", tablefmt="pipe")) + "\n"
+        return str(tabu(tabular_data=lst, headers="keys", tablefmt=style)) + ends

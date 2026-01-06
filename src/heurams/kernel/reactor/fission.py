@@ -5,6 +5,7 @@ import heurams.kernel.puzzles as puz
 import heurams.kernel.particles as pt
 from heurams.services.logger import get_logger
 
+from tabulate import tabulate as tabu
 from transitions import Machine
 from .states import FissionState, PhaserState
 
@@ -17,20 +18,20 @@ class Fission(Machine):
         self.phase = phase
         self.cursor = 0
         self.atom = atom
-        self.current_puzzle: puz.BasePuzzle
+        self.current_puzzle_inf: dict
         # phase 为 PhaserState 枚举实例, 需要获取其value
         phase_value = phase.value
         orbital_schedule = atom.registry["orbital"]["phases"][phase_value]  # type: ignore
         orbital_puzzles = atom.registry["nucleon"]["puzzles"]
-        self.puzzles = list()
+        self.puzzles_inf = list()
         self.min_ratings = []
         for item, possibility in orbital_schedule:  # type: ignore
-            self.logger.debug(f"开始处理: {item}")
+            logger.debug(f"开始处理: {item}")
             if not isinstance(possibility, float):
                 possibility = float(possibility)
 
             while possibility > 1:
-                self.puzzles.append(
+                self.puzzles_inf.append(
                     {
                         "puzzle": puz.puzzles[orbital_puzzles[item]["__origin__"]],
                         "alia": item,
@@ -39,16 +40,16 @@ class Fission(Machine):
                 possibility -= 1
 
             if random.random() <= possibility:
-                self.puzzles.append(
+                self.puzzles_inf.append(
                     {
                         "puzzle": puz.puzzles[orbital_puzzles[item]["__origin__"]],
                         "alia": item,
                     }
                 )
-        
+        self.current_puzzle_inf = self.puzzles_inf[0]
         states = [
-            {"name": FissionState.EXAMMODE.value, "on_enter": "on_exammode"},
-            {"name": FissionState.RETRONLY.value, "on_enter": "on_retronly"},
+            {"name": FissionState.EXAMMODE.value},
+            {"name": FissionState.RETRONLY.value},
         ]
 
         transitions = [
@@ -59,37 +60,56 @@ class Fission(Machine):
             },
         ]
 
+        for i in range(len(self.puzzles_inf)):
+            self.min_ratings.append(0x3f3f3f3f)
+
         Machine.__init__(
             self,
             states=states,
             transitions=transitions,
-            initial="Evaluator_0",
+            initial=FissionState.EXAMMODE.value,
         )
 
-    def get_puzzles(self):
+    def get_puzzles_inf(self):
         if self.state == 'retronly':
-            return [puz.puzzles['recognition']]
-        return self.puzzles
+            return [{"puzzle": puz.puzzles['recognition'], "alia": "Recognition"}]
+        return self.puzzles_inf
 
-    def get_current_puzzle(self):
+    def get_current_puzzle_inf(self):
         if self.state == 'retronly':
-            return puz.puzzles['recognition']
-        return self.current_puzzle
+            return {"puzzle": puz.puzzles['recognition'], "alia": "Recognition"}
+        return self.current_puzzle_inf
     
     def report(self, rating):
         self.min_ratings[self.cursor] = min(rating, self.min_ratings[self.cursor])
     
     def get_quality(self):
-        if self.is_state("exammode", self):
+        logger.debug(f"CState: {self.state}")
+        if self.is_state("retronly", self):
             return reduce(lambda x,y: min(x, y), self.min_ratings)
-        return -1
+        raise IndexError
 
     def forward(self, step=1):
         """将谜题指针向前移动并依情况更新或完成"""
         logger.debug("Procession.forward: step=%d, 当前 cursor=%d", step, self.cursor)
         self.cursor += step
-        if self.cursor >= len(self.puzzles):
+        if self.cursor >= len(self.puzzles_inf):
             if self.state != 'retronly':
                 self.finish()
         else:
-            self.current_puzzle = self.puzzles[self.cursor]
+            self.current_puzzle_inf = self.puzzles_inf[self.cursor]
+    
+    def __repr__(self, style="pipe", ends = "\n") -> str:
+        from heurams.services.textproc import truncate
+
+        dic = [
+            {
+                "Type": "Fission",
+                "Atom": truncate(self.atom.ident),
+                "State": self.state,
+                "Progress": f"{self.cursor + 1} / {len(self.puzzles_inf)}",
+                "Queue": list(map(lambda f: truncate(f['alia']), self.puzzles_inf)),
+                "Current Puzzle": f"{self.current_puzzle_inf['alia']}@{self.current_puzzle_inf['puzzle'].__name__}",  # type: ignore
+            }
+        ]
+        return str(tabu(dic, headers="keys", tablefmt=style)) + ends
