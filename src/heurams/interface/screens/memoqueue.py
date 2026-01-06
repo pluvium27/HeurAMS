@@ -80,27 +80,28 @@ class MemScreen(Screen):
 
     def _get_progress_text(self):
         s = f"阶段: {self.procession.phase.name}\n"
-        try:
-            alia = self.fission.get_current_puzzle_inf()['alia'] # type: ignore
-            s += f"谜题: {alia}\n"
-        except:
-            pass
-        try:
-            stat = self.phaser.__repr__('simple', '')
-            s += f"{stat}\n"
-        except:
-            pass
-        try:
-            stat = self.procession.__repr__('simple', '')
-            s += f"{stat}\n"
-        except:
-            pass
-        try:
-            stat = self.fission.__repr__('simple', '')
-            s += f"{stat}\n"
-        except Exception as e:
-            s = str(e)
-        #s += f"当前进度: {self.procession.process() + 1}/{self.procession.total_length()}"
+        if config_var.get().get("debug_topline", 0):
+            try:
+                alia = self.fission.get_current_puzzle_inf()["alia"]  # type: ignore
+                s += f"谜题: {alia}\n"
+            except:
+                pass
+            try:
+                stat = self.phaser.__repr__("simple", "")
+                s += f"{stat}\n"
+            except:
+                pass
+            try:
+                stat = self.procession.__repr__("simple", "")
+                s += f"{stat}\n"
+            except:
+                pass
+            try:
+                stat = self.fission.__repr__("simple", "")
+                s += f"{stat}\n"
+            except Exception as e:
+                s = str(e)
+            # s += f"当前进度: {self.procession.process() + 1}/{self.procession.total_length()}"
         return s
 
     def update_display(self):
@@ -110,6 +111,9 @@ class MemScreen(Screen):
 
     def mount_puzzle(self):
         """挂载当前谜题组件"""
+        if self.procession.phase == PhaserState.FINISHED:
+            self.mount_finished_widget()
+            return
         container = self.query_one("#puzzle-container")
         for i in container.children:
             i.remove()
@@ -150,16 +154,20 @@ class MemScreen(Screen):
     def watch_rating(self, old_rating, new_rating) -> None:
         if new_rating == -1:  # 安全值
             return
+        self.update_state()
+        if self.procession.phase == PhaserState.FINISHED:
+            rating = -1
+            return
         self.fission.report(new_rating)
         self.forward(new_rating)
         self.rating = -1
-    
+
     def forward(self, rating):
         self.update_state()
         allow_forward = 1 if rating >= 4 else 0
         if allow_forward:
             self.fission.forward()
-        if self.fission.state == 'retronly':
+        if self.fission.state == "retronly":
             self.forward_atom(self.fission.get_quality())
         self.update_state()
         self.mount_puzzle()
@@ -172,15 +180,11 @@ class MemScreen(Screen):
             self.update_state()  # 刷新状态
         self.procession.forward(1)
         self.update_state()  # 刷新状态
-        if self.procession.phase == PhaserState.FINISHED:  # 若所有队列都结束了
-            logger.debug(f"记忆进程结束")
-            self.mount_finished_widget()
-            return
         self.fission = self.procession.get_fission()
 
     def action_go_back(self):
         self.app.pop_screen()
-    
+
     def action_quick_pass(self):
         self.rating = 5
 

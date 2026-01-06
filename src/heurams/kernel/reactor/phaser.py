@@ -112,7 +112,7 @@ class Phaser(Machine):
         for i in self.processions:
             i: Procession
             if i.state != ProcessionState.FINISHED.value:
-                #if i.phase == PhaserState.UNSURE: 此判断是不必要的 因为没有这种 Procession
+                # if i.phase == PhaserState.UNSURE: 此判断是不必要的 因为没有这种 Procession
                 if i.phase == PhaserState.QUICK_REVIEW:
                     self.to_quick_review()
                 elif i.phase == PhaserState.RECOGNITION:
@@ -128,7 +128,7 @@ class Phaser(Machine):
         logger.debug("所有 Procession 已完成, 状态设置为 FINISHED")
         return Procession([AtomPlaceholder()], PhaserState.FINISHED)
 
-    def __repr__(self, style="pipe", ends = "\n"):
+    def __repr__(self, style="pipe", ends="\n"):
         from heurams.services.textproc import truncate
         from tabulate import tabulate as tabu
 
