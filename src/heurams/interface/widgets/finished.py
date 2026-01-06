@@ -7,6 +7,7 @@ class Finished(Widget):
         self,
         *children: Widget,
         alia="",
+        is_saved = 0,
         name: str | None = None,
         id: str | None = None,
         classes: str | None = None,
@@ -14,6 +15,7 @@ class Finished(Widget):
         markup: bool = True
     ) -> None:
         self.alia = alia
+        self.is_saved = is_saved
         super().__init__(
             *children,
             name=name,
@@ -25,6 +27,7 @@ class Finished(Widget):
 
     def compose(self):
         yield Label("本次记忆进程结束", id="finished_msg")
+        yield Label(f"算法数据{'已保存' if self.is_saved else "未能保存"}")
         yield Button("返回上一级", id="back-to-menu")
 
     def on_button_pressed(self, event):

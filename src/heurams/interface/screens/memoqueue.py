@@ -1,6 +1,7 @@
 """队列式记忆工作界面"""
 
 from enum import Enum, auto
+from typing import Callable
 
 from textual.app import ComposeResult
 from textual.containers import Center, ScrollableContainer
@@ -42,14 +43,17 @@ class MemScreen(Screen):
     def __init__(
         self,
         phaser: Phaser,
+        save_func: Callable,
         name=None,
         id=None,
         classes=None,
     ) -> None:
         super().__init__(name, id, classes)
         self.phaser = phaser
+        self.save_func = save_func
         self.update_state()
         self.fission: Fission
+        
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -125,8 +129,9 @@ class MemScreen(Screen):
         for i in container.children:
             i.remove()
         from heurams.interface.widgets.finished import Finished
-
-        container.mount(Finished())
+        if config_var.get().get("persist_to_file", 0):
+            self.save_func()
+        container.mount(Finished(is_saved=config_var.get().get("persist_to_file", 0)))
 
     def on_button_pressed(self, event):
         event.stop()
@@ -173,8 +178,21 @@ class MemScreen(Screen):
         self.mount_puzzle()
         self.update_display()
 
+    def atom_reporter(self, quality):
+        if not self.atom.registry["runtime"]["locked"]:
+            if not self.atom.registry["electron"].is_activated():
+                self.atom.registry["electron"].activate()
+                logger.debug(f"激活原子 {self.atom}")
+                self.atom.lock(1)
+                self.atom.minimize(5)
+            else:
+                self.atom.minimize(quality)
+        else:
+            pass
+
     def forward_atom(self, quality):
         logger.debug(f"Quality: {quality}")
+        self.atom_reporter(quality)
         if quality <= 3:
             self.procession.append()
             self.update_state()  # 刷新状态

@@ -16,6 +16,7 @@ class Phaser(Machine):
     def __init__(self, atoms: list[pt.Atom]) -> None:
         logger.debug("Phaser.__init__: 原子数量=%d", len(atoms))
 
+        self.atoms = atoms
         new_atoms = list()
         old_atoms = list()
 
@@ -105,6 +106,9 @@ class Phaser(Machine):
 
     def on_finished(self):
         """进入FINISHED状态时的回调"""
+        for i in self.atoms:
+            i.lock(1)
+            i.revise()
         logger.debug("Phaser 进入 FINISHED 状态")
 
     def current_procession(self):

@@ -101,7 +101,7 @@ class Repo:
             source = self.source
         if source == None:
             raise FileNotFoundError("不存在仓库到文件的映射")
-        source.mkdir(parents=True, exist_ok=False)
+        source.mkdir(parents=True, exist_ok=True)
         for keyname in save_list:
             filename = self.file_mapping[keyname]
             with open(source / filename, "w") as f:
@@ -112,7 +112,7 @@ class Repo:
                 if filename.endswith("toml"):
                     toml.dump(dict_data, f)
                 elif filename.endswith("json"):
-                    json.dump(dict_data, f)
+                    json.dump(dict_data, f, ensure_ascii=False, indent=4)
                 else:
                     raise ValueError(f"不支持的文件类型: {filename}")
 

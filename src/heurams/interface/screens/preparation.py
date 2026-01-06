@@ -130,8 +130,10 @@ class PreparationScreen(Screen):
             import heurams.kernel.reactor as rt
 
             pheser = rt.Phaser(atoms_to_provide)
-            memscreen = MemScreen(pheser)
+            save_func = self.repo.persist_to_repodir
+            memscreen = MemScreen(pheser, save_func)
             self.app.push_screen(memscreen)
+
 
         elif event.button.id == "precache_button":
             self.action_precache()

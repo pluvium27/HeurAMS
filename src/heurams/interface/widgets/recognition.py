@@ -107,13 +107,3 @@ class Recognition(BasePuzzleWidget):
         if event.button.id == "ok":
             self.screen.rating = 5  # type: ignore
             self.handler(5)
-
-    def handler(self, rating):
-        if not self.atom.registry["runtime"]["locked"]:
-            if not self.atom.registry["electron"].is_activated():
-                self.atom.registry["electron"].activate()
-                logger.debug(f"激活原子 {self.atom}")
-                self.atom.lock(1)
-                self.atom.minimize(5)
-        else:
-            pass
