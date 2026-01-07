@@ -5,7 +5,6 @@ import os
 from pathlib import Path
 from typing import List, Optional
 
-from matplotlib.cbook import ls_mapper
 from textual.app import ComposeResult
 from textual.containers import Container, ScrollableContainer
 from textual.reactive import reactive
