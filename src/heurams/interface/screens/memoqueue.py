@@ -90,7 +90,7 @@ class MemScreen(Screen):
         s = f"阶段: {self.procession.phase.name}\n"
         # 收藏状态
         if self.repo is not None:
-            fav_status = "★" if self._is_current_atom_favorited() else "☆"
+            fav_status = "已收藏" if self._is_current_atom_favorited() else "未收藏"
             s += f"收藏: {fav_status}\n"
         if config_var.get().get("debug_topline", 0):
             try:
@@ -113,7 +113,7 @@ class MemScreen(Screen):
                 s += f"{stat}\n"
             except Exception as e:
                 s = str(e)
-            # s += f"当前进度: {self.procession.process() + 1}/{self.procession.total_length()}"
+        s += f"进度: {self.procession.process() + 1}/{self.procession.total_length()}"
         return s
 
     def update_display(self):

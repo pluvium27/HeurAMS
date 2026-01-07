@@ -55,6 +55,8 @@ class MCQPuzzle(BasePuzzleWidget):
 
     def _load(self):
         cfg = self.atom.registry["nucleon"]["puzzles"][self.alia]
+        if cfg['mapping'] == {}:
+            self.screen.rating = 5 # type: ignore
         self.puzzle = pz.MCQPuzzle(
             cfg["mapping"], cfg["jammer"], int(cfg["max_riddles_num"]), cfg["prefix"]
         )
@@ -68,9 +70,9 @@ class MCQPuzzle(BasePuzzleWidget):
             logger.debug(self.puzzle.options)
         else:
             current_options = self.puzzle.options[len(self.inputlist)]
-        yield Label(setting["primary"], id="sentence")
-        yield Label(self.puzzle.wording[len(self.inputlist)], id="puzzle")
-        yield Label(f"当前输入: {self.inputlist}", id="inputpreview")
+            yield Label(setting["primary"], id="sentence")
+            yield Label(self.puzzle.wording[len(self.inputlist)], id="puzzle")
+            yield Label(f"当前输入: {self.inputlist}", id="inputpreview")
 
         # 渲染当前问题的选项
         with Container(id="btn-container"):
