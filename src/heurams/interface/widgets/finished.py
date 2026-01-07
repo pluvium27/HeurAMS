@@ -7,12 +7,12 @@ class Finished(Widget):
         self,
         *children: Widget,
         alia="",
-        is_saved = 0,
+        is_saved=0,
         name: str | None = None,
         id: str | None = None,
         classes: str | None = None,
         disabled: bool = False,
-        markup: bool = True
+        markup: bool = True,
     ) -> None:
         self.alia = alia
         self.is_saved = is_saved
@@ -22,7 +22,7 @@ class Finished(Widget):
             id=id,
             classes=classes,
             disabled=disabled,
-            markup=markup
+            markup=markup,
         )
 
     def compose(self):

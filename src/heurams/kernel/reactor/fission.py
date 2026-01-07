@@ -1,12 +1,13 @@
-from functools import reduce
 import random
-
-import heurams.kernel.puzzles as puz
-import heurams.kernel.particles as pt
-from heurams.services.logger import get_logger
+from functools import reduce
 
 from tabulate import tabulate as tabu
 from transitions import Machine
+
+import heurams.kernel.particles as pt
+import heurams.kernel.puzzles as puz
+from heurams.services.logger import get_logger
+
 from .states import FissionState, PhaserState
 
 logger = get_logger(__name__)

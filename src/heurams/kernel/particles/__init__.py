@@ -3,8 +3,8 @@ from .electron import Electron
 from .nucleon import Nucleon
 from .placeholders import (
     AtomPlaceholder,
-    NucleonPlaceholder,
     ElectronPlaceholder,
+    NucleonPlaceholder,
     orbital_placeholder,
 )
 

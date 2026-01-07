@@ -1,8 +1,9 @@
 from click import style
+from transitions import Machine
+
 import heurams.kernel.particles as pt
 from heurams.kernel.particles.placeholders import AtomPlaceholder
 from heurams.services.logger import get_logger
-from transitions import Machine
 
 from .procession import Procession
 from .states import PhaserState, ProcessionState
@@ -133,8 +134,9 @@ class Phaser(Machine):
         return Procession([AtomPlaceholder()], PhaserState.FINISHED)
 
     def __repr__(self, style="pipe", ends="\n"):
-        from heurams.services.textproc import truncate
         from tabulate import tabulate as tabu
+
+        from heurams.services.textproc import truncate
 
         lst = [
             {

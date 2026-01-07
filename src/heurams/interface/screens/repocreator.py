@@ -24,7 +24,7 @@ class RepoCreatorScreen(Screen):
 
         from heurams.context import config_var
 
-        template_dir = Path(config_var.get()["paths"]["template_dir"])
+        template_dir = Path(config_var.get()["paths"]["data"]) / "templates"
         templates = list()
         for i in template_dir.iterdir():
             if i.name.endswith(".toml"):

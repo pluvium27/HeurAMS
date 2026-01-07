@@ -1,8 +1,9 @@
-import heurams.kernel.repolib as repolib
-import heurams.kernel.particles as pt
-from heurams.services.textproc import truncate
-from pathlib import Path
 import time
+from pathlib import Path
+
+import heurams.kernel.particles as pt
+import heurams.kernel.repolib as repolib
+from heurams.services.textproc import truncate
 
 repo = repolib.Repo.create_from_repodir(Path("./test_repo"))
 alist = list()

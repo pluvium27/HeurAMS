@@ -1,6 +1,7 @@
 """队列式记忆工作界面"""
 
 from enum import Enum, auto
+from pathlib import Path
 from typing import Callable
 
 from textual.app import ComposeResult
@@ -9,10 +10,11 @@ from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
 
-import heurams.kernel.puzzles as pz
 import heurams.kernel.particles as pt
+import heurams.kernel.puzzles as pz
 from heurams.context import config_var
 from heurams.kernel.reactor import *
+from heurams.services.favorite_service import favorite_manager
 from heurams.services.logger import get_logger
 
 from .. import shim
@@ -32,6 +34,7 @@ class MemScreen(Screen):
         ("p", "prev", "查看上一个"),
         ("d", "toggle_dark", ""),
         ("v", "play_voice", "朗读"),
+        ("*", "toggle_favorite", "收藏"),
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
 
@@ -44,6 +47,7 @@ class MemScreen(Screen):
         self,
         phaser: Phaser,
         save_func: Callable,
+        repo=None,
         name=None,
         id=None,
         classes=None,
@@ -51,9 +55,9 @@ class MemScreen(Screen):
         super().__init__(name, id, classes)
         self.phaser = phaser
         self.save_func = save_func
+        self.repo = repo
         self.update_state()
         self.fission: Fission
-        
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -84,6 +88,10 @@ class MemScreen(Screen):
 
     def _get_progress_text(self):
         s = f"阶段: {self.procession.phase.name}\n"
+        # 收藏状态
+        if self.repo is not None:
+            fav_status = "★" if self._is_current_atom_favorited() else "☆"
+            s += f"收藏: {fav_status}\n"
         if config_var.get().get("debug_topline", 0):
             try:
                 alia = self.fission.get_current_puzzle_inf()["alia"]  # type: ignore
@@ -129,6 +137,7 @@ class MemScreen(Screen):
         for i in container.children:
             i.remove()
         from heurams.interface.widgets.finished import Finished
+
         if config_var.get().get("persist_to_file", 0):
             self.save_func()
         container.mount(Finished(is_saved=config_var.get().get("persist_to_file", 0)))
@@ -208,3 +217,40 @@ class MemScreen(Screen):
 
     def action_quick_fail(self):
         self.rating = 3
+
+    def _get_repo_rel_path(self) -> str:
+        """获取仓库相对路径（相对于 data/repo）"""
+        if self.repo is None:
+            return ""
+        # self.repo.source 是 Path 对象，指向仓库目录
+        repo_full_path = self.repo.source
+        data_repo_path = Path(config_var.get()["paths"]["data"]) / "repo"
+        try:
+            rel_path = repo_full_path.relative_to(data_repo_path)
+            return str(rel_path)
+        except ValueError:
+            # 如果不在 data/repo 下，则返回完整路径（字符串形式）
+            return str(repo_full_path)
+
+    def _is_current_atom_favorited(self) -> bool:
+        """检查当前原子是否已收藏"""
+        if self.repo is None:
+            return False
+        repo_path = self._get_repo_rel_path()
+        return favorite_manager.has(repo_path, self.atom.ident)
+
+    def action_toggle_favorite(self):
+        """切换收藏状态"""
+        if self.repo is None:
+            self.app.notify("无法收藏：未关联仓库", severity="error")
+            return
+        repo_path = self._get_repo_rel_path()
+        ident = self.atom.ident
+        if favorite_manager.has(repo_path, ident):
+            favorite_manager.remove(repo_path, ident)
+            self.app.notify(f"已取消收藏：{ident}", severity="information")
+        else:
+            favorite_manager.add(repo_path, ident)
+            self.app.notify(f"已收藏：{ident}", severity="information")
+        # 更新显示（如果需要）
+        self.update_display()

@@ -1,4 +1,7 @@
+from typing import Type
+
 from textual.app import App
+from textual.driver import Driver
 from textual.widgets import Button
 
 from heurams.context import config_var
@@ -6,8 +9,12 @@ from heurams.services.logger import get_logger
 
 from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
+from .screens.llmchat import LLMChatScreen
+from .screens.navigator import NavigatorScreen
 from .screens.precache import PrecachingScreen
+from .screens.radio import RadioScreen
 from .screens.repocreator import RepoCreatorScreen
+from .screens.repoeditor import RepoEditorScreen
 from .screens.synctool import SyncScreen
 
 logger = get_logger(__name__)
@@ -35,13 +42,10 @@ class HeurAMSApp(App):
     CSS_PATH = "css/main.tcss"
     SUB_TITLE = "启发式辅助记忆调度器"
     BINDINGS = [
-        ("q", "quit", "退出"),
-        ("d", "toggle_dark", "切换色调"),
-        ("1", "app.push_screen('dashboard')", "仪表盘"),
-        ("2", "app.push_screen('precache_all')", "缓存管理器"),
-        ("3", "app.push_screen('repo_creator')", "创建新仓库"),
-        # ("4", "app.push_screen('synctool')", "同步工具"),
-        ("0", "app.push_screen('about')", "版本信息"),
+        ("q", "go_back", "退出"),
+        ("d", "toggle_dark", "主题"),
+        ("n", "app.push_screen('navigator')", "导航"),
+        ("z", "app.push_screen('about')", "关于"),
     ]
     SCREENS = {
         "dashboard": DashboardScreen,
@@ -49,6 +53,10 @@ class HeurAMSApp(App):
         "precache_all": PrecachingScreen,
         "synctool": SyncScreen,
         "about": AboutScreen,
+        "navigator": NavigatorScreen,
+        "radio": RadioScreen,
+        "repo_editor": RepoEditorScreen,
+        "llmchat": LLMChatScreen,
     }
 
     def on_mount(self) -> None:
@@ -56,8 +64,11 @@ class HeurAMSApp(App):
         self.push_screen("dashboard")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        self.exit(event.button.id)
+        pass
+        # self.exit(event.button.id)
+
+    def action_go_back(self) -> None:
+        quit()
 
     def action_do_nothing(self):
-        print("DO NOTHING")
         self.refresh()

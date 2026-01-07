@@ -4,8 +4,8 @@
 """
 
 import pathlib
-from contextvars import ContextVar
 import shutil
+from contextvars import ContextVar
 
 from heurams.services.config import ConfigFile
 from heurams.services.logger import get_logger

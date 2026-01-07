@@ -1,7 +1,8 @@
+from tabulate import tabulate as tabu
+from transitions import Machine
+
 import heurams.kernel.particles as pt
 from heurams.services.logger import get_logger
-from transitions import Machine
-from tabulate import tabulate as tabu
 
 from .fission import Fission
 from .states import PhaserState, ProcessionState

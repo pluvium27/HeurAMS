@@ -11,8 +11,8 @@ import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
 from heurams.context import config_var
-from heurams.services.logger import get_logger
 from heurams.kernel.repolib import *
+from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -59,7 +59,8 @@ class PreparationScreen(Screen):
             )
 
             yield Static(f"\n单元预览:\n")
-            yield Markdown(self._get_full_content().replace("/", ""), classes="full")
+            for i in self._get_full_content().replace("/", "").splitlines():
+                yield Static(i, classes="full")
         yield Footer()
 
     # def watch_scheduled_num(self, old_scheduled_num, new_scheduled_num):
@@ -76,7 +77,7 @@ class PreparationScreen(Screen):
             n = pt.Nucleon.create_on_nucleonic_data(
                 nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
             )
-            content += f"- {n['content']}  \n"
+            content += f"  • {n['content']}  \n"
         return content
 
     def action_go_back(self):
@@ -126,14 +127,14 @@ class PreparationScreen(Screen):
                     left_new -= 1
                     if left_new >= 0:
                         atoms_to_provide.append(i)
-            from .memoqueue import MemScreen
             import heurams.kernel.reactor as rt
+
+            from .memoqueue import MemScreen
 
             pheser = rt.Phaser(atoms_to_provide)
             save_func = self.repo.persist_to_repodir
-            memscreen = MemScreen(pheser, save_func)
+            memscreen = MemScreen(pheser, save_func, repo=self.repo)
             self.app.push_screen(memscreen)
-
 
         elif event.button.id == "precache_button":
             self.action_precache()

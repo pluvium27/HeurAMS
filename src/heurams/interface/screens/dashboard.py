@@ -1,12 +1,14 @@
 """仪表盘界面"""
 
 import pathlib
+from pathlib import Path
 
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
 
+import heurams.kernel.particles as pt
 import heurams.services.timer as timer
 import heurams.services.version as version
 from heurams.context import *
@@ -14,10 +16,10 @@ from heurams.kernel.particles import *
 from heurams.kernel.repolib import *
 from heurams.services.logger import get_logger
 
-import heurams.kernel.particles as pt
-from pathlib import Path
 from .about import AboutScreen
+from .navigator import NavigatorScreen
 from .preparation import PreparationScreen
+from .radio import RadioScreen
 
 logger = get_logger(__name__)
 
@@ -26,6 +28,9 @@ class DashboardScreen(Screen):
     """主仪表盘屏幕"""
 
     SUB_TITLE = "仪表盘"
+    BINDINGS = [
+        ("q", "go_back", "返回"),
+    ]
 
     def __init__(
         self,
@@ -50,12 +55,12 @@ class DashboardScreen(Screen):
             Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
             Label("选择待学习或待修改的项目:", classes="title-label"),
             ListView(id="repo-list", classes="repo-list-view"),
-            Label(f'"潜进" 启发式辅助记忆调度器 | 版本 {version.ver} '),
+            Label(f'"潜进" 启发式辅助记忆调度器 版本 {version.ver} '),
         )
         yield Footer()
 
     def _load_data(self):
-        self.repo_dirs = Repo.probe_vaild_repos_in_dir(
+        self.repo_dirs = Repo.probe_valid_repos_in_dir(
             Path(config_var.get()["paths"]["data"]) / "repo"
         )
         for repo_dir in self.repo_dirs:
@@ -69,7 +74,6 @@ class DashboardScreen(Screen):
         unit_sum = len(repo)
         activated_sum = 0
         nextdate = 0x3F3F3F3F
-        is_unfinished = unit_sum > activated_sum
         for i in repo.ident_index:
             nucleon = pt.Nucleon.create_on_nucleonic_data(
                 nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
@@ -82,10 +86,11 @@ class DashboardScreen(Screen):
                 if electron.is_due():
                     is_due = 1
                 nextdate = min(nextdate, electron.nextdate())
+        is_unfinished = unit_sum > activated_sum
         if is_unfinished:
             nextdate = min(nextdate, timer.get_daystamp())
         need_to_study = is_due or is_unfinished
-        prompt = f"{title}\0\n  进度: {activated_sum}/{unit_sum}\n  {"需要学习" if need_to_study else "无需操作"}"
+        prompt = f"{title}\0\n  进度: {activated_sum}/{unit_sum} ({round(activated_sum/unit_sum*100)}%)\n  {"需要学习" if need_to_study else "无需操作"}"
         stat = {
             "is_due": is_due,
             "unit_sum": unit_sum,
@@ -139,7 +144,7 @@ class DashboardScreen(Screen):
             return
 
         selected_label = event.item.query_one(Label)
-        label_text = str(selected_label.renderable)
+        label_text = str(selected_label.render())
 
         if "未找到任何仓库" in label_text:
             return
@@ -158,3 +163,12 @@ class DashboardScreen(Screen):
     def action_quit_app(self) -> None:
         """退出应用程序"""
         self.app.exit()
+
+    def action_open_navigator(self) -> None:
+        """打开导航器"""
+        self.app.push_screen(NavigatorScreen())
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        """处理按钮点击事件"""
+        if event.button.id == "navigator-button":
+            self.action_open_navigator()

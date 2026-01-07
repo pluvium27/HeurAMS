@@ -9,7 +9,7 @@ timestamp_override = -1
 quick_pass = 1
 
 # 对于每个项目的默认新记忆原子数量
-scheduled_num = 8
+scheduled_num = 999
 
 # UTC 时间戳修正 仅用于 UNIX 日时间戳的生成修正, 单位为秒
 timezone_offset = +28800 # 中国标准时间 (UTC+8)
@@ -17,7 +17,7 @@ timezone_offset = +28800 # 中国标准时间 (UTC+8)
 [interface]
 
 [interface.memorizor]
-autovoice = true # 自动语音播放, 仅限于 recognition 组件
+autovoice = 0 # 自动语音播放, 仅限于 recognition 组件
 
 [algorithm]
 default = "SM-2" # 主要算法; 可选项: SM-2, SM-15M, FSRS

@@ -1,9 +1,9 @@
 from copy import deepcopy
 from logging import config
 
-from heurams.services.logger import get_logger
-from heurams.utils.evalizor import Evalizer
 from heurams.context import config_var
+from heurams.services.logger import get_logger
+from heurams.kernel.auxiliary.evalizor import Evalizer
 
 logger = get_logger(__name__)
 

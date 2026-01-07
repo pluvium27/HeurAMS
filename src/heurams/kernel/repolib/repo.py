@@ -7,7 +7,7 @@ import toml
 
 import heurams.kernel.particles as pt
 
-from ...utils.lict import Lict
+from heurams.kernel.auxiliary.lict import Lict
 
 
 class RepoManifest(TypedDict):
@@ -167,7 +167,7 @@ class Repo:
             return 0
 
     @classmethod
-    def probe_vaild_repos_in_dir(cls, folder: Path):
+    def probe_valid_repos_in_dir(cls, folder: Path):
         lst = list()
         for i in folder.iterdir():
             if i.is_dir():

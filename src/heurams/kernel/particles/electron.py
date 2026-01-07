@@ -57,6 +57,10 @@ class Electron:
         result = self.algodata[self.algo.algo_name]["is_activated"]
         return result
 
+    def last_modify(self):
+        result = self.algodata[self.algo.algo_name]["last_modify"]
+        return result
+
     def get_rating(self):
         try:
             result = self.algo.get_rating(self.algodata)
@@ -66,6 +70,10 @@ class Electron:
 
     def nextdate(self) -> int:
         result = self.algo.nextdate(self.algodata)
+        return result
+
+    def lastdate(self) -> int:
+        result = self.algodata[self.algo.algo_name]["lastdate"]
         return result
 
     def revisor(self, quality: int = 5, is_new_activation: bool = False):

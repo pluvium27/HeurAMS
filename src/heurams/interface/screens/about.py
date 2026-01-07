@@ -10,6 +10,9 @@ from heurams.context import *
 
 
 class AboutScreen(Screen):
+    BINDINGS = [
+        ("q", "go_back", "返回"),
+    ]
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -22,9 +25,13 @@ class AboutScreen(Screen):
   
 开发代号: {version.codename.capitalize()} {version.codename_cn} 
 
-一个基于启发式算法的开放源代码记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
+一个基于启发式算法的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
 
 以 AGPL-3.0 开放源代码  
+
+您可在项目主页 https://ams.imwangzhiyu.xyz 获取用户指南, 开发文档与软件更新  
+
+如果您觉得这个软件有用, 请给它添加一个星标 :)  
 
 开发人员:  
 

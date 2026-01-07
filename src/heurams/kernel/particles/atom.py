@@ -1,6 +1,5 @@
 from typing import TypedDict
 
-
 from heurams.services.logger import get_logger
 
 from .electron import Electron

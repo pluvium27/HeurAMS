@@ -5,6 +5,7 @@
 __pycache__/
 .idea/
 cache/
+data/repo/cngk
 #nucleon/test.toml
 electron/test.toml
 *.egg-info/
