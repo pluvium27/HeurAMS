@@ -1,23 +1,27 @@
-[build-system]
-requires = ["setuptools>=45", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "heurams"
 version = "0.5.0"
-description = "Heuristic Assisted Memory Scheduler"
-license = {file = "LICENSE"}
-classifiers = [
-    "License :: OSI Approved :: GNU Affero General Public License v3",
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
-    "Topic :: Education",
-    "Intended Audience :: Education",
-]
-keywords = ["spaced-repetition", "memory", "learning", "tui", "textual", "flashcards", "education"]
-
+description = "Heuristic Auxiliary Memory Scheduler"
 readme = "README.md"
+authors = [
+    { name = "pluvium27", email = "pluvium27@outlook.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "edge-tts==7.0.2",
+    "jieba==0.42.1",
+    "openai==1.0.0",
+    "playsound==1.2.2",
+    "tabulate>=0.9.0",
+    "textual==7.0.0",
+    "toml==0.10.2",
+    "transitions==0.9.3",
+]
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[project.scripts]
+heurams = "heurams.__main__:main"
+tui = "heurams.interface.__main__:main"
 
+[build-system]
+requires = ["uv_build>=0.9.22,<0.10.0"]
+build-backend = "uv_build"

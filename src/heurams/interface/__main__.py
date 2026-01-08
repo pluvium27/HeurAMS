@@ -12,7 +12,9 @@ from .screens.repocreator import RepoCreatorScreen
 
 logger = get_logger(__name__)
 
-app = HeurAMSApp()
+def main():
+    app = HeurAMSApp()
+    app.run()
 
 if __name__ == "__main__":
-    app.run()
+    main()

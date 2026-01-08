@@ -6,22 +6,15 @@ __pycache__/
 .idea/
 cache/
 data/repo/cngk
-#nucleon/test.toml
-electron/test.toml
 *.egg-info/
 build/
 dist/
 old/
-# config/
 data/cache/
-data/electron/
-data/nucleon/
 data/global/
-!data/nucleon/TEST*
-data/orbital/
 config/config_dev.toml
 AGENTS.md
-*.log.1
+*.log.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

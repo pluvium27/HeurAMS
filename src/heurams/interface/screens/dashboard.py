@@ -50,7 +50,7 @@ class DashboardScreen(Screen):
         yield ScrollableContainer(
             Label('欢迎使用 "潜进" 启发式辅助记忆调度器', classes="title-label"),
             Label(
-                f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()["timezone_offset"] / 3600})"
+                f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()['timezone_offset'] / 3600})"
             ),
             Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
             Label("选择待学习或待修改的项目:", classes="title-label"),
@@ -90,7 +90,7 @@ class DashboardScreen(Screen):
         if is_unfinished:
             nextdate = min(nextdate, timer.get_daystamp())
         need_to_study = is_due or is_unfinished
-        prompt = f"{title}\0\n  进度: {activated_sum}/{unit_sum} ({round(activated_sum/unit_sum*100)}%)\n  {"需要学习" if need_to_study else "无需操作"}"
+        prompt = f"{title}\0\n  进度: {activated_sum}/{unit_sum} ({round(activated_sum/unit_sum*100)}%)\n  {'需要学习' if need_to_study else '无需操作'}"
         stat = {
             "is_due": is_due,
             "unit_sum": unit_sum,
