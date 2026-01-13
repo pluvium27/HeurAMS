@@ -53,6 +53,11 @@ class Electron:
         result = self.algo.is_due(self.algodata)
         return result and self.is_activated()
 
+    def rept(self, real_rept = False):
+        if real_rept:
+            return self.algodata[self.algo.algo_name]['real_rept']
+        return self.algodata[self.algo.algo_name]['rept']
+
     def is_activated(self):
         result = self.algodata[self.algo.algo_name]["is_activated"]
         return result

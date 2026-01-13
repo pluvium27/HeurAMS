@@ -1,6 +1,3 @@
-"""LLM 聊天界面"""
-
-import asyncio
 from pathlib import Path
 from typing import Optional
 
@@ -19,7 +16,7 @@ logger = get_logger(__name__)
 class LLMChatScreen(Screen):
     """LLM 聊天屏幕"""
 
-    SUB_TITLE = "AI 聊天"
+    SUB_TITLE = "语言模型集成"
     BINDINGS = [
         ("q", "go_back", "返回"),
         ("ctrl+s", "save_session", "保存会话"),

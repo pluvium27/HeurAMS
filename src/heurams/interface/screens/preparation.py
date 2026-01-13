@@ -5,7 +5,7 @@ from textual.containers import ScrollableContainer
 from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widget import Widget
-from textual.widgets import Button, Footer, Header, Label, Markdown, Static
+from textual.widgets import Button, Footer, Header, Label, Markdown, Static, Rule, Sparkline
 
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
@@ -34,6 +34,7 @@ class PreparationScreen(Screen):
         super().__init__(name=None, id=None, classes=None)
         self.repo = repo
         self.repostat = repostat
+        self.load_data()
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -43,7 +44,7 @@ class PreparationScreen(Screen):
                 f"仓库路径: {config_var.get()['paths']['data']}/repo/[b]{self.repostat['dirname']}[/b]"
             )
             yield Label(f"\n单元数量: {len(self.repo)}\n")
-            yield Label(f"单次记忆数量: {self.scheduled_num}", id="schnum_label")
+            yield Label(f"最小记忆分组: {self.scheduled_num}\n", id="schnum_label")
 
             yield Button(
                 "开始记忆",
@@ -58,11 +59,15 @@ class PreparationScreen(Screen):
                 classes="precache-button",
             )
 
-            yield Static(f"\n单元预览:\n")
-            for i in self._get_full_content().replace("/", "").splitlines():
+            yield Static()
+            yield Sparkline(self.spark_line_arr, summary_function=max)
+            yield Rule()
+            #yield Static(str(self.spark_line_arr))
+            yield Static(f"单元状态预览:\n")
+            for i in self.content.splitlines():
                 yield Static(i, classes="full")
         yield Footer()
-
+    
     # def watch_scheduled_num(self, old_scheduled_num, new_scheduled_num):
     #    logger.debug("响应", old_scheduled_num, "->", new_scheduled_num)
     #    try:
@@ -71,14 +76,27 @@ class PreparationScreen(Screen):
     #    except:
     #        pass
 
-    def _get_full_content(self):
+    def load_data(self):
         content = ""
+        spark_line_arr = []
         for i in self.repo.ident_index:
             n = pt.Nucleon.create_on_nucleonic_data(
                 nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
             )
-            content += f"  • {n['content']}  \n"
-        return content
+            e = pt.Electron.create_on_electonic_data(electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i))
+            statstr = ""
+
+            if e.is_activated():
+                statstr = '[#00ff00]A[/]'
+                if e.is_due():
+                    statstr = '[#ffff00]R[/]'
+                #statstr += ('[dim]' + str(e.rept(real_rept=True)).zfill(2)+'[/]')
+            else:
+                statstr = '[#ff0000]U[/]'
+            spark_line_arr.append(e.rept(real_rept=True))
+            content += f" {statstr} {n['content'].replace('/', '')}  \n"
+        self.content = content
+        self.spark_line_arr = spark_line_arr
 
     def action_go_back(self):
         self.app.pop_screen()

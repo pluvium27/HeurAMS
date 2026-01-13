@@ -1,4 +1,3 @@
-from click import style
 from transitions import Machine
 
 import heurams.kernel.particles as pt
