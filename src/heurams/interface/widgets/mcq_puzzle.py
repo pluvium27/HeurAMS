@@ -152,7 +152,7 @@ class MCQPuzzle(BasePuzzleWidget):
             for option in current_options:
                 button_id = f"sel{str(self.cursor).zfill(3)}-{hash(option)}"
                 if button_id not in self.hashmap:
-                    self.hashmap[button_id] = option
+                    self.hashmap[button_id[7:]] = option
                 new_button = Button(option, id=button_id)
                 container.mount(new_button)
 

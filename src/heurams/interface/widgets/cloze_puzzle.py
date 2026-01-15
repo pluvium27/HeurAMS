@@ -9,6 +9,7 @@ from textual.widgets import Button, Label
 
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
+from heurams.services.hasher import hash
 from heurams.services.logger import get_logger
 
 from .base_puzzle_widget import BasePuzzleWidget

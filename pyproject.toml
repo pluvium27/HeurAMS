@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "pluvium27", email = "pluvium27@outlook.com" }
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     "edge-tts==7.0.2",
     "jieba==0.42.1",

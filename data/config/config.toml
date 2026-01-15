@@ -8,6 +8,9 @@ timestamp_override = -1
 # [调试] 一键通过
 quick_pass = true
 
+# [调试] 自动化测试模式(仅用于测试完整性)
+auto_pass = false
+
 # 对于每个项目的默认新记忆原子数量
 scheduled_num = 8
 

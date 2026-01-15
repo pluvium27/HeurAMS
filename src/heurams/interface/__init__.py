@@ -57,6 +57,7 @@ class HeurAMSApp(App):
         "radio": RadioScreen,
         "repo_editor": RepoEditorScreen,
         "llmchat": LLMChatScreen,
+#        "config": ConfigScreen,
     }
 
     def on_mount(self) -> None:

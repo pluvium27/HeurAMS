@@ -70,6 +70,7 @@ class MemScreen(Screen):
         """更新状态机"""
         self.procession: Procession = self.phaser.current_procession()  # type: ignore
         self.atom: pt.Atom = self.procession.current_atom  # type: ignore
+        
 
     def on_mount(self):
         self.fission = self.procession.get_fission()
@@ -175,6 +176,7 @@ class MemScreen(Screen):
         self.fission.report(new_rating)
         self.forward(new_rating)
         self.rating = -1
+
 
     def forward(self, rating):
         self.update_state()
