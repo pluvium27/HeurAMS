@@ -13,13 +13,28 @@ class Nucleon:
 
     def __init__(self, ident, payload, common):
         self.ident = ident
-        env = {
-            "payload": payload,
-            "default": config_var.get()["puzzles"],
-            "nucleon": (payload | common),
-        }
-        self.evalizer = Evalizer(environment=env)
-        self.data: dict = self.evalizer(deepcopy((payload | common)))  # type: ignore
+        try:
+            data_safe = deepcopy((payload | common))
+            data_puz = deepcopy(data_safe['puzzles'])
+            data_safe['puzzles'] = {}
+            env = {
+                "payload": data_safe,
+                "default": config_var.get()["puzzles"],
+                "nucleon": data_safe,
+            }
+            self.evalizer = Evalizer(environment=env)
+            data_safe = self.evalizer(deepcopy(data_safe))
+            env = {
+                "payload": data_safe,
+                "default": config_var.get()["puzzles"],
+                "nucleon": data_safe,
+            }
+            self.evalizer = Evalizer(environment=env)
+            data_puz = self.evalizer(deepcopy(data_puz))
+            data_safe['puzzles'] = data_puz # type: ignore
+            self.data: dict = data_safe # type: ignore
+        except Exception:
+            self.data = (payload | common)
 
     def __getitem__(self, key):
         if isinstance(key, str):

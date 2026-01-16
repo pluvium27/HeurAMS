@@ -6,6 +6,7 @@ __pycache__/
 .idea/
 cache/
 data/repo/cngk
+data/repo/eotgk
 *.egg-info/
 build/
 dist/

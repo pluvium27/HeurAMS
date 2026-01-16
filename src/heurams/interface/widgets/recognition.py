@@ -95,7 +95,7 @@ class Recognition(BasePuzzleWidget):
             if isinstance(item, Dict):
                 total = ""
                 for j, k in item.items():  # type: ignore
-                    total += f"> **{j}**: {k}  \n"
+                    total += f"> {j}: {k}  \n"
                 yield Markdown(total)
             if isinstance(item, str):
                 yield Markdown(item)

@@ -41,21 +41,24 @@ class AboutScreen(Screen):
 
 一个基于启发式算法的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
 
-以 AGPL-3.0 开放源代码  
+以 AGPL-3.0 开放源代码, 这直接意味着任何个体直接基于此代码对外或内部提供的应用和服务, 无论本地或网络, 必须向所有用户公开完整修改后的源代码, 且继续沿用 AGPL-3.0 协议.  
 
-您可在项目主页 https://ams.imwangzhiyu.xyz 获取用户指南, 开发文档与软件更新  
+您可在项目主页 https://ams.imwangzhiyu.xyz 获取用户指南, 开发文档与软件更新.  
 
-如果您觉得这个软件有用, 请给它添加一个星标 :)  
+如果您觉得这个软件有用, 可以给它添加一个星标 :)  
 
-我们的共同目标是为人人带来高品质的辅助记忆 & 学习软件.
+> 此软件, 以及它作为一个"程序库"是自由且免费的, 但是开发工作必须投入大量精力
+> 即使您不是软件开发人员, 我们也欢迎您加入 HeurAMS 的队伍!  
+> 您可以加入各种语言的翻译团队来翻译软件的界面, 您还可以制作图像、主题、音效, 或者改进软件配套的文档……  
+> 不管您来自何方, 我们都欢迎您加入社区并做出贡献.  
+> 我们的共同目标是为人人带来高品质的辅助记忆 & 学习软件.  
+> 您的慷慨支持, 我们必当涌泉相报.
 
-不管您来自何方, 我们都欢迎您加入社区并做出贡献.
+开发人员列表:  
 
-开发人员:  
+- Wang Zhiyu([@pluvium27](https://github.com/pluvium27)): 发起项目与主要维护者  
 
-- Wang Zhiyu([@pluvium27](https://github.com/pluvium27)): 项目作者  
-
-特别感谢:
+特别感谢以下人士, 他们的算法与理论构成了此软件算法的基石:  
 
 - [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论
 - [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 实现
@@ -64,18 +67,14 @@ class AboutScreen(Screen):
 
 # 运行环境信息
 
-Textual 框架版本: {textual_version}  
-  
-终端模拟器: {terminal_info}  
-  
 Python 解释器版本: {python_version}  
-  
+Textual 框架版本: {textual_version}  
+终端模拟器: {terminal_info}  
 操作系统版本: {os_version}  
-  
 存储余量: {disk_usage}  
-  
 内存大小: {memory_info}  
-
+  
+报告问题时, 请复制这些信息到问题描述, 并上传软件日志 `heurams.log` 作为附件, 以协助开发者定位错误  
 """
             yield Markdown(about_text, classes="about-markdown")
 
