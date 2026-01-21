@@ -1,20 +1,29 @@
-from textual.app import App
-from textual.widgets import Button
-
+from heurams.interface import *
 from heurams.context import config_var
-from heurams.interface import HeurAMSApp
 from heurams.services.logger import get_logger
-
-from .screens.about import AboutScreen
-from .screens.dashboard import DashboardScreen
-from .screens.precache import PrecachingScreen
-from .screens.repocreator import RepoCreatorScreen
 
 logger = get_logger(__name__)
 
+def environment_check():
+    from pathlib import Path
+
+    logger.debug("检查环境路径")
+    subdir = ["cache/voice", "repo", "global", "config"]
+    for i in subdir:
+        i = Path(config_var.get()["paths"]["data"]) / i
+        if not i.exists():
+            logger.info("创建目录: %s", i)
+            print(f"创建 {i}")
+            i.mkdir(exist_ok=True, parents=True)
+        else:
+            logger.debug("目录已存在: %s", i)
+            print(f"找到 {i}")
+    logger.debug("环境检查完成")
+
 def main():
+    environment_check()
     app = HeurAMSApp()
-    app.run()
+    app.run(inline=False)
 
 if __name__ == "__main__":
     main()

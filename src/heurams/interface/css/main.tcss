@@ -1,5 +1,18 @@
+
+
 NavigatorScreen {
     align: center middle;
+}
+
+
+.repo_listitem {
+    layout: grid;
+    grid-size: 2;
+}
+
+.repo_listitem_btn {
+    dock: right;
+    offset: -5% 0
 }
 
 #dialog {
@@ -38,6 +51,10 @@ LLMChatScreen {
     border: solid $primary;
     padding: 1;
     background: $surface;
+}
+
+#dashboardtop {
+    height: 4
 }
 
 #input-container {

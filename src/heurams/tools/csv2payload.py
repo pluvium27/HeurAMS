@@ -2,8 +2,7 @@
 """
 将符合条件的CSV转为符合Payload需要的TOML格式
 
-使用命令: python3 csv2payload.py <CSV路径> <生成TOML路径, 默认为文件名相同, 后缀为toml的TOML文件>
-
+使用命令: python3 csv2payload.py <CSV路径> <生成TOML路径, 默认为文件名相同, 后缀为toml的TOML文件> [-r: 可选参数, 表示按照索引打乱顺序的随机整数种子]
 
 转换规则:
 1. `ident` 列用作 TOML 的 section 标题(`[ident]`)
@@ -64,19 +63,23 @@ meaning = "狗发出的声音"
 - 生成序列基于原始 CSV 中 `ident` 为空的行出现的顺序
 - 所有值都保留为字符串类型，符合 TOML 字符串格式要求
 - 如果 CSV 包含更多列，它们也会以相同方式转换为键值对
+- 支持 `-r` 参数指定随机种子来打乱 section 顺序
 """
 import csv
 import sys
 import os
+import random
+import argparse
 from pathlib import Path
 
-def csv_to_toml(csv_path, toml_path=None):
+def csv_to_toml(csv_path, toml_path=None, random_seed=None):
     """
     将CSV文件转换为TOML格式
     
     Args:
         csv_path (str): 输入CSV文件路径
         toml_path (str): 输出TOML文件路径，默认为相同目录下同名文件
+        random_seed (int): 随机种子，用于打乱section顺序，None表示不打乱
     """
     # 检查CSV文件是否存在
     csv_file = Path(csv_path)
@@ -103,6 +106,12 @@ def csv_to_toml(csv_path, toml_path=None):
     if not rows:
         print("错误: CSV文件为空或格式不正确")
         sys.exit(1)
+    
+    # 如果指定了随机种子，设置随机种子并打乱行顺序
+    if random_seed is not None:
+        random.seed(random_seed)
+        random.shuffle(rows)
+        print(f"提示: 使用随机种子 {random_seed} 打乱了 section 顺序")
     
     # 生成TOML内容
     toml_content = []
@@ -143,16 +152,26 @@ def csv_to_toml(csv_path, toml_path=None):
 
 def main():
     """主函数"""
-    if len(sys.argv) < 2:
-        print("用法: python3 csv2payload.py <CSV路径> [<TOML路径>]")
-        print("示例: python3 csv2payload.py input.csv output.toml")
-        print("示例: python3 csv2payload.py input.csv  # 自动生成input.toml")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description='将CSV文件转换为TOML格式，支持随机打乱section顺序',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='''
+示例:
+  %(prog)s input.csv output.toml
+  %(prog)s input.csv                    # 自动生成input.toml
+  %(prog)s input.csv -r 42              # 使用种子42打乱顺序
+  %(prog)s input.csv -r 123 output.toml # 指定种子和输出路径
+        '''
+    )
     
-    csv_path = sys.argv[1]
-    toml_path = sys.argv[2] if len(sys.argv) > 2 else None
+    parser.add_argument('csv_path', help='输入的CSV文件路径')
+    parser.add_argument('toml_path', nargs='?', help='输出的TOML文件路径，默认为CSV同名文件')
+    parser.add_argument('-r', '--random-seed', type=int, 
+                       help='随机种子，用于打乱TOML section的顺序')
     
-    csv_to_toml(csv_path, toml_path)
+    args = parser.parse_args()
+    
+    csv_to_toml(args.csv_path, args.toml_path, args.random_seed)
 
 if __name__ == "__main__":
     main()

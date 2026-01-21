@@ -67,9 +67,7 @@ class Recognition(BasePuzzleWidget):
             f";{delim}": ";",
             f":{delim}": ":",
         }
-
-        nucleon = self.atom.registry["nucleon"]
-        metadata = self.atom.registry["nucleon"]
+        
         primary = cfg["primary"]
 
         with Center():

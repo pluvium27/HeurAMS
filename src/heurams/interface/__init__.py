@@ -1,12 +1,15 @@
-from typing import Type
+from time import sleep
+print("欢迎使用基本用户界面!")
+print("加载配置... ", end="", flush=True)
+from heurams.context import *
+print("已完成!")
 
+print("加载用户界面框架... ", end="", flush=True)
 from textual.app import App
-from textual.driver import Driver
 from textual.widgets import Button
+print("已完成!")
 
-from heurams.context import config_var
-from heurams.services.logger import get_logger
-
+print("加载用户界面布局... ", end="", flush=True)
 from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
 from .screens.llmchat import LLMChatScreen
@@ -16,27 +19,9 @@ from .screens.radio import RadioScreen
 from .screens.repocreator import RepoCreatorScreen
 from .screens.repoeditor import RepoEditorScreen
 from .screens.synctool import SyncScreen
-
-logger = get_logger(__name__)
-
-
-def environment_check():
-    from pathlib import Path
-
-    logger.debug("检查环境路径")
-    subdir = ["cache/voice", "repo", "global", "config"]
-    for i in subdir:
-        i = Path(config_var.get()["paths"]["data"]) / i
-        if not i.exists():
-            logger.info("创建目录: %s", i)
-            print(f"创建 {i}")
-            i.mkdir(exist_ok=True, parents=True)
-        else:
-            logger.debug("目录已存在: %s", i)
-            print(f"找到 {i}")
-    logger.debug("环境检查完成")
-
-
+print("已完成!")
+print(f"组件目录: {rootdir}")
+print(f"工作目录: {workdir}")
 class HeurAMSApp(App):
     TITLE = "潜进"
     CSS_PATH = "css/main.tcss"
@@ -61,7 +46,6 @@ class HeurAMSApp(App):
     }
 
     def on_mount(self) -> None:
-        environment_check()
         self.push_screen("dashboard")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

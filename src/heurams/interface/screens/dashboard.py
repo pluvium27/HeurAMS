@@ -1,12 +1,14 @@
 """仪表盘界面"""
 
+from functools import reduce
 import pathlib
 from pathlib import Path
 
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer
+from textual.containers import ScrollableContainer, Container, Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
+from textual.layouts import horizontal
 
 import heurams.kernel.particles as pt
 import heurams.services.timer as timer
@@ -42,21 +44,35 @@ class DashboardScreen(Screen):
         self.repostat = {}
         self.title2dirname = {}
         self.title2repo = {}
+        self.dirname2repo = {}
         self._load_data()
 
     def compose(self) -> ComposeResult:
         """组合界面组件"""
         yield Header(show_clock=True)
-        yield ScrollableContainer(
-            Label('欢迎使用 "潜进" 启发式辅助记忆调度器', classes="title-label"),
-            Label(
-                f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()['timezone_offset'] / 3600})"
-            ),
-            Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
-            Label("选择待学习或待修改的项目:", classes="title-label"),
-            ListView(id="repo-list", classes="repo-list-view"),
-            Label(f'"潜进" 启发式辅助记忆调度器 版本 {version.ver} '),
-        )
+        with ScrollableContainer():
+            yield Horizontal(
+                Vertical(
+                    Label('欢迎使用 "潜进" 启发式辅助记忆调度器'),
+                    Label(
+                        f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()['timezone_offset'] / 3600})"
+                    ),
+                    Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
+                    Label("选择待学习或待修改的项目:"),
+                    classes="column",
+                ),
+                Vertical(
+                    Label(f"已加载 {len(self.repostat)} 个单元集", classes='dataview'),
+                    Label(f"共计 {reduce(lambda x, y: x + y, map(lambda x: x.get('unit_sum'), self.repostat.values()))} 个单元", classes='dataview'),
+                    Label(f"已激活 {reduce(lambda x, y: x + y, map(lambda x: x.get('activated_sum'), self.repostat.values()))} 个单元", classes='dataview'),
+                    Label(""),
+                    classes="column",
+                ),
+                id="dashboardtop"
+            )
+
+            yield ListView(id="repo-list", classes="repo-list-view")
+            yield Label(f'"潜进" 启发式辅助记忆调度器 版本 {version.ver} ')
         yield Footer()
 
     def _load_data(self):
@@ -105,6 +121,7 @@ class DashboardScreen(Screen):
         self.repostat[dirname] = stat
         self.title2dirname[title] = dirname
         self.title2repo[title] = repo
+        self.dirname2repo[dirname] = repo
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""
@@ -132,7 +149,7 @@ class DashboardScreen(Screen):
 
         for repotitle in repotitles:
             prompt = self.repostat[self.title2dirname[repotitle]]["prompt"]
-            list_item = ListItem(Label(prompt))
+            list_item = ListItem(Label(prompt), Button(f"开始学习", flat=True, variant="primary", classes="repo_listitem_btn", id=f"launch_{self.repostat[self.title2dirname[repotitle]]['dirname']}"), classes="repo_listitem")
             repo_list_widget.append(list_item)
 
             # if not self.stay_enabled[repodir]:
@@ -169,6 +186,9 @@ class DashboardScreen(Screen):
         self.app.push_screen(NavigatorScreen())
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
+        logger.debug(f"event.button.id: {event.button.id}")
         """处理按钮点击事件"""
-        if event.button.id == "navigator-button":
-            self.action_open_navigator()
+        if str(event.button.id).startswith("launch_"): # type: ignore
+            from .preparation import launch
+            launch(repo=self.dirname2repo[event.button.id[7:]], app=self.app, scheduled_num=-1) # type: ignore
+            # TODO: 这样启动的记忆实例的状态机无法绑定到 PreparationScreen 中

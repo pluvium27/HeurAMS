@@ -49,13 +49,16 @@ class Fission(Machine):
         self.min_ratings = []
         for item, possibility in orbital_schedule:  # type: ignore
             logger.debug(f"开始处理: {item}")
+
+            puzzle = puz.puzzles[orbital_puzzles[item]["__origin__"]]
+
             if not isinstance(possibility, float):
                 possibility = float(possibility)
 
             while possibility > 1:
                 self.puzzles_inf.append(
                     {
-                        "puzzle": puz.puzzles[orbital_puzzles[item]["__origin__"]],
+                        "puzzle": puzzle,
                         "alia": item,
                     }
                 )
@@ -64,7 +67,7 @@ class Fission(Machine):
             if random.random() <= possibility:
                 self.puzzles_inf.append(
                     {
-                        "puzzle": puz.puzzles[orbital_puzzles[item]["__origin__"]],
+                        "puzzle": puzzle,
                         "alia": item,
                     }
                 )

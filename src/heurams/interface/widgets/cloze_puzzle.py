@@ -5,7 +5,7 @@ from typing import TypedDict
 from textual.containers import Container
 from textual.message import Message
 from textual.widget import Widget
-from textual.widgets import Button, Label
+from textual.widgets import Button, Label, Markdown
 
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
@@ -66,7 +66,7 @@ class ClozePuzzle(BasePuzzleWidget):
 
     def compose(self):
         yield Label(self.puzzle.wording, id="sentence")
-        yield Label(f"当前输入: {self.inputlist}", id="inputpreview")
+        yield Markdown(f"> {self.listprint(self.inputlist)}", id="inputpreview")
         # 渲染当前问题的选项
         with Container(id="btn-container"):
             for i in self.ans:
@@ -77,9 +77,18 @@ class ClozePuzzle(BasePuzzleWidget):
 
         yield Button("退格", id="delete")
 
+    def listprint(self, lst):
+        s = ""
+        if lst:
+            lastone = lst[-1]
+            for i in lst[:-1]:
+                s += (i + ' ')
+            s += f" `{lastone}`"
+        return s
+
     def update_display(self):
         preview = self.query_one("#inputpreview")
-        preview.update(f"当前输入: {self.inputlist}")  # type: ignore
+        preview.update(f"> {self.listprint(self.inputlist)}")  # type: ignore
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         button_id = event.button.id

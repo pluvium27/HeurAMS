@@ -4,7 +4,6 @@
 """
 
 import pathlib
-import shutil
 from contextvars import ContextVar
 
 from heurams.services.config import ConfigFile
@@ -15,40 +14,19 @@ from heurams.services.logger import get_logger
 # 数据文件路径规定: 以运行目录为准
 
 rootdir = pathlib.Path(__file__).parent
-print(f"项目根目录: {rootdir}")
+workdir = pathlib.Path.cwd()
+#print(f"项目根目录: {rootdir}")
+#print(f"工作目录: {workdir}")
 logger = get_logger(__name__)
 logger.debug(f"项目根目录: {rootdir}")
-workdir = pathlib.Path.cwd()
-print(f"工作目录: {workdir}")
 logger.debug(f"工作目录: {workdir}")
 
-if pathlib.Path(workdir / "data" / "config" / "config_dev.toml").exists():
-    print("使用开发设置")
-    logger.debug("使用开发设置")
-    config_var: ContextVar[ConfigFile] = ContextVar(
-        "config_var",
-        default=ConfigFile(workdir / "data" / "config" / "config_dev.toml"),
-    )
-else:
-    try:
-        config_var: ContextVar[ConfigFile] = ContextVar(
-            "config_var",
-            default=ConfigFile(workdir / "data" / "config" / "config.toml"),
-        )  # 配置文件
-    except Exception as e:
-        input("按下回车以创建新的配置文件, 或按下 Ctrl + C 以终止程序 ")
-        (workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
-        (workdir / "data" / "config" / "config").unlink(missing_ok=True)
-        shutil.copy(
-            (rootdir / "default" / "config" / "config.toml"),
-            workdir / "data" / "config" / "config.toml",
-        )
-    finally:
-        config_var: ContextVar[ConfigFile] = ContextVar(
-            "config_var",
-            default=ConfigFile(workdir / "data" / "config" / "config.toml"),
-        )  # 配置文件
+(workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
 
+config_var: ContextVar[ConfigFile] = ContextVar(
+    "config_var",
+    default=ConfigFile(workdir / "data" / "config" / "config.toml"),
+)
 
 class ConfigContext:
     """

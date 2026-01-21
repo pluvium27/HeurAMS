@@ -123,36 +123,41 @@ class PreparationScreen(Screen):
         event.stop()
         logger.debug("按下按钮")
         if event.button.id == "start_memorizing_button":
-            atoms = list()
-            for i in self.repo.ident_index:
-                n = pt.Nucleon.create_on_nucleonic_data(
-                    nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
-                )
-                e = pt.Electron.create_on_electonic_data(
-                    electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i)
-                )
-                a = pt.Atom(n, e, self.repo.orbitic_data)
-                atoms.append(a)
-
-            atoms_to_provide = list()
-            left_new = self.scheduled_num
-            for i in atoms:
-                i: pt.Atom
-                if i.registry["electron"].is_activated():
-                    if i.registry["electron"].is_due():
-                        atoms_to_provide.append(i)
-                else:
-                    left_new -= 1
-                    if left_new >= 0:
-                        atoms_to_provide.append(i)
-            import heurams.kernel.reactor as rt
-
-            from .memoqueue import MemScreen
-
-            pheser = rt.Phaser(atoms_to_provide)
-            save_func = self.repo.persist_to_repodir
-            memscreen = MemScreen(pheser, save_func, repo=self.repo)
-            self.app.push_screen(memscreen)
+            launch(repo=self.repo, app=self.app, scheduled_num=self.scheduled_num)
 
         elif event.button.id == "precache_button":
             self.action_precache()
+
+def launch(repo, app, scheduled_num):
+    if scheduled_num == -1:
+        scheduled_num = config_var.get()["scheduled_num"]
+    atoms = list()
+    for i in repo.ident_index:
+        n = pt.Nucleon.create_on_nucleonic_data(
+            nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
+        )
+        e = pt.Electron.create_on_electonic_data(
+            electronic_data=repo.electronic_data_lict.get_itemic_unit(i)
+        )
+        a = pt.Atom(n, e, repo.orbitic_data)
+        atoms.append(a)
+
+    atoms_to_provide = list()
+    left_new = scheduled_num
+    for i in atoms:
+        i: pt.Atom
+        if i.registry["electron"].is_activated():
+            if i.registry["electron"].is_due():
+                atoms_to_provide.append(i)
+        else:
+            left_new -= 1
+            if left_new >= 0:
+                atoms_to_provide.append(i)
+    import heurams.kernel.reactor as rt
+
+    from .memoqueue import MemScreen
+
+    pheser = rt.Phaser(atoms_to_provide)
+    save_func = repo.persist_to_repodir
+    memscreen = MemScreen(pheser, save_func, repo=repo)
+    app.push_screen(memscreen)
