@@ -3,6 +3,7 @@
 from functools import reduce
 import pathlib
 from pathlib import Path
+import os
 
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Container, Horizontal, Vertical
@@ -53,26 +54,26 @@ class DashboardScreen(Screen):
         with ScrollableContainer():
             yield Horizontal(
                 Vertical(
-                    Label('欢迎使用 "潜进" 启发式辅助记忆调度器'),
+                    Label(f'欢迎使用 "潜进" 版本 {version.ver}'),
                     Label(
-                        f"当前 UNIX 日时间戳: {timer.get_daystamp()} (UTC+{config_var.get()['timezone_offset'] / 3600})"
+                        f"当前 UNIX 日时间戳: {timer.get_daystamp()}"
                     ),
+                    Label(f"应用时区修正: UTC+{config_var.get()['timezone_offset'] / 3600}"),
                     Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
-                    Label("选择待学习或待修改的项目:"),
-                    classes="column",
+                    classes="column infview",
                 ),
                 Vertical(
                     Label(f"已加载 {len(self.repostat)} 个单元集", classes='dataview'),
                     Label(f"共计 {reduce(lambda x, y: x + y, map(lambda x: x.get('unit_sum'), self.repostat.values()))} 个单元", classes='dataview'),
                     Label(f"已激活 {reduce(lambda x, y: x + y, map(lambda x: x.get('activated_sum'), self.repostat.values()))} 个单元", classes='dataview'),
-                    Label(""),
-                    classes="column",
+                    Label(f"终端尺寸: {os.get_terminal_size()[0]}x{os.get_terminal_size()[1]}"),
+                    classes="column dataview",
                 ),
                 id="dashboardtop"
             )
 
             yield ListView(id="repo-list", classes="repo-list-view")
-            yield Label(f'"潜进" 启发式辅助记忆调度器 版本 {version.ver} ')
+            yield Label(f'"潜进" 启发式辅助记忆调度器 版本 {version.ver} {version.stage.capitalize()}')
         yield Footer()
 
     def _load_data(self):

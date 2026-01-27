@@ -4,6 +4,12 @@ NavigatorScreen {
     align: center middle;
 }
 
+.infview {
+    width: 5fr
+}
+.dataview {
+    width: 3fr
+}
 
 .repo_listitem {
     layout: grid;

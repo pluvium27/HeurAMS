@@ -98,11 +98,6 @@ class PrecachingScreen(Screen):
         yield Header(show_clock=True)
         with ScrollableContainer(id="precache_container"):
             yield Label("[b]音频预缓存[/b]", classes="title-label")
-            with Container(classes="cache-info"):
-                yield Static(f"缓存路径: {cache_dir}", classes="cache-path")
-                yield Static(f"文件数: {self.cache_stats['file_count']}", classes="cache-count")
-                yield Static(f"总大小: {self.cache_stats['human_size']}", classes="cache-size")
-                yield Button("刷新", id="refresh_cache_stats", variant="default")
             with Container():
                 yield Static(
                     f"缓存率: {self.cache_stats.get('cache_rate', 0):.1f}% (已缓存 {self.cache_stats.get('cached_units', 0)} / {self.cache_stats.get('total_units', 0)} 个单元)",
@@ -117,17 +112,20 @@ class PrecachingScreen(Screen):
                 yield Static(id="status", classes="status-info")
                 yield Static(id="current_item", classes="current-item")
                 yield ProgressBar(total=100, show_eta=False, id="progress_bar")
-
-            with Horizontal(classes="button-group"):
-                if not self.is_precaching:
-                    yield Button("开始预缓存", id="start_precache", variant="primary")
-                else:
-                    yield Button("取消预缓存", id="cancel_precache", variant="error")
-                yield Button("清空缓存", id="clear_cache", variant="warning")
-                yield Button("返回", id="go_back", variant="default")
-
-            yield Static("若您离开此界面, 未完成的缓存进程会自动停止.")
-            yield Static('缓存程序支持 "断点续传".')
+                with Horizontal(classes="button-group"):
+                    if not self.is_precaching:
+                        yield Button("开始预缓存", id="start_precache", variant="primary")
+                    else:
+                        yield Button("取消预缓存", id="cancel_precache", variant="error")
+                    yield Button("清空缓存", id="clear_cache", variant="warning")
+                    yield Button("返回", id="go_back", variant="default")
+            with Container(classes="cache-info"):
+                yield Static(f"缓存路径: {cache_dir}", classes="cache-path")
+                yield Static(f"文件数: {self.cache_stats['file_count']}", classes="cache-count")
+                yield Static(f"总大小: {self.cache_stats['human_size']}", classes="cache-size")
+                yield Button("刷新", id="refresh_cache_stats", variant="default", flat=True)
+                yield Static("若您离开此界面, 未完成的缓存进程会自动停止.")
+                yield Static('缓存程序支持 "断点续传".')
 
         yield Footer()
 
