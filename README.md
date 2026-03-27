@@ -6,60 +6,6 @@
 ## 关于此仓库
 本仓库为 "潜进" 软件组项目的核心部分, 包含核心功能模块以及基于 Textual 框架的基础用户界面(heurams.interface)实现  
 除了通过用户界面进行学习外, 你也可以在 Python 中导入 `heurams` 库, 使用其中实现的状态机, 算法迭代器和数据模型构建辅助记忆功能  
-本仓库在 AGPLv3 下开放源代码(详见 LICENSE 文件)  
-
-## 版本日志
-
-### 0.0.x
-- 简易调度器实现与最小原型
-
-### 0.1.x
-- 命令行操作的调度器
-
-### 0.2.x
-- 使用 Textual 构建富文本终端用户界面
-- 项目可行性验证
-- 采用 SM-2 原始算法, 评估方式为用户自评估原型
-
-### 0.3.x Frontal 前端
-- 简单的多文件项目
-- 创建了记忆内容/算法数据结构
-- 基于 SM-2 改进算法的自动复习测评评估
-- 重点设计古诗文记忆理解功能
-- TUI 界面改进
-- 简单的 TTS 集成
-
-### 0.4.x Fledge 雏鸟
-- 开发目标转为多用途
-- 使用模块管理解耦设计
-- 增加文档与类型标注
-- 采用上下文设计模式的隐式依赖注入与遵从 IoC, 注册器设计的算法与功能实现
-- 支持其他调度算法模块 (SM-2, SM-18M 参考理论变体, FSRS) 与谜题模块
-- 采用规范的日志调试取代 Textual Devtools 调试
-- 更新数据持久化协议规范
-- 引入动态数据模式 (宏驱动的动态内容生成) , 与基于文件的策略调控
-- 更佳的用户数据处理
-- 加入模块化扩展集成
-- 更换算法数据格式, 提高性能
-- 采用 provider-service 抽象架构, 支持切换服务提供者
-- 整体兼容性改进
-
-### 0.5.x Fulcrum 支点
-- 以仓库 (repository) 对象作为文件系统与运行时对象间的桥梁, 提高解耦性与性能
-- 使用具有列表-字典 API 同步特性的 "Lict" 对象作为 Repo 数据的内部存储
-- 将粒子对象作为纯运行时对象, 数据通过引用自动同步至 Repo, 减少负担
-- 实现声音形式回顾 "电台" 功能
-- 改进数据存储结构, 实现选择性持久化
-- 增强可配置性
-- 使用 Transitions 状态机库重新实现 Reactor 模块系列状态机, 增强可维护性
-- 实现整体回顾记忆功能, 与队列式记忆功能并列
-- 加入状态机快照功能 (基于 pickle) , 使中断的记忆流程得以恢复
-- 增加 "整体文章引用" 功能, 实现从一篇长文本中摘取内容片段记忆并在原文中高亮查看的组织操作
-
-### 下一步？
-- 增加云同步 / 文档源服务
-- 使用 Flutter 构建酷酷的现代化前端
-- ...
 
 ## 特性
 
@@ -81,13 +27,6 @@
 - 支持触屏/鼠标/键盘多操作模式
 - 简洁直观的复习流程设计
 
-### 架构特性
-- 模块化设计: 算法, 谜题, 服务提供者可插拔替换
-- 上下文管理: 使用 ContextVar 实现隐式依赖注入
-- 数据持久化: TOML 配置与内容, JSON 算法状态
-- 服务抽象: 音频播放, TTS, LLM 通过 provider 架构支持多种后端
-- 完整日志系统: 带轮转的日志记录, 便于调试
-
 ## 安装
 
 ### 从源码安装
@@ -107,13 +46,17 @@
    pip install -e .
    ```
 
+### 从包管理器安装
+暂时还没有:(  
+
 ## 启动应用
 ```bash
 # 在任一目录(建议是空目录或者包根目录, 将被用作存放数据)下运行
 python -m heurams.interface
 ```
 
-配置文件位于 `./data/config/config.toml`(相对于工作目录). 如果不存在, 会使用内置的默认配置.
+配置文件位于 `./data/config/config.toml`(相对于工作目录).  
+如果不存在, 会使用内置的默认配置.
 
 ## 项目结构
 
@@ -178,38 +121,25 @@ graph TB
     Algorithms --> Files
 ```
 
-### 目录结构(待更新 0.5.0)
-```
-src/heurams/
-├── __init__.py              # 包入口点
-├── context.py               # 全局上下文, 路径, 配置上下文管理器
-├── services/                # 核心服务
-│   ├── config.py            # 配置管理
-│   ├── logger.py            # 日志系统
-│   ├── timer.py             # 时间服务
-│   ├── audio_service.py     # 音频播放抽象
-│   ├── tts_service.py       # 文本转语音抽象
-│   └── sync_service.py      # WebDAV 同步服务
-├── kernel/                  # 核心业务逻辑
-│   ├── algorithms/          # 间隔重复算法 (FSRS, SM2)
-│   ├── particles/           # 数据模型 (Atom, Electron, Nucleon, Orbital)
-│   ├── puzzles/             # 谜题类型 (MCQ, cloze, recognition)
-│   └── reactor/             # 调度和处理逻辑
-├── providers/               # 外部服务提供者
-│   ├── audio/               # 音频播放实现
-│   ├── tts/                 # 文本转语音实现
-│   └── llm/                 # LLM 集成
-├── interface/               # Textual TUI 界面
-│   ├── widgets/             # UI 组件
-│   ├── screens/             # 应用屏幕
-│   └── __main__.py          # 应用入口点
-└── default/                 # 默认配置和数据模板
-```
-
 ## 贡献
 
 欢迎贡献！请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解贡献指南. 
 
 ## 许可证
 
-本项目基于 AGPL-3.0 许可证开源. 详见 [LICENSE](LICENSE) 文件. 
+### 项目本身
+
+本项目基于 AGPL-3.0 许可证开源. 详见根目录下 [LICENSE](LICENSE) 文件. 
+
+### 第三方代码
+
+项目在 `src/heurams/vendor/` 目录下嵌入了以下第三方代码(可能有修改):
+
+#### py-fsrs
+- 上游版本: 6.3.1
+- 位置: `src/heurams/vendor/pyfsrs/`
+- 原项目: [py-fsrs](https://github.com/open-spaced-repetition/py-fsrs)
+- 原许可证: Copyright (c) 2026 Open Spaced Repetition Contributors
+- 原许可证: MIT License, 详见 `src/heurams/vendor/pyfsrs/LICENSE`
+
+本项目受益于他们无私且优秀的工作
