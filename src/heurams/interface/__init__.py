@@ -18,12 +18,8 @@ print("加载用户界面布局... ", end="", flush=True)
 _start = perf_counter()
 from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
-from .screens.llmchat import LLMChatScreen
 from .screens.navigator import NavigatorScreen
 from .screens.precache import PrecachingScreen
-from .screens.radio import RadioScreen
-from .screens.repocreator import RepoCreatorScreen
-from .screens.repoeditor import RepoEditorScreen
 from .screens.synctool import SyncScreen
 _end = perf_counter()
 print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
@@ -44,14 +40,10 @@ class HeurAMSApp(App):
     ]
     SCREENS = {
         "dashboard": DashboardScreen,
-        "repo_creator": RepoCreatorScreen,
         "precache_all": PrecachingScreen,
         "synctool": SyncScreen,
         "about": AboutScreen,
         "navigator": NavigatorScreen,
-        "radio": RadioScreen,
-        "repo_editor": RepoEditorScreen,
-        "llmchat": LLMChatScreen,
 #        "config": ConfigScreen,
     }
 

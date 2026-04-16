@@ -22,7 +22,6 @@ from heurams.services.logger import get_logger
 from .about import AboutScreen
 from .navigator import NavigatorScreen
 from .preparation import PreparationScreen
-from .radio import RadioScreen
 
 logger = get_logger(__name__)
 
@@ -90,7 +89,7 @@ class DashboardScreen(Screen):
         is_due = 0
         unit_sum = len(repo)
         activated_sum = 0
-        nextdate = 0x3F3F3F3F
+        nextdate = float('inf')
         for i in repo.ident_index:
             nucleon = pt.Nucleon.create_on_nucleonic_data(
                 nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)

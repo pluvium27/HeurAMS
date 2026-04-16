@@ -1,4 +1,4 @@
-# 音频服务
+"""音频服务"""
 from typing import Callable
 
 from heurams.context import config_var

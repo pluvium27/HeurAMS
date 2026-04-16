@@ -24,15 +24,13 @@ class NavigatorScreen(ModalScreen):
 
     SCREENS = [
         ("仪表盘", "dashboard"),
-        ("电台", "radio"),
-        ("语言模型集成", "llmchat"),
         #        ("创建仓库", "repo_creator"),
         ("缓存管理器", "precache_all"),
-        ("收藏夹管理器", FavoriteManagerScreen),
-        ("配置设置", "config"),
+        ("收藏夹", FavoriteManagerScreen),
+        # ("配置设置", "config"),
+        # ("调试日志", "logviewer"),
+        ("同步工具", "synctool"),
         ("关于此软件", "about"),
-        ("调试日志", "logviewer"),
-        #        ("同步工具", "synctool"),
         #        ("仓库编辑器", "repo_editor"),
     ]
 

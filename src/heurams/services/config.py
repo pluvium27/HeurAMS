@@ -1,4 +1,4 @@
-# 配置文件服务
+"""配置文件服务"""
 import pathlib
 import typing
 
