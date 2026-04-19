@@ -39,7 +39,10 @@ NavigatorScreen {
     margin-top: 1;
     align: center middle;
 }
-
+.container {
+    height: auto;
+    padding: 0 0 1 0;
+}
 #message-input {
     width: 1fr;
     margin-right: 1;

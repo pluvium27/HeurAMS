@@ -1,7 +1,13 @@
 enable_built_in_interface = true
+_enable_built_in_interface_desc = "启用内置基本用户界面\n(当且仅当 HeurAMS 作为程序库时禁用, 以跳过用户界面逻辑)"
+_paths_desc = "用户数据路径定义"
 
 [paths]
 data = "./data"
+_data_desc = "用户数据根目录"
 cache = "./data/cache"
+_cache_desc = "缓存根目录\n(如音频缓存在 voice 子目录)"
 config = "./data/config"
+_config_desc = "配置文件根目录"
 repo = "./data/repo"
+_repo_desc = "记忆单元集根目录"

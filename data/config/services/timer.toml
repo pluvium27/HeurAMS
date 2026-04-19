@@ -1,3 +1,6 @@
 daystamp_override = -1
+_daystamp_override_desc = "[调试] 覆写 UNIX 日时间戳, 单位为日\n(设为 -1 禁用)"
 timestamp_override = -1
+_timestamp_override_desc = "[调试] 覆写 UNIX 时间戳, 单位为秒\n(设为 -1 禁用)"
 timezone_offset = 28800
+_timezone_offset_desc = "时区偏移设置, 用于取消跨天时区误差, 单位为秒\n(如 28800 为 UTC+8.0, 中国标准时间)"

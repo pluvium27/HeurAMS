@@ -1,1 +1,2 @@
 max_riddles_num = 2
+_max_riddles_num_desc = "单次生成的最大谜题数量"

@@ -56,6 +56,11 @@ class ConfigDict(UserDict): # 舒服了
 
     def update_index(self): # 如果有人没事干在config里面创建指向config的符号链接 这玩意会崩溃 但是不要修复: 需要这个符号链接特性
         for i in self.path.iterdir():
+            if i.name.startswith('_'):
+                if i.name == '_.toml' and not i.is_dir():
+                    with open(self.path/'_.toml', 'r+') as f:
+                        self.data.update(dict(toml.load(f)))
+                continue
             if i.is_dir():
                 self.data[i.name] = i
             else:

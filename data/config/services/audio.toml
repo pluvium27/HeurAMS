@@ -1,4 +1,5 @@
 provider = "playsound"
+_provider_desc = "音频驱动类型"
 
 [_provider_candidate]
 playsound = "python 跨平台音频系统"

@@ -8,7 +8,7 @@ import os
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Container, Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static, Collapsible, Input, Switch
+from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static, Collapsible, Input, Switch, Select
 from textual.layouts import horizontal
 
 import heurams.kernel.particles as pt
@@ -45,9 +45,13 @@ class SettingScreen(Screen):
         """组合界面组件"""
         yield Header(show_clock=True)
         with ScrollableContainer():
-            yield Label('设置页面')
+            yield Label('[b]设置页面[/b]')
             for i in config_var.get():
-                yield Collapsible(*self._get_subcfg(f'{i}'), title=i)
+                if i.startswith('_'):
+                    continue
+                a = self._get_subcfg(f'{i}')
+                if a:
+                    yield Collapsible(*a, title=i + f'\n{config_var.get().get(f"_{i}_desc", "")}')
         yield Footer()
 
     def _get_subcfg(self, parent_epath: str):
@@ -56,7 +60,11 @@ class SettingScreen(Screen):
             if parent.is_dir:
                 lst = list()
                 for i in parent:
-                    lst.append(Collapsible(*self._get_subcfg(f"{parent_epath}.{i}"), title=i))
+                    if i.startswith('_'):
+                        continue
+                    a = self._get_subcfg(f"{parent_epath}.{i}")
+                    if a:
+                        lst.append(Collapsible(*a, title=i + f'\n{parent.get(f"_{i}_desc", "")}'))
                 return lst
         if isinstance(parent, dict) or (isinstance(parent, ConfigDict) and not parent.is_dir):
             lst = list()
@@ -64,38 +72,57 @@ class SettingScreen(Screen):
                 if i.startswith('_'):
                     continue
                 if isinstance(parent[i], dict):
-                    lst.append(Collapsible(*self._get_subcfg(f"{parent_epath}.{i}"), title=i))
-                elif isinstance(parent[i], float):
-                    lst.extend([
-                        Label(i),
-                        Input(value=str(parent[i]), placeholder='要求一个浮点数', type='number', id=domize(f"{parent_epath}.{i}"))
-                    ])
-                elif isinstance(parent[i], str):
-                    lst.extend([
-                        Label(i),
-                        Input(value=parent[i], placeholder='要求一个字符串', type='text', id=domize(f"{parent_epath}.{i}"))
-                    ])
-                elif isinstance(parent[i], bool):
-                    lst.extend([
-                        Label(i),
-                        Switch(value=str(parent[i]), id=domize(f"{parent_epath}.{i}"))
-                    ])
-                elif isinstance(parent[i], int):
-                    lst.extend([
-                        Label(i),
-                        Input(value=str(parent[i]), placeholder='要求一个整数', type='integer', id=domize(f"{parent_epath}.{i}"))
-                    ])
-                elif isinstance(parent[i], list):
-                    pass
+                    a = self._get_subcfg(f"{parent_epath}.{i}")
+                    if a:
+                        lst.append(Collapsible(*a, title=i + f'\n{parent.get(f"_{i}_desc", "")}'))
+                elif f'_{i}_candidate' in parent:
+                    if isinstance(parent[f'_{i}_candidate'], dict):
+                        lst.append(Horizontal(
+                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                            Select((f"{j} ({k})", j) for j, k in parent[f'_{i}_candidate'].items()),
+                            classes='container'
+                        ))
+                    elif isinstance(parent[f'_{i}_candidate'], list):
+                        lst.append(Horizontal(
+                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                            Select((j, j) for j in parent[f'_{i}_candidate']),
+                            classes='container'
+                        ))
                 else:
-                    lst.append(Label('未知类型'))
-
+                    if isinstance(parent[i], float):
+                        lst.append(Horizontal(
+                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                            Input(value=str(parent[i]), placeholder='要求一个浮点数', type='number', id=domize(f"{parent_epath}.{i}")),
+                        classes='container'))
+                    elif isinstance(parent[i], str):
+                        lst.append(Horizontal(
+                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                            Input(value=parent[i], placeholder='要求一个字符串', type='text', id=domize(f"{parent_epath}.{i}")),
+                        classes='container'))
+                    elif isinstance(parent[i], bool):
+                        lst.append(Horizontal(
+                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                            Switch(value=str(parent[i]), id=domize(f"{parent_epath}.{i}")),
+                        classes='container'))
+                    elif isinstance(parent[i], int):
+                        lst.append(Horizontal(
+                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                            Input(value=str(parent[i]), placeholder='要求一个整数', type='integer', id=domize(f"{parent_epath}.{i}")),
+                        classes='container'))
+                    elif isinstance(parent[i], list):
+                        pass
+                    else:
+                        lst.append(Label('未知类型'))
             return lst
         return [Label('无子项')]
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""
         pass
+
+    def action_go_back(self) -> None:
+        """返回上一屏幕"""
+        self.app.pop_screen()
 
     def action_quit_app(self) -> None:
         """退出应用程序"""

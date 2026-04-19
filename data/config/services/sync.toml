@@ -1,4 +1,5 @@
 provider = "webdav"
+_provider_desc = "同步服务驱动类型"
 
 [_provider_candidate]
 webdav = "WebDAV 兼容网络文件系统 (包括 webdavs)"

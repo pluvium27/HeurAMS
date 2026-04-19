@@ -1,4 +1,5 @@
 voice = "zh-CN-XiaoxiaoNeural"
+_voice_desc = "音色"
 
 [_voice_candidate]
 zh-CN-XiaoxiaoNeural = "晓晓: 中文温柔女声"
