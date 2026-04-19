@@ -17,6 +17,7 @@ import heurams.services.version as version
 from heurams.context import *
 from heurams.kernel.particles import *
 from heurams.kernel.repolib import *
+from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
 
 from .about import AboutScreen
@@ -58,14 +59,14 @@ class DashboardScreen(Screen):
                         f"当前 UNIX 日时间戳: {timer.get_daystamp()}"
                     ),
                     Label(f"应用时区修正: UTC+{config_var.get()['timezone_offset'] / 3600}"),
-                    Label(f"全局算法设置: {config_var.get()['algorithm']['default']}"),
+                    Label(f"全局算法设置: {config_var.get()['algorithm']['default']}: {algorithms[config_var.get()['algorithm']['default']].desc}"),
                     classes="column infview",
                 ),
                 Vertical(
                     Label(f"已加载 {len(self.repostat)} 个单元集", classes='dataview'),
                     Label(f"共计 {reduce(lambda x, y: x + y, map(lambda x: x.get('unit_sum'), self.repostat.values()))} 个单元", classes='dataview'),
                     Label(f"已激活 {reduce(lambda x, y: x + y, map(lambda x: x.get('activated_sum'), self.repostat.values()))} 个单元", classes='dataview'),
-                    Label(f"终端尺寸: {os.get_terminal_size()[0]}x{os.get_terminal_size()[1]}"),
+                    Label(f""),
                     classes="column dataview",
                 ),
                 id="dashboardtop"

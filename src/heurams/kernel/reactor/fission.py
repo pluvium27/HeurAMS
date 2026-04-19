@@ -71,7 +71,8 @@ class Fission(Machine):
                         "alia": item,
                     }
                 )
-        self.current_puzzle_inf = self.puzzles_inf[0]
+        if self.puzzles_inf:
+            self.current_puzzle_inf = self.puzzles_inf[0]
 
         for i in range(len(self.puzzles_inf)):
             self.min_ratings.append(float('inf'))
@@ -94,12 +95,14 @@ class Fission(Machine):
         return self.current_puzzle_inf
 
     def report(self, rating):
-        self.min_ratings[self.cursor] = min(rating, self.min_ratings[self.cursor])
+        if self.puzzles_inf:
+            self.min_ratings[self.cursor] = min(rating, self.min_ratings[self.cursor])
 
     def get_quality(self):
-        if self.is_state("retronly", self):
-            return reduce(lambda x, y: min(x, y), self.min_ratings)
-        raise IndexError
+        if self.puzzles_inf:
+            if self.is_state("retronly", self):
+                return reduce(lambda x, y: min(x, y), self.min_ratings)
+            raise IndexError
 
     def forward(self, step=1):
         """将谜题指针向前移动并依情况更新或完成"""

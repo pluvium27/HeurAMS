@@ -9,10 +9,10 @@ timestamp_override = -1
 quick_pass = true
 
 # [调试] 自动化测试模式(仅用于测试完整性)
-auto_pass = false
+auto_pass = true
 
 # 对于每个项目的默认新记忆原子数量
-scheduled_num = 20
+scheduled_num = 100
 
 # UTC 时间戳修正 仅用于 UNIX 日时间戳的生成修正, 单位为秒
 timezone_offset = +28800 # 中国标准时间 (UTC+8)

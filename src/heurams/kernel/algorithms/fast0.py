@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 
 class FAST0Algorithm(BaseAlgorithm):
     algo_name = "FAST-0"
-
+    desc = '快速筛选用特殊调度器'
     class AlgodataDict(TypedDict):
         real_rept: int
         rept: int

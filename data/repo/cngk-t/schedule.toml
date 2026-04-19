@@ -2,7 +2,7 @@ schedule = ["quick_review", "recognition", "final_review"]
 
 [phases]
 quick_review = [["FillBlank", "1.0"], ["Recognition", "1.0"]]
-recognition = [["Recognition", "1.0"]]
+recognition = [["FillBlank", "1.0"]]
 final_review = [["FillBlank", "1.0"], ["Recognition", "1.0"]]
 
 [annotation]

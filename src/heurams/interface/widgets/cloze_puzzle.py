@@ -70,8 +70,9 @@ class ClozePuzzle(BasePuzzleWidget):
         # 渲染当前问题的选项
         with Container(id="btn-container"):
             for i in self.ans:
-                self.hashmap[str(hash(i))] = i
-                btnid = f"sel000-{hash(i)}"
+                h = str(hash(i))
+                self.hashmap[h] = i
+                btnid = f"sel000-{h}"
                 logger.debug(f"建立按钮 {btnid}")
                 yield Button(i, id=f"{btnid}")
 
