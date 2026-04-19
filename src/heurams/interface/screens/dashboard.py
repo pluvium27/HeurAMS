@@ -96,7 +96,8 @@ class DashboardScreen(Screen):
                 nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
             )
             electron = pt.Electron.create_on_electonic_data(
-                electronic_data=repo.electronic_data_lict.get_itemic_unit(i)
+                electronic_data=repo.electronic_data_lict.get_itemic_unit(i),
+                algo_name=config_var.get()['repo'][repo.manifest['title']]['algorithm']
             )
             if electron.is_activated():
                 activated_sum += 1

@@ -1,0 +1,11 @@
+algorithm = "NSP-0"
+_algorithm_desc = "记忆调度算法"
+scheduled_num = 420
+_scheduled_num_desc = "单次记忆单元数量"
+
+[_algorithm_candidate]
+NSP-0 = "筛选用非间隔重复调度器"
+none = "不设置默认调度器"
+SM-2 = "第二代 SuperMemo 简单间隔重复调度器"
+SM-15M = "第15代 SuperMemo 复杂间隔重复调度器 (不稳定且逆向工程)"
+FSRS = "先进开放间隔重复调度器"

@@ -37,6 +37,7 @@ class HeurAMSApp(App):
         ("q", "go_back", "退出"),
         ("d", "toggle_dark", "主题"),
         ("n", "app.push_screen('navigator')", "导航"),
+        ("s", "app.push_screen('setting')", "设置"),
         ("z", "app.push_screen('about')", "关于"),
     ]
     SCREENS = {
