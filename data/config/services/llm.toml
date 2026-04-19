@@ -1,0 +1,5 @@
+provider = "openai"
+
+[_provider_candidate]
+openai = "OpenAI 风格 API, 同时支持与其相容的模型服务 (如 deepseek)"
+none = "不使用语言大模型"

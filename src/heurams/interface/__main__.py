@@ -10,7 +10,7 @@ def environment_check():
     logger.debug("检查环境路径")
     subdir = ["cache/voice", "repo", "global", "config"]
     for i in subdir:
-        i = Path(config_var.get()["paths"]["data"]) / i
+        i = Path(config_var.get()["global"]["paths"]["data"]) / i
         if not i.exists():
             logger.info("创建目录: %s", i)
             print(f"创建 {i}")

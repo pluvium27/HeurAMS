@@ -58,8 +58,8 @@ class DashboardScreen(Screen):
                     Label(
                         f"当前 UNIX 日时间戳: {timer.get_daystamp()}"
                     ),
-                    Label(f"应用时区修正: UTC+{config_var.get()['timezone_offset'] / 3600}"),
-                    Label(f"全局算法设置: {config_var.get()['algorithm']['default']}: {algorithms[config_var.get()['algorithm']['default']].desc}"),
+                    Label(f"应用时区修正: UTC+{config_var.get()['services']['timer']['timezone_offset'] / 3600}"),
+                    Label(f"全局算法设置: {config_var.get()['interface']['global']['algorithm']}: {algorithms[config_var.get()['interface']['global']['algorithm']].desc}"),
                     classes="column infview",
                 ),
                 Vertical(
@@ -78,7 +78,7 @@ class DashboardScreen(Screen):
 
     def _load_data(self):
         self.repo_dirs = Repo.probe_valid_repos_in_dir(
-            Path(config_var.get()["paths"]["data"]) / "repo"
+            Path(config_var.get()['global']["paths"]["data"]) / "repo"
         )
         for repo_dir in self.repo_dirs:
             repo = Repo.create_from_repodir(repo_dir)

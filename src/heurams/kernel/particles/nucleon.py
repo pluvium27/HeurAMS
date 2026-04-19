@@ -19,14 +19,14 @@ class Nucleon:
             data_safe['puzzles'] = {}
             env = {
                 "payload": data_safe,
-                "default": config_var.get()["puzzles"],
+                "default": config_var.get()['interface']["puzzles"],
                 "nucleon": data_safe,
             }
             self.evalizer = Evalizer(environment=env)
             data_safe = self.evalizer(deepcopy(data_safe))
             env = {
                 "payload": data_safe,
-                "default": config_var.get()["puzzles"],
+                "default": config_var.get()['interface']["puzzles"],
                 "nucleon": data_safe,
             }
             self.evalizer = Evalizer(environment=env)

@@ -63,7 +63,7 @@ class FavoriteManager:
 
     def _get_file_path(self) -> Path:
         """获取收藏文件路径"""
-        config_path = Path(config_var.get()["paths"]["data"])
+        config_path = Path(config_var.get()['global']["paths"]["data"])
         fav_path = config_path / "global" / "favorites.json"
         fav_path.parent.mkdir(parents=True, exist_ok=True)
         return fav_path

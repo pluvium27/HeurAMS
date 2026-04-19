@@ -59,3 +59,15 @@ class HeurAMSApp(App):
 
     def action_do_nothing(self):
         self.refresh()
+
+    # 移除烦人的 "rich traceback"
+    # Textual 官方不会管这破事, 写 Rich 写入脑了导致的
+    # 不知道哪来的自信改标准库的 traceback
+    # https://github.com/Textualize/textual/discussions/6255
+    def _fatal_error(self):
+        self._close_messages_no_wait()
+        raise self._exception
+
+    def panic(self, *args):
+        self._close_messages_no_wait()
+        raise self._exception

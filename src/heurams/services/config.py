@@ -1,127 +1,80 @@
-"""配置文件服务"""
 import pathlib
 import typing
 
 import toml
+from collections import UserDict
+import atexit
 
 from heurams.services.logger import get_logger
+from heurams.services.exceptions import WTFException
 
-default_config = {
-    "persist_to_file": 1, # 将更改保存到文件
-    "daystamp_override": -1, # 覆写时间, 设为 -1 以禁用
-    "timestamp_override": -1, # 覆写时间, 设为 -1 以禁用
-    "quick_pass": 1, # 启用用于测试的快速通过
-    "scheduled_num": 8, # 对于每个项目的默认新记忆原子数量
-    "timezone_offset": 28800, # UTC 时间戳修正 仅用于 UNIX 日时间戳的生成修正, 单位为秒
-    # 28800 是中国标准时间 (UTC+8)
-    
-    "interface": {
-        "memorizor": {
-            "autovoice": True  # 自动语音播放, 仅限于 recognition 组件
-        }
-    },
-    
-    "algorithm": {
-        "default": "SM-2"  # 主要算法
-        # 可选项: SM-2, SM-15M, FSRS
-    },
-    
-    "puzzles": {  # 谜题默认配置
-        "mcq": {
-            "max_riddles_num": 2
-        },
-        "cloze": {
-            "min_denominator": 3
-        }
-    },
-    
-    "paths": {  # 相对于配置文件的 ".." (即工作目录) 而言 或绝对路径
-        "data": "./data"
-    },
-    
-    "services": {  # 定义服务到提供者的映射
-        "audio": "playsound",  # 可选项: playsound(通用), termux(仅用于 Android Termux), mpg123(TODO)
-        "tts": "edgetts",  # 可选项: edgetts
-        "llm": "openai",  # 可选项: openai
-        "sync": "webdav"  # 可选项: 留空, webdav
-    },
-    
-    "providers": {
-        "tts": {
-            "edgetts": {  # EdgeTTS 设置
-                "voice": "zh-CN-XiaoxiaoNeural"  # 可选项: zh-CN-YunjianNeural (男声), zh-CN-XiaoxiaoNeural (女声)
-            }
-        },
-        "llm": {
-            "openai": {  # 与 OpenAI 相容的语言模型接口服务设置
-                "url": "",
-                "key": ""
-            }
-        },
-        "sync": {
-            "webdav": {  # WebDAV 同步设置
-                "url": "",
-                "username": "",
-                "password": "",
-                "remote_path": "/heurams/",
-                "verify_ssl": True
-            }
-        }
-    },
-}
-
-class ConfigFile:
-    def __init__(self, path: pathlib.Path):
+# 我们的流程是: 找到文件名: 返回文件名里头的数据; 找不到: 继续查索引; 所以 self.data 除了存本级各种索引球用没得
+# 递归就是这么吊
+class ConfigDict(UserDict): # 舒服了
+    def __init__(self, config_path: pathlib.Path, dict = None): # 需要自己把自己提起来
+        if dict:
+            raise WTFException("不要放默认值...")
+        super().__init__(dict)
         self.logger = get_logger(__name__)
-        self.path = path
-        self.data = dict()
-        if not self.path.exists():
-            self.path.touch()
-            self.logger.debug("创建配置文件: %s", self.path)
-            self.data = default_config
-        self.valid_configfile = 1
-        # 考虑到可能临时编辑格式错误, 所以不覆写格式错误的配置文件, 而是提示损坏并使用默认配置
-        self._load()
-
-    def _load(self):
-        """从文件加载配置数据"""
-        with open(self.path, "r") as f:
-            try:
-                self.data = toml.load(f)
-                self.logger.debug("配置文件加载成功: %s", self.path)
-            except toml.TomlDecodeError as e:
-                print(f"{e}")
-                self.logger.error("TOML解析错误: %s", e)
-                self.data = default_config
-                self.valid_configfile = 0
-
-    def modify(self, key: str, value: typing.Any):
-        """修改配置值并保存"""
-        self.data[key] = value
-        self.logger.debug("修改配置项: %s = %s", key, value)
-        self.save()
-
-    def save(self, path: typing.Union[str, pathlib.Path] = ""):
-        """保存配置到文件"""
-        if self.valid_configfile:
-            save_path = pathlib.Path(path) if path else self.path
-            with open(save_path, "w") as f:
-                toml.dump(self.data, f)
-            self.logger.debug("配置文件已保存: %s", save_path)
+        self.path = config_path
+        self.is_dir = self.path.is_dir()
+        if self.is_dir:
+            self.update_index() # 狗儿要唱狗儿歌
         else:
-            pass
+            with open(self.path, 'r+') as f: #TODO: 给这个做缓存
+                try:
+                    self.data = toml.load(f)
+                except:
+                    self.data = {}
+                    self.persist = lambda: False # 不修改错误的配置文件
+    
+    def __getitem__(self, key):
+        # 我们实现了先进的懒狗加载
+        value = super().__getitem__(key)
+        if isinstance(value, pathlib.Path):
+            return ConfigDict(value)
+        return value
 
-    def get(self, key: str, default: typing.Any = None) -> typing.Any:
-        """获取配置值, 如果不存在返回默认值"""
-        return self.data.get(key, default)
+    def converter(self, s):
+        if (self.path / s).exists:
+            return self.path / s
+        return self.path / s+'.toml'
 
-    def __getitem__(self, key: str) -> typing.Any:
-        return self.data[key]
+    def __contains__(self, key):
+        if isinstance(key, str):
+            key = self.converter(key)
+        return super().__contains__(key)
 
-    def __setitem__(self, key: str, value: typing.Any):
-        self.data[key] = value
-        self.save()
+    def __setitem__(self, key, value):
+        if isinstance(key, str):
+            key = self.converter(key)
+        origvalue = super().__getitem__(key) # 所以你不该访问不存在的对象
+        if isinstance(origvalue, ConfigDict):
+            if origvalue.path.is_dir():
+                raise WTFException("你怎么能变更目录配置的内容呢?!")
+            else:
+                # 对文件, 我们允许这种覆写存在
+                # 但是不准变类型
+                origvalue.data = value
+        super().__setitem__(key, value)
 
-    def __contains__(self, key: str) -> bool:
-        """支持 in 语法"""
-        return key in self.data
+    def update_index(self): # 如果有人没事干在config里面创建指向config的符号链接 这玩意会崩溃 但是不要修复: 需要这个符号链接特性
+        for i in self.path.iterdir():
+            if i.is_dir():
+                self.data[i.name] = i
+            else:
+                if i.suffix == '.toml':
+                    self.data[i.stem] = i
+                else:
+                    self.logger.log(f"配置目录中有无效的文件 {i.stem}") # what's up bro
+
+    def persist(self):
+        if self.is_dir:
+            raise WTFException("不准这样浪费性能...")
+
+        with open(self.path, 'w+') as f:
+            toml.dump(self.data, f)
+    
+    def __del__(self):
+        if not self.is_dir:
+            self.persist() # 不准循环引用, 懂了吧

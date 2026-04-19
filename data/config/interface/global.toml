@@ -1,0 +1,6 @@
+persist_to_file = true
+quick_pass = true
+auto_pass = false
+scheduled_num = 420
+algorithm = "NSP-0"
+_algorithm_candidate = [ "SM-2", "SM-15M", "FSRS", "NSP-0", "None",]

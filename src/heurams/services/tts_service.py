@@ -7,7 +7,7 @@ from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
-convertor: Callable = prov[config_var.get()["services"]["tts"]].convert
+convertor: Callable = prov[config_var.get()['services']["tts"]["provider"]].convert
 logger.debug(
-    "TTS 服务初始化完成, 使用 provider: %s", config_var.get()["services"]["tts"]
+    "TTS 服务初始化完成, 使用 provider: %s", config_var.get()['services']["tts"]["provider"]
 )

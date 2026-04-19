@@ -28,7 +28,7 @@ class PreparationScreen(Screen):
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
 
-    scheduled_num = reactive(config_var.get()["scheduled_num"])
+    scheduled_num = reactive(config_var.get()['interface']['global']["scheduled_num"])
 
     def __init__(self, repo: Repo, repostat: dict) -> None:
         super().__init__(name=None, id=None, classes=None)
@@ -41,7 +41,7 @@ class PreparationScreen(Screen):
         with ScrollableContainer(id="vice_container"):
             yield Label(f"准备就绪: [b]{self.repostat['title']}[/b]\n")
             yield Label(
-                f"仓库路径: {config_var.get()['paths']['data']}/repo/[b]{self.repostat['dirname']}[/b]"
+                f"仓库路径: {config_var.get()['global']['paths']['data']}/repo/[b]{self.repostat['dirname']}[/b]"
             )
             yield Label(f"\n单元数量: {len(self.repo)}\n")
             yield Label(f"最小记忆分组: {self.scheduled_num}\n", id="schnum_label")
@@ -130,7 +130,7 @@ class PreparationScreen(Screen):
 
 def launch(repo, app, scheduled_num):
     if scheduled_num == -1:
-        scheduled_num = config_var.get()["scheduled_num"]
+        scheduled_num = config_var.get()['interface']['global']["scheduled_num"]
     atoms = list()
     for i in repo.ident_index:
         n = pt.Nucleon.create_on_nucleonic_data(

@@ -115,7 +115,7 @@ class FavoriteManagerScreen(Screen):
     def _get_repo_info(self, repo_path: str, fav: FavoriteItem) -> Optional[dict]:
         """获取仓库信息（标题、原子内容预览）"""
         try:
-            data_repo = Path(config_var.get()["paths"]["data"]) / "repo"
+            data_repo = Path(config_var.get()['global']["paths"]["data"]) / "repo"
             repo_dir = data_repo / repo_path
             if not repo_dir.exists():
                 logger.warning("仓库目录不存在: %s", repo_dir)

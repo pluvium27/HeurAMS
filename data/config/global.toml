@@ -1,0 +1,7 @@
+enable_built_in_interface = true
+
+[paths]
+data = "./data"
+cache = "./data/cache"
+config = "./data/config"
+repo = "./data/repo"

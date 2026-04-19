@@ -27,7 +27,7 @@ from heurams.kernel.algorithms.sm15m_calc import (
 
 # 全局状态文件路径
 _GLOBAL_STATE_FILE = os.path.expanduser(
-    pathlib.Path(config_var.get()["paths"]["data"])
+    pathlib.Path(config_var.get()['global']["paths"]["data"])
     / "global"
     / "sm15m_global_state.json"
 )

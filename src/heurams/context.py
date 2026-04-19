@@ -6,7 +6,7 @@
 import pathlib
 from contextvars import ContextVar
 
-from heurams.services.config import ConfigFile
+from heurams.services.config import ConfigDict
 from heurams.services.logger import get_logger
 
 # 默认数据目录, 以包目录下的 data 为准
@@ -24,9 +24,9 @@ logger.debug(f"工作目录: {workdir}")
 
 (workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
 
-config_var: ContextVar[ConfigFile].get = ContextVar(
+config_var: ContextVar[ConfigDict].get = ContextVar(
     "config_var",
-    default=ConfigFile(workdir / "data" / "config" / "config.toml"),
+    default=ConfigDict(workdir / "data" / "config"),
 )
 """配置对象的全局引用对象."""
 
@@ -41,7 +41,7 @@ class ConfigContext:
         >>> get_daystamp()  # 恢复原配置
     """
 
-    def __init__(self, config_provider: ConfigFile):
+    def __init__(self, config_provider: ConfigDict):
         self.config_provider = config_provider
         self._token = None
 

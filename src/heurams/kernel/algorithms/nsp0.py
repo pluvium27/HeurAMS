@@ -8,8 +8,8 @@ from .base import BaseAlgorithm
 logger = get_logger(__name__)
 
 
-class FAST0Algorithm(BaseAlgorithm):
-    algo_name = "FAST-0"
+class NSP0Algorithm(BaseAlgorithm):
+    algo_name = "NSP-0"
     desc = '快速筛选用特殊调度器'
     class AlgodataDict(TypedDict):
         real_rept: int
@@ -36,7 +36,7 @@ class FAST0Algorithm(BaseAlgorithm):
     def revisor(
         cls, algodata: dict, feedback: int = 5, is_new_activation: bool = False
     ):
-        """FAST-0 算法迭代决策机制实现
+        """NSP-0 算法迭代决策机制实现
         根据 quality(0 ~ 5) 进行参数迭代最佳间隔
         quality 由主程序评估
 
@@ -44,7 +44,7 @@ class FAST0Algorithm(BaseAlgorithm):
             quality (int): 记忆保留率量化参数
         """
         logger.debug(
-            "FAST0.revisor 开始, feedback: %d, is_new_activation: %s",
+            "NSP0.revisor 开始, feedback: %d, is_new_activation: %s",
             feedback,
             is_new_activation,
         )
@@ -71,7 +71,7 @@ class FAST0Algorithm(BaseAlgorithm):
     def is_due(cls, algodata):
         result = algodata[cls.algo_name]["next_date"] <= timer.get_daystamp()
         logger.debug(
-            "FAST0.is_due: next_date=%d, current_daystamp=%d, result=%s",
+            "NSP0.is_due: next_date=%d, current_daystamp=%d, result=%s",
             algodata[cls.algo_name]["next_date"],
             timer.get_daystamp(),
             result,
@@ -81,11 +81,11 @@ class FAST0Algorithm(BaseAlgorithm):
     @classmethod
     def get_rating(cls, algodata):
         efactor = algodata[cls.algo_name]["efactor"]
-        logger.debug("FAST0.rate: efactor=%f", efactor)
+        logger.debug("NSP0.rate: efactor=%f", efactor)
         return str(efactor)
 
     @classmethod
     def nextdate(cls, algodata) -> int:
         next_date = algodata[cls.algo_name]["next_date"]
-        logger.debug("FAST0.nextdate: %d", next_date)
+        logger.debug("NSP0.nextdate: %d", next_date)
         return next_date

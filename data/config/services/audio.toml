@@ -1,0 +1,8 @@
+provider = "playsound"
+
+[_provider_candidate]
+playsound = "python 跨平台音频系统"
+termux = "Android Termux 音频系统"
+mpg123 = "通用音频系统, 依赖系统 mpg123"
+pulseaudio = "高级音频路由系统"
+none = "不使用音频"

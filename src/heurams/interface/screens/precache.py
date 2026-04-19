@@ -13,7 +13,7 @@ import heurams.services.hasher as hasher
 from heurams.context import *
 
 # 兼容性缓存路径：优先使用 paths.cache，否则使用 data/cache
-paths = config_var.get()["paths"]
+paths = config_var.get()['global']["paths"]
 cache_dir = pathlib.Path(paths.get("cache", paths["data"] + "/cache")) / "voice"
 
 
@@ -61,7 +61,7 @@ class PrecachingScreen(Screen):
         """获取所有仓库的总单元数"""
         from heurams.context import config_var
         from heurams.kernel.repolib import Repo
-        repo_path = pathlib.Path(config_var.get()["paths"]["data"]) / "repo"
+        repo_path = pathlib.Path(config_var.get()['global']["paths"]["data"]) / "repo"
         repo_dirs = Repo.probe_valid_repos_in_dir(repo_path)
         repos = map(Repo.create_from_repodir, repo_dirs)
         total = 0
@@ -230,7 +230,7 @@ class PrecachingScreen(Screen):
         from heurams.context import config_var, rootdir, workdir
         from heurams.kernel.repolib import Repo
 
-        repo_path = pathlib.Path(config_var.get()["paths"]["data"]) / "repo"
+        repo_path = pathlib.Path(config_var.get()['global']["paths"]["data"]) / "repo"
         repo_dirs = Repo.probe_valid_repos_in_dir(repo_path)
         repos = map(Repo.create_from_repodir, repo_dirs)
 
