@@ -75,17 +75,17 @@ class SettingScreen(Screen):
                     a = self._get_subcfg(f"{parent_epath}.{i}")
                     if a:
                         lst.append(Collapsible(*a, title=i + f'\n{parent.get(f"_{i}_desc", "")}'))
-                elif f'_{i}_candidate' in parent:
+                elif f'_{i}_candidate' in parent: # 选择框模式
                     if isinstance(parent[f'_{i}_candidate'], dict):
                         lst.append(Horizontal(
                             Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Select((f"{j} ({k})", j) for j, k in parent[f'_{i}_candidate'].items()),
+                            Select(((f"{j} ({k})", j) for j, k in parent[f'_{i}_candidate'].items()), prompt=f'{parent.get(f"{i}", "")}', id=domize(f"{parent_epath}.{i}")),
                             classes='container'
                         ))
                     elif isinstance(parent[f'_{i}_candidate'], list):
                         lst.append(Horizontal(
                             Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Select((j, j) for j in parent[f'_{i}_candidate']),
+                            Select(((j, j) for j in parent[f'_{i}_candidate']), prompt=f'{parent.get(f"{i}", "")}', id=domize(f"{parent_epath}.{i}")),
                             classes='container'
                         ))
                 else:
@@ -102,7 +102,7 @@ class SettingScreen(Screen):
                     elif isinstance(parent[i], bool):
                         lst.append(Horizontal(
                             Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Switch(value=str(parent[i]), id=domize(f"{parent_epath}.{i}")),
+                            Switch(value=parent[i], id=domize(f"{parent_epath}.{i}")),
                         classes='container'))
                     elif isinstance(parent[i], int):
                         lst.append(Horizontal(
@@ -122,6 +122,7 @@ class SettingScreen(Screen):
 
     def action_go_back(self) -> None:
         """返回上一屏幕"""
+        config_var.get().persist()
         self.app.pop_screen()
 
     def action_quit_app(self) -> None:
@@ -132,12 +133,27 @@ class SettingScreen(Screen):
         """打开导航器"""
         self.app.push_screen(NavigatorScreen())
 
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        logger.debug(f"event.button.id: {event.button.id}")
-        """处理按钮点击事件"""
-        if str(event.button.id) == 'apply':
-            pass
-        if str(event.button.id) == 'openfolder':
-            pass
-        if str(event.button.id) == 'cancel':
-            pass
+
+    def on_input_changed(self, event: Input.Changed) -> None:
+        widget_id = event.input.id
+        if not widget_id:
+            return
+        eepath = undomize(widget_id)
+        value = event.value
+        epath(config_var.get(), eepath, enable_modify=True, new_value=type(epath(config_var.get(), eepath))(value))
+
+    def on_switch_changed(self, event: Switch.Changed) -> None:
+        widget_id = event.switch.id
+        if not widget_id:
+            return
+        eepath = undomize(widget_id)
+        value = event.value
+        epath(config_var.get(), eepath, enable_modify=True, new_value=type(epath(config_var.get(), eepath))(value))
+
+    def on_select_changed(self, event: Select.Changed) -> None:
+        widget_id = event.select.id
+        if not widget_id:
+            return
+        eepath = undomize(widget_id)
+        value = event.value
+        epath(config_var.get(), eepath, enable_modify=True, new_value=type(epath(config_var.get(), eepath))(value))
