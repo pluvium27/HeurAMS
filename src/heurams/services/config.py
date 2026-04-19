@@ -41,13 +41,9 @@ class ConfigDict(UserDict): # 舒服了
         return self.path / s+'.toml'
 
     def __contains__(self, key):
-        if isinstance(key, str):
-            key = self.converter(key)
         return super().__contains__(key)
 
     def __setitem__(self, key, value):
-        if isinstance(key, str):
-            key = self.converter(key)
         origvalue = super().__getitem__(key) # 所以你不该访问不存在的对象
         if isinstance(origvalue, ConfigDict):
             if origvalue.path.is_dir():
@@ -78,3 +74,10 @@ class ConfigDict(UserDict): # 舒服了
     def __del__(self):
         if not self.is_dir:
             self.persist() # 不准循环引用, 懂了吧
+    
+    @staticmethod
+    def titleize(objt):
+        if isinstance(objt, pathlib.Path):
+            return objt.stem
+        else:
+            return objt

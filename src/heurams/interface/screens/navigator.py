@@ -27,7 +27,7 @@ class NavigatorScreen(ModalScreen):
         #        ("创建仓库", "repo_creator"),
         ("缓存管理器", "precache_all"),
         ("收藏夹", FavoriteManagerScreen),
-        # ("配置设置", "config"),
+        ("设置页面", "setting"),
         # ("调试日志", "logviewer"),
         ("同步工具", "synctool"),
         ("关于此软件", "about"),

@@ -20,6 +20,7 @@ from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
 from .screens.navigator import NavigatorScreen
 from .screens.precache import PrecachingScreen
+from .screens.setting import SettingScreen
 from .screens.synctool import SyncScreen
 _end = perf_counter()
 print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
@@ -44,7 +45,7 @@ class HeurAMSApp(App):
         "synctool": SyncScreen,
         "about": AboutScreen,
         "navigator": NavigatorScreen,
-#        "config": ConfigScreen,
+        "setting": SettingScreen,
     }
 
     def on_mount(self) -> None:
