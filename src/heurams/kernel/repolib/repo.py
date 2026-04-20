@@ -7,6 +7,7 @@ import toml
 
 import heurams.kernel.particles as pt
 
+from heurams.context import config_var
 from heurams.kernel.auxiliary.lict import Lict
 
 
@@ -62,6 +63,14 @@ class Repo:
             "algodata": self.algodata,
             "source": self.source,
         }
+        self.config = {
+            "algorithm": config_var.get()['interface']['global']['algorithm'],
+            "scheduled_num": config_var.get()['interface']['global']['scheduled_num'],
+        }
+        try:
+            self.config.update(dict(config_var.get()['repo'][self.manifest['package']]))
+        except:
+            pass
         self._generate_particles_data()
 
     def _generate_particles_data(self):

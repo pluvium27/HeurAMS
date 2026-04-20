@@ -11,7 +11,7 @@ class DebugClient:
         self.socket.connect(f"tcp://localhost:{port}")
         print(f"已连接到调试服务器 (端口 {port})")
         print("输入Python代码并按回车执行, 输入 'exit' 退出")
-        print("可用变量: app, logger")
+        print("可用变量: app, logger, config_var")
         print("-" * 50)
 
     def execute(self, code):

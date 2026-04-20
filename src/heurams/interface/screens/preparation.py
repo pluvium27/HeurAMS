@@ -92,7 +92,8 @@ class PreparationScreen(Screen):
                 nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
             )
             e = pt.Electron.from_data(
-                electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i)
+                electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i),
+                algo_name=self.repo.config['algorithm']
             )
             statstr = ""
 
@@ -146,7 +147,8 @@ def launch(repo, app, scheduled_num):
             nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
         )
         e = pt.Electron.from_data(
-            electronic_data=repo.electronic_data_lict.get_itemic_unit(i)
+            electronic_data=repo.electronic_data_lict.get_itemic_unit(i),
+            algo_name=repo.config['algorithm']
         )
         a = pt.Atom(n, e, repo.orbitic_data)
         atoms.append(a)

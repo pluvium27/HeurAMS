@@ -70,6 +70,7 @@ API 版本代号: `{version.codename.capitalize()}`
 # 运行环境信息
 
 Python 解释器版本: {python_version}  
+Python 解释器路径: {sys.executable}  
 Textual 框架版本: {textual_version}  
 终端模拟器: {terminal_info}  
 操作系统版本: {os_version}  

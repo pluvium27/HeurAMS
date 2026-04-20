@@ -1,6 +1,5 @@
-_services_desc = '服务模块(services)设置'
-_providers_desc = '驱动模块(providers)设置'
+_services_desc = '服务模块设置'
+_providers_desc = '驱动模块设置'
 _repo_desc = '单元集独立设置'
 _interface_desc = '基本用户界面设置'
-_default_desc = '默认设置'
 _global_desc = '底层设置'
