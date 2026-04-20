@@ -24,6 +24,7 @@ class Electron:
             algo_name = "SM-2"
         self.algodata = algodata
         self.ident = ident
+        self.algoname = algo_name
         self.algo: algolib.BaseAlgorithm = algorithms[algo_name]
 
         if not self.algo.check_integrity(self.algodata):
@@ -53,10 +54,10 @@ class Electron:
         result = self.algo.is_due(self.algodata)
         return result and self.is_activated()
 
-    def rept(self, real_rept = False):
+    def rept(self, real_rept=False):
         if real_rept:
-            return self.algodata[self.algo.algo_name]['real_rept']
-        return self.algodata[self.algo.algo_name]['rept']
+            return self.algodata[self.algo.algo_name]["real_rept"]
+        return self.algodata[self.algo.algo_name]["rept"]
 
     def is_activated(self):
         result = self.algodata[self.algo.algo_name]["is_activated"]
@@ -112,7 +113,7 @@ class Electron:
         return len(self.algodata[self.algo.algo_name])
 
     @staticmethod
-    def create_on_electonic_data(electronic_data: tuple, algo_name: str = ""):
+    def from_data(electronic_data: tuple, algo_name: str = ""):
         _data = electronic_data
         ident = _data[0]
         algodata = _data[1]

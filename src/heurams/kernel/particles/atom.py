@@ -32,7 +32,7 @@ class Atom:
 
     default_runtime = {
         "locked": False,
-        "min_rate": float('inf'),
+        "min_rate": float("inf"),
         "new_activation": False,
     }
 

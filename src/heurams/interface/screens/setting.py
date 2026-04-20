@@ -8,7 +8,19 @@ import os
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Container, Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static, Collapsible, Input, Switch, Select
+from textual.widgets import (
+    Button,
+    Footer,
+    Header,
+    Label,
+    ListItem,
+    ListView,
+    Static,
+    Collapsible,
+    Input,
+    Switch,
+    Select,
+)
 from textual.layouts import horizontal
 
 import heurams.kernel.particles as pt
@@ -45,13 +57,15 @@ class SettingScreen(Screen):
         """组合界面组件"""
         yield Header(show_clock=True)
         with ScrollableContainer():
-            yield Label('[b]设置页面[/b]')
+            yield Label("[b]设置页面[/b]")
             for i in config_var.get():
-                if i.startswith('_'):
+                if i.startswith("_"):
                     continue
-                a = self._get_subcfg(f'{i}')
+                a = self._get_subcfg(f"{i}")
                 if a:
-                    yield Collapsible(*a, title=i + f'\n{config_var.get().get(f"_{i}_desc", "")}')
+                    yield Collapsible(
+                        *a, title=i + f'\n{config_var.get().get(f"_{i}_desc", "")}'
+                    )
         yield Footer()
 
     def _get_subcfg(self, parent_epath: str):
@@ -60,61 +74,115 @@ class SettingScreen(Screen):
             if parent.is_dir:
                 lst = list()
                 for i in parent:
-                    if i.startswith('_'):
+                    if i.startswith("_"):
                         continue
                     a = self._get_subcfg(f"{parent_epath}.{i}")
                     if a:
-                        lst.append(Collapsible(*a, title=i + f'\n{parent.get(f"_{i}_desc", "")}'))
+                        lst.append(
+                            Collapsible(
+                                *a, title=i + f'\n{parent.get(f"_{i}_desc", "")}'
+                            )
+                        )
                 return lst
-        if isinstance(parent, dict) or (isinstance(parent, ConfigDict) and not parent.is_dir):
+        if isinstance(parent, dict) or (
+            isinstance(parent, ConfigDict) and not parent.is_dir
+        ):
             lst = list()
             for i in parent:
-                if i.startswith('_'):
+                if i.startswith("_"):
                     continue
                 if isinstance(parent[i], dict):
                     a = self._get_subcfg(f"{parent_epath}.{i}")
                     if a:
-                        lst.append(Collapsible(*a, title=i + f'\n{parent.get(f"_{i}_desc", "")}'))
-                elif f'_{i}_candidate' in parent: # 选择框模式
-                    if isinstance(parent[f'_{i}_candidate'], dict):
-                        lst.append(Horizontal(
-                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Select(((f"{j} ({k})", j) for j, k in parent[f'_{i}_candidate'].items()), prompt=f'{parent.get(f"{i}", "")}', id=domize(f"{parent_epath}.{i}")),
-                            classes='container'
-                        ))
-                    elif isinstance(parent[f'_{i}_candidate'], list):
-                        lst.append(Horizontal(
-                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Select(((j, j) for j in parent[f'_{i}_candidate']), prompt=f'{parent.get(f"{i}", "")}', id=domize(f"{parent_epath}.{i}")),
-                            classes='container'
-                        ))
+                        lst.append(
+                            Collapsible(
+                                *a, title=i + f'\n{parent.get(f"_{i}_desc", "")}'
+                            )
+                        )
+                elif f"_{i}_candidate" in parent:  # 选择框模式
+                    if isinstance(parent[f"_{i}_candidate"], dict):
+                        lst.append(
+                            Horizontal(
+                                Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                                Select(
+                                    (
+                                        (f"{j} ({k})", j)
+                                        for j, k in parent[f"_{i}_candidate"].items()
+                                    ),
+                                    prompt=f'{parent.get(f"{i}", "")}',
+                                    id=domize(f"{parent_epath}.{i}"),
+                                ),
+                                classes="container",
+                            )
+                        )
+                    elif isinstance(parent[f"_{i}_candidate"], list):
+                        lst.append(
+                            Horizontal(
+                                Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                                Select(
+                                    ((j, j) for j in parent[f"_{i}_candidate"]),
+                                    prompt=f'{parent.get(f"{i}", "")}',
+                                    id=domize(f"{parent_epath}.{i}"),
+                                ),
+                                classes="container",
+                            )
+                        )
                 else:
                     if isinstance(parent[i], float):
-                        lst.append(Horizontal(
-                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Input(value=str(parent[i]), placeholder='要求一个浮点数', type='number', id=domize(f"{parent_epath}.{i}")),
-                        classes='container'))
+                        lst.append(
+                            Horizontal(
+                                Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                                Input(
+                                    value=str(parent[i]),
+                                    placeholder="要求一个浮点数",
+                                    type="number",
+                                    id=domize(f"{parent_epath}.{i}"),
+                                ),
+                                classes="container",
+                            )
+                        )
                     elif isinstance(parent[i], str):
-                        lst.append(Horizontal(
-                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Input(value=parent[i], placeholder='要求一个字符串', type='text', id=domize(f"{parent_epath}.{i}")),
-                        classes='container'))
+                        lst.append(
+                            Horizontal(
+                                Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                                Input(
+                                    value=parent[i],
+                                    placeholder="要求一个字符串",
+                                    type="text",
+                                    id=domize(f"{parent_epath}.{i}"),
+                                ),
+                                classes="container",
+                            )
+                        )
                     elif isinstance(parent[i], bool):
-                        lst.append(Horizontal(
-                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Switch(value=parent[i], id=domize(f"{parent_epath}.{i}")),
-                        classes='container'))
+                        lst.append(
+                            Horizontal(
+                                Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                                Switch(
+                                    value=parent[i], id=domize(f"{parent_epath}.{i}")
+                                ),
+                                classes="container",
+                            )
+                        )
                     elif isinstance(parent[i], int):
-                        lst.append(Horizontal(
-                            Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
-                            Input(value=str(parent[i]), placeholder='要求一个整数', type='integer', id=domize(f"{parent_epath}.{i}")),
-                        classes='container'))
+                        lst.append(
+                            Horizontal(
+                                Label(i + f'\n{parent.get(f"_{i}_desc", "")}'),
+                                Input(
+                                    value=str(parent[i]),
+                                    placeholder="要求一个整数",
+                                    type="integer",
+                                    id=domize(f"{parent_epath}.{i}"),
+                                ),
+                                classes="container",
+                            )
+                        )
                     elif isinstance(parent[i], list):
                         pass
                     else:
-                        lst.append(Label('未知类型'))
+                        lst.append(Label("未知类型"))
             return lst
-        return [Label('无子项')]
+        return [Label("无子项")]
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""
@@ -133,14 +201,18 @@ class SettingScreen(Screen):
         """打开导航器"""
         self.app.push_screen(NavigatorScreen())
 
-
     def on_input_changed(self, event: Input.Changed) -> None:
         widget_id = event.input.id
         if not widget_id:
             return
         eepath = undomize(widget_id)
         value = event.value
-        epath(config_var.get(), eepath, enable_modify=True, new_value=type(epath(config_var.get(), eepath))(value))
+        epath(
+            config_var.get(),
+            eepath,
+            enable_modify=True,
+            new_value=type(epath(config_var.get(), eepath))(value),
+        )
 
     def on_switch_changed(self, event: Switch.Changed) -> None:
         widget_id = event.switch.id
@@ -148,7 +220,12 @@ class SettingScreen(Screen):
             return
         eepath = undomize(widget_id)
         value = event.value
-        epath(config_var.get(), eepath, enable_modify=True, new_value=type(epath(config_var.get(), eepath))(value))
+        epath(
+            config_var.get(),
+            eepath,
+            enable_modify=True,
+            new_value=type(epath(config_var.get(), eepath))(value),
+        )
 
     def on_select_changed(self, event: Select.Changed) -> None:
         widget_id = event.select.id
@@ -156,4 +233,9 @@ class SettingScreen(Screen):
             return
         eepath = undomize(widget_id)
         value = event.value
-        epath(config_var.get(), eepath, enable_modify=True, new_value=type(epath(config_var.get(), eepath))(value))
+        epath(
+            config_var.get(),
+            eepath,
+            enable_modify=True,
+            new_value=type(epath(config_var.get(), eepath))(value),
+        )

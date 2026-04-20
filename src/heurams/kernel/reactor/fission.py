@@ -75,7 +75,7 @@ class Fission(Machine):
             self.current_puzzle_inf = self.puzzles_inf[0]
 
         for i in range(len(self.puzzles_inf)):
-            self.min_ratings.append(float('inf'))
+            self.min_ratings.append(float("inf"))
 
         Machine.__init__(
             self,

@@ -15,26 +15,26 @@ class Nucleon:
         self.ident = ident
         try:
             data_safe = deepcopy((payload | common))
-            data_puz = deepcopy(data_safe['puzzles'])
-            data_safe['puzzles'] = {}
+            data_puz = deepcopy(data_safe["puzzles"])
+            data_safe["puzzles"] = {}
             env = {
                 "payload": data_safe,
-                "default": config_var.get()['interface']["puzzles"],
+                "default": config_var.get()["interface"]["puzzles"],
                 "nucleon": data_safe,
             }
             self.evalizer = Evalizer(environment=env)
             data_safe = self.evalizer(deepcopy(data_safe))
             env = {
                 "payload": data_safe,
-                "default": config_var.get()['interface']["puzzles"],
+                "default": config_var.get()["interface"]["puzzles"],
                 "nucleon": data_safe,
             }
             self.evalizer = Evalizer(environment=env)
             data_puz = self.evalizer(deepcopy(data_puz))
-            data_safe['puzzles'] = data_puz # type: ignore
-            self.data: dict = data_safe # type: ignore
+            data_safe["puzzles"] = data_puz  # type: ignore
+            self.data: dict = data_safe  # type: ignore
         except Exception:
-            self.data = (payload | common)
+            self.data = payload | common
 
     def __getitem__(self, key):
         if isinstance(key, str):
@@ -71,7 +71,7 @@ class Nucleon:
         return s
 
     @staticmethod
-    def create_on_nucleonic_data(nucleonic_data: tuple):
+    def from_data(nucleonic_data: tuple):
         _data = nucleonic_data
         payload = _data[1][0]
         common = _data[1][1]

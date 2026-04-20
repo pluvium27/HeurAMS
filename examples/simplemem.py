@@ -5,14 +5,12 @@ import heurams.kernel.particles as pt
 import heurams.kernel.repolib as repolib
 from heurams.services.textproc import truncate
 
-repo = repolib.Repo.create_from_repodir(Path("./test_repo"))
+repo = repolib.Repo.from_repodir(Path("./test_repo"))
 alist = list()
 print(repo.ident_index)
 for i in repo.ident_index:
-    n = pt.Nucleon.create_on_nucleonic_data(
-        nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
-    )
-    e = pt.Electron.create_on_electonic_data(
+    n = pt.Nucleon.from_data(nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i))
+    e = pt.Electron.from_data(
         electronic_data=repo.electronic_data_lict.get_itemic_unit(i)
     )
     print(n)

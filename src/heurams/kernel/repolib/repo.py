@@ -13,10 +13,14 @@ from heurams.kernel.auxiliary.lict import Lict
 class RepoManifest(TypedDict):
     title: str
     author: str
+    package: str
     desc: str
 
 
 class Repo:
+    """只维护仓库本身
+    上层 API 请访问此对象下粒子对象列表"""
+
     file_mapping = {
         "schedule": "schedule.toml",
         "payload": "payload.toml",
@@ -58,14 +62,15 @@ class Repo:
             "algodata": self.algodata,
             "source": self.source,
         }
-        self.generate_particles_data()
+        self._generate_particles_data()
 
-    def generate_particles_data(self):
-
+    def _generate_particles_data(self):
+        """生成上层的粒子对象组和 API 交互, 会在 init 后自动调用"""
         self.nucleonic_data_lict = Lict(
             initlist=list(map(self._nucleonic_proc, self.payload))
         )
         self.orbitic_data = self.schedule
+        self.data_length = len(self.nucleonic_data_lict)
         self.ident_index = self.nucleonic_data_lict.keys()
         for i in self.ident_index:
             self.algodata.append_new((i, {}))
@@ -75,13 +80,6 @@ class Repo:
         ident = unit[0]
         common = self.typedef["common"]
         return (ident, (unit[1], common))
-
-    @staticmethod
-    def _merge(value):
-        def inner(x):
-            return (x, value)
-
-        return inner
 
     def __len__(self):
         return len(self.payload)
@@ -95,6 +93,7 @@ class Repo:
     def persist_to_repodir(
         self, save_list: list | None = None, source: Path | None = None
     ):
+        """保存单元集数据到目录"""
         if save_list == None:
             save_list = self.default_save_list
         if self.source != None and source == None:
@@ -116,11 +115,13 @@ class Repo:
                 else:
                     raise ValueError(f"不支持的文件类型: {filename}")
 
-    def export_to_single_dict(self):
+    def export_to_dict(self):
+        """导出至单个字典"""
         return self.database
 
     @classmethod
     def create_new_repo(cls, source=None):
+        """创建新的空单元集"""
         default_database = {
             "schedule": {},
             "payload": Lict([]),
@@ -132,7 +133,8 @@ class Repo:
         return Repo(**default_database)
 
     @classmethod
-    def create_from_repodir(cls, source: Path):
+    def from_repodir(cls, source: Path):
+        """从目录创建单元集"""
         database = {}
         for keyname, filename in cls.file_mapping.items():
             with open(source / filename, "r") as f:
@@ -153,21 +155,24 @@ class Repo:
         return Repo(**database)
 
     @classmethod
-    def create_from_single_dict(cls, dictdata, source: Path | None = None):
+    def from_dict(cls, dictdata, source: Path | None = None):
+        """从单一字典创建单元集"""
         database = dictdata
         database["source"] = source
         return Repo(**database)
 
     @classmethod
     def check_repodir(cls, source: Path):
+        """检测单元集目录合法性"""
         try:
-            cls.create_from_repodir(source)
-            return 1
+            cls.from_repodir(source)
+            return True
         except:
-            return 0
+            return False
 
     @classmethod
     def probe_valid_repos_in_dir(cls, folder: Path):
+        """返回一个合法的子目录 Path() 列表"""
         lst = list()
         for i in folder.iterdir():
             if i.is_dir():

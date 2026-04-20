@@ -55,8 +55,8 @@ class MCQPuzzle(BasePuzzleWidget):
 
     def _load(self):
         cfg = self.atom.registry["nucleon"]["puzzles"][self.alia]
-        if cfg['mapping'] == {}:
-            self.screen.rating = 5 # type: ignore
+        if cfg["mapping"] == {}:
+            self.screen.rating = 5  # type: ignore
         self.puzzle = pz.MCQPuzzle(
             cfg["mapping"], cfg["jammer"], int(cfg["max_riddles_num"]), cfg["prefix"]
         )

@@ -30,6 +30,7 @@ config_var: ContextVar[ConfigDict].get = ContextVar(
 )
 """配置对象的全局引用对象."""
 
+
 class ConfigContext:
     """
     功能完备的上下文管理器

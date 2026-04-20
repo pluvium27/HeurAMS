@@ -15,7 +15,7 @@ class BasePuzzleWidget(Widget):
         id: str | None = None,
         classes: str | None = None,
         disabled: bool = False,
-        markup: bool = True
+        markup: bool = True,
     ) -> None:
         super().__init__(
             *children,
@@ -23,7 +23,7 @@ class BasePuzzleWidget(Widget):
             id=id,
             classes=classes,
             disabled=disabled,
-            markup=markup
+            markup=markup,
         )
         self.atom = atom
 

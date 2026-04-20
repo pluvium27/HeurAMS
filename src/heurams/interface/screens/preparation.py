@@ -5,7 +5,16 @@ from textual.containers import ScrollableContainer
 from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widget import Widget
-from textual.widgets import Button, Footer, Header, Label, Markdown, Static, Rule, Sparkline
+from textual.widgets import (
+    Button,
+    Footer,
+    Header,
+    Label,
+    Markdown,
+    Static,
+    Rule,
+    Sparkline,
+)
 
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
@@ -28,20 +37,19 @@ class PreparationScreen(Screen):
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
 
-    scheduled_num = reactive(config_var.get()['interface']['global']["scheduled_num"])
+    scheduled_num = reactive(config_var.get()["interface"]["global"]["scheduled_num"])
 
-    def __init__(self, repo: Repo, repostat: dict) -> None:
+    def __init__(self, repo: Repo) -> None:
         super().__init__(name=None, id=None, classes=None)
         self.repo = repo
-        self.repostat = repostat
         self.load_data()
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
         with ScrollableContainer(id="vice_container"):
-            yield Label(f"准备就绪: [b]{self.repostat['title']}[/b]\n")
+            yield Label(f"准备就绪: [b]{self.repo.manifest['title']}[/b]\n")
             yield Label(
-                f"仓库路径: {config_var.get()['global']['paths']['data']}/repo/[b]{self.repostat['dirname']}[/b]"
+                f"[b]仓库路径: {self.repo.source}[/b]"
             )
             yield Label(f"\n单元数量: {len(self.repo)}\n")
             yield Label(f"最小记忆分组: {self.scheduled_num}\n", id="schnum_label")
@@ -62,12 +70,12 @@ class PreparationScreen(Screen):
             yield Static()
             yield Sparkline(self.spark_line_arr, summary_function=max)
             yield Rule()
-            #yield Static(str(self.spark_line_arr))
+            # yield Static(str(self.spark_line_arr))
             yield Static(f"单元状态预览:\n")
             for i in self.content.splitlines():
                 yield Static(i, classes="full")
         yield Footer()
-    
+
     # def watch_scheduled_num(self, old_scheduled_num, new_scheduled_num):
     #    logger.debug("响应", old_scheduled_num, "->", new_scheduled_num)
     #    try:
@@ -80,19 +88,21 @@ class PreparationScreen(Screen):
         content = ""
         spark_line_arr = []
         for i in self.repo.ident_index:
-            n = pt.Nucleon.create_on_nucleonic_data(
+            n = pt.Nucleon.from_data(
                 nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
             )
-            e = pt.Electron.create_on_electonic_data(electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i))
+            e = pt.Electron.from_data(
+                electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i)
+            )
             statstr = ""
 
             if e.is_activated():
-                statstr = '[#00ff00]A[/]'
+                statstr = "[#00ff00]A[/]"
                 if e.is_due():
-                    statstr = '[#ffff00]R[/]'
-                #statstr += ('[dim]' + str(e.rept(real_rept=True)).zfill(2)+'[/]')
+                    statstr = "[#ffff00]R[/]"
+                # statstr += ('[dim]' + str(e.rept(real_rept=True)).zfill(2)+'[/]')
             else:
-                statstr = '[#ff0000]U[/]'
+                statstr = "[#ff0000]U[/]"
             spark_line_arr.append(e.rept(real_rept=True))
             content += f" {statstr} {n['content'].replace('/', '')}  \n"
         self.content = content
@@ -107,9 +117,7 @@ class PreparationScreen(Screen):
         lst = list()
         for i in self.repo.ident_index:
             lst.append(
-                pt.Nucleon.create_on_nucleonic_data(
-                    self.repo.nucleonic_data_lict.get_itemic_unit(i)
-                )
+                pt.Nucleon.from_data(self.repo.nucleonic_data_lict.get_itemic_unit(i))
             )
         precache_screen = PrecachingScreen(
             nucleons=lst, desc=self.repo.manifest["title"]
@@ -128,15 +136,16 @@ class PreparationScreen(Screen):
         elif event.button.id == "precache_button":
             self.action_precache()
 
+
 def launch(repo, app, scheduled_num):
     if scheduled_num == -1:
-        scheduled_num = config_var.get()['interface']['global']["scheduled_num"]
+        scheduled_num = config_var.get()["interface"]["global"]["scheduled_num"]
     atoms = list()
     for i in repo.ident_index:
-        n = pt.Nucleon.create_on_nucleonic_data(
+        n = pt.Nucleon.from_data(
             nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
         )
-        e = pt.Electron.create_on_electonic_data(
+        e = pt.Electron.from_data(
             electronic_data=repo.electronic_data_lict.get_itemic_unit(i)
         )
         a = pt.Atom(n, e, repo.orbitic_data)

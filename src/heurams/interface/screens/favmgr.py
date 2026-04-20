@@ -68,7 +68,7 @@ class FavoriteManagerScreen(Screen):
         if self.favorites:
             list_view = self.query_one("#favorites-list")
             for fav in self.favorites:
-                list_view.append(self._create_favorite_item(fav)) # type: ignore
+                list_view.append(self._create_favorite_item(fav))  # type: ignore
 
     def _encode_favorite_key(self, repo_path: str, ident: str) -> str:
         """编码仓库路径和标识符为安全的按钮 ID 部分"""
@@ -115,12 +115,12 @@ class FavoriteManagerScreen(Screen):
     def _get_repo_info(self, repo_path: str, fav: FavoriteItem) -> Optional[dict]:
         """获取仓库信息（标题、原子内容预览）"""
         try:
-            data_repo = Path(config_var.get()['global']["paths"]["data"]) / "repo"
+            data_repo = Path(config_var.get()["global"]["paths"]["data"]) / "repo"
             repo_dir = data_repo / repo_path
             if not repo_dir.exists():
                 logger.warning("仓库目录不存在: %s", repo_dir)
                 return None
-            repo = Repo.create_from_repodir(repo_dir)
+            repo = Repo.from_repodir(repo_dir)
             # 获取原子内容预览
             content_preview = ""
             payload = repo.payload
@@ -201,4 +201,4 @@ class FavoriteManagerScreen(Screen):
 
     def action_toggle_dark(self) -> None:
         """切换暗黑模式"""
-        self.app.dark = not self.app.dark # type: ignore
+        self.app.dark = not self.app.dark  # type: ignore

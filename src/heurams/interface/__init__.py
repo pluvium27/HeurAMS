@@ -1,9 +1,11 @@
 from time import sleep, perf_counter
+
 print("欢迎使用基本用户界面!")
 print("加载配置与上下文... ", end="", flush=True)
 _start1 = perf_counter()
 _start = perf_counter()
 from heurams.context import *
+
 _end = perf_counter()
 print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
 
@@ -11,6 +13,7 @@ print("加载用户界面框架... ", end="", flush=True)
 _start = perf_counter()
 from textual.app import App
 from textual.widgets import Button
+
 _end = perf_counter()
 print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
 
@@ -22,6 +25,7 @@ from .screens.navigator import NavigatorScreen
 from .screens.precache import PrecachingScreen
 from .screens.setting import SettingScreen
 from .screens.synctool import SyncScreen
+
 _end = perf_counter()
 print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
 
@@ -29,9 +33,12 @@ print(f"组件目录: {rootdir}")
 print(f"工作目录: {workdir}")
 _end1 = perf_counter()
 print(f"前置工作共计耗时: {round(1000 * (_end1 - _start1))}ms")
+
+
 class HeurAMSApp(App):
     TITLE = "潜进"
     CSS_PATH = "css/main.tcss"
+    css_dir = pathlib.Path("css").resolve()
     SUB_TITLE = "启发式辅助记忆调度器"
     BINDINGS = [
         ("q", "go_back", "退出"),

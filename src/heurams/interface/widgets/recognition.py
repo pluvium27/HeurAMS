@@ -67,7 +67,7 @@ class Recognition(BasePuzzleWidget):
             f";{delim}": ";",
             f":{delim}": ":",
         }
-        
+
         primary = cfg["primary"]
 
         with Center():
@@ -88,7 +88,7 @@ class Recognition(BasePuzzleWidget):
         for item in cfg["secondary"]:
             if isinstance(item, list):
                 for j in item:
-                    yield Markdown(f"### 笔记: {j}") #TODO ANNOTATION
+                    yield Markdown(f"### 笔记: {j}")  # TODO ANNOTATION
                     continue
             if isinstance(item, Dict):
                 total = ""

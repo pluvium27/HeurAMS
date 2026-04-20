@@ -38,7 +38,7 @@ class MemScreen(Screen):
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
 
-    if config_var.get()['interface']['global']["quick_pass"]:
+    if config_var.get()["interface"]["global"]["quick_pass"]:
         BINDINGS.append(("k", "quick_pass", "正确应答"))
         BINDINGS.append(("f", "quick_fail", "错误应答"))
     rating = reactive(-1)
@@ -70,7 +70,6 @@ class MemScreen(Screen):
         """更新状态机"""
         self.procession: Procession = self.phaser.current_procession()  # type: ignore
         self.atom: pt.Atom = self.procession.current_atom  # type: ignore
-        
 
     def on_mount(self):
         self.fission = self.procession.get_fission()
@@ -93,7 +92,7 @@ class MemScreen(Screen):
         if self.repo is not None:
             fav_status = "已收藏" if self._is_current_atom_favorited() else "未收藏"
             s += f"收藏: {fav_status}\n"
-        '''if config_var.get().get("debug_topline", 0):
+        """if config_var.get().get("debug_topline", 0):
             try:
                 alia = self.fission.get_current_puzzle_inf()["alia"]  # type: ignore
                 s += f"谜题: {alia}\n"
@@ -113,7 +112,7 @@ class MemScreen(Screen):
                 stat = self.fission.__repr__("simple", "")
                 s += f"{stat}\n"
             except Exception as e:
-                s = str(e)'''
+                s = str(e)"""
         s += f"进度: {self.procession.process() + 1}/{self.procession.total_length()}"
         return s
 
@@ -139,9 +138,9 @@ class MemScreen(Screen):
             i.remove()
         from heurams.interface.widgets.finished import Finished
 
-        if config_var.get()['interface']['global']["persist_to_file"]:
+        if config_var.get()["interface"]["global"]["persist_to_file"]:
             self.save_func()
-        container.mount(Finished(is_saved=['interface']['global']["persist_to_file"]))
+        container.mount(Finished(is_saved=["interface"]["global"]["persist_to_file"]))
 
     def on_button_pressed(self, event):
         event.stop()
@@ -156,7 +155,7 @@ class MemScreen(Screen):
         from heurams.services.audio_service import play_by_path
         from heurams.services.hasher import get_md5
 
-        path = Path(config_var.get()['global']["paths"]["data"]) / "cache" / "voice"
+        path = Path(config_var.get()["global"]["paths"]["data"]) / "cache" / "voice"
         path = path / f"{get_md5(self.atom.registry['nucleon']["tts_text"])}.wav"
         if path.exists():
             play_by_path(path)
@@ -176,7 +175,6 @@ class MemScreen(Screen):
         self.fission.report(new_rating)
         self.forward(new_rating)
         self.rating = -1
-
 
     def forward(self, rating):
         self.update_state()
@@ -226,7 +224,7 @@ class MemScreen(Screen):
             return ""
         # self.repo.source 是 Path 对象，指向仓库目录
         repo_full_path = self.repo.source
-        data_repo_path = Path(config_var.get()['global']["paths"]["data"]) / "repo"
+        data_repo_path = Path(config_var.get()["global"]["paths"]["data"]) / "repo"
         try:
             rel_path = repo_full_path.relative_to(data_repo_path)
             return str(rel_path)

@@ -1,7 +1,7 @@
-zmq_debug = false
-_zmq_debug_desc = "[调试] ZMQ 调试服务器, 这会在 zmq_debug_port 上打开调试服务器\n可作为 HeurAMS 执行任意 python 代码, 如无必要请关闭"
+zmq_debug = true
+_zmq_debug_desc = "[调试] ZMQ 调试服务器, 这会在 zmq_debug_port 上打开一个服务器\n调试工具可远程在 HeurAMS 内执行任意 python 代码, 无必要请关闭"
 zmq_debug_port = 5555
-_zmq_debug_port_desc = "ZMQ 调试服务器端口"
+_zmq_debug_port_desc = "[调试] ZMQ 调试服务器端口"
 enable_built_in_interface = false
 _enable_built_in_interface_desc = "启用内置基本用户界面\n(当且仅当 HeurAMS 作为程序库时禁用, 以跳过用户界面逻辑)"
 _paths_desc = "用户数据路径定义"

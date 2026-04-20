@@ -13,16 +13,16 @@ import heurams.services.hasher as hasher
 from heurams.context import *
 
 # 兼容性缓存路径：优先使用 paths.cache，否则使用 data/cache
-paths = config_var.get()['global']["paths"]
+paths = config_var.get()["global"]["paths"]
 cache_dir = pathlib.Path(paths.get("cache", paths["data"] + "/cache")) / "voice"
 
 
 def format_size(bytes_num: int) -> str:
     """将字节数格式化为人类可读的字符串"""
-    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+    for unit in ["B", "KB", "MB", "GB", "TB"]:
         if bytes_num < 1024.0:
             return f"{bytes_num:.2f} {unit}"
-        bytes_num /= 1024.0 # type: ignore
+        bytes_num /= 1024.0  # type: ignore
     return f"{bytes_num:.2f} PB"
 
 
@@ -54,16 +54,24 @@ class PrecachingScreen(Screen):
         self.cancel_flag = 0
         self.desc = desc
         # 不再需要缓存配置，保留配置读取以兼容
-        self.cache_stats = {"total_size": 0, "file_count": 0, "human_size": "0 B", "cached_units": 0, "total_units": 0, "cache_rate": 0}
+        self.cache_stats = {
+            "total_size": 0,
+            "file_count": 0,
+            "human_size": "0 B",
+            "cached_units": 0,
+            "total_units": 0,
+            "cache_rate": 0,
+        }
         self._update_cache_stats()
 
     def _get_total_units(self) -> int:
         """获取所有仓库的总单元数"""
         from heurams.context import config_var
         from heurams.kernel.repolib import Repo
-        repo_path = pathlib.Path(config_var.get()['global']["paths"]["data"]) / "repo"
+
+        repo_path = pathlib.Path(config_var.get()["global"]["paths"]["data"]) / "repo"
         repo_dirs = Repo.probe_valid_repos_in_dir(repo_path)
-        repos = map(Repo.create_from_repodir, repo_dirs)
+        repos = map(Repo.from_repodir, repo_dirs)
         total = 0
         for repo in repos:
             try:
@@ -86,7 +94,7 @@ class PrecachingScreen(Screen):
                         cached_units += 1
         total_units = self._get_total_units()
         cache_rate = (cached_units / total_units * 100) if total_units > 0 else 0
-        
+
         self.cache_stats["total_size"] = total_size
         self.cache_stats["file_count"] = file_count
         self.cache_stats["human_size"] = format_size(total_size)
@@ -101,11 +109,15 @@ class PrecachingScreen(Screen):
             with Container():
                 yield Static(
                     f"缓存率: {self.cache_stats.get('cache_rate', 0):.1f}% (已缓存 {self.cache_stats.get('cached_units', 0)} / {self.cache_stats.get('total_units', 0)} 个单元)",
-                    classes="cache-usage-text"
+                    classes="cache-usage-text",
                 )
                 if self.nucleons:
-                    yield Static(f"目标单元归属: [b]{self.desc}[/b]", classes="target-info")
-                    yield Static(f"单元数量: {len(self.nucleons)}", classes="target-info")
+                    yield Static(
+                        f"目标单元归属: [b]{self.desc}[/b]", classes="target-info"
+                    )
+                    yield Static(
+                        f"单元数量: {len(self.nucleons)}", classes="target-info"
+                    )
                 else:
                     yield Static("目标: 所有单元", classes="target-info")
 
@@ -114,16 +126,26 @@ class PrecachingScreen(Screen):
                 yield ProgressBar(total=100, show_eta=False, id="progress_bar")
                 with Horizontal(classes="button-group"):
                     if not self.is_precaching:
-                        yield Button("开始预缓存", id="start_precache", variant="primary")
+                        yield Button(
+                            "开始预缓存", id="start_precache", variant="primary"
+                        )
                     else:
-                        yield Button("取消预缓存", id="cancel_precache", variant="error")
+                        yield Button(
+                            "取消预缓存", id="cancel_precache", variant="error"
+                        )
                     yield Button("清空缓存", id="clear_cache", variant="warning")
                     yield Button("返回", id="go_back", variant="default")
             with Container(classes="cache-info"):
                 yield Static(f"缓存路径: {cache_dir}", classes="cache-path")
-                yield Static(f"文件数: {self.cache_stats['file_count']}", classes="cache-count")
-                yield Static(f"总大小: {self.cache_stats['human_size']}", classes="cache-size")
-                yield Button("刷新", id="refresh_cache_stats", variant="default", flat=True)
+                yield Static(
+                    f"文件数: {self.cache_stats['file_count']}", classes="cache-count"
+                )
+                yield Static(
+                    f"总大小: {self.cache_stats['human_size']}", classes="cache-size"
+                )
+                yield Button(
+                    "刷新", id="refresh_cache_stats", variant="default", flat=True
+                )
                 yield Static("若您离开此界面, 未完成的缓存进程会自动停止.")
                 yield Static('缓存程序支持 "断点续传".')
 
@@ -230,9 +252,9 @@ class PrecachingScreen(Screen):
         from heurams.context import config_var, rootdir, workdir
         from heurams.kernel.repolib import Repo
 
-        repo_path = pathlib.Path(config_var.get()['global']["paths"]["data"]) / "repo"
+        repo_path = pathlib.Path(config_var.get()["global"]["paths"]["data"]) / "repo"
         repo_dirs = Repo.probe_valid_repos_in_dir(repo_path)
-        repos = map(Repo.create_from_repodir, repo_dirs)
+        repos = map(Repo.from_repodir, repo_dirs)
 
         # 计算总项目数
         self.total = 0
@@ -241,7 +263,7 @@ class PrecachingScreen(Screen):
             try:
                 for i in repo.ident_index:
                     nucleon_list.append(
-                        pt.Nucleon.create_on_nucleonic_data(
+                        pt.Nucleon.from_data(
                             repo.nucleonic_data_lict.get_itemic_unit(i)
                         )
                     )

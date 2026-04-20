@@ -3,8 +3,10 @@ def truncate(text):
         return text
     return text[:3] + ">"
 
+
 def domize(text):
-    return text.replace('.', '--DOT--')
+    return text.replace(".", "--DOT--")
+
 
 def undomize(text):
-    return text.replace('--DOT--', '.')
+    return text.replace("--DOT--", ".")

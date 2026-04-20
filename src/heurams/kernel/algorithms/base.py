@@ -8,7 +8,8 @@ logger = get_logger(__name__)
 
 class BaseAlgorithm:
     algo_name = "BaseAlgorithm"
-    desc = '算法基类'
+    desc = "算法基类"
+
     class AlgodataDict(TypedDict):
         real_rept: int
         rept: int

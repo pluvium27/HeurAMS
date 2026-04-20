@@ -10,7 +10,8 @@ logger = get_logger(__name__)
 
 class NSP0Algorithm(BaseAlgorithm):
     algo_name = "NSP-0"
-    desc = '快速筛选用特殊调度器'
+    desc = "快速筛选用特殊调度器"
+
     class AlgodataDict(TypedDict):
         real_rept: int
         rept: int
@@ -23,7 +24,7 @@ class NSP0Algorithm(BaseAlgorithm):
 
     defaults = {
         "real_rept": 0,
-        'important': 0,
+        "important": 0,
         "rept": 0,
         "interval": 0,
         "last_date": 0,
@@ -52,8 +53,10 @@ class NSP0Algorithm(BaseAlgorithm):
         if feedback == -1:
             logger.debug("feedback 为 -1, 跳过更新")
             return
-        algodata[cls.algo_name]["interval"] = (1 if feedback <= 3 else float('inf'))
-        algodata[cls.algo_name]["important"] = (1 if feedback <= 3 else algodata[cls.algo_name]["important"])
+        algodata[cls.algo_name]["interval"] = 1 if feedback <= 3 else float("inf")
+        algodata[cls.algo_name]["important"] = (
+            1 if feedback <= 3 else algodata[cls.algo_name]["important"]
+        )
         algodata[cls.algo_name]["last_date"] = timer.get_daystamp()
         algodata[cls.algo_name]["next_date"] = (
             timer.get_daystamp() + algodata[cls.algo_name]["interval"]

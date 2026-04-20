@@ -53,7 +53,11 @@ class NavigatorScreen(ModalScreen):
             )
             yield Static("按下回车以完成切换\n所有会话将被保存")
             yield Button(
-                "关闭 (n)", id="close_button", variant="primary", classes="close-button", flat=True
+                "关闭 (n)",
+                id="close_button",
+                variant="primary",
+                classes="close-button",
+                flat=True,
             )
 
     def on_mount(self) -> None:

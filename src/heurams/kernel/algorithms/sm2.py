@@ -10,7 +10,8 @@ logger = get_logger(__name__)
 
 class SM2Algorithm(BaseAlgorithm):
     algo_name = "SM-2"
-    desc = '经典间隔重复算法'
+    desc = "经典间隔重复算法"
+
     class AlgodataDict(TypedDict):
         efactor: float
         real_rept: int

@@ -1,5 +1,6 @@
 import heurams.services.version as ver
 
+
 # __main__.py
 def main():
     prompt = f"""HeurAMS {ver.ver} 已经被成功地安装在系统中.
@@ -16,6 +17,7 @@ python 代指您使用的解释器, 在某些发行版中可能是 python3, 而 
  此时您的解释器在项目目录里的 .venv/bin 中, 使用 IDE 开发前, 务必切换解释器!
 注意: 一个常见的误区是, 执行 interface 下的 __main__.py 运行基本用户界面, 这会导致 Python 上下文环境异常, 请不要这样做."""
     print(prompt)
+
 
 if __name__ == "__main__":
     main()
