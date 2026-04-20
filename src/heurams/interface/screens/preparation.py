@@ -1,7 +1,7 @@
 """记忆准备界面"""
 
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer, Container
+from textual.containers import ScrollableContainer, Container, Horizontal
 from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widget import Widget
@@ -22,6 +22,7 @@ import heurams.services.hasher as hasher
 from heurams.context import *
 from heurams.context import config_var
 from heurams.kernel.repolib import *
+from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
@@ -38,7 +39,7 @@ class PreparationScreen(Screen):
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
 
-    scheduled_num = reactive(config_var.get()["interface"]["global"]["scheduled_num"])
+    CSS_PATH = rootdir / "interface" / "css" / "screens" / "preparation.tcss"
 
     def __init__(self, repo: Repo) -> None:
         super().__init__(name=None, id=None, classes=None)
@@ -47,32 +48,44 @@ class PreparationScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
-        with Reveal(ScrollableContainer(id="vice_container")):
-            yield Label(f"准备就绪: [b]{self.repo.manifest['title']}[/b]\n")
-            yield Label(f"[b]仓库路径: {self.repo.source}[/b]")
-            yield Label(f"\n单元数量: {len(self.repo)}\n")
-            yield Label(f"最小记忆分组: {self.scheduled_num}\n", id="schnum_label")
-
-            yield Button(
-                "开始记忆",
-                id="start_memorizing_button",
-                variant="primary",
-                classes="start-button",
+        with ScrollableContainer(id="main_container"):
+            yield Markdown(
+                f"**准备就绪**: `{self.repo.manifest['title']}`\n", id="title"
             )
-            yield Button(
-                "预缓存音频",
-                id="precache_button",
-                variant="success",
-                classes="precache-button",
+            yield Label(f"单元集路径: {self.repo.source}")
+            yield Label(
+                f"学习完成度: {self.repo.progress['touched']}/{len(self.repo)} [d]\\[{round(self.repo.progress['touched']/self.repo.progress['total']*100, 1)}%][/d]"
+            )
+            yield Label(
+                f"调度算法: {self.repo.config["algorithm"]} {algorithms[self.repo.config["algorithm"]].desc}"
+            )
+            yield Label(
+                f"学习数量: {self.repo.preview['review'] + self.scheduled_num} = {self.repo.preview['review']} [d][复习][/d] + {self.scheduled_num} [d][新识记][/d]\n",
+                id="schnum_label",
+            )
+
+            yield Horizontal(
+                Button(
+                    "开始记忆",
+                    id="start_memorizing_button",
+                    variant="primary",
+                    classes="btn",
+                ),
+                Button(
+                    "预缓存音频",
+                    id="precache_button",
+                    variant="success",
+                    classes="btn",
+                ),
+                id="operations",
             )
 
             yield Static()
             yield Sparkline(self.spark_line_arr, summary_function=max)
-            yield Rule()
             # yield Static(str(self.spark_line_arr))
-            yield Static(f"单元状态预览:\n")
-            for i in self.content.splitlines():
-                yield Static(i, classes="full")
+            with Reveal(ScrollableContainer(id="previewer_container")):
+                for i in self.content.splitlines():
+                    yield Static(i, classes="unit-statline")
         yield Footer()
 
     # def watch_scheduled_num(self, old_scheduled_num, new_scheduled_num):
@@ -84,6 +97,7 @@ class PreparationScreen(Screen):
     #        pass
 
     def load_data(self):
+        self.scheduled_num = self.repo.config["scheduled_num"]
         content = ""
         spark_line_arr = []
         for i in self.repo.ident_index:
@@ -168,6 +182,5 @@ def launch(repo, app, scheduled_num):
     from .memoqueue import MemScreen
 
     pheser = rt.Phaser(atoms_to_provide)
-    save_func = repo.persist_to_repodir
-    memscreen = MemScreen(pheser, save_func, repo=repo)
+    memscreen = MemScreen(pheser, repo=repo)
     app.push_screen(memscreen)

@@ -45,27 +45,23 @@ API 版本代号: `{version.codename.capitalize()}`
 
 以 AGPL-3.0 开放源代码, 这直接意味着任何个体直接基于此代码对外或内部提供的应用和服务, 无论本地或网络, 必须向所有用户公开完整修改后的源代码, 且继续沿用 AGPL-3.0 协议.  
 
-您正使用的 TUI 用户界面是 python 版本程序库自带的基本用户界面, 作为基本的全功能前端实现与程序库测试, 如果您想去除它, 请移除程序库根目录中的 interface 文件夹.  
+您正使用的 TUI 用户界面是 python 版本程序库自带的基本用户界面, 以作为基本的全功能前端实现与程序库测试, 位于程序库根目录中的 interface 文件夹.  
 
 您可在项目主页 https://ams.pluv27.top 获取用户指南, 开发文档与软件更新.  
 
-如果您觉得这个软件有用, 可以在它的源代码仓库给它添加一个星标 :)  
+如果您觉得这个软件有用, 可以考虑参与贡献, 或在它的源代码仓库给它添加一个星标 :)  
 
-> 潜进(HeurAMS), 以及它作为一个"程序库"是自由且免费的, 但是开发工作必须投入大量精力.  
-> 您可以加入各种语言的翻译团队来翻译软件的界面, 您还可以制作图像、主题、音效, 或者改进软件配套的文档……  
-> 不管您来自何方, 我们都欢迎您加入社区并做出贡献.  
-> 我们的共同目标是为人人带来高品质的辅助记忆 & 学习软件.  
-> 您的慷慨支持, 我们必当涌泉相报.  
+您的慷慨支持, 我们必当涌泉相报.  
 
 开发人员列表:  
 
 - Wang Zhiyu([@pluvium27](https://github.com/pluvium27)): 发起项目与主要维护者  
 
-特别感谢以下人士, 他们的算法与理论构成了此软件算法的基石:  
+特别感谢以下人士, 他们的算法与理论构成了此软件现有算法的基石:  
 
 - [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论
 - [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 实现
-- [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 文献参考
+- [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 中文文献参考
 
 
 # 运行环境信息
@@ -86,6 +82,7 @@ Textual 框架版本: {textual_version}
                 "返回主界面",
                 id="back_button",
                 variant="primary",
+                flat=True,
                 classes="back-button",
             )
         yield Footer()

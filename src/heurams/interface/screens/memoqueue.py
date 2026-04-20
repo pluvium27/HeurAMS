@@ -19,14 +19,7 @@ from heurams.services.logger import get_logger
 
 from .. import shim
 
-
-class AtomState(Enum):
-    FAILED = auto()
-    NORMAL = auto()
-
-
 logger = get_logger(__name__)
-
 
 class MemScreen(Screen):
     BINDINGS = [
@@ -35,18 +28,17 @@ class MemScreen(Screen):
         ("d", "toggle_dark", ""),
         ("v", "play_voice", "朗读"),
         ("*", "toggle_favorite", "收藏"),
-        ("0,1,2,3", "app.push_screen('about')", ""),
     ]
 
     if config_var.get()["interface"]["global"]["quick_pass"]:
         BINDINGS.append(("k", "quick_pass", "正确应答"))
         BINDINGS.append(("f", "quick_fail", "错误应答"))
+
     rating = reactive(-1)
 
     def __init__(
         self,
         phaser: Phaser,
-        save_func: Callable,
         repo=None,
         name=None,
         id=None,
@@ -54,7 +46,6 @@ class MemScreen(Screen):
     ) -> None:
         super().__init__(name, id, classes)
         self.phaser = phaser
-        self.save_func = save_func
         self.repo = repo
         self.update_state()
         self.fission: Fission
@@ -62,8 +53,8 @@ class MemScreen(Screen):
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
         with ScrollableContainer():
-            yield Label(self._get_progress_text(), id="progress")
-            yield ScrollableContainer(id="puzzle-container")
+            yield Label(self._get_progress_text(), id="head_stat")
+            yield ScrollableContainer(id="puzzle_container")
         yield Footer()
 
     def update_state(self):
@@ -92,33 +83,12 @@ class MemScreen(Screen):
         if self.repo is not None:
             fav_status = "已收藏" if self._is_current_atom_favorited() else "未收藏"
             s += f"收藏: {fav_status}\n"
-        """if config_var.get().get("debug_topline", 0):
-            try:
-                alia = self.fission.get_current_puzzle_inf()["alia"]  # type: ignore
-                s += f"谜题: {alia}\n"
-            except:
-                pass
-            try:
-                stat = self.phaser.__repr__("simple", "")
-                s += f"{stat}\n"
-            except:
-                pass
-            try:
-                stat = self.procession.__repr__("simple", "")
-                s += f"{stat}\n"
-            except:
-                pass
-            try:
-                stat = self.fission.__repr__("simple", "")
-                s += f"{stat}\n"
-            except Exception as e:
-                s = str(e)"""
         s += f"进度: {self.procession.process() + 1}/{self.procession.total_length()}"
         return s
 
     def update_display(self):
         """更新进度显示"""
-        progress_widget = self.query_one("#progress")
+        progress_widget = self.query_one("#head_stat")
         progress_widget.update(self._get_progress_text())  # type: ignore
 
     def mount_puzzle(self):
@@ -126,14 +96,14 @@ class MemScreen(Screen):
         if self.procession.phase == PhaserState.FINISHED:
             self.mount_finished_widget()
             return
-        container = self.query_one("#puzzle-container")
+        container = self.query_one("#puzzle_container")
         for i in container.children:
             i.remove()
         container.mount(self.puzzle_widget())
 
     def mount_finished_widget(self):
         """挂载已完成组件"""
-        container = self.query_one("#puzzle-container")
+        container = self.query_one("#puzzle_container")
         for i in container.children:
             i.remove()
         from heurams.interface.widgets.finished import Finished

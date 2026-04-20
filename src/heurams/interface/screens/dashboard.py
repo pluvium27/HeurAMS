@@ -93,7 +93,6 @@ class DashboardScreen(Screen):
         # need_review: 需要/不需要学习
         # nearest_review_time: 最近下次学习时间
         # progress: 进度
-        # algotype: 算法类型
         ## initial_time: 起始时间
         # package: 包名
         # prompt: 最终呈现信息

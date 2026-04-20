@@ -24,7 +24,7 @@ def get_daystamp() -> int:
 
 def get_timestamp() -> float:
     """获取 UNIX 时间戳"""
-    # 搞这个类的原因是要支持可复现操作
+    # 搞这个函数的原因是要支持可复现操作
     time_override = config_var.get()["services"]["timer"]["timestamp_override"]
     if time_override != -1:
         logger.debug("使用覆盖的时间戳: %f", time_override)

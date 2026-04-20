@@ -17,7 +17,7 @@ paths = config_var.get()["global"]["paths"]
 cache_dir = pathlib.Path(paths.get("cache", paths["data"] + "/cache")) / "voice"
 
 
-def format_size(bytes_num: int) -> str:
+def human_size(bytes_num: int) -> str:
     """将字节数格式化为人类可读的字符串"""
     for unit in ["B", "KB", "MB", "GB", "TB"]:
         if bytes_num < 1024.0:
@@ -97,7 +97,7 @@ class PrecachingScreen(Screen):
 
         self.cache_stats["total_size"] = total_size
         self.cache_stats["file_count"] = file_count
-        self.cache_stats["human_size"] = format_size(total_size)
+        self.cache_stats["human_size"] = human_size(total_size)
         self.cache_stats["cached_units"] = cached_units
         self.cache_stats["total_units"] = total_units
         self.cache_stats["cache_rate"] = cache_rate
