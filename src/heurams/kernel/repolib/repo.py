@@ -82,7 +82,7 @@ class Repo:
         self.data_length = len(self.nucleonic_data_lict)
         self.ident_index = self.nucleonic_data_lict.keys()
         for i in self.ident_index:
-            self.algodata.append_new((i, {}))
+            self.algodata.append_if_it_donesnt_exist_before((i, {}))
         self.electronic_data_lict = self.algodata
 
     def _nucleonic_proc(self, unit):

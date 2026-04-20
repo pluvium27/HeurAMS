@@ -105,20 +105,21 @@ class DashboardScreen(Screen):
         repo.progress = {
             "total": repo.data_length,
             "touched": 0,
+            "have_activated_ever": 0,
         }
         initial_time = float("inf")
         for i in range(repo.data_length):
             e = pt.Electron.from_data(electronic_data=repo.electronic_data_lict[i], algo_name=repo.config['algorithm'])
             n = pt.Nucleon.from_data(repo.nucleonic_data_lict[i])
             if e.is_activated():
+                repo.progress["have_activated_ever"] = 1
                 repo.progress["touched"] += 1
                 repo.nearest_review_time = min(repo.nearest_review_time, e.nextdate())
                 # initial_time = min(initial_time, e.)
         repo.need_review = timer.get_daystamp() >= repo.nearest_review_time
         repo.prompt = f"""{repo.manifest['title']} ({repo.config['algorithm']})
-  进度: {repo.progress['touched']}/{repo.progress['total']} ({round(repo.progress['touched']/repo.progress['total']*100, 1)}%)
-  {'需要学习' if repo.need_review else "无需操作"}
-        """
+  [d]进度: {repo.progress['touched']}/{repo.progress['total']} ({round(repo.progress['touched']/repo.progress['total']*100, 1)}%)[/d]
+  [d]{'需要复习' if repo.need_review else ("暂未开始" if not repo.progress['have_activated_ever'] else '无需操作')}[/d]"""
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""
