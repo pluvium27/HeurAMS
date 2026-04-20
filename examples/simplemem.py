@@ -12,7 +12,7 @@ for i in repo.ident_index:
     n = pt.Nucleon.from_data(nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i))
     e = pt.Electron.from_data(
         electronic_data=repo.electronic_data_lict.get_itemic_unit(i),
-        algo_name=repo.config['algorithm']
+        algo_name=repo.config["algorithm"],
     )
     print(n)
     input()

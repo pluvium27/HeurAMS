@@ -35,8 +35,8 @@ class DashboardScreen(Screen):
         ("q", "go_back", "返回"),
     ]
 
-    CSS_PATH = Path(__file__).parent.parent / 'css' / "screens" / "dashboard.tcss"
-    
+    CSS_PATH = Path(__file__).parent.parent / "css" / "screens" / "dashboard.tcss"
+
     def __init__(
         self,
         name: str | None = None,
@@ -109,7 +109,10 @@ class DashboardScreen(Screen):
         }
         initial_time = float("inf")
         for i in range(repo.data_length):
-            e = pt.Electron.from_data(electronic_data=repo.electronic_data_lict[i], algo_name=repo.config['algorithm'])
+            e = pt.Electron.from_data(
+                electronic_data=repo.electronic_data_lict[i],
+                algo_name=repo.config["algorithm"],
+            )
             n = pt.Nucleon.from_data(repo.nucleonic_data_lict[i])
             if e.is_activated():
                 repo.progress["have_activated_ever"] = 1

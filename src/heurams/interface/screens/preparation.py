@@ -48,9 +48,7 @@ class PreparationScreen(Screen):
         yield Header(show_clock=True)
         with ScrollableContainer(id="vice_container"):
             yield Label(f"准备就绪: [b]{self.repo.manifest['title']}[/b]\n")
-            yield Label(
-                f"[b]仓库路径: {self.repo.source}[/b]"
-            )
+            yield Label(f"[b]仓库路径: {self.repo.source}[/b]")
             yield Label(f"\n单元数量: {len(self.repo)}\n")
             yield Label(f"最小记忆分组: {self.scheduled_num}\n", id="schnum_label")
 
@@ -93,7 +91,7 @@ class PreparationScreen(Screen):
             )
             e = pt.Electron.from_data(
                 electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i),
-                algo_name=self.repo.config['algorithm']
+                algo_name=self.repo.config["algorithm"],
             )
             statstr = ""
 
@@ -148,7 +146,7 @@ def launch(repo, app, scheduled_num):
         )
         e = pt.Electron.from_data(
             electronic_data=repo.electronic_data_lict.get_itemic_unit(i),
-            algo_name=repo.config['algorithm']
+            algo_name=repo.config["algorithm"],
         )
         a = pt.Atom(n, e, repo.orbitic_data)
         atoms.append(a)

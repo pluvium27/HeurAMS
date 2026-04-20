@@ -1,3 +1,4 @@
+# 已弃用
 class RefVar:
     def __init__(self, initvalue) -> None:
         self.data = initvalue

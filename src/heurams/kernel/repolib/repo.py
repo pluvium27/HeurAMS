@@ -64,11 +64,11 @@ class Repo:
             "source": self.source,
         }
         self.config = {
-            "algorithm": config_var.get()['interface']['global']['algorithm'],
-            "scheduled_num": config_var.get()['interface']['global']['scheduled_num'],
+            "algorithm": config_var.get()["interface"]["global"]["algorithm"],
+            "scheduled_num": config_var.get()["interface"]["global"]["scheduled_num"],
         }
         try:
-            self.config.update(dict(config_var.get()['repo'][self.manifest['package']]))
+            self.config.update(dict(config_var.get()["repo"][self.manifest["package"]]))
         except:
             pass
         self._generate_particles_data()
@@ -82,7 +82,7 @@ class Repo:
         self.data_length = len(self.nucleonic_data_lict)
         self.ident_index = self.nucleonic_data_lict.keys()
         for i in self.ident_index:
-            self.algodata.append_if_it_donesnt_exist_before((i, {}))
+            self.algodata.append_if_it_doesnt_exist_before((i, {}))
         self.electronic_data_lict = self.algodata
 
     def _nucleonic_proc(self, unit):

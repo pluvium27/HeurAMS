@@ -1,3 +1,4 @@
+# 已弃用
 from collections import UserList
 from typing import Any, Iterator
 
