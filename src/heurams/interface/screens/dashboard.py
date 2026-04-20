@@ -35,7 +35,7 @@ class DashboardScreen(Screen):
         ("q", "go_back", "返回"),
     ]
 
-    CSS_PATH = rootdir / 'interface' / "css" / "screens" / "dashboard.tcss"
+    CSS_PATH = rootdir / "interface" / "css" / "screens" / "dashboard.tcss"
 
     def __init__(
         self,
@@ -78,9 +78,7 @@ class DashboardScreen(Screen):
 
             yield ListView(id="repo_list", classes="repo-list")  # 单元集选择
 
-            yield Label(
-                f'版本 {version.ver} {version.stage.capitalize()}'
-            )  # 版本信息
+            yield Label(f"版本 {version.ver} {version.stage.capitalize()}")  # 版本信息
         yield Footer()
 
     def _load_data(self):
@@ -108,7 +106,7 @@ class DashboardScreen(Screen):
         }
         repo.preview = {
             "review": 0,
-            "new": repo.config['scheduled_num'],
+            "new": repo.config["scheduled_num"],
         }
         initial_time = float("inf")
         for i in range(repo.data_length):
@@ -121,8 +119,8 @@ class DashboardScreen(Screen):
                 repo.progress["have_activated_ever"] = 1
                 repo.progress["touched"] += 1
                 repo.nearest_review_time = min(repo.nearest_review_time, e.nextdate())
-                if (timer.get_daystamp() >= e.nextdate()):
-                    repo.preview['review'] += 1
+                if timer.get_daystamp() >= e.nextdate():
+                    repo.preview["review"] += 1
                 # initial_time = min(initial_time, e.)
         repo.need_review = timer.get_daystamp() >= repo.nearest_review_time
         repo.prompt = f"""{repo.manifest['title']} \\[{repo.config['algorithm']}]

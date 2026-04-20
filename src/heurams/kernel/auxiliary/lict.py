@@ -1,6 +1,7 @@
 from collections.abc import MutableSequence
 from typing import Any, Iterator, Optional
 
+
 class Lict(MutableSequence):
     """ "列典" 对象
 

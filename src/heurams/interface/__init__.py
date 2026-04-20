@@ -80,4 +80,3 @@ class HeurAMSApp(App):
     def panic(self, *args):
         self._close_messages_no_wait()
         raise self._exception
-    
