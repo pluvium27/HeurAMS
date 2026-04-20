@@ -1,0 +1,27 @@
+.foot {
+    align-vertical: bottom;
+}
+
+Switch {
+    dock: right;
+}
+
+Label {
+    width: auto
+}
+
+Select {
+    width: 55%;
+    dock: right;
+}
+
+Input {
+    width: 55%;
+    dock: right;
+}
+
+Horizontal {
+    width: 100%;
+    height: 4;
+    padding: 0 0 1 0;
+}

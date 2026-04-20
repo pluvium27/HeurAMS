@@ -3,7 +3,7 @@
 }
 
 #header {
-    height: 4;
+    height: 3;
 }
 
 .repo-list-item {

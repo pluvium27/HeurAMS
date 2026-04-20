@@ -1,7 +1,7 @@
 """记忆准备界面"""
 
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer
+from textual.containers import ScrollableContainer, Container
 from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widget import Widget
@@ -15,6 +15,7 @@ from textual.widgets import (
     Rule,
     Sparkline,
 )
+from textual.lazy import Reveal, Lazy
 
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
@@ -46,7 +47,7 @@ class PreparationScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
-        with ScrollableContainer(id="vice_container"):
+        with Reveal(ScrollableContainer(id="vice_container")):
             yield Label(f"准备就绪: [b]{self.repo.manifest['title']}[/b]\n")
             yield Label(f"[b]仓库路径: {self.repo.source}[/b]")
             yield Label(f"\n单元数量: {len(self.repo)}\n")

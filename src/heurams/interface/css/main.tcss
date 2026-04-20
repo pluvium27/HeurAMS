@@ -2,22 +2,6 @@ NavigatorScreen {
     align: center middle;
 }
 
-.infview {
-    width: 5fr
-}
-.dataview {
-    width: 3fr
-}
-
-.repo_listitem {
-    layout: grid;
-    grid-size: 2;
-}
-
-.repo_listitem_btn {
-    dock: right;
-    offset: -5% 0
-}
 
 #dialog {
     grid-size: 2;
@@ -28,34 +12,4 @@ NavigatorScreen {
     height: 12;
     border: thick $background 80%;
     background: $surface;
-}
-
-#dashboardtop {
-    height: 4
-}
-
-#input-container {
-    height: 3;
-    margin-top: 1;
-    align: center middle;
-}
-.container {
-    height: auto;
-    padding: 0 0 1 0;
-}
-#message-input {
-    width: 1fr;
-    margin-right: 1;
-}
-
-#status-bar {
-    height: 1;
-    margin-top: 1;
-    text-style: italic;
-    color: $text-muted;
-}
-
-.session-label {
-    color: $primary;
-    text-style: bold;
 }

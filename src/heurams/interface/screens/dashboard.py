@@ -35,7 +35,7 @@ class DashboardScreen(Screen):
         ("q", "go_back", "返回"),
     ]
 
-    CSS_PATH = Path(__file__).parent.parent / "css" / "screens" / "dashboard.tcss"
+    CSS_PATH = rootdir / 'interface' / "css" / "screens" / "dashboard.tcss"
 
     def __init__(
         self,
@@ -53,10 +53,9 @@ class DashboardScreen(Screen):
         with ScrollableContainer():
             yield Horizontal(  # 顶部的状态
                 Vertical(
-                    Label(f'欢迎使用 "潜进" 版本 {version.ver}'),
-                    Label(f"当前 UNIX 日时间戳: {timer.get_daystamp()}"),
+                    Label(f"当前日时间戳: {timer.get_daystamp()}"),
                     Label(
-                        f"应用时区修正: UTC+{config_var.get()['services']['timer']['timezone_offset'] / 3600}"
+                        f"应用时区修正: UTC+{str(config_var.get()['services']['timer']['timezone_offset'] / 3600).rstrip('.0')}"
                     ),
                     Label(
                         f"默认算法设置: {config_var.get()['interface']['global']['algorithm']}"
@@ -80,7 +79,7 @@ class DashboardScreen(Screen):
             yield ListView(id="repo_list", classes="repo-list")  # 单元集选择
 
             yield Label(
-                f'"潜进" 启发式辅助记忆调度器 版本 {version.ver} {version.stage.capitalize()}'
+                f'版本 {version.ver} {version.stage.capitalize()}'
             )  # 版本信息
         yield Footer()
 
@@ -107,6 +106,10 @@ class DashboardScreen(Screen):
             "touched": 0,
             "have_activated_ever": 0,
         }
+        repo.preview = {
+            "review": 0,
+            "new": repo.config['scheduled_num'],
+        }
         initial_time = float("inf")
         for i in range(repo.data_length):
             e = pt.Electron.from_data(
@@ -118,11 +121,13 @@ class DashboardScreen(Screen):
                 repo.progress["have_activated_ever"] = 1
                 repo.progress["touched"] += 1
                 repo.nearest_review_time = min(repo.nearest_review_time, e.nextdate())
+                if (timer.get_daystamp() >= e.nextdate()):
+                    repo.preview['review'] += 1
                 # initial_time = min(initial_time, e.)
         repo.need_review = timer.get_daystamp() >= repo.nearest_review_time
-        repo.prompt = f"""{repo.manifest['title']} ({repo.config['algorithm']})
+        repo.prompt = f"""{repo.manifest['title']} \\[{repo.config['algorithm']}]
   [d]进度: {repo.progress['touched']}/{repo.progress['total']} ({round(repo.progress['touched']/repo.progress['total']*100, 1)}%)[/d]
-  [d]{'需要复习' if repo.need_review else ("暂未开始" if not repo.progress['have_activated_ever'] else '无需操作')}[/d]"""
+  [d]{f'需要学习: {repo.preview['review']}R + {repo.preview['new']}U' if repo.need_review else (f"暂未开始: 0R + {repo.preview['new']}U" if not repo.progress['have_activated_ever'] else '无需操作')}[/d]"""
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""

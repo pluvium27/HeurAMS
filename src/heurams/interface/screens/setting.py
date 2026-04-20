@@ -44,7 +44,8 @@ class SettingScreen(Screen):
     BINDINGS = [
         ("q", "go_back", "返回"),
     ]
-
+    CSS_PATH = rootdir / 'interface' / "css" / "screens" / "setting.tcss"
+    
     def __init__(
         self,
         name: str | None = None,
@@ -66,6 +67,7 @@ class SettingScreen(Screen):
                     yield Collapsible(
                         *a, title=i + f'\n{config_var.get().get(f"_{i}_desc", "")}'
                     )
+        yield Label("退出页面时, 所作的更改会立即保存, 但仍建议重启软件以确保新的配置得到应用", classes="foot")
         yield Footer()
 
     def _get_subcfg(self, parent_epath: str):
@@ -112,7 +114,6 @@ class SettingScreen(Screen):
                                     prompt=f'{parent.get(f"{i}", "")}',
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="container",
                             )
                         )
                     elif isinstance(parent[f"_{i}_candidate"], list):
@@ -124,7 +125,6 @@ class SettingScreen(Screen):
                                     prompt=f'{parent.get(f"{i}", "")}',
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="container",
                             )
                         )
                 else:
@@ -138,7 +138,6 @@ class SettingScreen(Screen):
                                     type="number",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="container",
                             )
                         )
                     elif isinstance(parent[i], str):
@@ -151,7 +150,6 @@ class SettingScreen(Screen):
                                     type="text",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="container",
                             )
                         )
                     elif isinstance(parent[i], bool):
@@ -161,7 +159,6 @@ class SettingScreen(Screen):
                                 Switch(
                                     value=parent[i], id=domize(f"{parent_epath}.{i}")
                                 ),
-                                classes="container",
                             )
                         )
                     elif isinstance(parent[i], int):
@@ -174,7 +171,6 @@ class SettingScreen(Screen):
                                     type="integer",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="container",
                             )
                         )
                     elif isinstance(parent[i], list):
