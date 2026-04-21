@@ -5,14 +5,14 @@ from pathlib import Path
 from typing import Callable
 
 from textual.app import ComposeResult
-from textual.containers import Center, ScrollableContainer
+from textual.containers import Center, ScrollableContainer, Container
 from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
 
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
-from heurams.context import config_var
+from heurams.context import config_var, rootdir
 from heurams.kernel.reactor import *
 from heurams.services.favorite_service import favorite_manager
 from heurams.services.logger import get_logger
@@ -28,7 +28,12 @@ class MemScreen(Screen):
         ("d", "toggle_dark", ""),
         ("v", "play_voice", "朗读"),
         ("*", "toggle_favorite", "收藏"),
+        ("n", "block_prompt"),
+        ("s", "block_prompt"),
+        ("z", "block_prompt"),
     ]
+
+    CSS_PATH = rootdir / 'interface' / 'css' / 'screens' / 'memoqueue.tcss'
 
     if config_var.get()["interface"]["global"]["quick_pass"]:
         BINDINGS.append(("k", "quick_pass", "正确应答"))
@@ -38,17 +43,17 @@ class MemScreen(Screen):
 
     def __init__(
         self,
-        phaser: Phaser,
+        router: Router,
         repo=None,
         name=None,
         id=None,
         classes=None,
     ) -> None:
         super().__init__(name, id, classes)
-        self.phaser = phaser
+        self.router = router
         self.repo = repo
         self.update_state()
-        self.fission: Fission
+        self.expander: Expander
 
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
@@ -59,17 +64,17 @@ class MemScreen(Screen):
 
     def update_state(self):
         """更新状态机"""
-        self.procession: Procession = self.phaser.current_procession()  # type: ignore
+        self.procession: Procession = self.router.current_procession()  # type: ignore
         self.atom: pt.Atom = self.procession.current_atom  # type: ignore
 
     def on_mount(self):
-        self.fission = self.procession.get_fission()
+        self.expander = self.procession.get_expander()
         self.mount_puzzle()
         self.update_display()
 
     def puzzle_widget(self):
         try:
-            puzzle = self.fission.get_current_puzzle_inf()
+            puzzle = self.expander.get_current_puzzle_inf()
             return shim.puzzle2widget[puzzle["puzzle"]](  # type: ignore
                 atom=self.atom, alia=puzzle["alia"]  # type: ignore
             )
@@ -93,7 +98,7 @@ class MemScreen(Screen):
 
     def mount_puzzle(self):
         """挂载当前谜题组件"""
-        if self.procession.phase == PhaserState.FINISHED:
+        if self.procession.phase == RouterState.FINISHED:
             self.mount_finished_widget()
             return
         container = self.query_one("#puzzle_container")
@@ -139,10 +144,10 @@ class MemScreen(Screen):
         if new_rating == -1:  # 安全值
             return
         self.update_state()
-        if self.procession.phase == PhaserState.FINISHED:
+        if self.procession.phase == RouterState.FINISHED:
             rating = -1
             return
-        self.fission.report(new_rating)
+        self.expander.report(new_rating)
         self.forward(new_rating)
         self.rating = -1
 
@@ -150,9 +155,9 @@ class MemScreen(Screen):
         self.update_state()
         allow_forward = 1 if rating >= 4 else 0
         if allow_forward:
-            self.fission.forward()
-        if self.fission.state == "retronly":
-            self.forward_atom(self.fission.get_quality())
+            self.expander.forward()
+        if self.expander.state == "retronly":
+            self.forward_atom(self.expander.get_quality())
         self.update_state()
         self.mount_puzzle()
         self.update_display()
@@ -177,7 +182,7 @@ class MemScreen(Screen):
             self.update_state()  # 刷新状态
         self.procession.forward(1)
         self.update_state()  # 刷新状态
-        self.fission = self.procession.get_fission()
+        self.expander = self.procession.get_expander()
 
     def action_go_back(self):
         self.app.pop_screen()
@@ -224,3 +229,6 @@ class MemScreen(Screen):
             self.app.notify(f"已收藏：{ident}", severity="information")
         # 更新显示（如果需要）
         self.update_display()
+
+    def action_block_prompt(self):
+        self.app.notify("功能在记忆界面中不可用, 完成或返回后再试", severity="error")

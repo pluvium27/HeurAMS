@@ -4,8 +4,8 @@ from transitions import Machine
 import heurams.kernel.particles as pt
 from heurams.services.logger import get_logger
 
-from .fission import Fission
-from .states import PhaserState, ProcessionState
+from .expander import Expander
+from .states import RouterState, ProcessionState
 
 logger = get_logger(__name__)
 
@@ -13,7 +13,7 @@ logger = get_logger(__name__)
 class Procession(Machine):
     """队列: 标识单次记忆流程"""
 
-    def __init__(self, atoms: list, phase_state: PhaserState, name_: str = ""):
+    def __init__(self, atoms: list, phase_state: RouterState, name_: str = ""):
         logger.debug(
             "Procession.__init__: 原子数量=%d, phase=%s, name='%s'",
             len(atoms),
@@ -113,8 +113,8 @@ class Procession(Machine):
         logger.debug("Procession.is_empty: %s", empty)
         return empty
 
-    def get_fission(self):
-        return Fission(atom=self.current_atom, phase=self.phase)  # type: ignore
+    def get_expander(self):
+        return Expander(atom=self.current_atom, phase=self.phase)  # type: ignore
 
     def __repr__(self, style="pipe", ends="\n"):
         from heurams.services.textproc import truncate

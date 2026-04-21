@@ -2,7 +2,7 @@ import copy
 import random
 from typing import TypedDict
 
-from textual.containers import Container
+from textual.containers import Container, ScrollableContainer
 from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Button, Label, Markdown
@@ -68,7 +68,7 @@ class ClozePuzzle(BasePuzzleWidget):
         yield Label(self.puzzle.wording, id="sentence")
         yield Markdown(f"> {self.listprint(self.inputlist)}", id="inputpreview")
         # 渲染当前问题的选项
-        with Container(id="btn-container"):
+        with ScrollableContainer(id="btn-container"):
             for i in self.ans:
                 h = str(hash(i))
                 self.hashmap[h] = i

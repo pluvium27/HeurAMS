@@ -3,9 +3,9 @@
 Reactor 是 HeurAMS 的记忆流程状态机模块, 和界面 (interface) 的实现是解耦的, 以便后期与其他框架的适配.\
 得益于 Pickle, 状态机模块支持快照!
 
-## Phaser - 全局阶段控制器
+## Router - 全局阶段控制器
 
-在一次队列记忆流程中, Phaser 代表记忆流程本身.
+在一次队列记忆流程中, Router 代表记忆流程本身.
 
 ### 属性
 
@@ -25,7 +25,7 @@ Reactor 是 HeurAMS 的记忆流程状态机模块, 和界面 (interface) 的实
 
 在初始化 Procession 时, 每个 Procession 被赋予一个不重复的状态属性 作为"阶段状态"属性, 以此标识 Procession 的阶段属性, 因为每个 Procession 管理一个阶段下的复习进程.
 
-你可以用 state 属性获取 Phaser 的当前状态.
+你可以用 state 属性获取 Router 的当前状态.
 
 #### Procession 属性
 
@@ -34,26 +34,26 @@ Reactor 是 HeurAMS 的记忆流程状态机模块, 和界面 (interface) 的实
 
 ### 初始化
 
-Phaser 接受一个存储 Atom 对象的列表, 作为组织记忆流程的材料\
+Router 接受一个存储 Atom 对象的列表, 作为组织记忆流程的材料\
 在内部, 根据是否激活将其分为 new_atoms 与 old_atoms.\
 因此, 如果你传入的列表中有算法上"无所事事"的 Atom, 流程会对其进行"加强复习"
 由此创建 Procession.
 
 ### 直接输出呈现形式
 
-Phaser 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
+Router 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 其以 ascii 表格形式输出, 格式也符合 markdown 表格规范, 你可以直接复制到 markdown.\
 示例:
 
 ```text
-| Type   | State   | Processions            | Current Procession   |
-|:-------|:--------|:-----------------------|:---------------------|
-| Phaser | unsure  | ['新记忆', '总体复习'] | 新记忆               |
+| Type   | State  | Processions            | Current Procession |
+| :----- | :----- | :--------------------- | :----------------- |
+| Router | unsure | ['新记忆', '总体复习'] | 新记忆             |
 ```
 
-| Type | State | Processions | Current Procession |
-|:-------|:--------|:-----------------------|:---------------------|
-| Phaser | unsure | ['新记忆', '总体复习'] | 新记忆 |
+| Type   | State  | Processions            | Current Procession |
+| :----- | :----- | :--------------------- | :----------------- |
+| Router | unsure | ['新记忆', '总体复习'] | 新记忆             |
 
 ### 方法
 
@@ -85,29 +85,29 @@ Phaser 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 - cursor: 指针, 是当前原子在 atoms 列表中的索引
 - phase: "阶段属性"
 
-> 注意区分 "Phaser" 和 "Phase", 其中 "Phase" 表示 "Phaser State".
+> 注意区分 "Router" 和 "Phase", 其中 "Phase" 表示 "Router State".
 
 - name\_: 阶段的命名
 - state: 当前状态属性
 
 ### 初始化
 
-接受一个 atoms 列表与 phase_state (PhaserState Enum 类型)对象
+接受一个 atoms 列表与 phase_state (RouterState Enum 类型)对象
 
 ### 直接输出呈现形式
 
-同 Phaser, 但显示数据有所不同\
-与 Phaser 不同, Procession 显示队列会对过长的 atom.ident 进行缩略(末尾 `>` 符号)
+同 Router, 但显示数据有所不同\
+与 Router 不同, Procession 显示队列会对过长的 atom.ident 进行缩略(末尾 `>` 符号)
 
 ```text
-| Type       | Name   | State   | Progress   | Queue                  | Current Atom                  |
-|:-----------|:-------|:--------|:-----------|:-----------------------|:------------------------------|
-| Procession | 新记忆 | active  | 1 / 2      | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
+| Type       | Name   | State  | Progress | Queue                  | Current Atom                  |
+| :--------- | :----- | :----- | :------- | :--------------------- | :---------------------------- |
+| Procession | 新记忆 | active | 1 / 2    | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
 ```
 
-| Type | Name | State | Progress | Queue | Current Atom |
-|:-----------|:-------|:--------|:-----------|:-----------------------|:------------------------------|
-| Procession | 新记忆 | active | 1 / 2 | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
+| Type       | Name   | State  | Progress | Queue                  | Current Atom                  |
+| :--------- | :----- | :----- | :------- | :--------------------- | :---------------------------- |
+| Procession | 新记忆 | active | 1 / 2    | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
 
 ### 方法
 
@@ -142,11 +142,11 @@ Phaser 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 
 判断是否为空队列(传入原子列表对象是空列表的队列)
 
-#### get_fission(self)
+#### get_expander(self)
 
-获取当前原子的 Fission 对象, 用于单原子调度展开
+获取当前原子的 Expander 对象, 用于单原子调度展开
 
-## Fission - 单原子调度控制器
+## Expander - 单原子调度控制器
 
 ### 属性
 

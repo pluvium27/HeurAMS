@@ -181,6 +181,6 @@ def launch(repo, app, scheduled_num):
 
     from .memoqueue import MemScreen
 
-    pheser = rt.Phaser(atoms_to_provide)
-    memscreen = MemScreen(pheser, repo=repo)
+    router = rt.Router(atoms_to_provide)
+    memscreen = MemScreen(router=router, repo=repo)
     app.push_screen(memscreen)

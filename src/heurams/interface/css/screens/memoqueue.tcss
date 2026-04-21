@@ -1,0 +1,4 @@
+#puzzle_container > * {
+    height: auto;
+    width: auto;
+}

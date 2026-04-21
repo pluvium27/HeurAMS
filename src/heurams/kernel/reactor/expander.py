@@ -8,39 +8,39 @@ import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as puz
 from heurams.services.logger import get_logger
 
-from .states import FissionState, PhaserState
+from .states import ExpanderState, RouterState
 
 logger = get_logger(__name__)
 
 
-class Fission(Machine):
+class Expander(Machine):
     """单原子调度展开器"""
 
-    def __init__(self, atom: pt.Atom, phase=PhaserState.RECOGNITION):
+    def __init__(self, atom: pt.Atom, phase=RouterState.RECOGNITION):
         self.phase = phase
         self.cursor = 0
         self.atom = atom
         self.current_puzzle_inf: dict
-        # phase 为 PhaserState 枚举实例, 需要获取其value
+        # phase 为 RouterState 枚举实例, 需要获取其value
         phase_value = phase.value
         states = [
-            {"name": FissionState.EXAMMODE.value},
-            {"name": FissionState.RETRONLY.value},
+            {"name": ExpanderState.EXAMMODE.value},
+            {"name": ExpanderState.RETRONLY.value},
         ]
 
         transitions = [
             {
                 "trigger": "finish",
-                "source": FissionState.EXAMMODE.value,
-                "dest": FissionState.RETRONLY.value,
+                "source": ExpanderState.EXAMMODE.value,
+                "dest": ExpanderState.RETRONLY.value,
             },
         ]
-        if phase == PhaserState.FINISHED:
+        if phase == RouterState.FINISHED:
             Machine.__init__(
                 self,
                 states=states,
                 transitions=transitions,
-                initial=FissionState.EXAMMODE.value,
+                initial=ExpanderState.EXAMMODE.value,
             )
             return
         orbital_schedule = atom.registry["orbital"]["phases"][phase_value]  # type: ignore
@@ -81,7 +81,7 @@ class Fission(Machine):
             self,
             states=states,
             transitions=transitions,
-            initial=FissionState.EXAMMODE.value,
+            initial=ExpanderState.EXAMMODE.value,
         )
 
     def get_puzzles_inf(self):
@@ -118,7 +118,7 @@ class Fission(Machine):
 
         dic = [
             {
-                "Type": "Fission",
+                "Type": "Expander",
                 "Atom": truncate(self.atom.ident),
                 "State": self.state,
                 "Progress": f"{self.cursor + 1} / {len(self.puzzles_inf)}",

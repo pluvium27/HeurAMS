@@ -75,7 +75,7 @@ class MCQPuzzle(BasePuzzleWidget):
             yield Label(f"当前输入: {self.inputlist}", id="inputpreview")
 
         # 渲染当前问题的选项
-        with Container(id="btn-container"):
+        with ScrollableContainer(id="btn-container"):
             for i in current_options:
                 self.hashmap[str(hash(i))] = i
                 btnid = f"sel{str(self.cursor).zfill(3)}-{hash(i)}"

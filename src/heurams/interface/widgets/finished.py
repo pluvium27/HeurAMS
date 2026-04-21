@@ -28,7 +28,7 @@ class Finished(Widget):
     def compose(self):
         yield Label("本次记忆进程结束", id="finished_msg")
         yield Label(f"算法数据{'已保存' if self.is_saved else "未能保存"}")
-        yield Button("返回上一级", id="back-to-menu")
+        yield Button("返回上一级", flat=True, id="back-to-menu")
 
     def on_button_pressed(self, event):
         button_id = event.button.id

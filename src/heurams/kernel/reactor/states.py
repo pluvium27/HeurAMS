@@ -5,7 +5,7 @@ from heurams.services.logger import get_logger
 logger = get_logger(__name__)
 
 
-class PhaserState(Enum):
+class RouterState(Enum):
     UNSURE = "unsure"
     QUICK_REVIEW = "quick_review"
     RECOGNITION = "recognition"
@@ -18,7 +18,7 @@ class ProcessionState(Enum):
     FINISHED = "finished"
 
 
-class FissionState(Enum):
+class ExpanderState(Enum):
     EXAMMODE = "exammode"
     RETRONLY = "retronly"
 

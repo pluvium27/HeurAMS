@@ -1,5 +1,0 @@
-schedule = ["quick_review", "recognition", "final_review"]
-[phases]
-quick_review = [["FillBlank", "1.0"], ["SelectMeaning", "0.5"], ["Recognition", "1.0"]]
-recognition = [["Recognition", "1.0"]]
-final_review = [["FillBlank", "0.7"], ["SelectMeaning", "0.7"], ["Recognition", "1.0"]]
