@@ -5,6 +5,8 @@ from textual.containers import Grid, ScrollableContainer
 from textual.screen import ModalScreen
 from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
 
+from textual import events, on
+
 from heurams.context import *
 from heurams.services.logger import get_logger
 

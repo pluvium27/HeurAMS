@@ -1271,7 +1271,7 @@ class SM:
         self.ofm = OFM(self)
 
     def _find_index_to_insert(self, item, r=None):
-        """Binary search to find insertion index for sorted queue."""
+        """Binary search to find insertion index for sorted procession."""
         if r is None:
             r = list(range(len(self.q)))
 
@@ -1290,7 +1290,7 @@ class SM:
             return self._find_index_to_insert(item, r[i:])
 
     def add_item(self, value):
-        """Add a new item to the queue."""
+        """Add a new item to the procession."""
         item = Item(self, value)
         index = self._find_index_to_insert(item)
         self.q.insert(index, item)
@@ -1330,7 +1330,7 @@ class SM:
         item.answer(grade, now)
 
     def discard(self, item):
-        """Remove item from queue."""
+        """Remove item from procession."""
         if item in self.q:
             self.q.remove(item)
 

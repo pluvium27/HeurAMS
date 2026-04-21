@@ -11,10 +11,10 @@ logger = get_logger(__name__)
 
 
 class Router(Machine):
-    """全局调度阶段管理器"""
+    """全局调度阶段路由器"""
 
     def __init__(self, atoms: list[pt.Atom]) -> None:
-        logger.debug("Router.__init__: 原子数量=%d", len(atoms))
+        logger.debug(f"Router.__init__: 原子数量={len(atoms)}")
 
         self.atoms = atoms
         new_atoms = list()
@@ -26,9 +26,10 @@ class Router(Machine):
             else:
                 old_atoms.append(i)
 
-        logger.debug("新原子数量=%d, 旧原子数量=%d", len(new_atoms), len(old_atoms))
+        logger.debug(f"新原子数量={len(new_atoms)}, 旧原子数量={len(old_atoms)}")
 
         self.processions = list()
+        """路由中的所有队列"""
         # TODO: 改进为基于配置文件的可选复习阶段
         if len(old_atoms):
             self.processions.append(
@@ -116,15 +117,15 @@ class Router(Machine):
         for i in self.processions:
             i: Procession
             if i.state != ProcessionState.FINISHED.value:
-                # if i.phase == RouterState.UNSURE: 此判断是不必要的 因为没有这种 Procession
-                if i.phase == RouterState.QUICK_REVIEW:
+                # if i.route == RouterState.UNSURE: 此判断是不必要的 因为没有这种 Procession
+                if i.route == RouterState.QUICK_REVIEW:
                     self.to_quick_review()
-                elif i.phase == RouterState.RECOGNITION:
+                elif i.route == RouterState.RECOGNITION:
                     self.to_recognition()
-                elif i.phase == RouterState.FINAL_REVIEW:
+                elif i.route == RouterState.FINAL_REVIEW:
                     self.to_final_review()
 
-                logger.debug("找到未完成的 Procession: phase=%s", i.phase)
+                logger.debug("找到未完成的 Procession: route=%s", i.route)
                 return i
 
         # 所有Procession都已完成

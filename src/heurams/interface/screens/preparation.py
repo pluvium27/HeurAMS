@@ -17,6 +17,8 @@ from textual.widgets import (
 )
 from textual.lazy import Reveal, Lazy
 
+from textual import events, on
+
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
@@ -34,7 +36,7 @@ class PreparationScreen(Screen):
 
     BINDINGS = [
         ("q", "go_back", "返回"),
-        ("p", "precache", "预缓存音频"),
+        ("p", "precache", "缓存"),
         ("d", "toggle_dark", ""),
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
@@ -46,8 +48,16 @@ class PreparationScreen(Screen):
         self.repo = repo
         self.load_data()
 
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
+
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
+        
+        if config_var.get()['interface']['global']['show_header']:
+            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer(id="main_container"):
             yield Markdown(
                 f"**准备就绪**: `{self.repo.manifest['title']}`\n", id="title"
@@ -72,7 +82,7 @@ class PreparationScreen(Screen):
                     classes="btn",
                 ),
                 Button(
-                    "预缓存音频",
+                    "管理缓存",
                     id="precache_button",
                     variant="success",
                     classes="btn",

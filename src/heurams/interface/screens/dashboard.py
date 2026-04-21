@@ -10,6 +10,8 @@ from textual.containers import ScrollableContainer, Container, Horizontal, Verti
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
 from textual.layouts import horizontal
+from textual import events, on
+from textual.reactive import reactive
 
 import heurams.kernel.particles as pt
 import heurams.services.timer as timer
@@ -37,6 +39,8 @@ class DashboardScreen(Screen):
 
     CSS_PATH = rootdir / "interface" / "css" / "screens" / "dashboard.tcss"
 
+    repolink = reactive({})
+    
     def __init__(
         self,
         name: str | None = None,
@@ -44,12 +48,12 @@ class DashboardScreen(Screen):
         classes: str | None = None,
     ) -> None:
         super().__init__(name, id, classes)
-        self.repolink = {}
+        self._load_data()
 
     def compose(self) -> ComposeResult:
         """组合界面组件"""
-        self._load_data()
-        yield Header(show_clock=True)
+        if config_var.get()['interface']['global']['show_header']:
+            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer():
             yield Horizontal(  # 顶部的状态
                 Vertical(
@@ -58,7 +62,7 @@ class DashboardScreen(Screen):
                         f"应用时区修正: UTC+{str(config_var.get()['services']['timer']['timezone_offset'] / 3600).rstrip('.0')}"
                     ),
                     Label(
-                        f"默认算法设置: {config_var.get()['interface']['global']['algorithm']}"
+                        f"默认算法设置: {config_var.get()['interface']['global']['algorithm']}",
                     ),
                     classes="left",
                 ),
@@ -80,6 +84,13 @@ class DashboardScreen(Screen):
 
             yield Label(f"版本 {version.ver} {version.stage.capitalize()}")  # 版本信息
         yield Footer()
+
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
+        # https://github.com/Textualize/textual/discussions/4268
+        # self.refresh(recompose=True) 此函数有问题且官方不管 而且性能低
 
     def _load_data(self):
         repo_dirs = Repo.probe_valid_repos_in_dir(
@@ -154,7 +165,7 @@ class DashboardScreen(Screen):
         for r in self.repos:
             self.repolink[str(id(r))] = r  # 用于规避 ctype id 对象还原
             list_item = ListItem(
-                Label(r.prompt),
+                *[Label(line) for line in r.prompt.splitlines()],
                 Button(
                     f"开始学习",
                     flat=True,

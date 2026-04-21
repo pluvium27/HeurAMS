@@ -6,7 +6,7 @@ from .nucleon import Nucleon
 
 orbital_placeholder = {
     "schedule": ["quick_review", "recognition", "final_review"],
-    "phases": {
+    "routes": {
         "quick_review": [
             ["FillBlank", 1.0],
             ["SelectMeaning", 0.5],

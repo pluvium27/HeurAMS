@@ -25,6 +25,7 @@ from .screens.navigator import NavigatorScreen
 from .screens.precache import PrecachingScreen
 from .screens.setting import SettingScreen
 from .screens.synctool import SyncScreen
+from . import shim
 
 _end = perf_counter()
 print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
@@ -55,6 +56,9 @@ class HeurAMSApp(App):
         "navigator": NavigatorScreen,
         "setting": SettingScreen,
     }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def on_mount(self) -> None:
         self.push_screen("dashboard")

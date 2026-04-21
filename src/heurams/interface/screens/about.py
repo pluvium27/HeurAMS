@@ -5,6 +5,8 @@ from textual.containers import ScrollableContainer
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Markdown, Static
 
+from textual import events, on
+
 import heurams.services.version as version
 from heurams.context import *
 import platform
@@ -19,8 +21,19 @@ class AboutScreen(Screen):
         ("q", "go_back", "返回"),
     ]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
+
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
+        
+        if config_var.get()['interface']['global']['show_header']:
+            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer(id="about_container"):
             yield Label("[b]关于与版本信息[/b]")
 

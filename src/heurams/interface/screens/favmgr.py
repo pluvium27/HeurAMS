@@ -4,6 +4,8 @@ import base64
 from pathlib import Path
 from typing import List, Optional
 
+from textual import events, on
+
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
@@ -18,6 +20,7 @@ from textual.widgets import (
     Static,
 )
 
+from textual import events, on
 from heurams.context import config_var
 from heurams.kernel.repolib import Repo
 from heurams.services.favorite_service import FavoriteItem, favorite_manager
@@ -53,7 +56,9 @@ class FavoriteManagerScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """组合界面组件"""
-        yield Header(show_clock=True)
+        
+        if config_var.get()['interface']['global']['show_header']:
+            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer(id="favorites-container"):
             if not self.favorites:
                 yield Label("暂无收藏", classes="empty-label")
@@ -62,6 +67,12 @@ class FavoriteManagerScreen(Screen):
                 yield Label(f"共 {len(self.favorites)} 个收藏项", classes="count-label")
                 yield ListView(id="favorites-list")
         yield Footer()
+
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def on_mount(self) -> None:
         """挂载后填充列表"""

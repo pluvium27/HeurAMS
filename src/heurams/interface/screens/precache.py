@@ -8,6 +8,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, ProgressBar, Static
 from textual.worker import get_current_worker
 
+from textual import events, on
+
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
@@ -80,6 +82,12 @@ class PrecachingScreen(Screen):
                 continue
         return total
 
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
+
     def _update_cache_stats(self) -> None:
         """更新缓存统计信息"""
         total_size = 0
@@ -103,7 +111,9 @@ class PrecachingScreen(Screen):
         self.cache_stats["cache_rate"] = cache_rate
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
+        
+        if config_var.get()['interface']['global']['show_header']:
+            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer(id="precache_container"):
             yield Label("[b]音频预缓存[/b]", classes="title-label")
             with Container():

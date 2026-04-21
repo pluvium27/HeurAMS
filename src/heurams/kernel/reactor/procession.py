@@ -13,11 +13,11 @@ logger = get_logger(__name__)
 class Procession(Machine):
     """队列: 标识单次记忆流程"""
 
-    def __init__(self, atoms: list, phase_state: RouterState, name_: str = ""):
+    def __init__(self, atoms: list, route_state: RouterState, name_: str = ""):
         logger.debug(
-            "Procession.__init__: 原子数量=%d, phase=%s, name='%s'",
+            "Procession.__init__: 原子数量=%d, route=%s, name='%s'",
             len(atoms),
-            phase_state.value,
+            route_state.value,
             name_,
         )
         self.current_atom: pt.Atom | None
@@ -25,7 +25,7 @@ class Procession(Machine):
         self.current_atom = atoms[0] if atoms else None
         self.cursor = 0
         self.name_ = name_
-        self.phase = phase_state
+        self.route = route_state
 
         states = [
             {"name": ProcessionState.ACTIVE.value, "on_enter": "on_active"},
@@ -114,7 +114,7 @@ class Procession(Machine):
         return empty
 
     def get_expander(self):
-        return Expander(atom=self.current_atom, phase=self.phase)  # type: ignore
+        return Expander(atom=self.current_atom, route=self.route)  # type: ignore
 
     def __repr__(self, style="pipe", ends="\n"):
         from heurams.services.textproc import truncate
@@ -125,7 +125,7 @@ class Procession(Machine):
                 "Name": self.name_,
                 "State": self.state,
                 "Progress": f"{self.cursor + 1} / {len(self.atoms)}",
-                "Queue": list(map(lambda f: truncate(f.ident), self.atoms)),
+                "Procession": list(map(lambda f: truncate(f.ident), self.atoms)),
                 "Current Atom": self.current_atom.ident,  # type: ignore
             }
         ]

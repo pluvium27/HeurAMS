@@ -9,6 +9,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, ProgressBar, Static
 from textual.worker import get_current_worker
 
+from textual import events, on
+
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
@@ -26,8 +28,16 @@ class SyncScreen(Screen):
         self.log_messages = []
         self.max_log_lines = 50
 
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
+
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
+        
+        if config_var.get()['interface']['global']['show_header']:
+            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer(id="sync_container"):
             # 标题和连接状态
             yield Static("同步工具", classes="title")

@@ -1,6 +1,6 @@
 schedule = ["quick_review", "recognition", "final_review"]
 
-[phases]
+[routes]
 quick_review = [["FillBlank", "1.0"], ["Recognition", "1.0"]]
 recognition = [["FillBlank", "1.0"]]
 final_review = [["FillBlank", "1.0"], ["Recognition", "1.0"]]

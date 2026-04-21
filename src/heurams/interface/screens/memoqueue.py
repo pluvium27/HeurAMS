@@ -10,6 +10,8 @@ from textual.reactive import reactive
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
 
+from textual import events, on
+
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
 from heurams.context import config_var, rootdir
@@ -17,9 +19,12 @@ from heurams.kernel.reactor import *
 from heurams.services.favorite_service import favorite_manager
 from heurams.services.logger import get_logger
 
+import pickle
+
 from .. import shim
 
 logger = get_logger(__name__)
+
 
 class MemScreen(Screen):
     BINDINGS = [
@@ -33,7 +38,8 @@ class MemScreen(Screen):
         ("z", "block_prompt"),
     ]
 
-    CSS_PATH = rootdir / 'interface' / 'css' / 'screens' / 'memoqueue.tcss'
+    SUB_TITLE = "学习中"
+    CSS_PATH = rootdir / "interface" / "css" / "screens" / "memoqueue.tcss"
 
     if config_var.get()["interface"]["global"]["quick_pass"]:
         BINDINGS.append(("k", "quick_pass", "正确应答"))
@@ -55,8 +61,15 @@ class MemScreen(Screen):
         self.update_state()
         self.expander: Expander
 
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
+
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
+        if config_var.get()['interface']['global']['show_header']:
+            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer():
             yield Label(self._get_progress_text(), id="head_stat")
             yield ScrollableContainer(id="puzzle_container")
@@ -83,7 +96,7 @@ class MemScreen(Screen):
             return Static(f"无法生成谜题 {e}")
 
     def _get_progress_text(self):
-        s = f"阶段: {self.procession.phase.name}\n"
+        s = f"阶段: {self.procession.route.name}\n"
         # 收藏状态
         if self.repo is not None:
             fav_status = "已收藏" if self._is_current_atom_favorited() else "未收藏"
@@ -98,7 +111,7 @@ class MemScreen(Screen):
 
     def mount_puzzle(self):
         """挂载当前谜题组件"""
-        if self.procession.phase == RouterState.FINISHED:
+        if self.procession.route == RouterState.FINISHED:
             self.mount_finished_widget()
             return
         container = self.query_one("#puzzle_container")
@@ -144,7 +157,7 @@ class MemScreen(Screen):
         if new_rating == -1:  # 安全值
             return
         self.update_state()
-        if self.procession.phase == RouterState.FINISHED:
+        if self.procession.route == RouterState.FINISHED:
             rating = -1
             return
         self.expander.report(new_rating)

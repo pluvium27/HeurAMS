@@ -83,16 +83,16 @@ Router 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 - current_atom: 当前记忆原子的引用
 - atoms: 队列中所有原子列表
 - cursor: 指针, 是当前原子在 atoms 列表中的索引
-- phase: "阶段属性"
+- route: "阶段属性"
 
-> 注意区分 "Router" 和 "Phase", 其中 "Phase" 表示 "Router State".
+> 注意区分 "Router" 和 "Route", 其中 "Route" 表示 "Router State".
 
 - name\_: 阶段的命名
 - state: 当前状态属性
 
 ### 初始化
 
-接受一个 atoms 列表与 phase_state (RouterState Enum 类型)对象
+接受一个 atoms 列表与 route_state (RouterState Enum 类型)对象
 
 ### 直接输出呈现形式
 
@@ -100,12 +100,12 @@ Router 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 与 Router 不同, Procession 显示队列会对过长的 atom.ident 进行缩略(末尾 `>` 符号)
 
 ```text
-| Type       | Name   | State  | Progress | Queue                  | Current Atom                  |
+| Type       | Name   | State  | Progress | Procession                  | Current Atom                  |
 | :--------- | :----- | :----- | :------- | :--------------------- | :---------------------------- |
 | Procession | 新记忆 | active | 1 / 2    | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
 ```
 
-| Type       | Name   | State  | Progress | Queue                  | Current Atom                  |
+| Type       | Name   | State  | Progress | Procession                  | Current Atom                  |
 | :--------- | :----- | :----- | :------- | :--------------------- | :---------------------------- |
 | Procession | 新记忆 | active | 1 / 2    | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
 
@@ -166,7 +166,7 @@ Router 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 
 ### 初始化
 
-接受 atom 对象和 phase 参数
+接受 atom 对象和 route 参数
 
 ### 方法
 

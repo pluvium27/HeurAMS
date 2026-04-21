@@ -16,13 +16,13 @@ logger = get_logger(__name__)
 class Expander(Machine):
     """单原子调度展开器"""
 
-    def __init__(self, atom: pt.Atom, phase=RouterState.RECOGNITION):
-        self.phase = phase
+    def __init__(self, atom: pt.Atom, route=RouterState.RECOGNITION):
+        self.route = route
         self.cursor = 0
         self.atom = atom
         self.current_puzzle_inf: dict
-        # phase 为 RouterState 枚举实例, 需要获取其value
-        phase_value = phase.value
+        # route 为 RouterState 枚举实例, 需要获取其value
+        route_value = route.value
         states = [
             {"name": ExpanderState.EXAMMODE.value},
             {"name": ExpanderState.RETRONLY.value},
@@ -35,7 +35,7 @@ class Expander(Machine):
                 "dest": ExpanderState.RETRONLY.value,
             },
         ]
-        if phase == RouterState.FINISHED:
+        if route == RouterState.FINISHED:
             Machine.__init__(
                 self,
                 states=states,
@@ -43,7 +43,7 @@ class Expander(Machine):
                 initial=ExpanderState.EXAMMODE.value,
             )
             return
-        orbital_schedule = atom.registry["orbital"]["phases"][phase_value]  # type: ignore
+        orbital_schedule = atom.registry["orbital"]["routes"][route_value]  # type: ignore
         orbital_puzzles = atom.registry["nucleon"]["puzzles"]
         self.puzzles_inf = list()
         self.min_ratings = []
@@ -122,7 +122,9 @@ class Expander(Machine):
                 "Atom": truncate(self.atom.ident),
                 "State": self.state,
                 "Progress": f"{self.cursor + 1} / {len(self.puzzles_inf)}",
-                "Queue": list(map(lambda f: truncate(f["alia"]), self.puzzles_inf)),
+                "Procession": list(
+                    map(lambda f: truncate(f["alia"]), self.puzzles_inf)
+                ),
                 "Current Puzzle": f"{self.current_puzzle_inf['alia']}@{self.current_puzzle_inf['puzzle'].__name__}",  # type: ignore
             }
         ]
