@@ -1,11 +1,9 @@
 import json
-from functools import reduce
 from pathlib import Path
 from typing import TypedDict
 
 import toml
 
-import heurams.kernel.particles as pt
 
 from heurams.context import config_var
 from heurams.kernel.auxiliary.lict import Lict

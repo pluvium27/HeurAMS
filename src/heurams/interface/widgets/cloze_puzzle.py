@@ -2,8 +2,7 @@ import copy
 import random
 from typing import TypedDict
 
-from textual.containers import Container, ScrollableContainer
-from textual.message import Message
+from textual.containers import ScrollableContainer
 from textual.widget import Widget
 from textual.widgets import Button, Label, Markdown
 

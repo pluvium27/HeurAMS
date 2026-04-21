@@ -2,7 +2,8 @@
 
 import heurams.interface.widgets as pzw
 import heurams.kernel.puzzles as pz
-import platform, os, sys
+import platform
+import os
 from heurams.context import config_var
 
 puzzle2widget = {

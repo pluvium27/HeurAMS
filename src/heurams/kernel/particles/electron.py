@@ -1,11 +1,9 @@
 from copy import deepcopy
-from typing import TypedDict
 
 import heurams.kernel.algorithms as algolib
 import heurams.services.timer as timer
 from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
-from heurams.context import config_var
 
 logger = get_logger(__name__)
 

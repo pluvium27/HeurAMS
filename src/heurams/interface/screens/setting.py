@@ -1,37 +1,24 @@
 """设置页面"""
 
-from functools import reduce
-import pathlib
-from pathlib import Path
-import os
 
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer, Container, Horizontal, Vertical
+from textual.containers import ScrollableContainer, Horizontal
 from textual.screen import Screen
 from textual.widgets import (
-    Button,
     Footer,
     Header,
     Label,
-    ListItem,
-    ListView,
-    Static,
     Collapsible,
     Input,
     Switch,
     Select,
 )
-from textual.layouts import horizontal
 
 from textual import events, on
 
-import heurams.kernel.particles as pt
-import heurams.services.timer as timer
-import heurams.services.version as version
 from heurams.context import *
 from heurams.kernel.particles import *
 from heurams.kernel.repolib import *
-from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
 from heurams.services.textproc import domize, undomize
 from heurams.services.epath import epath
@@ -194,7 +181,6 @@ class SettingScreen(Screen):
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""
-        pass
 
     def action_go_back(self) -> None:
         """返回上一屏幕"""

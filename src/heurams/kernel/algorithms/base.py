@@ -40,7 +40,6 @@ class BaseAlgorithm:
             feedback,
             is_new_activation,
         )
-        pass
 
     @classmethod
     def is_due(cls, algodata) -> int:

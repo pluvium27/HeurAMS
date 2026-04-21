@@ -17,11 +17,7 @@ from heurams.context import config_var
 from heurams.kernel.algorithms.sm15m_calc import (
     MAX_AF,
     MIN_AF,
-    NOTCH_AF,
-    RANGE_AF,
-    RANGE_REPETITION,
     SM,
-    THRESHOLD_RECALL,
     Item,
 )
 

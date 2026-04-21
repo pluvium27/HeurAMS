@@ -1,7 +1,7 @@
 """LLM 提供者基类"""
 
 import asyncio
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from heurams.services.logger import get_logger
 

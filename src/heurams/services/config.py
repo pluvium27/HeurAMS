@@ -1,9 +1,7 @@
 import pathlib
-import typing
 
 import toml
 from collections import UserDict
-import atexit
 
 from heurams.services.logger import get_logger
 from heurams.services.exceptions import WTFException

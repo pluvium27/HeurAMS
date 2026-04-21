@@ -1,4 +1,3 @@
-from heurams.kernel.particles import orbital
 
 from .atom import Atom
 from .electron import Electron

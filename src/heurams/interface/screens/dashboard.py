@@ -1,15 +1,12 @@
 """仪表盘界面"""
 
 from functools import reduce
-import pathlib
 from pathlib import Path
-import os
 
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer, Container, Horizontal, Vertical
+from textual.containers import ScrollableContainer, Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
-from textual.layouts import horizontal
 from textual import events, on
 from textual.reactive import reactive
 
@@ -19,10 +16,8 @@ import heurams.services.version as version
 from heurams.context import *
 from heurams.kernel.particles import *
 from heurams.kernel.repolib import *
-from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
 
-from .about import AboutScreen
 from .navigator import NavigatorScreen
 from .preparation import PreparationScreen
 
@@ -40,7 +35,7 @@ class DashboardScreen(Screen):
     CSS_PATH = rootdir / "interface" / "css" / "screens" / "dashboard.tcss"
 
     repolink = reactive({})
-    
+
     def __init__(
         self,
         name: str | None = None,
@@ -59,7 +54,7 @@ class DashboardScreen(Screen):
                 Vertical(
                     Label(f"当前日时间戳: {timer.get_daystamp()}"),
                     Label(
-                        f"应用时区修正: UTC+{str(config_var.get()['services']['timer']['timezone_offset'] / 3600).rstrip('.0')}"
+                        f"应用时区修正: UTC+{str(config_var.get()['services']['timer']['timezone_offset'] / 3600).removesuffix('.0')}"
                     ),
                     Label(
                         f"默认算法设置: {config_var.get()['interface']['global']['algorithm']}",
@@ -112,21 +107,21 @@ class DashboardScreen(Screen):
         repo.progress = {
             "total": repo.data_length,
             "touched": 0,
-            "have_activated_ever": 0,
+            "have_activated_ever": False,
         }
         repo.preview = {
             "review": 0,
-            "new": repo.config["scheduled_num"],
+            "new": repo.config["scheduled_num"], # TODO: 考虑之后在这里加点运算避免 SM-2 积压, 但现在需要的是直观!
         }
         initial_time = float("inf")
-        for i in range(repo.data_length):
+        for i in range(repo.data_length): # TODO: 增加异步性能优化, 但是学习数据属实规模小...
             e = pt.Electron.from_data(
                 electronic_data=repo.electronic_data_lict[i],
                 algo_name=repo.config["algorithm"],
             )
-            n = pt.Nucleon.from_data(repo.nucleonic_data_lict[i])
+            # n = pt.Nucleon.from_data(repo.nucleonic_data_lict[i])
             if e.is_activated():
-                repo.progress["have_activated_ever"] = 1
+                repo.progress["have_activated_ever"] = True # 被激活过~
                 repo.progress["touched"] += 1
                 repo.nearest_review_time = min(repo.nearest_review_time, e.nextdate())
                 if timer.get_daystamp() >= e.nextdate():
@@ -145,9 +140,9 @@ class DashboardScreen(Screen):
         repodirs = sorted(
             self.repos,
             key=lambda r: r.nearest_review_time,
-            reverse=True,
+            reverse=True, # 紧张的先复习
         )
-        repotitles = map(lambda f: self.repostat[f.name]["title"], repodirs)
+
         # 填充列表
         if not repodirs:
             repo_list_widget.append(
@@ -163,18 +158,19 @@ class DashboardScreen(Screen):
             return
 
         for r in self.repos:
-            self.repolink[str(id(r))] = r  # 用于规避 ctype id 对象还原
+            self.repolink[str(r.manifest['package'])] = r  # 用于规避 ctype id 对象还原
+            # NOTE: 上一行不要使用 id(), id 可能被重用!
             list_item = ListItem(
                 *[Label(line) for line in r.prompt.splitlines()],
                 Button(
                     f"开始学习",
                     flat=True,
                     variant="primary",
-                    id=f"slaunch_repo_{id(r)}",
+                    id=f"slaunch_repo_{r.manifest['package']}",
                     classes="repo-list-item-shortcut",
                 ),
                 classes="repo-list-item",
-                id=f"launch_repo_{id(r)}",
+                id=f"launch_repo_{r.manifest['package']}",
             )
             repo_list_widget.append(list_item)
 
@@ -187,7 +183,7 @@ class DashboardScreen(Screen):
             return
 
         # 还原对象
-        selected_repo = self.repolink[event.item.id.lstrip("launch_repo_")]
+        selected_repo = self.repolink[event.item.id.removeprefix("launch_repo_")]
 
         # 跳转到准备屏幕
         self.app.push_screen(PreparationScreen(selected_repo))

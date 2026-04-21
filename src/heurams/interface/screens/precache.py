@@ -200,7 +200,6 @@ class PrecachingScreen(Screen):
 
     def precache_by_text(self, text: str):
         """预缓存单段文本的音频"""
-        from heurams.context import config_var, rootdir, workdir
 
         cache_dir.mkdir(parents=True, exist_ok=True)
         cache_file = cache_dir / f"{hasher.get_md5(text)}.wav"
@@ -259,7 +258,7 @@ class PrecachingScreen(Screen):
 
     def precache_all_files(self):
         """预缓存所有文件"""
-        from heurams.context import config_var, rootdir, workdir
+        from heurams.context import config_var
         from heurams.kernel.repolib import Repo
 
         repo_path = pathlib.Path(config_var.get()["global"]["paths"]["data"]) / "repo"
@@ -315,7 +314,6 @@ class PrecachingScreen(Screen):
             try:
                 import shutil
 
-                from heurams.context import config_var, rootdir, workdir
 
                 shutil.rmtree(cache_dir, ignore_errors=True)
                 self.update_status("已清空", "音频缓存已清空", 0)

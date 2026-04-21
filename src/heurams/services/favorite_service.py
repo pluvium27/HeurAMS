@@ -1,10 +1,9 @@
 # 收藏服务
 import json
-import shutil
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import List
 
 from heurams.context import config_var
 from heurams.services.logger import get_logger

@@ -1,17 +1,24 @@
 [project]
 name = "heurams"
 version = "0.5.0"
+authors = [{ name = "pluvium27", email = "pluvium27@outlook.com" }]
 description = "Heuristic Auxiliary Memory Scheduler"
 readme = "README.md"
-authors = [{ name = "pluvium27", email = "pluvium27@outlook.com" }]
-requires-python = "==3.14.*"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+
 dependencies = [
-    "edge-tts>=7.2.8",
-    "jieba>=0.42.1",
-    "openai>=2.32.0",
-    "playsound==1.2.2",
+    #"edge-tts>=7.2.8",
+    #"jieba>=0.42.1",
+    #"openai>=2.32.0",
+    #"playsound==1.2.2",
+    #"pygobject>=3.56.2", # playsound 依赖它
     "psutil>=7.2.2",
-    "pygobject>=3.56.2",
     "tabulate>=0.10.0",
     "textual>=8.2.3",
     "toml>=0.10.2",
@@ -19,10 +26,14 @@ dependencies = [
     "zmq>=0.0.0",
 ]
 
+[project.urls]
+Homepage = "https://ams.pluv.top"
+Issues = "https://github.com/heurams/heurams/issues"
+
 [project.scripts]
 heurams = "heurams.__main__:main"
 tui = "heurams.interface.__main__:main"
 
 [build-system]
-requires = ["uv_build>=0.9.22,<0.10.0"]
+requires = ["uv_build>=0.7.19"]
 build-backend = "uv_build"

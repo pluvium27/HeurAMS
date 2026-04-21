@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum
 
 from heurams.services.logger import get_logger
 

@@ -6,7 +6,6 @@ HeurAMS 日志服务模块
 import logging
 import logging.handlers
 import pathlib
-import sys
 from typing import Optional, Union
 
 # 默认配置

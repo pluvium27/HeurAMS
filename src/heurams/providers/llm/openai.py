@@ -1,7 +1,6 @@
 """OpenAI 兼容 LLM 提供者"""
 
-import asyncio
-from typing import Any, AsyncGenerator, Dict, List, Optional
+from typing import Any, AsyncGenerator, Dict, List
 
 from heurams.services.logger import get_logger
 

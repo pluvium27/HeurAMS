@@ -3,7 +3,6 @@
 注意: 在未配置 pulseaudio 的 termux 不可用
 """
 
-import os
 import pathlib
 
 import playsound

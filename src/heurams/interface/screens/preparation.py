@@ -1,10 +1,8 @@
 """记忆准备界面"""
 
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer, Container, Horizontal
-from textual.reactive import reactive
+from textual.containers import ScrollableContainer, Horizontal
 from textual.screen import Screen
-from textual.widget import Widget
 from textual.widgets import (
     Button,
     Footer,
@@ -12,15 +10,13 @@ from textual.widgets import (
     Label,
     Markdown,
     Static,
-    Rule,
     Sparkline,
 )
-from textual.lazy import Reveal, Lazy
+from textual.lazy import Reveal
 
 from textual import events, on
 
 import heurams.kernel.particles as pt
-import heurams.services.hasher as hasher
 from heurams.context import *
 from heurams.context import config_var
 from heurams.kernel.repolib import *

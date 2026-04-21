@@ -3,7 +3,7 @@
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, Markdown, Static
+from textual.widgets import Button, Footer, Header, Label, Markdown
 
 from textual import events, on
 

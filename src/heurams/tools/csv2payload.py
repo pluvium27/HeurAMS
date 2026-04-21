@@ -68,7 +68,6 @@ meaning = "狗发出的声音"
 
 import csv
 import sys
-import os
 import random
 import argparse
 from pathlib import Path

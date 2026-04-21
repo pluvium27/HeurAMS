@@ -6,13 +6,11 @@ import time
 from textual.app import ComposeResult
 from textual.containers import Horizontal, ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, ProgressBar, Static
+from textual.widgets import Button, Footer, Header, ProgressBar, Static
 from textual.worker import get_current_worker
 
 from textual import events, on
 
-import heurams.kernel.particles as pt
-import heurams.services.hasher as hasher
 from heurams.context import *
 
 

@@ -1,7 +1,7 @@
 # 单项选择题
 from typing import TypedDict
 
-from textual.containers import Container, ScrollableContainer
+from textual.containers import ScrollableContainer
 from textual.widget import Widget
 from textual.widgets import Button, Label
 

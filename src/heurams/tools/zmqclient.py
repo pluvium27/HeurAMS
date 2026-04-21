@@ -1,6 +1,5 @@
 import zmq
 import pickle
-import readline
 import sys
 
 

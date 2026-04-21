@@ -1,25 +1,21 @@
 """队列式记忆工作界面"""
 
-from enum import Enum, auto
 from pathlib import Path
-from typing import Callable
 
 from textual.app import ComposeResult
-from textual.containers import Center, ScrollableContainer, Container
+from textual.containers import ScrollableContainer
 from textual.reactive import reactive
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, Static
+from textual.widgets import Footer, Header, Label, Static
 
 from textual import events, on
 
 import heurams.kernel.particles as pt
-import heurams.kernel.puzzles as pz
 from heurams.context import config_var, rootdir
 from heurams.kernel.reactor import *
 from heurams.services.favorite_service import favorite_manager
 from heurams.services.logger import get_logger
 
-import pickle
 
 from .. import shim
 
