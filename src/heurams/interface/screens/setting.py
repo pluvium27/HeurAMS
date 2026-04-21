@@ -46,7 +46,6 @@ class SettingScreen(Screen):
     @on(events.ScreenResume)
     def post_active(self, event):
         from heurams.interface import shim
-
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
@@ -113,6 +112,7 @@ class SettingScreen(Screen):
                                     prompt=f'{parent.get(f"{i}", "")}',
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
+                                classes="setting-item"
                             )
                         )
                     elif isinstance(parent[f"_{i}_candidate"], list):
@@ -124,6 +124,7 @@ class SettingScreen(Screen):
                                     prompt=f'{parent.get(f"{i}", "")}',
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
+                                classes="setting-item"
                             )
                         )
                 else:
@@ -137,6 +138,7 @@ class SettingScreen(Screen):
                                     type="number",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
+                                classes="setting-item"
                             )
                         )
                     elif isinstance(parent[i], str):
@@ -149,6 +151,7 @@ class SettingScreen(Screen):
                                     type="text",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
+                                classes="setting-item"
                             )
                         )
                     elif isinstance(parent[i], bool):
@@ -156,8 +159,10 @@ class SettingScreen(Screen):
                             Horizontal(
                                 Label(i + f'\n[d]{parent.get(f"_{i}_desc", "")}[/d]'),
                                 Switch(
-                                    value=parent[i], id=domize(f"{parent_epath}.{i}")
+                                    value=parent[i], id=domize(f"{parent_epath}.{i}"),
+                                    classes="setting-switch",
                                 ),
+                                classes="setting-item"
                             )
                         )
                     elif isinstance(parent[i], int):
@@ -170,6 +175,7 @@ class SettingScreen(Screen):
                                     type="integer",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
+                                classes="setting-item"
                             )
                         )
                     elif isinstance(parent[i], list):

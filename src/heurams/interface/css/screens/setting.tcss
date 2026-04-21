@@ -2,12 +2,8 @@
     align-vertical: bottom;
 }
 
-Switch {
+.setting-switch {
     dock: right;
-}
-
-Label {
-    width: auto
 }
 
 Select {
@@ -20,7 +16,7 @@ Input {
     dock: right;
 }
 
-Horizontal {
+.setting-item {
     width: 100%;
     height: 4;
     padding: 0 0 1 0;
