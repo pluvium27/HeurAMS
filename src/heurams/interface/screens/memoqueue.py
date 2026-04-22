@@ -62,7 +62,6 @@ class MemScreen(Screen):
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
-        import time
         from heurams.services.attic import Attic
         a = Attic('ana', {'openqueue': 0})
         a.data['openqueue'] += 1
@@ -113,7 +112,6 @@ class MemScreen(Screen):
 
     def mount_puzzle(self):
         """挂载当前谜题组件"""
-        from heurams.services.attic import Attic
         if self.procession.route == RouterState.FINISHED:
             self.mount_finished_widget()
             return

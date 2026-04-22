@@ -8,14 +8,13 @@ cache/
 data/repo/cngk
 data/repo/eotgk
 data/repo/evtgk
+data/misc
+data/cache
+data/session
 *.egg-info/
 build/
 dist/
 old/
-data/cache/
-data/global/
-config/config_dev.toml
-AGENTS.md
 *.log.*
 
 # Byte-compiled / optimized / DLL files

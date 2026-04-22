@@ -3,7 +3,6 @@ import pickle as pkl
 from heurams.services.logger import get_logger
 from heurams.context import config_var
 from pathlib import Path
-from heurams.services.hasher import get_md5
 import atexit
 from heurams.services import timer
 from heurams.services.exceptions import WTFException

@@ -6,7 +6,7 @@ from pathlib import Path
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static, Markdown
+from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
 from textual import events, on
 from textual.reactive import reactive
 

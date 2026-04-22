@@ -16,17 +16,27 @@
 
 > 许多出版物都广泛讨论了不同重复间隔对学习效果的影响. 特别是, 间隔效应被认为是一种普遍现象. 间隔效应是指, 如果重复的间隔是分散/稀疏的, 而不是集中重复, 那么学习任务的表现会更好. 因此, 有观点提出, 学习中使用的最佳重复间隔是**最长的, 但不会导致遗忘的间隔**.
 
-- 采用经实证的 SM-2 间隔迭代算法, 此算法亦用作 Anki 闪卡记忆软件的默认闪卡调度器
-- 动态规划每个记忆单元的记忆间隔时间表
-- 动态跟踪记忆反馈数据, 优化长期记忆保留率与稳定性
+- 软件开箱即用, 无需多加配置即可使用默认的 `SM-2` 算法进行学习
+- 此外, 算法模块是 "潜进" 内核 (heurams.kernel) 中的一等公民, 内核天然支持插拔各型算法
+- 无需安装繁杂的插件即可分单元集完成算法快速切换与调优, 研究者可以方便地修改算法模块以便捷地进行研究与测试
+- 内置 `SM-2` 简单间隔重复算法, 此算法亦用作 `Anki` 闪卡记忆软件的默认闪卡调度器
+- 还内置 `NSP-0` 筛选用非间隔重复算法以便快速筛选记忆内容, `FSRS` 先进间隔重复算法作为效率更高的调度器, 与 `SM-15M` 复杂间隔重复算法(逆向工程)
+- 算法模块可以标记记忆项目, 也可以动态规划每个记忆单元的记忆间隔时间表, 动态跟踪记忆反馈数据, 以优化长期记忆保留率与稳定性
+- 得益于项目的模块化架构与单元集结构设计, 一个项目甚至可以与任意种算法共存并互通, 这对研究者及想探索/实验高效率方法的用户极其友好
 
-### 学习进程优化
+### 多模态学习进程
 
-- 元数据配置: 支持配置详细附加数据
-- 自然语音: 集成文本转语音 (TTS) 功能, 支持"电台"回顾功能
-- 多种谜题类型: 选择题 (MCQ), 填空题 (Cloze), 识别题 (Recognition)
-- 动态内容生成: 支持宏驱动的模板系统, 根据上下文动态生成题目
-- 云同步支持: 通过多种协议同步数据到远程服务器
+与 `Anki` 的 SQLite `apkg` 包不同, 潜进项目坚持使用人类可读的文件夹组织单元集, 这带来了若干好处, 包括:
+- 人类可读: 您可以用任意工具, 乃至一个记事本修改记忆载荷数据而无需打开软件
+- 元数据配置: 配置自由度极高, 可以任意组合, 重造, 乃至创造新内容
+- 测验, 算法与知识互相隔离: 您的记忆项目不再是单一的闪卡, 而是 `载荷(payload)` 和 `谜题(puzzle)` 通过 `元数据(typedef)` 抽象成的 `核子(nucleon)` 对象, 在程序内部和 `算法数据(algodata)` 抽象成的 `电子`, `调度设置(schedule)` 定义的 `轨道(orbital)` 共同有机组合成的运行时对象 `原子(atom)`! 这意味着一条知识不仅可以用若干不同的算法规划, 还可以用多种并行的谜题类型测验, 极大地提升您的学习效果和丰富度. 作为学习者, 您无需担忧这些概念复杂--仅需从云端下载单元集即可无痛体验所有功能!
+- 多模态学习
+  - 软件自身集成了文本转语音 (TTS) , 音频与语言模型 (LLM) 模块, 这些功能乃至功能本身都是可插拔, 可扩展, 可切换驱动的, 这为内容创建了极大的丰富度
+  - 软件内置多种谜题类型, 包括选择题 (MCQ), 填空题 (Cloze) 与识别题 (Recognition), 您可在同一单元应用多种, 或是选择启用
+  - 软件天然支持动态内容生成, 支持宏驱动的模板系统, 根据上下文乃至语言模型动态生成知识点的解析
+  - 在间隔重复研究尚被 SuperMemo 系列独占的时代, Wozniak 就早已表示 "如果不能理解知识, 就无需记忆它". 今天, 我们依然相信理解是记忆的基石
+- 云同步与分享优化: 由于我们的记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持分享内容的版本控制
+- 优越性能: 得益于现代的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
 
 ### 实用用户界面
 
@@ -35,6 +45,17 @@
 - 简洁直观的复习流程设计
 
 ## 快速开始
+
+### 从包管理器安装
+
+潜进(heurams) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本
+
+```
+# 稳定版
+python -m pip install heurams -i https://pypi.pluv27.top/root/stable/+simple/
+# 开发版
+python -m pip install heurams -i https://pypi.pluv27.top/root/dev/+simple/
+```
 
 ### 从源码安装
 
@@ -45,13 +66,13 @@
    cd HeurAMS
    ```
 
-1. 安装依赖:
+2. 安装依赖:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-1. 以开发模式安装包:
+3. 以开发模式安装包:
 
    ```bash
    pip install -e .
@@ -59,66 +80,7 @@
 
 ## 项目结构
 
-### 架构图(待更新 0.5.0)
-
-以下 Mermaid 图展示了 HeurAMS 的主要组件及其关系:
-
-```mermaid
-graph TB
-    subgraph "用户界面层 (TUI)"
-        TUI[Textual TUI]
-        Widgets[界面组件]
-        Screens[应用屏幕]
-    end
-
-    subgraph "服务层"
-        Config[配置管理]
-        Logger[日志系统]
-        Timer[时间服务]
-        AudioService[音频服务]
-        TTSService[TTS服务]
-        SyncService[同步服务]
-        OtherServices[其他服务]
-    end
-
-    subgraph "内核层"
-        Algorithms[算法模块]
-        Particles[数据模型]
-        Puzzles[谜题模块]
-        Reactor[调度反应器]
-    end
-
-    subgraph "提供者层"
-        AudioProvider[音频提供者]
-        TTSProvider[TTS提供者]
-        OtherProviders[其他提供者]
-    end
-
-    subgraph "数据层"
-        Files[本地文件数据]
-    end
-
-    subgraph "上下文管理"
-        Context[ConfigContext]
-        CtxVar[config_var]
-    end
-
-    TUI --> Config
-    TUI --> Logger
-    TUI --> AudioService
-    TUI --> TTSService
-    TUI --> OtherServices
-    Config --> Files
-    Config --> Context
-    AudioService --> AudioProvider
-    TTSService --> TTSProvider
-    OtherServices --> OtherProviders
-    Reactor --> Algorithms
-    Reactor --> Particles
-    Reactor --> Puzzles
-    Particles --> Files
-    Algorithms --> Files
-```
+详见[架构说明](ARCHITECTURE.md).
 
 ## 参与项目
 
