@@ -6,7 +6,7 @@ from pathlib import Path
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static
+from textual.widgets import Button, Footer, Header, Label, ListItem, ListView, Static, Markdown
 from textual import events, on
 from textual.reactive import reactive
 
@@ -74,10 +74,11 @@ class DashboardScreen(Screen):
                 ),
                 id="header",
             )
-
             yield ListView(id="repo_list", classes="repo-list")  # 单元集选择
-
+            from heurams.services.attic import Attic
+            a = Attic('ana', {'totaltime': 0, 'openpuzzles': 0, 'puzzles_err': 0})
             yield Label(f"版本 {version.ver} {version.stage.capitalize()}")  # 版本信息
+            yield Label(f"在 {round(a.data['totaltime'], 2)} 秒内处理了 {a.data['openpuzzles']} 个谜题, 正确率{'无法求解' if not a.data['openpuzzles'] else ' ' + str(round(100 * (1 - a.data['puzzles_err']/a.data['openpuzzles']), 2)) + '%'}, 平均速度{'无法求解' if not a.data['totaltime'] else ' ' + str(round(a.data['openpuzzles']/a.data['totaltime'], 2)) + '个/s'}", id='analysis')  # 版本信息
         yield Footer()
 
     @on(events.ScreenResume)
@@ -201,6 +202,5 @@ class DashboardScreen(Screen):
         logger.debug(f"event.button.id: {event.button.id}")
         if event.button.id.startswith("slaunch_repo_"):  # type: ignore
             from .preparation import launch
-
-            launch(repo=self.repolink[event.button.id.lstrip("slaunch_repo_")], app=self.app, scheduled_num=-1)  # type: ignore
+            launch(repo=self.repolink[event.button.id.removeprefix("slaunch_repo_")], app=self.app, scheduled_num=-1)  # type: ignore
             # TODO: 这样启动的记忆实例的状态机无法绑定到 PreparationScreen 中

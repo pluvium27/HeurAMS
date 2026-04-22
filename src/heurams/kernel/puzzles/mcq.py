@@ -72,7 +72,7 @@ class MCQPuzzle(BasePuzzle):
 
         # 确保至少有4个干扰项
         while len(self.jammer) < 4:
-            self.jammer.append(" " * (4 - len(self.jammer)))
+            self.jammer.append("")
 
         unique_jammers = set(jammer + list(self.mapping.values()))
 

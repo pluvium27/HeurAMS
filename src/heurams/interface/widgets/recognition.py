@@ -49,7 +49,7 @@ class Recognition(BasePuzzleWidget):
     def compose(self):
         from heurams.context import config_var
 
-        autovoice = config_var.get()["interface"]["widgets"]["autovoice"]
+        autovoice = config_var.get()["interface"]["widgets"]['recognition']["autovoice"]
         if autovoice:
             self.screen.action_play_voice()  # type: ignore
         cfg: RecognitionConfig = self.atom.registry["nucleon"]["puzzles"][self.alia]
@@ -96,8 +96,9 @@ class Recognition(BasePuzzleWidget):
             if isinstance(item, str):
                 yield Markdown(item)
 
-        with Center():
-            yield Button("我已知晓", id="ok")
+        with Center() as c:
+            with Button("我已知晓", id="ok") as b:
+                b.focus()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "ok":

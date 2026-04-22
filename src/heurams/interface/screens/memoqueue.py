@@ -16,11 +16,9 @@ from heurams.kernel.reactor import *
 from heurams.services.favorite_service import favorite_manager
 from heurams.services.logger import get_logger
 
-
 from .. import shim
 
 logger = get_logger(__name__)
-
 
 class MemScreen(Screen):
     BINDINGS = [
@@ -29,6 +27,7 @@ class MemScreen(Screen):
         ("d", "toggle_dark", ""),
         ("v", "play_voice", "朗读"),
         ("*", "toggle_favorite", "收藏"),
+        ("r", "resume_mark"),
         ("n", "block_prompt"),
         ("s", "block_prompt"),
         ("z", "block_prompt"),
@@ -60,10 +59,13 @@ class MemScreen(Screen):
     @on(events.ScreenResume)
     def post_active(self, event):
         from heurams.interface import shim
-
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
+        import time
+        from heurams.services.attic import Attic
+        a = Attic('ana', {'openqueue': 0})
+        a.data['openqueue'] += 1
         if config_var.get()['interface']['global']['show_header']:
             yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer():
@@ -78,6 +80,10 @@ class MemScreen(Screen):
 
     def on_mount(self):
         self.expander = self.procession.get_expander()
+        from heurams.services.attic import Attic
+        import time
+        a = Attic('ana', {'last': time.time()})
+        a.data['last'] = time.time()
         self.mount_puzzle()
         self.update_display()
 
@@ -107,6 +113,7 @@ class MemScreen(Screen):
 
     def mount_puzzle(self):
         """挂载当前谜题组件"""
+        from heurams.services.attic import Attic
         if self.procession.route == RouterState.FINISHED:
             self.mount_finished_widget()
             return
@@ -117,6 +124,8 @@ class MemScreen(Screen):
 
     def mount_finished_widget(self):
         """挂载已完成组件"""
+        a = Attic('ana', {'finished': 0})
+        a.data['finished'] += 1
         container = self.query_one("#puzzle_container")
         for i in container.children:
             i.remove()
@@ -168,6 +177,13 @@ class MemScreen(Screen):
         if self.expander.state == "retronly":
             self.forward_atom(self.expander.get_quality())
         self.update_state()
+        from heurams.services.attic import Attic
+        a = Attic('ana', {'openpuzzles': 0})
+        a = Attic('ana', {'totaltime': 0})
+        a.data['openpuzzles'] += 1
+        import time
+        a.data['totaltime'] += time.time() - a.data['last']
+        a.data['last'] = time.time()
         self.mount_puzzle()
         self.update_display()
 
@@ -187,6 +203,8 @@ class MemScreen(Screen):
         logger.debug(f"Quality: {quality}")
         self.atom_reporter(quality)
         if quality <= 3:
+            a = Attic('ana', {'puzzles_err': 0})
+            a.data['puzzles_err'] += 1
             self.procession.append()
             self.update_state()  # 刷新状态
         self.procession.forward(1)
@@ -241,3 +259,11 @@ class MemScreen(Screen):
 
     def action_block_prompt(self):
         self.app.notify("功能在记忆界面中不可用, 完成或返回后再试", severity="error")
+
+    def action_resume_mark(self):
+        from heurams.services.attic import Attic
+        import time
+        a = Attic('ana')
+        l = a.data['last']
+        a.data['last'] = time.time()
+        self.app.notify(f"时间恢复已修正: {l} -> {a.data['last']}")

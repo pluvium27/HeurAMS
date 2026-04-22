@@ -6,6 +6,11 @@
     height: 3;
 }
 
+#analysis {
+    margin: 0;
+    padding: 0;
+} 
+
 .repo-list-item {
     layout: grid;
     grid-size: 1;

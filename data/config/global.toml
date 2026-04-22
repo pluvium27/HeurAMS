@@ -1,4 +1,4 @@
-zmq_debug = true
+zmq_debug = false
 _zmq_debug_desc = "[调试] ZeroMQ 调试服务器, 这会在 zmq_debug_port 上打开一个服务器\n调试工具可远程在 HeurAMS 内执行任意 python 代码, 无必要请关闭"
 zmq_debug_port = 5555
 _zmq_debug_port_desc = "[调试] ZeroMQ 调试服务器端口"
@@ -15,3 +15,7 @@ config = "./data/config"
 _config_desc = "配置文件根目录"
 repo = "./data/repo"
 _repo_desc = "记忆单元集根目录"
+misc = "./data/misc"
+_misc_desc = "扩展程序和 whisper 等模块的数据存储根目录"
+_addons = "./data/addons"
+__addons_desc = "扩展程序根目录"

@@ -1,2 +1,2 @@
-min_denominator = "3"
+min_denominator = "2"
 _min_denominator_desc = "设空比例系数的倒数"

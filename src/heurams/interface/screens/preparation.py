@@ -51,7 +51,9 @@ class PreparationScreen(Screen):
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
-        
+        from heurams.services.attic import Attic
+        a = Attic('ana', {'openpre': 0})
+        a.data['openpre'] += 1
         if config_var.get()['interface']['global']['show_header']:
             yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
         with ScrollableContainer(id="main_container"):

@@ -19,8 +19,9 @@ import sys
 class AboutScreen(Screen):
     BINDINGS = [
         ("q", "go_back", "返回"),
+        ("z", "go_back", "关于"),
     ]
-
+    SUB_TITLE = "关于"
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

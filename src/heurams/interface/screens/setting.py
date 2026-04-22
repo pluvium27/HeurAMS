@@ -32,6 +32,7 @@ class SettingScreen(Screen):
     SUB_TITLE = "设置"
     BINDINGS = [
         ("q", "go_back", "返回"),
+        ("s", "go_back", "设置"),
     ]
     CSS_PATH = rootdir / "interface" / "css" / "screens" / "setting.tcss"
 
