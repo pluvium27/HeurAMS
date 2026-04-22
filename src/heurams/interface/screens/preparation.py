@@ -52,10 +52,13 @@ class PreparationScreen(Screen):
 
     def compose(self) -> ComposeResult:
         from heurams.services.attic import Attic
-        a = Attic('ana', {'openpre': 0})
-        a.data['openpre'] += 1
-        if config_var.get()['interface']['global']['show_header']:
-            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
+
+        a = Attic("ana", {"openpre": 0})
+        a.data["openpre"] += 1
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer(id="main_container"):
             yield Markdown(
                 f"**准备就绪**: `{self.repo.manifest['title']}`\n", id="title"

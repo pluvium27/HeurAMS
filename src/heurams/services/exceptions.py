@@ -1,4 +1,2 @@
-
-
 class WTFException(Exception):
     pass

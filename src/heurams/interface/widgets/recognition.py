@@ -49,7 +49,7 @@ class Recognition(BasePuzzleWidget):
     def compose(self):
         from heurams.context import config_var
 
-        autovoice = config_var.get()["interface"]["widgets"]['recognition']["autovoice"]
+        autovoice = config_var.get()["interface"]["widgets"]["recognition"]["autovoice"]
         if autovoice:
             self.screen.action_play_voice()  # type: ignore
         cfg: RecognitionConfig = self.atom.registry["nucleon"]["puzzles"][self.alia]

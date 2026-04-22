@@ -56,9 +56,11 @@ class FavoriteManagerScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """组合界面组件"""
-        
-        if config_var.get()['interface']['global']['show_header']:
-            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
+
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer(id="favorites-container"):
             if not self.favorites:
                 yield Label("暂无收藏", classes="empty-label")

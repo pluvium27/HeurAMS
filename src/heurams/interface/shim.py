@@ -15,7 +15,7 @@ puzzle2widget = {
 
 
 def set_term_title(title):
-    if not config_var.get()['interface']['global']['change_window_title']:
+    if not config_var.get()["interface"]["global"]["change_window_title"]:
         return
     system = platform.system()
     if system == "Windows":

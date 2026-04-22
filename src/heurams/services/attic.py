@@ -6,31 +6,37 @@ from pathlib import Path
 import atexit
 from heurams.services import timer
 from heurams.services.exceptions import WTFException
+
 logger = get_logger(__name__)
+
 
 def singleton(cls):
     instances = {}
+
     def get_instance(ident, default):
         key = ident
         if key not in instances:
             instances[key] = cls(ident)
         instances[key].patch_dict(default)
         return instances[key]
+
     return get_instance
 
-atticdir = Path(config_var.get()['global']['paths']['misc']) / 'attics'
+
+atticdir = Path(config_var.get()["global"]["paths"]["misc"]) / "attics"
 atticdir.mkdir(parents=True, exist_ok=True)
+
 
 @singleton
 class Attic:
-    def __init__(self, ident, default:dict={}):
+    def __init__(self, ident, default: dict = {}):
         self.ident = ident
-        self.ident = self.ident.replace('<DAYSTAMP>', str(timer.get_daystamp()))
-        self.ident = self.ident.replace('<TIMESTAMP>', str(timer.get_timestamp()))
-        if '<' in ident or '>' in ident:
+        self.ident = self.ident.replace("<DAYSTAMP>", str(timer.get_daystamp()))
+        self.ident = self.ident.replace("<TIMESTAMP>", str(timer.get_timestamp()))
+        if "<" in ident or ">" in ident:
             raise WTFException
-        #self.ident = get_md5(self.ident)
-        self.pklpath = atticdir / f'{self.ident}.pkl'
+        # self.ident = get_md5(self.ident)
+        self.pklpath = atticdir / f"{self.ident}.pkl"
         atexit.register(self.save)
         self.data = default
         if self.pklpath.exists():
@@ -45,9 +51,9 @@ class Attic:
         self.data.update({k: v for k, v in dct.items() if k not in self.data})
 
     def save(self):
-        with open(atticdir / f'{self.ident}.pkl', 'wb') as f:
+        with open(atticdir / f"{self.ident}.pkl", "wb") as f:
             pkl.dump(self.data, f)
 
     def load(self):
-        with open(atticdir / f'{self.ident}.pkl', 'rb') as f:
+        with open(atticdir / f"{self.ident}.pkl", "rb") as f:
             self.data.update(dict(pkl.load(f)))

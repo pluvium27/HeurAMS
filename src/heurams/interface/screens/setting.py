@@ -1,6 +1,5 @@
 """设置页面"""
 
-
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Horizontal
 from textual.screen import Screen
@@ -47,12 +46,15 @@ class SettingScreen(Screen):
     @on(events.ScreenResume)
     def post_active(self, event):
         from heurams.interface import shim
+
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
         """组合界面组件"""
-        if config_var.get()['interface']['global']['show_header']:
-            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer():
             yield Label("[b]设置页面[/b]")
             for i in config_var.get():
@@ -61,7 +63,8 @@ class SettingScreen(Screen):
                 a = self._get_subcfg(f"{i}")
                 if a:
                     yield Collapsible(
-                        *a, title=i + f'\n[d]{config_var.get().get(f"_{i}_desc", "")}[/d]'
+                        *a,
+                        title=i + f'\n[d]{config_var.get().get(f"_{i}_desc", "")}[/d]',
                     )
         yield Label(
             "退出页面时, 所作的更改会立即保存, 但仍建议重启软件以确保新的配置得到应用",
@@ -113,7 +116,7 @@ class SettingScreen(Screen):
                                     prompt=f'{parent.get(f"{i}", "")}',
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="setting-item"
+                                classes="setting-item",
                             )
                         )
                     elif isinstance(parent[f"_{i}_candidate"], list):
@@ -125,7 +128,7 @@ class SettingScreen(Screen):
                                     prompt=f'{parent.get(f"{i}", "")}',
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="setting-item"
+                                classes="setting-item",
                             )
                         )
                 else:
@@ -139,7 +142,7 @@ class SettingScreen(Screen):
                                     type="number",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="setting-item"
+                                classes="setting-item",
                             )
                         )
                     elif isinstance(parent[i], str):
@@ -152,7 +155,7 @@ class SettingScreen(Screen):
                                     type="text",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="setting-item"
+                                classes="setting-item",
                             )
                         )
                     elif isinstance(parent[i], bool):
@@ -160,10 +163,11 @@ class SettingScreen(Screen):
                             Horizontal(
                                 Label(i + f'\n[d]{parent.get(f"_{i}_desc", "")}[/d]'),
                                 Switch(
-                                    value=parent[i], id=domize(f"{parent_epath}.{i}"),
+                                    value=parent[i],
+                                    id=domize(f"{parent_epath}.{i}"),
                                     classes="setting-switch",
                                 ),
-                                classes="setting-item"
+                                classes="setting-item",
                             )
                         )
                     elif isinstance(parent[i], int):
@@ -176,7 +180,7 @@ class SettingScreen(Screen):
                                     type="integer",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
-                                classes="setting-item"
+                                classes="setting-item",
                             )
                         )
                     elif isinstance(parent[i], list):

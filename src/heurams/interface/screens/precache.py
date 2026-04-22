@@ -111,9 +111,11 @@ class PrecachingScreen(Screen):
         self.cache_stats["cache_rate"] = cache_rate
 
     def compose(self) -> ComposeResult:
-        
-        if config_var.get()['interface']['global']['show_header']:
-            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
+
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer(id="precache_container"):
             yield Label("[b]音频预缓存[/b]", classes="title-label")
             with Container():
@@ -313,7 +315,6 @@ class PrecachingScreen(Screen):
             # 清空缓存
             try:
                 import shutil
-
 
                 shutil.rmtree(cache_dir, ignore_errors=True)
                 self.update_status("已清空", "音频缓存已清空", 0)

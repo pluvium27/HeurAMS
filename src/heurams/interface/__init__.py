@@ -63,9 +63,11 @@ class HeurAMSApp(App):
         self.push_screen("dashboard")
 
     def action_go_back(self) -> None:
-        self.exit() # go_back 在最顶层是退出, Screen 会再次定义为返回, 键位都是 q, 免得不一样
+        self.exit()  # go_back 在最顶层是退出, Screen 会再次定义为返回, 键位都是 q, 免得不一样
 
-    def action_do_nothing(self) -> None: # 用来给没使用/禁用的快捷键占位, 因为 Binding 删除不了
+    def action_do_nothing(
+        self,
+    ) -> None:  # 用来给没使用/禁用的快捷键占位, 因为 Binding 删除不了
         pass
 
     # 移除烦人的 "rich traceback"
@@ -78,10 +80,10 @@ class HeurAMSApp(App):
         if hasattr(self, "_exception"):
             self._close_messages_no_wait()
             raise self._exception
-        super()._fatal_error() # fallback
+        super()._fatal_error()  # fallback
 
     def panic(self, *args):
         if hasattr("_exception"):
             self._close_messages_no_wait()
             raise self._exception
-        super().panic(*args) # ditto
+        super().panic(*args)  # ditto

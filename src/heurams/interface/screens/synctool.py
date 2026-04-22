@@ -33,9 +33,11 @@ class SyncScreen(Screen):
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
-        
-        if config_var.get()['interface']['global']['show_header']:
-            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
+
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer(id="sync_container"):
             # 标题和连接状态
             yield Static("同步工具", classes="title")

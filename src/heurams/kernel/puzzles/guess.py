@@ -1,4 +1,3 @@
-
 from heurams.services.logger import get_logger
 
 from .base import BasePuzzle

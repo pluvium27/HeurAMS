@@ -22,6 +22,7 @@ class AboutScreen(Screen):
         ("z", "go_back", "关于"),
     ]
     SUB_TITLE = "关于"
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -32,9 +33,11 @@ class AboutScreen(Screen):
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
-        
-        if config_var.get()['interface']['global']['show_header']:
-            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
+
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer(id="about_container"):
             yield Label("[b]关于与版本信息[/b]")
 
@@ -115,7 +118,7 @@ Textual 框架版本: {textual_version}
             import textual
 
             return textual.__version__
-        except ImportError, AttributeError:
+        except (ImportError, AttributeError):
             return "未知"
 
     def _get_terminal_info(self) -> str:

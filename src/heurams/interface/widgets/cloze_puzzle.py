@@ -79,14 +79,14 @@ class ClozePuzzle(BasePuzzleWidget):
                 self.hashmap[h] = i
                 btnid = f"sel000-{h}"
                 logger.debug(f"建立按钮 {btnid}")
-                self.btn_shortcuts[f'{c}'] = btnid
-                yield Button(f'[{c}] {i}', id=f"{btnid}")
+                self.btn_shortcuts[f"{c}"] = btnid
+                yield Button(f"[{c}] {i}", id=f"{btnid}")
             s.focus()
 
         yield Button("退格", id="delete")
-        self.btn_shortcuts[f'0'] = 'delete'
-        self.btn_shortcuts[f'backspace'] = 'delete'
-        self.btn_shortcuts[f'delete'] = 'delete'
+        self.btn_shortcuts[f"0"] = "delete"
+        self.btn_shortcuts[f"backspace"] = "delete"
+        self.btn_shortcuts[f"delete"] = "delete"
 
     def listprint(self, lst):
         s = ""
@@ -128,10 +128,10 @@ class ClozePuzzle(BasePuzzleWidget):
             pass
         else:
             self.atom.minimize(rating)
-    
+
     def on_key(self, event: Key) -> None:
         self.notify(event.key)
         if event.key in self.btn_shortcuts:
             btn_id = self.btn_shortcuts.get(event.key)
-            btn_id = '#' + btn_id
+            btn_id = "#" + btn_id
             self.query_one(btn_id, Button).press()

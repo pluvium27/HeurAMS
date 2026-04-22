@@ -136,7 +136,6 @@ class Router(Machine):
     def __repr__(self, style="pipe", ends="\n"):
         from tabulate import tabulate as tabu
 
-
         lst = [
             {
                 "Type": "Router",

@@ -79,21 +79,21 @@ class MCQPuzzle(BasePuzzleWidget):
         c = 0
         with ScrollableContainer(id="btn-container") as s:
             for i in current_options:
-                if i in [' ', '']:
+                if i in [" ", ""]:
                     continue
                 c += 1
                 h = str(hash(i))
                 self.hashmap[h] = i
                 btnid = f"sel{str(self.cursor).zfill(3)}-{h}"
                 logger.debug(f"建立按钮 {btnid}")
-                self.btn_shortcuts[f'{c}'] = f'{btnid}'
-                yield Button(f'[{c}] ' + i, id=f"{btnid}")
+                self.btn_shortcuts[f"{c}"] = f"{btnid}"
+                yield Button(f"[{c}] " + i, id=f"{btnid}")
             s.focus()
             yield Button("退格", id="delete")
 
-        self.btn_shortcuts['0'] = f'delete'
-        self.btn_shortcuts['delete'] = f'delete'
-        self.btn_shortcuts['backspace'] = f'delete'
+        self.btn_shortcuts["0"] = f"delete"
+        self.btn_shortcuts["delete"] = f"delete"
+        self.btn_shortcuts["backspace"] = f"delete"
 
     def update_display(self, error=0):
         # 更新预览标签
@@ -162,7 +162,7 @@ class MCQPuzzle(BasePuzzleWidget):
         if current_question_index < len(self.puzzle.options):
             current_options = self.puzzle.options[current_question_index]
             for option in current_options:
-                if option in ['', ' ']:
+                if option in ["", " "]:
                     continue
                 c += 1
                 button_id = f"sel{str(self.cursor).zfill(3)}-{hash(option)}"
@@ -182,5 +182,5 @@ class MCQPuzzle(BasePuzzleWidget):
         self.notify(event.key)
         if event.key in self.btn_shortcuts:
             btn_id = self.btn_shortcuts.get(event.key)
-            btn_id = '#' + btn_id
+            btn_id = "#" + btn_id
             self.query_one(btn_id, Button).press()

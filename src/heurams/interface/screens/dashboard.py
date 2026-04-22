@@ -47,8 +47,10 @@ class DashboardScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """组合界面组件"""
-        if config_var.get()['interface']['global']['show_header']:
-            yield Header(show_clock=config_var.get()['interface']['global']['clock_on_header'])
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer():
             yield Horizontal(  # 顶部的状态
                 Vertical(
@@ -76,14 +78,19 @@ class DashboardScreen(Screen):
             )
             yield ListView(id="repo_list", classes="repo-list")  # 单元集选择
             from heurams.services.attic import Attic
-            a = Attic('ana', {'totaltime': 0, 'openpuzzles': 0, 'puzzles_err': 0})
+
+            a = Attic("ana", {"totaltime": 0, "openpuzzles": 0, "puzzles_err": 0})
             yield Label(f"版本 {version.ver} {version.stage.capitalize()}")  # 版本信息
-            yield Label(f"在 {round(a.data['totaltime'], 2)} 秒内处理了 {a.data['openpuzzles']} 个谜题, 正确率{'无法求解' if not a.data['openpuzzles'] else ' ' + str(round(100 * (1 - a.data['puzzles_err']/a.data['openpuzzles']), 2)) + '%'}, 平均速度{'无法求解' if not a.data['totaltime'] else ' ' + str(round(a.data['openpuzzles']/a.data['totaltime'], 2)) + '个/s'}", id='analysis')  # 版本信息
+            yield Label(
+                f"在 {round(a.data['totaltime'], 2)} 秒内处理了 {a.data['openpuzzles']} 个谜题, 正确率{'无法求解' if not a.data['openpuzzles'] else ' ' + str(round(100 * (1 - a.data['puzzles_err']/a.data['openpuzzles']), 2)) + '%'}, 平均速度{'无法求解' if not a.data['totaltime'] else ' ' + str(round(a.data['openpuzzles']/a.data['totaltime'], 2)) + '个/s'}",
+                id="analysis",
+            )  # 版本信息
         yield Footer()
 
     @on(events.ScreenResume)
     def post_active(self, event):
         from heurams.interface import shim
+
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
         # https://github.com/Textualize/textual/discussions/4268
         # self.refresh(recompose=True) 此函数有问题且官方不管 而且性能低
@@ -112,17 +119,21 @@ class DashboardScreen(Screen):
         }
         repo.preview = {
             "review": 0,
-            "new": repo.config["scheduled_num"], # TODO: 考虑之后在这里加点运算避免 SM-2 积压, 但现在需要的是直观!
+            "new": repo.config[
+                "scheduled_num"
+            ],  # TODO: 考虑之后在这里加点运算避免 SM-2 积压, 但现在需要的是直观!
         }
         initial_time = float("inf")
-        for i in range(repo.data_length): # TODO: 增加异步性能优化, 但是学习数据属实规模小...
+        for i in range(
+            repo.data_length
+        ):  # TODO: 增加异步性能优化, 但是学习数据属实规模小...
             e = pt.Electron.from_data(
                 electronic_data=repo.electronic_data_lict[i],
                 algo_name=repo.config["algorithm"],
             )
             # n = pt.Nucleon.from_data(repo.nucleonic_data_lict[i])
             if e.is_activated():
-                repo.progress["have_activated_ever"] = True # 被激活过~
+                repo.progress["have_activated_ever"] = True  # 被激活过~
                 repo.progress["touched"] += 1
                 repo.nearest_review_time = min(repo.nearest_review_time, e.nextdate())
                 if timer.get_daystamp() >= e.nextdate():
@@ -141,7 +152,7 @@ class DashboardScreen(Screen):
         repodirs = sorted(
             self.repos,
             key=lambda r: r.nearest_review_time,
-            reverse=True, # 紧张的先复习
+            reverse=True,  # 紧张的先复习
         )
 
         # 填充列表
@@ -159,7 +170,7 @@ class DashboardScreen(Screen):
             return
 
         for r in self.repos:
-            self.repolink[str(r.manifest['package'])] = r  # 用于规避 ctype id 对象还原
+            self.repolink[str(r.manifest["package"])] = r  # 用于规避 ctype id 对象还原
             # NOTE: 上一行不要使用 id(), id 可能被重用!
             list_item = ListItem(
                 *[Label(line) for line in r.prompt.splitlines()],
@@ -202,5 +213,6 @@ class DashboardScreen(Screen):
         logger.debug(f"event.button.id: {event.button.id}")
         if event.button.id.startswith("slaunch_repo_"):  # type: ignore
             from .preparation import launch
+
             launch(repo=self.repolink[event.button.id.removeprefix("slaunch_repo_")], app=self.app, scheduled_num=-1)  # type: ignore
             # TODO: 这样启动的记忆实例的状态机无法绑定到 PreparationScreen 中
