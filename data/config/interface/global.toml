@@ -14,7 +14,7 @@ scheduled_num = 420
 _scheduled_num_desc = "默认记忆单元数量\n可被单元集设置覆盖"
 refresh_on_resume = true
 _refresh_on_resume_desc = "[调试] 每当 Screen 激活后都刷新状态"
-algorithm = "SM-2"
+algorithm = "FSRS"
 _algorithm_desc = "默认记忆调度算法\n可被单元集设置覆盖"
 
 [_algorithm_candidate]
