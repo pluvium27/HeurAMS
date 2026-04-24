@@ -88,7 +88,7 @@ python -m pip install heurams -i https://pypi.pluv27.top/root/dev/+simple/
 - 位置: `src/heurams/vendor/pyfsrs/`
 - 原项目: [py-fsrs](https://github.com/open-spaced-repetition/py-fsrs)
 - 原版权: Copyright (c) 2026 Open Spaced Repetition Contributors
-- 原许可证: MIT License, 详见 `src/heurams/vendor/pyfsrs/LICENSE`
+- 原许可证: MIT License
 
 #### SM.js (slaypni)
 
@@ -97,6 +97,6 @@ python -m pip install heurams -i https://pypi.pluv27.top/root/dev/+simple/
 - 位置: `src/heurams/kernel/algorithms/sm15m*.py`
 - 原项目: [SM.js](https://github.com/slaypni/SM-15)
 - 原版权: Copyright (c) 2014 Kazuaki Tanida
-- 原许可证: MIT License, 详见 `src/heurams/vendor/pyfsrs/LICENSE`
+- 原许可证: MIT License
 
 本项目受益于他们无私且优秀的工作
