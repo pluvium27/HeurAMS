@@ -13,6 +13,7 @@ license = "AGPL-3.0-or-later"
 license-files = ["LICENSE"]
 
 dependencies = [
+    "fsrs>=6.3.1",
     #"edge-tts>=7.2.8",
     #"jieba>=0.42.1",
     #"openai>=2.32.0",
@@ -33,6 +34,21 @@ Issues = "https://github.com/heurams/heurams/issues"
 [project.scripts]
 heurams = "heurams.__main__:main"
 tui = "heurams.interface.__main__:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=6.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+pythonpath = ["src"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
 
 [build-system]
 requires = ["uv_build>=0.7.19"]
