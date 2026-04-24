@@ -6,9 +6,9 @@
 
 ## 项目结构
 
-这个仓库是 "潜进" 的核心程序库在 python 语言下的实现  
-包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)  
-除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库, 使用框架构建其他辅助记忆功能前端或其他应用程序  
+这个仓库是 "潜进" 的核心程序库在 python 语言下的实现\
+包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)\
+除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库, 使用框架构建其他辅助记忆功能前端或其他应用程序
 
 ## 特性
 
@@ -27,16 +27,17 @@
 ### 多模态学习进程
 
 与 `Anki` 的 SQLite `apkg` 包不同, 潜进项目坚持使用人类可读的文件夹组织单元集, 这带来了若干好处, 包括:
-- 人类可读: 您可以用任意工具, 乃至一个记事本修改记忆载荷数据而无需打开软件
+
+- 人类可读: 您可以用任意工具, 乃至一个记事本自由修改记忆载荷数据而无需打开软件
 - 元数据配置: 配置自由度极高, 可以任意组合, 重造, 乃至创造新内容
-- 测验, 算法与知识互相隔离: 您的记忆项目不再是单一的闪卡, 而是 `载荷(payload)` 和 `谜题(puzzle)` 通过 `元数据(typedef)` 抽象成的 `核子(nucleon)` 对象, 在程序内部和 `算法数据(algodata)` 抽象成的 `电子`, `调度设置(schedule)` 定义的 `轨道(orbital)` 共同有机组合成的运行时对象 `原子(atom)`! 这意味着一条知识不仅可以用若干不同的算法规划, 还可以用多种并行的谜题类型测验, 极大地提升您的学习效果和丰富度. 作为学习者, 您无需担忧这些概念复杂--仅需从云端下载单元集即可无痛体验所有功能!
+- 测验, 算法与知识互相隔离: 您的记忆项目不再是单一的闪卡, 而是 `载荷(payload)` 和 `谜题(puzzle)` 通过 `元数据(typedef)` 抽象成的 `核子(nucleon)` 对象, 在程序内部和 `算法数据(algodata)` 抽象成的 `电子`, `调度设置(schedule)` 定义的 `轨道(orbital)` 共同有机组合成的运行时对象 `原子(atom)`! 这意味着一条知识不仅可以用若干不同的算法规划, 还可以用多种并行的谜题类型测验, 极大地提升您的学习效果和丰富度. 作为学习者, 您无需担忧这些概念复杂--仅需从云端下载单元集即可开箱即用上述特性!
 - 多模态学习
   - 软件自身集成了文本转语音 (TTS) , 音频与语言模型 (LLM) 模块, 这些功能乃至功能本身都是可插拔, 可扩展, 可切换驱动的, 这为内容创建了极大的丰富度
   - 软件内置多种谜题类型, 包括选择题 (MCQ), 填空题 (Cloze) 与识别题 (Recognition), 您可在同一单元应用多种, 或是选择启用
   - 软件天然支持动态内容生成, 支持宏驱动的模板系统, 根据上下文乃至语言模型动态生成知识点的解析
   - 在间隔重复研究尚被 SuperMemo 系列独占的时代, Wozniak 就早已表示 "如果不能理解知识, 就无需记忆它". 今天, 我们依然相信理解是记忆的基石
 - 云同步与分享优化: 由于我们的记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持分享内容的版本控制, 如果您想分享单文件, 我们也支持 .zip/.tar.gz/.tar.xz 导入与导出
-- 优越性能: 得益于现代的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
+- 性能提升: 得益于现代且支持分块的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
 
 ### 实用用户界面
 
@@ -59,24 +60,8 @@ python -m pip install heurams -i https://pypi.pluv27.top/root/dev/+simple/
 
 ### 从源码安装
 
-1. 克隆仓库:
-
-   ```bash
-   git clone https://gitea.imwangzhiyu.xyz/ajax/HeurAMS
-   cd HeurAMS
-   ```
-
-2. 安装依赖:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. 以开发模式安装包:
-
-   ```bash
-   pip install -e .
-   ```
+我们提供原生 python 和 uv 两种安装方式\
+详见[贡献指南](CONTRIBUTING.md)
 
 ## 项目结构
 
@@ -94,14 +79,24 @@ python -m pip install heurams -i https://pypi.pluv27.top/root/dev/+simple/
 
 ### 第三方代码
 
-项目在 `src/heurams/vendor/` 目录下嵌入了以下第三方代码(可能有修改):
+项目在 `src/heurams/vendor/` 目录下嵌入或在其他位置间接使用了以下第三方代码(可能有修改):
 
-#### py-fsrs
+#### py-fsrs (open-spaced-repetition)
 
 - 上游版本: 6.3.1
+- 引用方式: vendor
 - 位置: `src/heurams/vendor/pyfsrs/`
 - 原项目: [py-fsrs](https://github.com/open-spaced-repetition/py-fsrs)
-- 原许可证: Copyright (c) 2026 Open Spaced Repetition Contributors
+- 原版权: Copyright (c) 2026 Open Spaced Repetition Contributors
+- 原许可证: MIT License, 详见 `src/heurams/vendor/pyfsrs/LICENSE`
+
+#### SM.js (slaypni)
+
+- 上游版本: commit `6e3bb4afaf484426deb4a9fa3bcffe42ac066b45` (2015年2月4日上游已停止维护)
+- 引用方式: 将 coffeescript 重写为 python 并间接引用, 数学原理一致; 并对重写后代码进行逻辑, 性能与标准化 API 改进
+- 位置: `src/heurams/kernel/algorithms/sm15m*.py`
+- 原项目: [SM.js](https://github.com/slaypni/SM-15)
+- 原版权: Copyright (c) 2014 Kazuaki Tanida
 - 原许可证: MIT License, 详见 `src/heurams/vendor/pyfsrs/LICENSE`
 
 本项目受益于他们无私且优秀的工作

@@ -1,5 +1,7 @@
 from time import sleep, perf_counter
 
+# import gc
+# gc.set_threshold(100, 1, 1)
 print("欢迎使用基本用户界面!")
 print("加载配置与上下文... ", end="", flush=True)
 _start_all = perf_counter()

@@ -62,7 +62,7 @@ API 版本代号: `{version.codename.capitalize()}`
 
 以 AGPL-3.0 开放源代码, 这直接意味着任何个体直接基于此代码对外或内部提供的应用和服务, 无论本地或网络, 必须向所有用户公开完整修改后的源代码, 且继续沿用 AGPL-3.0 协议.  
 
-您正使用的 TUI 用户界面是 python 版本程序库自带的基本用户界面, 以作为基本的全功能前端实现与程序库测试, 位于程序库根目录中的 interface 文件夹.  
+您正使用的 TUI 用户界面是 python 版本程序库自带的基本用户界面, 以作为第一个全功能前端实现与程序库测试套件, 位于程序库根目录中的 interface 文件夹.  
 
 您可在项目主页 https://ams.pluv27.top 获取用户指南, 开发文档与软件更新.  
 
@@ -154,7 +154,7 @@ Textual 框架版本: {textual_version}
                     import distro
 
                     return f"{distro.name()} {distro.version()}"
-                except ImportError, AttributeError:
+                except (ImportError, AttributeError):
                     return platform.platform()
             else:
                 return platform.platform()

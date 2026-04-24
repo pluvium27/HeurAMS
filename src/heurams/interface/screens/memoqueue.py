@@ -209,6 +209,8 @@ class MemScreen(Screen):
         logger.debug(f"Quality: {quality}")
         self.atom_reporter(quality)
         if quality <= 3:
+            from heurams.services.attic import Attic
+
             a = Attic("ana", {"puzzles_err": 0})
             a.data["puzzles_err"] += 1
             self.procession.append()

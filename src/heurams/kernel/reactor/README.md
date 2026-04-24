@@ -51,9 +51,9 @@ Router 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 | Router | unsure | ['新记忆', '总体复习'] | 新记忆             |
 ```
 
-| Type   | State  | Processions            | Current Procession |
+| Type | State | Processions | Current Procession |
 | :----- | :----- | :--------------------- | :----------------- |
-| Router | unsure | ['新记忆', '总体复习'] | 新记忆             |
+| Router | unsure | ['新记忆', '总体复习'] | 新记忆 |
 
 ### 方法
 
@@ -105,9 +105,9 @@ Router 的 __repr__ 定义了此对象"官方的显示"用作直观的调试.\
 | Procession | 新记忆 | active | 1 / 2    | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
 ```
 
-| Type       | Name   | State  | Progress | Procession                  | Current Atom                  |
+| Type | Name | State | Progress | Procession | Current Atom |
 | :--------- | :----- | :----- | :------- | :--------------------- | :---------------------------- |
-| Procession | 新记忆 | active | 1 / 2    | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
+| Procession | 新记忆 | active | 1 / 2 | ['秦孝公>', '君臣固>'] | 秦孝公据崤函之固, 拥雍州之地, |
 
 ### 方法
 
