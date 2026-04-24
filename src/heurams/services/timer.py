@@ -1,4 +1,5 @@
 # 时间服务
+import datetime
 import time
 
 from heurams.context import config_var
@@ -33,3 +34,32 @@ def get_timestamp() -> float:
     result = time.time()
     logger.debug("获取当前时间戳: %f", result)
     return result
+
+
+def get_timestamp_ms() -> int:
+    """获取当前毫秒级 Unix 时间戳"""
+    return int(get_timestamp() * 1000)
+
+
+def daystamp_to_datetime(daystamp: int) -> datetime.datetime:
+    """将日戳转换为 UTC datetime (当日午夜)"""
+    return datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc) + datetime.timedelta(
+        days=daystamp
+    )
+
+
+def datetime_to_daystamp(dt: datetime.datetime) -> int:
+    """将 datetime 转换为日戳（从 1970-01-01 起的天数）
+
+    接受带时区或 naive 的 datetime（naive 视为 UTC）。
+    """
+    epoch = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=datetime.timezone.utc)
+    delta = dt - epoch
+    return delta.days
+
+
+def get_now_datetime() -> datetime.datetime:
+    """获取当前时间的 UTC datetime（遵守时间覆盖）"""
+    return datetime.datetime.fromtimestamp(get_timestamp(), tz=datetime.timezone.utc)
