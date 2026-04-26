@@ -98,15 +98,6 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ 
 - `all` 依赖组:
   - 包含以上所有依赖
 
-llm-openai：OpenAI API 支持
-
-audio-playsound：播放声音（注意 playsound==1.2.2 固定版本，pygobject 是 Linux 下的依赖）
-
-dev：开发调试工具（ZMQ 远程调试、pytest 单元测试等）
-
-全量安装组
-all：包含以上所有可选组
-
 ### 从源码安装
 
 我们提供原生 python 和 uv 两种安装方式.\
