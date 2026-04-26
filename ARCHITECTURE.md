@@ -232,8 +232,8 @@ Router.__init__(atoms)
 |------|------|------|------|
 | **SM-2** | `sm2.py` | ✅ 完成 | 经典 SuperMemo 1987 算法 |
 | **NSP-0** | `nsp0.py` | ✅ 完成 | 非间隔过滤调度器 |
-| **SM-15M** | `sm15m.py` + `sm15m_calc.py` | ✅ 完成 | 从 CoffeeScript 移植的 SM-15 |
-| **FSRS** | `fsrs.py` | ❌ 未实现 | 进度: `logger.info("尚未实现")` |
+| **SM-15M** | `sm15m.py` | ✅ 完成 | 从 CoffeeScript 移植的 SM-15 |
+| **FSRS** | `fsrs.py` | ✅ 部分完成 | 优化器不可用 |
 | **Base** | `base.py` | ✅ 基类 | 定义 `AlgodataDict` 结构和默认值 |
 
 每个算法提供以下类方法：

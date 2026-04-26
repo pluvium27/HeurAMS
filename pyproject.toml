@@ -4,7 +4,7 @@ version = "0.5.0"
 authors = [{ name = "pluvium27", email = "pluvium27@outlook.com" }]
 description = "Heuristic Auxiliary Memory Scheduler"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -12,19 +12,45 @@ classifiers = [
 license = "AGPL-3.0-or-later"
 license-files = ["LICENSE"]
 
-dependencies = [
-    "fsrs>=6.3.1",
-    #"edge-tts>=7.2.8",
-    #"jieba>=0.42.1",
-    #"openai>=2.32.0",
-    #"playsound==1.2.2",
-    #"pygobject>=3.56.2", # playsound 依赖它
-    "psutil>=7.2.2",
+dependencies = [ # 这些依赖只能驱动 kernel 程序库
     "tabulate>=0.10.0",
-    "textual>=8.2.3",
     "toml>=0.10.2",
     "transitions>=0.9.3",
-    "zmq>=0.0.0",
+]
+
+[project.optional-dependencies]
+interface = [ # 基本用户界面依赖
+    "textual>=8.2.3",
+    "psutil>=7.2.2",
+]
+algo-fsrs = [
+    "fsrs>=6.3.1", # FSRS 算法底层依赖
+]
+tts-edgetts = [
+    "edge-tts>=7.2.8", # 微软 TTS
+]
+misc-jieba = [
+    "jieba>=0.42.1", # 用于中文智能分词
+]
+llm-openai = [
+    "openai>=2.32.0",
+]
+audio-playsound = [
+    "playsound==1.2.2",
+    "pygobject>=3.56.2", # playsound 依赖它
+]
+dev = [ # 调试所需依赖
+    "zmq>=0.0.0", # 用于 ZMQ 远程调试服务器, 在 linux 上建议先安装 libzmq
+    "pytest>=8.0.0", # 用于普通测试
+    "pytest-cov>=6.0.0",
+]
+all = [
+    "heurams[algo-fsrs]",
+    "heurams[tts-edgetts]",
+    "heurams[misc-jieba]",
+    "heurams[llm-openai]",
+    "heurams[audio-playsound]",
+    "heurams[dev]",
 ]
 
 [project.urls]
@@ -34,12 +60,7 @@ Issues = "https://github.com/heurams/heurams/issues"
 [project.scripts]
 heurams = "heurams.__main__:main"
 tui = "heurams.interface.__main__:main"
-
-[dependency-groups]
-dev = [
-    "pytest>=8.0.0",
-    "pytest-cov>=6.0.0",
-]
+heurams-tui = "heurams.interface.__main__:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
