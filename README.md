@@ -49,19 +49,68 @@
 
 ### 从包管理器安装
 
-潜进(heurams) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本
+潜进(heurams) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本.
+
+> [!CAUTION]
+> 对于部分 Linux 发行版和 Android Termux 用户:\
+> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖\
+> 例如在 termux 上先运行 `pkg install cmake clang libzmq`\
+> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器
+
+#### 稳定版本
 
 ```
-# 稳定版
-python -m pip install heurams -i https://pypi.pluv27.top/root/stable/+simple/
-# 开发版
-python -m pip install heurams -i https://pypi.pluv27.top/root/dev/+simple/
+python -m pip install heurams[all] -i https://pypi.pluv27.top/root/stable/+simple/ # 安装全部可选依赖(推荐)
 ```
+
+#### 开发版本
+
+```
+python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ # 安装全部可选依赖(推荐)
+```
+
+#### 依赖组说明
+
+由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面的命令会安装所有可选依赖, 以下是依赖组列表
+
+- 基础依赖: (只能驱动程序库)
+  - tabulate: 终端表格
+  - toml: TOML 文件加载
+  - transitions: 状态机依赖
+- `interface` 依赖组: (基本用户界面依赖)
+  - textual: 终端用户界面
+  - psutil: 获取系统信息
+- `algo-fsrs` 依赖组:
+  - py-fsrs: FSRS 算法模块需要
+- `tts-edgetts` 依赖组:
+  - edge-tts：微软文本转语音
+- `misc-jieba` 依赖组:
+  - jieba: 中文智能分词所需
+- `llm-openai` 依赖组:
+  - openai: OpenAI API 所需
+- `audio-playsound` 依赖组:
+  - playsound: 通用音频播放
+  - pygobject: playsound 依赖
+- `dev` 依赖组:
+  - zmq: 远程调试服务器所需
+  - pytest: 测试所需
+  - pytest-cov: 测试所需
+- `all` 依赖组:
+  - 包含以上所有依赖
+
+llm-openai：OpenAI API 支持
+
+audio-playsound：播放声音（注意 playsound==1.2.2 固定版本，pygobject 是 Linux 下的依赖）
+
+dev：开发调试工具（ZMQ 远程调试、pytest 单元测试等）
+
+全量安装组
+all：包含以上所有可选组
 
 ### 从源码安装
 
-我们提供原生 python 和 uv 两种安装方式\
-详见[贡献指南](CONTRIBUTING.md)
+我们提供原生 python 和 uv 两种安装方式.\
+详见[贡献指南](CONTRIBUTING.md).
 
 ## 项目结构
 
@@ -99,4 +148,4 @@ python -m pip install heurams -i https://pypi.pluv27.top/root/dev/+simple/
 - 原版权: Copyright (c) 2014 Kazuaki Tanida
 - 原许可证: MIT License
 
-本项目受益于他们无私且优秀的工作
+本项目受益于他们无私且优秀的工作.

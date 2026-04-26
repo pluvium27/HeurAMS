@@ -74,10 +74,10 @@ graph TB
 Nucleon(ident, payload, common)
 ```
 
-- **只读**内容容器. 通过 `Evalizer` (基于 `eval()` 的模板系统)对 payload 和 common 进行编译展开. 
-- 包含 `puzzles` 字段, 定义该记忆单元支持哪些谜题类型. 
-- 从 `repo.payload` 和 `repo.typedef["common"]` 配对创建. 
-- 一旦创建, 内容不可修改 (`__setitem__` 抛出 `AttributeError`). 
+- **只读**内容容器. 通过 `Evalizer` (基于 `eval()` 的模板系统)对 payload 和 common 进行编译展开.
+- 包含 `puzzles` 字段, 定义该记忆单元支持哪些谜题类型.
+- 从 `repo.payload` 和 `repo.typedef["common"]` 配对创建.
+- 一旦创建, 内容不可修改 (`__setitem__` 抛出 `AttributeError`).
 
 ### Electron (电子) — 状态层
 
@@ -85,9 +85,9 @@ Nucleon(ident, payload, common)
 Electron(ident, algodata, algo_name)
 ```
 
-- 算法状态数据的包装器. 每个 Electron 绑定一个算法 (`algorithms[algo_name]`). 
-- `algodata` 是到仓库 `algodata.lict` 中对应字典的**引用**, 修改即持久化. 
-- 核心方法：`activate()` (标记激活)、`revisor()` (评分迭代)、`is_due()` (到期判断). 
+- 算法状态数据的包装器. 每个 Electron 绑定一个算法 (`algorithms[algo_name]`).
+- `algodata` 是到仓库 `algodata.lict` 中对应字典的**引用**, 修改即持久化.
+- 核心方法：`activate()` (标记激活)、`revisor()` (评分迭代)、`is_due()` (到期判断).
 
 ### Orbital (轨道) — 策略层
 
@@ -101,8 +101,8 @@ orbital = {
 }
 ```
 
-- 定义复习阶段流程和各阶段内谜题选择策略的纯字典. 
-- 每个阶段对应一组 `(谜题类型, 概率系数)` 元组列表, 概率系数 >1 的部分表示强制重复次数. 
+- 定义复习阶段流程和各阶段内谜题选择策略的纯字典.
+- 每个阶段对应一组 `(谜题类型, 概率系数)` 元组列表, 概率系数 >1 的部分表示强制重复次数.
 
 ### Atom (原子) — 运行时组装
 
@@ -110,9 +110,9 @@ orbital = {
 Atom(nucleon, electron, orbital)
 ```
 
-- 三者的运行时组合, 附带 `runtime` 运行时标志 (`locked`, `min_rate`, `new_activation`). 
-- 是 UI 和调度层操作的基本单位. 
-- `revise()` 方法在 `locked` 为真时调用 `electron.revisor(min_rate)`, 执行最终评分迭代. 
+- 三者的运行时组合, 附带 `runtime` 运行时标志 (`locked`, `min_rate`, `new_activation`).
+- 是 UI 和调度层操作的基本单位.
+- `revise()` 方法在 `locked` 为真时调用 `electron.revisor(min_rate)`, 执行最终评分迭代.
 
 **关系图**：
 
@@ -137,11 +137,11 @@ graph LR
     Schedule --> Orbital
 ```
 
----
+______________________________________________________________________
 
 ## 调度反应器 (Reactor)
 
-调度反应器是核心业务流程引擎, 采用三层嵌套的有限状态机设计 (基于 `transitions` 库). 
+调度反应器是核心业务流程引擎, 采用三层嵌套的有限状态机设计 (基于 `transitions` 库).
 
 ### 状态枚举定义
 
@@ -222,11 +222,11 @@ Router.__init__(atoms)
                                                   └─ Algorithm.revisor(algodata, feedback)
 ```
 
----
+______________________________________________________________________
 
 ## 算法系统
 
-所有算法继承自 `BaseAlgorithm`, 以类方法的风格实现, 通过 `algorithms` 字典注册. 
+所有算法继承自 `BaseAlgorithm`, 以类方法的风格实现, 通过 `algorithms` 字典注册.
 
 | 算法 | 文件 | 状态 | 说明 |
 |------|------|------|------|
@@ -260,11 +260,11 @@ Router.__init__(atoms)
 }
 ```
 
----
+______________________________________________________________________
 
 ## 仓库系统 (Repo)
 
-仓库是 TOML/JSON 文件目录, 无数据库依赖. 
+仓库是 TOML/JSON 文件目录, 无数据库依赖.
 
 ### 目录结构
 
@@ -299,11 +299,11 @@ classDiagram
     }
 ```
 
-- `payload` 和 `algodata` 使用 `Lict` (列表+字典混合容器), 支持双模式访问. 
-- `_generate_particles_data()` 在初始化时自动将 payload 数据转换为 `Nucleon` 所需的格式. 
-- 默认保存列表 `default_save_list = ["algodata"]`, 仅持久化算法状态. 
+- `payload` 和 `algodata` 使用 `Lict` (列表+字典混合容器), 支持双模式访问.
+- `_generate_particles_data()` 在初始化时自动将 payload 数据转换为 `Nucleon` 所需的格式.
+- 默认保存列表 `default_save_list = ["algodata"]`, 仅持久化算法状态.
 
----
+______________________________________________________________________
 
 ## Lict 集合
 
@@ -318,13 +318,13 @@ lict.keys()                     # 所有键
 lict.dicted_data                # 纯字典导出
 ```
 
-脏同步机制：修改列表时自动同步字典, 修改字典时自动同步列表. 用于 `payload` 和 `algodata` 的双模式访问需求. 
+脏同步机制：修改列表时自动同步字典, 修改字典时自动同步列表. 用于 `payload` 和 `algodata` 的双模式访问需求.
 
----
+______________________________________________________________________
 
 ## 配置系统 (ConfigDict)
 
-`ConfigDict` 继承 `UserDict`, 是**单例模式**的 TOML 懒加载配置管理器. 
+`ConfigDict` 继承 `UserDict`, 是**单例模式**的 TOML 懒加载配置管理器.
 
 ### 配置目录约定
 
@@ -361,11 +361,11 @@ with ConfigContext(test_config):
     ...  # 临时使用测试配置
 ```
 
----
+______________________________________________________________________
 
 ## 提供者系统 (Providers)
 
-可插拔的后端实现, 通过 `providers/__init__.py` 中的字典注册. 
+可插拔的后端实现, 通过 `providers/__init__.py` 中的字典注册.
 
 | 类别 | 提供者 | 说明 |
 |------|--------|------|
@@ -375,9 +375,9 @@ with ConfigContext(test_config):
 | | `termux` | Android Termux 环境 |
 | **LLM** | `openai` | OpenAI 兼容 API (未完整实现) |
 
-选择方式：`services/*.toml` 中的 `provider` 字段. 
+选择方式：`services/*.toml` 中的 `provider` 字段.
 
----
+______________________________________________________________________
 
 ## 谜题系统 (Puzzles)
 
@@ -391,9 +391,9 @@ with ConfigContext(test_config):
 | **Guess** | `guess.py` | 猜测词义 |
 | **Base** | `base.py` | 抽象基类 |
 
-谜题通过轨道策略 (Orbital)在 `Expander` 中按概率展开, 每个原子可产生多个谜题, 每个谜题独立评分. 
+谜题通过轨道策略 (Orbital)在 `Expander` 中按概率展开, 每个原子可产生多个谜题, 每个谜题独立评分.
 
----
+______________________________________________________________________
 
 ## 服务层
 
@@ -410,9 +410,9 @@ with ConfigContext(test_config):
 | **Epath** | `epath.py` | 点符号嵌套字典访问 (`epath(dct, "a.b.c")`) |
 | **TextProc** | `textproc.py` | `truncate()`, `domize()`, `undomize()` |
 
-日志系统：每个模块通过 `get_logger(__name__)` 创建自己的日志器, 日志文件 10MB 轮转, 最多 5 个备份, 追加到 `heurams.log`. 
+日志系统：每个模块通过 `get_logger(__name__)` 创建自己的日志器, 日志文件 10MB 轮转, 最多 5 个备份, 追加到 `heurams.log`.
 
----
+______________________________________________________________________
 
 ## 复习全流程
 
@@ -454,14 +454,14 @@ sequenceDiagram
     UI->>User: 显示总结
 ```
 
----
+______________________________________________________________________
 
 ## 关键设计决策
 
-1. **无数据库** — 所有持久化基于 TOML/JSON 文件目录, 方便版本管理和手动编辑. 
-2. **Lict 双模式访问** — payload 和 algodata 同时支持列表迭代和字典查找, 兼顾批处理和随机访问. 
-3. **物理隐喻分离** — 内容 (Nucleon)、状态 (Electron)、策略 (Orbital) 三者正交, 可独立替换, 便于组合不同算法和内容类型. 
-4. **transitions 状态机** — 使用 `transitions` 库实现 Router → Procession → Expander 三层嵌套状态机, 每个层次职责明确. 
-5. **Evalizer eval 模板** — 使用 `eval()` 实现动态模板替换, 功能灵活但存在安全风险 (标记为待替换). 
-6. **配置单例** — `ConfigDict` 以规范化路径为键实现单例, 避免多实例导致的配置不一致问题. 
-7. **评分累积** — 原子在多谜题阶段的最终评分取所有谜题的最低评分 (`min_rate`), 确保严格评估. 
+1. **无数据库** — 所有持久化基于 TOML/JSON 文件目录, 方便版本管理和手动编辑.
+2. **Lict 双模式访问** — payload 和 algodata 同时支持列表迭代和字典查找, 兼顾批处理和随机访问.
+3. **物理隐喻分离** — 内容 (Nucleon)、状态 (Electron)、策略 (Orbital) 三者正交, 可独立替换, 便于组合不同算法和内容类型.
+4. **transitions 状态机** — 使用 `transitions` 库实现 Router → Procession → Expander 三层嵌套状态机, 每个层次职责明确.
+5. **Evalizer eval 模板** — 使用 `eval()` 实现动态模板替换, 功能灵活但存在安全风险 (标记为待替换).
+6. **配置单例** — `ConfigDict` 以规范化路径为键实现单例, 避免多实例导致的配置不一致问题.
+7. **评分累积** — 原子在多谜题阶段的最终评分取所有谜题的最低评分 (`min_rate`), 确保严格评估.
