@@ -80,7 +80,7 @@ class DashboardScreen(Screen):
             from heurams.services.attic import Attic
 
             a = Attic("ana", {"totaltime": 0, "openpuzzles": 0, "puzzles_err": 0})
-            yield Label(f"版本 {version.ver} {version.stage.capitalize()}")  # 版本信息
+            yield Label(f"版本 {version.ver}-{version.stage}")  # 版本信息
             yield Label(
                 f"在 {round(a.data['totaltime'], 2)} 秒内处理了 {a.data['openpuzzles']} 个谜题, 正确率{'无法求解' if not a.data['openpuzzles'] else ' ' + str(round(100 * (1 - a.data['puzzles_err']/a.data['openpuzzles']), 2)) + '%'}, 平均速度{'无法求解' if not a.data['totaltime'] else ' ' + str(round(a.data['openpuzzles']/a.data['totaltime'], 2)) + ' 个每秒'}",
                 id="analysis",
