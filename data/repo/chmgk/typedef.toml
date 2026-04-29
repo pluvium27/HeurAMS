@@ -1,0 +1,17 @@
+[annotation]
+note = "笔记"
+keyword_note = "关键词翻译"
+translation = "语句翻译"
+delimiter = "分隔符"
+content = "内容"
+tts_text = "文本转语音文本"
+
+[common]
+delimiter = "/"
+tts_text = "eval:payload['content'].replace('/', '')"
+
+[common.puzzles] # 谜题定义
+# 我们称 "Recognition" 为 recognition 谜题的 alia
+"Recognition" = { __origin__ = "recognition", __hint__ = "", primary = "eval:payload['content']", secondary = ["eval:payload['keyword_note']", "eval:payload['note']"], top_dim = ["eval:payload['translation']"] }
+"SelectMeaning" = { __origin__ = "mcq", __hint__ = "eval:payload['content']", primary = "eval:payload['content']", mapping = "eval:payload['keyword_note']", jammer = "eval:list(payload['keyword_note'].values())", max_riddles_num = "eval:default['mcq']['max_riddles_num']", prefix = "选择正确项: " }
+"FillBlank" = { __origin__ = "cloze", __hint__ = "", text = "eval:payload['content']", delimiter = "eval:nucleon['delimiter']", min_denominator = "eval:default['cloze']['min_denominator']"}

@@ -15,6 +15,7 @@ from heurams.context import config_var, rootdir
 from heurams.kernel.reactor import *
 from heurams.services.favorite_service import favorite_manager
 from heurams.services.logger import get_logger
+from heurams.services.attic import Attic
 
 from .. import shim
 
@@ -136,8 +137,8 @@ class MemScreen(Screen):
         from heurams.interface.widgets.finished import Finished
 
         if config_var.get()["interface"]["global"]["persist_to_file"]:
-            self.save_func()
-        container.mount(Finished(is_saved=["interface"]["global"]["persist_to_file"]))
+            self.repo.persist_to_repodir()
+        container.mount(Finished(is_saved=config_var.get()["interface"]["global"]["persist_to_file"]))
 
     def on_button_pressed(self, event):
         event.stop()

@@ -50,6 +50,7 @@
 ```bash
 # 克隆仓库
 git clone https://git.pluv27.top/pluv/HeurAMS
+
 cd HeurAMS
 
 # 可能需要切换到 dev 分支
@@ -60,7 +61,7 @@ git checkout dev
 ## 首先要安装uv, 例如通过 pip 或者其他包管理器
 python3 -m pip install uv
 
-uv sync # 同步开发运行环境
+uv sync --all-extras # 同步开发运行环境
 
 uv run heurams # 验证包安装
 
