@@ -12,9 +12,9 @@
 除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库或使用 `RPC` 与 `heurams` 程序库实例通讯, 使用框架构建其他辅助记忆功能前端或其他应用程序
 
 > [!NOTE]
-> 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台应用程序前端开发, 称作 "潜进K型 (HeurAMS-K)"
-> 它通过 `PyOtherSide` 直接复用 python 内核, 现代化的 UI 支持 Windows, Linux, macOS, Android 和 Plasma Mobile
-> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 HeurAMS-K 项目的开发
+> 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目  
+> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android 和 Plasma Mobile 提供现代用户界面
+> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发
 
 ## 特性
 
