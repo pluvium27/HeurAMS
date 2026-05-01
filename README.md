@@ -7,9 +7,14 @@
 
 ## 项目结构
 
-这个仓库是 "潜进" 的核心程序库在 python 语言下的实现\
-包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)\
+这个仓库是 "潜进" 的核心程序库在 python 语言下的实现  
+包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)  
 除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库或使用 `RPC` 与 `heurams` 程序库实例通讯, 使用框架构建其他辅助记忆功能前端或其他应用程序
+
+> [!NOTE]
+> 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台应用程序前端开发, 称作 "潜进K型 (HeurAMS-K)"
+> 它通过 `PyOtherSide` 直接复用 python 内核, 现代化的 UI 支持 Windows, Linux, macOS, Android 和 Plasma Mobile
+> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 HeurAMS-K 项目的开发
 
 ## 特性
 
@@ -53,9 +58,9 @@
 潜进(heurams) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本.
 
 > [!CAUTION]
-> 对于部分 Linux 发行版和 Android Termux 用户:\
-> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖\
-> 例如在 termux 上先运行 `pkg install cmake clang libzmq`\
+> 对于部分 Linux 发行版和 Android Termux 用户:  
+> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖  
+> 例如在 termux 上先运行 `pkg install cmake clang libzmq`  
 > 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器
 
 #### 稳定版本
