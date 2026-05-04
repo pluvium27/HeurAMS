@@ -13,3 +13,13 @@ NavigatorScreen {
     border: thick $background 80%;
     background: $surface;
 }
+
+.favorite-item {
+    height: auto;
+}
+
+.favorite-item-btn {
+    dock: right;
+    width: 8;
+    padding: 0;
+}

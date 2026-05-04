@@ -54,9 +54,10 @@ class NSP0Algorithm(BaseAlgorithm):
             logger.debug("feedback 为 -1, 跳过更新")
             return
         algodata[cls.algo_name]["interval"] = 1 if feedback <= 3 else float("inf")
-        algodata[cls.algo_name]["important"] = (
-            1 if feedback <= 3 else algodata[cls.algo_name]["important"]
-        )
+        if not algodata[cls.algo_name]["important"]:
+            algodata[cls.algo_name]["important"] = (
+                1 if feedback <= 3 else algodata[cls.algo_name]["important"]
+            )
         algodata[cls.algo_name]["last_date"] = timer.get_daystamp()
         algodata[cls.algo_name]["next_date"] = (
             timer.get_daystamp() + algodata[cls.algo_name]["interval"]

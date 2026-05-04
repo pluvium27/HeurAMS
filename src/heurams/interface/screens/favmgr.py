@@ -7,7 +7,7 @@ from typing import List, Optional
 from textual import events, on
 
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer
+from textual.containers import ScrollableContainer, Horizontal
 from textual.screen import Screen
 from textual.widgets import (
     Button,
@@ -104,23 +104,20 @@ class FavoriteManagerScreen(Screen):
         # 尝试获取仓库信息
         repo_info = self._get_repo_info(fav.repo_path, fav)
         title = repo_info.get("title", fav.repo_path) if repo_info else fav.repo_path
-        content_preview = repo_info.get("content_preview", "") if repo_info else ""
         added_time = self._format_time(fav.added)
 
         # 构建显示文本
-        display_text = f"[b]{title}[/b] ({fav.ident})\n"
-        if content_preview:
-            display_text += f"{content_preview}\n"
-        display_text += f"添加于: {added_time}"
+        display_text = f"{fav.ident}\n"
+        display_text += f"  [d]添加于: {added_time}\n  来自 {title}[/d]"
         if fav.tags:
-            display_text += f"  标签: {', '.join(fav.tags)}"
+            display_text += f"{', '.join(fav.tags)}"
 
         # 创建安全的按钮 ID
         button_key = self._encode_favorite_key(fav.repo_path, fav.ident)
         # 创建列表项，包含移除按钮
-        container = ScrollableContainer(
-            Markdown(display_text, classes="favorite-content"),
-            Button("移除", id=f"remove-{button_key}", variant="error"),
+        container = Horizontal(
+            Label(display_text, classes="favorite-content"),
+            Button("移除", id=f"remove-{button_key}", variant="error", flat=True, classes="favorite-item-btn"),
             classes="favorite-item",
         )
         return ListItem(container)

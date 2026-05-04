@@ -24,12 +24,13 @@ logger = get_logger(__name__)
 
 class MemScreen(Screen):
     BINDINGS = [
-        ("q", "go_back", "返回"),
+        ("q", "go_back_notif", "返回"),
         ("p", "prev", "查看上一个"),
         ("d", "toggle_dark", ""),
         ("v", "play_voice", "朗读"),
         ("*", "toggle_favorite", "收藏"),
         ("r", "resume_mark"),
+        ("Q", "go_back"),
         ("n", "block_prompt"),
         ("s", "block_prompt"),
         ("z", "block_prompt"),
@@ -220,6 +221,8 @@ class MemScreen(Screen):
         self.update_state()  # 刷新状态
         self.expander = self.procession.get_expander()
 
+    def action_go_back_notif(self):
+        self.notify("确定吗? 按下大写 Q 以返回")
     def action_go_back(self):
         self.app.pop_screen()
 

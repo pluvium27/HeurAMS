@@ -2,7 +2,7 @@ import copy
 import random
 from typing import TypedDict
 
-from textual.containers import ScrollableContainer
+from textual.containers import ScrollableContainer, Horizontal
 from textual.widget import Widget
 from textual.widgets import Button, Label, Markdown
 from textual.events import Key
@@ -71,6 +71,7 @@ class ClozePuzzle(BasePuzzleWidget):
         # 渲染当前问题的选项
         with ScrollableContainer(id="btn-container") as s:
             c = 0
+            btns = []
             for i in self.ans:
                 h = str(hash(i))
                 if hash(i) in self.hashmap.keys():
@@ -80,7 +81,12 @@ class ClozePuzzle(BasePuzzleWidget):
                 btnid = f"sel000-{h}"
                 logger.debug(f"建立按钮 {btnid}")
                 self.btn_shortcuts[f"{c}"] = btnid
-                yield Button(f"[{c}] {i}", id=f"{btnid}")
+                btns.append(Button(f"{i}", id=f"{btnid}", classes='cloze-option-btn'))
+            for i in range((len(btns)+1)//2):
+                if 2 * i + 1 + 1 <= len(btns):
+                    yield Horizontal(btns[i], btns[len(btns) - 1 - i], classes='hori')
+                else:
+                    yield btns[i]
             s.focus()
 
         yield Button("退格", id="delete")
@@ -130,7 +136,7 @@ class ClozePuzzle(BasePuzzleWidget):
             self.atom.minimize(rating)
 
     def on_key(self, event: Key) -> None:
-        self.notify(event.key)
+        #self.notify(event.key)
         if event.key in self.btn_shortcuts:
             btn_id = self.btn_shortcuts.get(event.key)
             btn_id = "#" + btn_id
