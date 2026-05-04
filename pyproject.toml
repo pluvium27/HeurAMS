@@ -30,10 +30,7 @@ tts-edgetts = [
     "edge-tts>=7.2.8", # 微软 TTS
 ]
 llm = ["openai>=2.32.0"]
-audio-playsound = [
-    "playsound3==3.3.1",
-    #"pygobject>=3.56.2", # playsound 依赖它
-]
+audio-playsound = ["playsound3>=3.3.1"]
 dev = [ # 调试所需依赖
     "zmq>=0.0.0",        # 用于 ZMQ 远程调试服务器, 在 linux 上建议先安装 libzmq
     "pytest>=8.0.0",     # 用于普通测试

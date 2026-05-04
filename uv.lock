@@ -493,7 +493,7 @@ requires-dist = [
     { name = "heurams", extras = ["tts-edgetts"], marker = "extra == 'all'" },
     { name = "heurams", extras = ["tts-edgetts"], marker = "extra == 'basic'" },
     { name = "openai", marker = "extra == 'llm'", specifier = ">=2.32.0" },
-    { name = "playsound3", marker = "extra == 'audio-playsound'", specifier = "==3.3.1" },
+    { name = "playsound3", marker = "extra == 'audio-playsound'", specifier = ">=3.3.1" },
     { name = "psutil", marker = "extra == 'interface'", specifier = ">=7.2.2" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.0.0" },

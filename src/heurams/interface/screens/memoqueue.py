@@ -156,11 +156,11 @@ class MemScreen(Screen):
 
         path = Path(config_var.get()["global"]["paths"]["data"]) / "cache" / "voice"
         path = path / f"{get_md5(self.atom.registry['nucleon']["tts_text"])}.wav"
+        logger.debug(str(path))
         if path.exists():
             play_by_path(path)
         else:
             from heurams.services.tts_service import convertor
-
             convertor(self.atom.registry["nucleon"]["tts_text"], path)
             play_by_path(path)
 
