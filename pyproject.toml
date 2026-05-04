@@ -29,29 +29,24 @@ algo-fsrs = [
 tts-edgetts = [
     "edge-tts>=7.2.8", # 微软 TTS
 ]
-misc-jieba = [
-    "jieba>=0.42.1", # 用于中文智能分词
-]
-llm-openai = [
-    "openai>=2.32.0",
-]
+llm = ["openai>=2.32.0"]
 audio-playsound = [
-    "playsound==1.2.2",
-    "pygobject>=3.56.2", # playsound 依赖它
+    "playsound3==3.3.1",
+    #"pygobject>=3.56.2", # playsound 依赖它
 ]
 dev = [ # 调试所需依赖
-    "zmq>=0.0.0", # 用于 ZMQ 远程调试服务器, 在 linux 上建议先安装 libzmq
-    "pytest>=8.0.0", # 用于普通测试
+    "zmq>=0.0.0",        # 用于 ZMQ 远程调试服务器, 在 linux 上建议先安装 libzmq
+    "pytest>=8.0.0",     # 用于普通测试
     "pytest-cov>=6.0.0",
 ]
 all = [
     "heurams[algo-fsrs]",
     "heurams[tts-edgetts]",
-    "heurams[misc-jieba]",
-    "heurams[llm-openai]",
+    "heurams[llm]",
     "heurams[audio-playsound]",
     "heurams[dev]",
 ]
+basic = ["heurams[algo-fsrs]", "heurams[tts-edgetts]", "heurams[llm]"]
 
 [project.urls]
 Homepage = "https://ams.pluv.top"
@@ -59,7 +54,6 @@ Issues = "https://github.com/heurams/heurams/issues"
 
 [project.scripts]
 heurams = "heurams.__main__:main"
-tui = "heurams.interface.__main__:main"
 heurams-tui = "heurams.interface.__main__:main"
 
 [tool.pytest.ini_options]

@@ -70,7 +70,7 @@ uv sync --all-extras # 同步开发运行环境
 
 uv run heurams # 验证包安装
 
-uv run tui # 启动 TUI
+uv run heurams-tui # 启动 TUI
 
 # 如果决定使用原生 python 环境 (不推荐, 但我们保留了这种方式以便在不便支持 uv 与硬链接的环境和文件系统(例如 termux)运行 HeurAMS)
 
@@ -79,7 +79,7 @@ python3 -m pip install -r requirements.txt
 python3 -m pip install -e .
 
 python3 -m heurams # 验证安装
-python3 -m heurams.__interface__ # 启动 TUI
+python3 -m heurams.interface # 启动 TUI
 ```
 
 ## 许可证与外部引用

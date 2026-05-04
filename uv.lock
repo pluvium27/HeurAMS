@@ -450,17 +450,19 @@ algo-fsrs = [
 all = [
     { name = "edge-tts" },
     { name = "fsrs" },
-    { name = "jieba" },
     { name = "openai" },
-    { name = "playsound" },
-    { name = "pygobject" },
+    { name = "playsound3" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "zmq" },
 ]
 audio-playsound = [
-    { name = "playsound" },
-    { name = "pygobject" },
+    { name = "playsound3" },
+]
+basic = [
+    { name = "edge-tts" },
+    { name = "fsrs" },
+    { name = "openai" },
 ]
 dev = [
     { name = "pytest" },
@@ -471,11 +473,8 @@ interface = [
     { name = "psutil" },
     { name = "textual" },
 ]
-llm-openai = [
+llm = [
     { name = "openai" },
-]
-misc-jieba = [
-    { name = "jieba" },
 ]
 tts-edgetts = [
     { name = "edge-tts" },
@@ -486,16 +485,16 @@ requires-dist = [
     { name = "edge-tts", marker = "extra == 'tts-edgetts'", specifier = ">=7.2.8" },
     { name = "fsrs", marker = "extra == 'algo-fsrs'", specifier = ">=6.3.1" },
     { name = "heurams", extras = ["algo-fsrs"], marker = "extra == 'all'" },
+    { name = "heurams", extras = ["algo-fsrs"], marker = "extra == 'basic'" },
     { name = "heurams", extras = ["audio-playsound"], marker = "extra == 'all'" },
     { name = "heurams", extras = ["dev"], marker = "extra == 'all'" },
-    { name = "heurams", extras = ["llm-openai"], marker = "extra == 'all'" },
-    { name = "heurams", extras = ["misc-jieba"], marker = "extra == 'all'" },
+    { name = "heurams", extras = ["llm"], marker = "extra == 'all'" },
+    { name = "heurams", extras = ["llm"], marker = "extra == 'basic'" },
     { name = "heurams", extras = ["tts-edgetts"], marker = "extra == 'all'" },
-    { name = "jieba", marker = "extra == 'misc-jieba'", specifier = ">=0.42.1" },
-    { name = "openai", marker = "extra == 'llm-openai'", specifier = ">=2.32.0" },
-    { name = "playsound", marker = "extra == 'audio-playsound'", specifier = "==1.2.2" },
+    { name = "heurams", extras = ["tts-edgetts"], marker = "extra == 'basic'" },
+    { name = "openai", marker = "extra == 'llm'", specifier = ">=2.32.0" },
+    { name = "playsound3", marker = "extra == 'audio-playsound'", specifier = "==3.3.1" },
     { name = "psutil", marker = "extra == 'interface'", specifier = ">=7.2.2" },
-    { name = "pygobject", marker = "extra == 'audio-playsound'", specifier = ">=3.56.2" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.0.0" },
     { name = "tabulate", specifier = ">=0.10.0" },
@@ -504,7 +503,7 @@ requires-dist = [
     { name = "transitions", specifier = ">=0.9.3" },
     { name = "zmq", marker = "extra == 'dev'", specifier = ">=0.0.0" },
 ]
-provides-extras = ["interface", "algo-fsrs", "tts-edgetts", "misc-jieba", "llm-openai", "audio-playsound", "dev", "all"]
+provides-extras = ["interface", "algo-fsrs", "tts-edgetts", "llm", "audio-playsound", "dev", "all", "basic"]
 
 [[package]]
 name = "httpcore"
@@ -551,12 +550,6 @@ sdist = { url = "https://mirrors.ustc.edu.cn/pypi/packages/72/34/14ca021ce8e5dfe
 wheels = [
     { url = "https://mirrors.ustc.edu.cn/pypi/packages/cb/b1/3846dd7f199d53cb17f49cba7e651e9ce294d8497c8c150530ed11865bb8/iniconfig-2.3.0-py3-none-any.whl", hash = "sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12", size = 7484, upload-time = "2025-10-18T21:55:41.639Z" },
 ]
-
-[[package]]
-name = "jieba"
-version = "0.42.1"
-source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
-sdist = { url = "https://mirrors.ustc.edu.cn/pypi/packages/c6/cb/18eeb235f833b726522d7ebed54f2278ce28ba9438e3135ab0278d9792a2/jieba-0.42.1.tar.gz", hash = "sha256:055ca12f62674fafed09427f176506079bc135638a14e23e25be909131928db2", size = 19214172, upload-time = "2020-01-20T14:27:23.5Z" }
 
 [[package]]
 name = "jiter"
@@ -817,11 +810,15 @@ wheels = [
 ]
 
 [[package]]
-name = "playsound"
-version = "1.2.2"
+name = "playsound3"
+version = "3.3.1"
 source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
+dependencies = [
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://mirrors.ustc.edu.cn/pypi/packages/6b/93/39f2296a69fe2c70dcc9b9724147ffc9d7f676f67eb3cbad3baa725ae32d/playsound3-3.3.1.tar.gz", hash = "sha256:3f0eb87d5ff2061d07663c4b010b8e7d66c274344712b01d561a0a73447ef41d", size = 608340, upload-time = "2026-01-22T18:05:55.444Z" }
 wheels = [
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/f5/16/10d897b0a83fb4b05b03a63d7a2667ab75f857f67f7062fd447dd3f49bf7/playsound-1.2.2-py2.py3-none-any.whl", hash = "sha256:1e83750a5325cbccee03d6e751ba3e78c037ac95b95a3ba1f38d0c5aca9e1a34", size = 5960, upload-time = "2017-06-29T14:08:29.207Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/62/9d/8b97af915bd8a9e2b17b08bb9d62d45cce5c00a28a64b08324bb5895145b/playsound3-3.3.1-py3-none-any.whl", hash = "sha256:8e606115c3630762a7136579ceb25fbf725768a31f7d0bfc2883154d8c50205d", size = 9697, upload-time = "2026-01-22T18:05:53.783Z" },
 ]
 
 [[package]]
@@ -946,25 +943,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pycairo"
-version = "1.29.0"
-source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
-sdist = { url = "https://mirrors.ustc.edu.cn/pypi/packages/22/d9/1728840a22a4ef8a8f479b9156aa2943cd98c3907accd3849fb0d5f82bfd/pycairo-1.29.0.tar.gz", hash = "sha256:f3f7fde97325cae80224c09f12564ef58d0d0f655da0e3b040f5807bd5bd3142", size = 665871, upload-time = "2025-11-11T19:13:01.584Z" }
-wheels = [
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/f6/28/6363087b9e60af031398a6ee5c248639eefc6cc742884fa2789411b1f73b/pycairo-1.29.0-cp312-cp312-win32.whl", hash = "sha256:91bcd7b5835764c616a615d9948a9afea29237b34d2ed013526807c3d79bb1d0", size = 751486, upload-time = "2025-11-11T19:11:54.451Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/3a/d2/d146f1dd4ef81007686ac52231dd8f15ad54cf0aa432adaefc825475f286/pycairo-1.29.0-cp312-cp312-win_amd64.whl", hash = "sha256:3f01c3b5e49ef9411fff6bc7db1e765f542dc1c9cfed4542958a5afa3a8b8e76", size = 845383, upload-time = "2025-11-11T19:12:01.551Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/01/16/6e6f33bb79ec4a527c9e633915c16dc55a60be26b31118dbd0d5859e8c51/pycairo-1.29.0-cp312-cp312-win_arm64.whl", hash = "sha256:eafe3d2076f3533535ad4a361fa0754e0ee66b90e548a3a0f558fed00b1248f2", size = 694518, upload-time = "2025-11-11T19:12:06.561Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/f0/21/3f477dc318dd4e84a5ae6301e67284199d7e5a2384f3063714041086b65d/pycairo-1.29.0-cp313-cp313-win32.whl", hash = "sha256:3eb382a4141591807073274522f7aecab9e8fa2f14feafd11ac03a13a58141d7", size = 750949, upload-time = "2025-11-11T19:12:12.198Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/43/34/7d27a333c558d6ac16dbc12a35061d389735e99e494ee4effa4ec6d99bed/pycairo-1.29.0-cp313-cp313-win_amd64.whl", hash = "sha256:91114e4b3fbf4287c2b0788f83e1f566ce031bda49cf1c3c3c19c3e986e95c38", size = 844149, upload-time = "2025-11-11T19:12:19.171Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/15/43/e782131e23df69e5c8e631a016ed84f94bbc4981bf6411079f57af730a23/pycairo-1.29.0-cp313-cp313-win_arm64.whl", hash = "sha256:09b7f69a5ff6881e151354ea092137b97b0b1f0b2ab4eb81c92a02cc4a08e335", size = 693595, upload-time = "2025-11-11T19:12:23.445Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/2d/fa/87eaeeb9d53344c769839d7b2854db7ff2cd596211e00dd1b702eeb1838f/pycairo-1.29.0-cp314-cp314-win32.whl", hash = "sha256:69e2a7968a3fbb839736257bae153f547bca787113cc8d21e9e08ca4526e0b6b", size = 767198, upload-time = "2025-11-11T19:12:42.336Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/3c/90/3564d0f64d0a00926ab863dc3c4a129b1065133128e96900772e1c4421f8/pycairo-1.29.0-cp314-cp314-win_amd64.whl", hash = "sha256:e91243437a21cc4c67c401eff4433eadc45745275fa3ade1a0d877e50ffb90da", size = 871579, upload-time = "2025-11-11T19:12:48.982Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/5e/91/93632b6ba12ad69c61991e3208bde88486fdfc152be8cfdd13444e9bc650/pycairo-1.29.0-cp314-cp314-win_arm64.whl", hash = "sha256:b72200ea0e5f73ae4c788cd2028a750062221385eb0e6d8f1ecc714d0b4fdf82", size = 719537, upload-time = "2025-11-11T19:12:55.016Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/93/23/37053c039f8d3b9b5017af9bc64d27b680c48a898d48b72e6d6583cf0155/pycairo-1.29.0-cp314-cp314t-win_amd64.whl", hash = "sha256:5e45fce6185f553e79e4ef1722b8e98e6cde9900dbc48cb2637a9ccba86f627a", size = 874015, upload-time = "2025-11-11T19:12:28.47Z" },
-    { url = "https://mirrors.ustc.edu.cn/pypi/packages/d7/54/123f6239685f5f3f2edc123f1e38d2eefacebee18cf3c532d2f4bd51d0ef/pycairo-1.29.0-cp314-cp314t-win_arm64.whl", hash = "sha256:caba0837a4b40d47c8dfb0f24cccc12c7831e3dd450837f2a356c75f21ce5a15", size = 721404, upload-time = "2025-11-11T19:12:36.919Z" },
-]
-
-[[package]]
 name = "pycparser"
 version = "3.0"
 source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
@@ -1073,15 +1051,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pygobject"
-version = "3.56.2"
-source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
-dependencies = [
-    { name = "pycairo" },
-]
-sdist = { url = "https://mirrors.ustc.edu.cn/pypi/packages/a2/80/09247a2be28af2c2240132a0af6c1005a2b1d089242b13a2cd782d2de8d7/pygobject-3.56.2.tar.gz", hash = "sha256:b816098969544081de9eecedb94ad6ac59c77e4d571fe7051f18bebcec074313", size = 1409059, upload-time = "2026-03-25T16:14:04.008Z" }
-
-[[package]]
 name = "pytest"
 version = "9.0.3"
 source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
@@ -1109,6 +1078,22 @@ dependencies = [
 sdist = { url = "https://mirrors.ustc.edu.cn/pypi/packages/b1/51/a849f96e117386044471c8ec2bd6cfebacda285da9525c9106aeb28da671/pytest_cov-7.1.0.tar.gz", hash = "sha256:30674f2b5f6351aa09702a9c8c364f6a01c27aae0c1366ae8016160d1efc56b2", size = 55592, upload-time = "2026-03-21T20:11:16.284Z" }
 wheels = [
     { url = "https://mirrors.ustc.edu.cn/pypi/packages/9d/7a/d968e294073affff457b041c2be9868a40c1c71f4a35fcc1e45e5493067b/pytest_cov-7.1.0-py3-none-any.whl", hash = "sha256:a0461110b7865f9a271aa1b51e516c9a95de9d696734a2f71e3e78f46e1d4678", size = 22876, upload-time = "2026-03-21T20:11:14.438Z" },
+]
+
+[[package]]
+name = "pywin32"
+version = "311"
+source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
+wheels = [
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/e7/ab/01ea1943d4eba0f850c3c61e78e8dd59757ff815ff3ccd0a84de5f541f42/pywin32-311-cp312-cp312-win32.whl", hash = "sha256:750ec6e621af2b948540032557b10a2d43b0cee2ae9758c54154d711cc852d31", size = 8706543, upload-time = "2025-07-14T20:13:20.765Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/d1/a8/a0e8d07d4d051ec7502cd58b291ec98dcc0c3fff027caad0470b72cfcc2f/pywin32-311-cp312-cp312-win_amd64.whl", hash = "sha256:b8c095edad5c211ff31c05223658e71bf7116daa0ecf3ad85f3201ea3190d067", size = 9495040, upload-time = "2025-07-14T20:13:22.543Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/ba/3a/2ae996277b4b50f17d61f0603efd8253cb2d79cc7ae159468007b586396d/pywin32-311-cp312-cp312-win_arm64.whl", hash = "sha256:e286f46a9a39c4a18b319c28f59b61de793654af2f395c102b4f819e584b5852", size = 8710102, upload-time = "2025-07-14T20:13:24.682Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/a5/be/3fd5de0979fcb3994bfee0d65ed8ca9506a8a1260651b86174f6a86f52b3/pywin32-311-cp313-cp313-win32.whl", hash = "sha256:f95ba5a847cba10dd8c4d8fefa9f2a6cf283b8b88ed6178fa8a6c1ab16054d0d", size = 8705700, upload-time = "2025-07-14T20:13:26.471Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/e3/28/e0a1909523c6890208295a29e05c2adb2126364e289826c0a8bc7297bd5c/pywin32-311-cp313-cp313-win_amd64.whl", hash = "sha256:718a38f7e5b058e76aee1c56ddd06908116d35147e133427e59a3983f703a20d", size = 9494700, upload-time = "2025-07-14T20:13:28.243Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/04/bf/90339ac0f55726dce7d794e6d79a18a91265bdf3aa70b6b9ca52f35e022a/pywin32-311-cp313-cp313-win_arm64.whl", hash = "sha256:7b4075d959648406202d92a2310cb990fea19b535c7f4a78d3f5e10b926eeb8a", size = 8709318, upload-time = "2025-07-14T20:13:30.348Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/c9/31/097f2e132c4f16d99a22bfb777e0fd88bd8e1c634304e102f313af69ace5/pywin32-311-cp314-cp314-win32.whl", hash = "sha256:b7a2c10b93f8986666d0c803ee19b5990885872a7de910fc460f9b0c2fbf92ee", size = 8840714, upload-time = "2025-07-14T20:13:32.449Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/90/4b/07c77d8ba0e01349358082713400435347df8426208171ce297da32c313d/pywin32-311-cp314-cp314-win_amd64.whl", hash = "sha256:3aca44c046bd2ed8c90de9cb8427f581c479e594e99b5c0bb19b29c10fd6cb87", size = 9656800, upload-time = "2025-07-14T20:13:34.312Z" },
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/c0/d2/21af5c535501a7233e734b8af901574572da66fcc254cb35d0609c9080dd/pywin32-311-cp314-cp314-win_arm64.whl", hash = "sha256:a508e2d9025764a8270f93111a970e1d0fbfc33f4153b388bb649b7eec4f9b42", size = 8932540, upload-time = "2025-07-14T20:13:36.379Z" },
 ]
 
 [[package]]

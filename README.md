@@ -7,14 +7,14 @@
 
 ## 项目结构
 
-这个仓库是 "潜进" 的核心程序库在 python 语言下的实现  
+此仓库为 "潜进" 的核心程序库在 python 语言下的实现  
 包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)  
 除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库或使用 `RPC` 与 `heurams` 程序库实例通讯, 使用框架构建其他辅助记忆功能前端或其他应用程序
 
 > [!NOTE]
 > 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目  
-> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android 和 Plasma Mobile 提供现代用户界面
-> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发
+> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android 和 Plasma Mobile 提供现代用户界面  
+> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发  
 
 ## 特性
 
@@ -57,19 +57,22 @@
 
 潜进(heurams) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本.
 
+#### 稳定版本
+
+```
+python -m pip install heurams[basic] -i https://pypi.pluv27.top/root/stable/+simple/ # 安装适用于用户体验的可选依赖(推荐)
+```
+```
+python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/stable/+simple/ # 安装适用于一般计算机的通用音频模块(不适用于 termux, termux 的音频支持是内建的)
+```
+
+#### 开发版本
+
 > [!CAUTION]
 > 对于部分 Linux 发行版和 Android Termux 用户:  
 > 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖  
 > 例如在 termux 上先运行 `pkg install cmake clang libzmq`  
-> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器
-
-#### 稳定版本
-
-```
-python -m pip install heurams[all] -i https://pypi.pluv27.top/root/stable/+simple/ # 安装全部可选依赖(推荐)
-```
-
-#### 开发版本
+> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器  
 
 ```
 python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ # 安装全部可选依赖(推荐)
@@ -79,34 +82,21 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ 
 
 由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面提供的命令会安装所有可选依赖, 以下是依赖组列表
 
-- 基础依赖: (只能驱动程序库)
-  - tabulate: 终端表格生成
-  - toml: TOML 文件加载
-  - transitions: 状态机依赖
-- `interface` 依赖组: (基本用户界面依赖)
-  - textual: 终端用户界面
-  - psutil: 获取系统信息
-- `algo-fsrs` 依赖组:
-  - py-fsrs: FSRS 算法模块需要
-- `tts-edgetts` 依赖组:
-  - edge-tts：微软文本转语音
-- `misc-jieba` 依赖组:
-  - jieba: 中文智能分词所需
-- `llm-openai` 依赖组:
-  - openai: OpenAI API 所需
-- `audio-playsound` 依赖组:
-  - playsound: 通用音频播放
-  - pygobject: playsound 依赖
-- `dev` 依赖组:
-  - zmq: 远程调试服务器所需
-  - pytest: 测试所需
-  - pytest-cov: 测试所需
-- `all` 依赖组:
-  - 包含以上所有依赖
+| 依赖组 | 包含模块 | 说明 |
+|--------|----------|------|
+| 最小化安装 | tabulate, toml, transitions | 核心驱动程序库，始终必需 |
+| interface | textual, psutil | 基本用户界面依赖 |
+| algo-fsrs | py-fsrs | FSRS 算法模块 |
+| tts-edgetts | edge-tts | 微软文本转语音 |
+| llm | openai | OpenAI API 调用 |
+| audio-playsound | playsound, pygobject | 通用音频播放及依赖 |
+| dev | zmq, pytest, pytest-cov | 开发调试与测试工具 |
+| basic | [tts-edgetts], [llm-openai], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
+| all | 以上所有依赖 | 完整安装组 |
 
 ### 从源码安装
 
-我们提供原生 python 和 uv 两种安装方式.\
+我们提供原生 python 和 uv 两种安装方式.  
 详见[贡献指南](CONTRIBUTING.md).
 
 ## 项目结构
@@ -115,7 +105,8 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ 
 
 ## 参与项目
 
-欢迎参与到项目协作中! 请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解贡献指南.
+欢迎参与到项目协作中!  
+请参阅[贡献指南](CONTRIBUTING.md).
 
 ## 许可证
 
@@ -127,15 +118,6 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ 
 ### 第三方代码
 
 项目在 `src/heurams/vendor/` 目录下嵌入或在其他位置间接使用了以下第三方代码(可能有修改):
-
-#### py-fsrs (open-spaced-repetition)
-
-- 上游版本: 6.3.1
-- 引用方式: vendor
-- 位置: `src/heurams/vendor/pyfsrs/`
-- 原项目: [py-fsrs](https://github.com/open-spaced-repetition/py-fsrs)
-- 原版权: Copyright (c) 2026 Open Spaced Repetition Contributors
-- 原许可证: MIT License
 
 #### SM.js (slaypni)
 

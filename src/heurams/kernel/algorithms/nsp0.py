@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 
 class NSP0Algorithm(BaseAlgorithm):
     algo_name = "NSP-0"
-    desc = "快速筛选用特殊调度器"
+    desc = "快速筛选用非间隔重复调度器"
 
     class AlgodataDict(TypedDict):
         real_rept: int

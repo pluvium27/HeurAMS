@@ -5,10 +5,19 @@ from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
+_registry: dict[str, type["BaseAlgorithm"]] = {}
 
 class BaseAlgorithm:
     algo_name = "BaseAlgorithm"
     desc = "算法基类"
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        _registry[cls.algo_name] = cls
+
+    @classmethod
+    def get_registry(cls) -> dict[str, type["BaseAlgorithm"]]:
+        return dict(_registry)
 
     class AlgodataDict(TypedDict):
         real_rept: int

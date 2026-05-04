@@ -12,8 +12,8 @@ python 代指您使用的解释器, 在某些发行版中可能是 python3, 而 
 尽管项目保留了 requirements.txt, 我们仍不推荐使用系统 python 和原始 venv 进行开发.
 项目的推荐开发环境工具是 uv.
 如果你的环境已经安装了 uv:
- 先运行 uv sync 同步环境, 此命令只需要执行一遍, uv 会自动处理依赖.
- 然后通过运行 uv run tui 启动内置基本用户界面.
+ 先运行 uv sync --all-extras 同步环境, 此命令只需要执行一遍, uv 会自动处理依赖.
+ 然后通过运行 uv run heurams-tui 启动内置基本用户界面.
  此时您的解释器在项目目录里的 .venv/bin 中, 使用 IDE 开发前, 务必切换解释器!
 注意: 一个常见的误区是, 执行 interface 下的 __main__.py 运行基本用户界面, 这会导致 Python 上下文环境异常, 请不要这样做."""
     print(prompt)

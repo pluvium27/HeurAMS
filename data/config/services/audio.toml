@@ -2,7 +2,7 @@ provider = "playsound"
 _provider_desc = "音频驱动类型"
 
 [_provider_candidate]
-playsound = "python 跨平台音频系统"
+playsound = "Python 桌面跨平台音频系统, 使用了 playsound3 替代了老旧的 playsound"
 termux = "Android Termux 音频系统"
 mpg123 = "通用音频系统, 依赖系统 mpg123"
 pulseaudio = "高级音频路由系统"
