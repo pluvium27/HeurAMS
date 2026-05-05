@@ -1444,11 +1444,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.095589
         }
     },
     "上称帝喾, 下道齐桓, 中述汤武, 以刺世事.": {
@@ -1456,11 +1456,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.096489
         }
     },
     "明道德之广崇, 治乱之条贯, 靡不毕见.": {
@@ -1468,11 +1468,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.0973692
         }
     },
     "其文约, 其辞微, 其志洁, 其行廉.": {
@@ -1480,11 +1480,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.098246
         }
     },
     "其称文小而其指极大, 举类迩而见义远.": {
@@ -1492,11 +1492,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.0991225
         }
     },
     "其志洁, 故其称物芳; 其行廉, 故死而不容.": {
@@ -1504,11 +1504,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1000113
         }
     },
     "自疏濯淖污泥之中, 蝉蜕于浊秽, 以浮游尘埃之外, 不获世之滋垢, 皭然泥而不滓者也.": {
@@ -1516,11 +1516,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.100887
         }
     },
     "推此志也, 虽与日月争光可也.": {
@@ -1528,11 +1528,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1017635
         }
     },
     "山居秋暝": {
@@ -1540,11 +1540,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1026397
         }
     },
     "空山新雨后, 天气晚来秋.": {
@@ -1552,11 +1552,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1035266
         }
     },
     "明月松间照, 清泉石上流.": {
@@ -1564,11 +1564,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1044123
         }
     },
     "竹喧归浣女, 莲动下渔舟.": {
@@ -1576,11 +1576,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1053016
         }
     },
     "随意春芳歇, 王孙自可留.": {
@@ -1588,11 +1588,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1062007
         }
     },
     "师说": {
@@ -1600,11 +1600,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.107093
         }
     },
     "古之学者必有师.": {
@@ -1612,11 +1612,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1079836
         }
     },
     "师者, 所以传道受业解惑也.": {
@@ -1624,11 +1624,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.108877
         }
     },
     "人非生而知之者, 孰能无惑?": {
@@ -1636,11 +1636,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1097696
         }
     },
     "惑而不从师, 其为惑也, 终不解矣.": {
@@ -1648,11 +1648,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1106517
         }
     },
     "生乎吾前, 其闻道也固先乎吾, 吾从而师之;": {
@@ -1660,11 +1660,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.111523
         }
     },
     "生乎吾后, 其闻道也亦先乎吾, 吾从而师之.": {
@@ -1672,11 +1672,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.112409
         }
     },
     "吾师道也, 夫庸知其年之先后生于吾乎?": {
@@ -1684,11 +1684,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1132977
         }
     },
     "是故无贵无贱, 无长无少, 道之所存, 师之所存也.": {
@@ -1696,11 +1696,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1141808
         }
     },
     "嗟乎! 师道之不传也久矣! 欲人之无惑也难矣!": {
@@ -1708,11 +1708,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.115059
         }
     },
     "古之圣人, 其出人也远矣, 犹且从师而问焉;": {
@@ -1720,11 +1720,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1159356
         }
     },
     "今之众人, 其下圣人也亦远矣, 而耻学于师.": {
@@ -1732,11 +1732,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.116813
         }
     },
     "是故圣益圣, 愚益愚.": {
@@ -1744,11 +1744,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1177015
         }
     },
     "圣人之所以为圣, 愚人之所以为愚, 其皆出于此乎!": {
@@ -1756,11 +1756,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1185758
         }
     },
     "爱其子, 择师而教之; 于其身也, 则耻师焉, 惑矣.": {
@@ -1768,11 +1768,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1194518
         }
     },
     "彼童子之师, 授之书而习其句读者, 非吾所谓传其道解其惑者也.": {
@@ -1780,11 +1780,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.120329
         }
     },
     "句读之不知, 惑之不解, 或师焉, 或不焉, 小学而大遗, 吾未见其明也.": {
@@ -1792,11 +1792,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.12121
         }
     },
     "巫医乐师百工之人, 不耻相师.": {
@@ -1804,11 +1804,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1220849
         }
     },
     "士大夫之族, 曰师曰弟子云者, 则群聚而笑之.": {
@@ -1816,11 +1816,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1229665
         }
     },
     "问之, 则曰: “彼与彼年相若也, 道相似也.": {
@@ -1828,11 +1828,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.1238453
         }
     },
     "位卑则足羞, 官盛则近谀.”": {
@@ -1840,11 +1840,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.124723
         }
     },
     "呜呼! 师道之不复, 可知矣.": {
@@ -1852,11 +1852,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20577,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777886739.125607
         }
     },
     "巫医乐师百工之人, 君子不齿, 今其智乃反不能及, 其可怪也欤!": {
@@ -1864,23 +1864,23 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0340557
         }
     },
     "圣人无常师. 孔子师郯子、苌弘、师襄、老聃.": {
         "NSP-0": {
             "real_rept": 0,
-            "important": 0,
+            "important": 1,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": 1,
+            "last_date": 20578,
+            "next_date": 20579,
+            "is_activated": 1,
+            "last_modify": 1777938950.0348792
         }
     },
     "郯子之徒, 其贤不及孔子.": {
@@ -1888,11 +1888,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0353334
         }
     },
     "孔子曰: 三人行, 则必有我师.": {
@@ -1900,11 +1900,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.03615
         }
     },
     "是故弟子不必不如师, 师不必贤于弟子, 闻道有先后, 术业有专攻, 如是而已.": {
@@ -1912,11 +1912,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0369658
         }
     },
     "李氏子蟠, 年十七, 好古文, 六艺经传皆通习之, 不拘于时, 学于余.": {
@@ -1924,11 +1924,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0377731
         }
     },
     "余嘉其能行古道, 作《师说》以贻之.": {
@@ -1936,11 +1936,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0385973
         }
     },
     "归去来兮辞": {
@@ -1948,11 +1948,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.039485
         }
     },
     "归去来兮, 田园将芜胡不归?": {
@@ -1960,11 +1960,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.040328
         }
     },
     "既自以心为形役, 奚惆怅而独悲?": {
@@ -1972,11 +1972,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0411494
         }
     },
     "悟已往之不谏, 知来者之可追.": {
@@ -1984,11 +1984,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0419598
         }
     },
     "实迷途其未远, 觉今是而昨非.": {
@@ -1996,11 +1996,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0427594
         }
     },
     "舟遥遥以轻飏, 风飘飘而吹衣.": {
@@ -2008,23 +2008,23 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.043582
         }
     },
     "问征夫以前路, 恨晨光之熹微.": {
         "NSP-0": {
             "real_rept": 0,
-            "important": 0,
+            "important": 1,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": 1,
+            "last_date": 20578,
+            "next_date": 20579,
+            "is_activated": 1,
+            "last_modify": 1777938950.0443935
         }
     },
     "乃瞻衡宇, 载欣载奔.": {
@@ -2032,11 +2032,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0448318
         }
     },
     "僮仆欢迎, 稚子候门.": {
@@ -2044,11 +2044,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0456398
         }
     },
     "三径就荒, 松菊犹存.": {
@@ -2056,11 +2056,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0464475
         }
     },
     "携幼入室, 有酒盈樽.": {
@@ -2068,11 +2068,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0472815
         }
     },
     "引壶觞以自酌, 眄庭柯以怡颜.": {
@@ -2080,11 +2080,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0480993
         }
     },
     "倚南窗以寄傲, 审容膝之易安.": {
@@ -2092,11 +2092,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0489156
         }
     },
     "园日涉以成趣, 门虽设而常关.": {
@@ -2104,11 +2104,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0497541
         }
     },
     "策扶老以流憩, 时矫首而遐观.": {
@@ -2116,11 +2116,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0621138
         }
     },
     "云无心以出岫, 鸟倦飞而知还.": {
@@ -2128,11 +2128,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0514085
         }
     },
     "景翳翳以将入, 抚孤松而盘桓.": {
@@ -2140,11 +2140,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0522354
         }
     },
     "归去来兮, 请息交以绝游.": {
@@ -2152,11 +2152,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.053065
         }
     },
     "世与我而相违, 复驾言兮焉求?": {
@@ -2164,11 +2164,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0538673
         }
     },
     "悦亲戚之情话, 乐琴书以消忧.": {
@@ -2176,11 +2176,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0546837
         }
     },
     "农人告余以春及, 将有事于西畴.": {
@@ -2188,11 +2188,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0554926
         }
     },
     "或命巾车, 或棹孤舟.": {
@@ -2200,11 +2200,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0562994
         }
     },
     "既窈窕以寻壑, 亦崎岖而经丘.": {
@@ -2212,11 +2212,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0629177
         }
     },
     "木欣欣以向荣, 泉涓涓而始流.": {
@@ -2224,11 +2224,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0579095
         }
     },
     "善万物之得时, 感吾生之行休.": {
@@ -2236,11 +2236,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.058717
         }
     },
     "已矣乎!  寓形宇内复几时?": {
@@ -2248,11 +2248,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0595295
         }
     },
     "曷不委心任去留?": {
@@ -2260,11 +2260,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.060347
         }
     },
     "胡为乎遑遑欲何之?": {
@@ -2272,11 +2272,11 @@
             "real_rept": 0,
             "important": 0,
             "rept": 0,
-            "interval": 0,
-            "last_date": 0,
-            "next_date": 0,
-            "is_activated": 0,
-            "last_modify": 1777751808.8809566
+            "interval": Infinity,
+            "last_date": 20578,
+            "next_date": Infinity,
+            "is_activated": 1,
+            "last_modify": 1777938950.0612867
         }
     },
     "富贵非吾愿, 帝乡不可期.": {

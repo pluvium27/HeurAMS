@@ -2,13 +2,13 @@
     "临安春雨初霁": {
         "SM-2": {
             "efactor": 2.5,
-            "real_rept": 2,
-            "rept": 0,
-            "interval": 1,
-            "last_date": 20573,
-            "next_date": 20574,
+            "real_rept": 4,
+            "rept": 2,
+            "interval": 15,
+            "last_date": 20578,
+            "next_date": 20593,
             "is_activated": 1,
-            "last_modify": 1777521623.7446923
+            "last_modify": 1777940498.2121851
         }
     }
 }
