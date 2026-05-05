@@ -112,7 +112,7 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ 
 
 ### 项目本身
 
-本项目基于 AGPL-3.0 许可证开放源代码.  
+本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款.  
 详见根目录下 [LICENSE](LICENSE) 文件.  
 
 ### 第三方代码
