@@ -1,6 +1,6 @@
-# 截图展示
+# 用户界面屏幕截图
 
-潜进 (HeurAMS) 项目目前有两个前端实现, 此文档用于呈现它们的截图: 
+潜进 (HeurAMS) 项目目前有两个前端实现, 此文档用于呈现它们的截图 (尽量与最新版本同步):  
 
 - Textual 基本用户界面 (heurams.interface): 基于 Python Textual 框架构建的程序库内置跨平台 TUI 界面, 支持触屏、鼠标、键盘多操作模式, 是当前开箱即用的默认前端.
 - KiriMemo (org.kde.kirimemo): 基于 KDE Kirigami 框架的现代跨平台前端, 使用 C++ 和 QML 构建, 通过 `PyOtherSide` 直接复用 Python 内核, 为多种平台提供原生体验 (尚未稳定).
@@ -9,6 +9,10 @@
 详见[贡献指南](CONTRIBUTING.md#新的用户界面前端).
 
 ## 基本用户界面前端的截图
+
+> 截图所使用的终端模拟器为 KDE Konsole  
+> 字体为 Cascadia Code 和 Noto Sans SC  
+> 终端尺寸设置为 80x25 (软件也支持更大的终端尺寸)  
 
 ### 仪表盘与导航器
 

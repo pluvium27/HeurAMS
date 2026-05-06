@@ -5,7 +5,7 @@
 "潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,  
 也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.
 
-## 项目结构
+## 关于此仓库
 
 此仓库为 "潜进" 的核心程序库在 python 语言下的实现  
 包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)  
@@ -36,25 +36,28 @@
 
 - 人类可读: 您可以用任意工具, 乃至一个记事本自由修改记忆载荷数据而无需打开软件
 - 元数据配置: 配置自由度极高, 可以任意组合, 重造, 乃至创造新内容
-- 测验, 算法与知识互相隔离: 一条知识不再是单一的闪卡, 不仅可以用若干不同的算法规划, 还可以用多种并行的谜题类型测验, 极大地提升您的学习效果和丰富度. 作为学习者, 您无需担忧概念复杂--仅需从云端下载单元集即可开箱即用上述特性!
+- 测验, 算法与知识互相隔离: 一条知识不再是单一的闪卡, 不仅可以用若干不同的算法规划, 还可以用多种并行的谜题类型测验, 极大地提升学习效果和丰富度. 作为学习者, 您无需担忧概念复杂--仅需从云端下载单元集即可开箱即用上述特性!
 - 多模态学习
   - 软件自身集成了文本转语音 (TTS) , 音频与语言模型 (LLM) 模块, 这些功能乃至功能本身都是可插拔, 可扩展, 可切换驱动的, 这为内容创建了极大的丰富度
-  - 软件内置多种谜题类型, 包括选择题 (MCQ), 填空题 (Cloze) 与识别题 (Recognition), 您可在同一单元应用多种, 或是选择启用
+  - 软件内置多种谜题类型, 包括选择题 (MCQ), 填空题 (Cloze) 与识别题 (Recognition), 您可在同一单元应用多种, 或是选择性启用
   - 软件天然支持动态内容生成, 支持宏驱动的模板系统, 根据上下文乃至语言模型动态生成知识点的解析
   - 在间隔重复研究尚被 SuperMemo 系列独占的时代, Wozniak 就早已表示 "如果不能理解知识, 就无需记忆它". 今天, 我们依然相信理解是记忆的基石
-- 云同步与分享优化: 由于我们的记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持分享内容的版本控制, 如果您想分享单文件, 我们也支持导出为压缩包或合并单文本文件以通过纯文本文件形式在 pastebin 等平台分享
+- 云同步与分享优化:
+  - 由于记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持版本控制
+  - 如果您想分享单文件, 软件也支持导出为压缩包或合并成单文本文件以通过纯文本文件形式在 pastebin 等平台分享
 - 性能提升: 得益于现代且支持分块的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
-- AI 友好: 想象您有一些 .apkg 牌组或一大段教材内容, 您可以方便且高效率地使用 AI 工具生成可在 HeurAMS 使用的单元集
+- AI 辅助友好: 想象您有一些 .apkg 牌组或一大段教材内容, 您可以方便且高效率地使用 AI 工具创建可在 HeurAMS 使用的单元集
 
 ### 内置实用用户界面
 
-尽管内置界面不是唯一前端, 但它在多种场景下仍具有独特优势
+尽管不是唯一前端, 但响应式 Textual 框架构建的内置终端用户界面在多种场景下仍具有独特优势:
 
-- 响应式 Textual 框架构建的跨平台 TUI 界面
-- 支持触屏/鼠标/键盘多操作模式
-- 简洁直观的复习流程设计
+- 跨平台, 并支持触屏/鼠标/键盘多操作模式
 - 与几乎所有现代终端模拟器相容
-- 对于支持 sixel 的终端模拟器, 可支持显示图像内容
+- 对于[支持 sixel 协议的终端模拟器](https://www.arewesixelyet.com/), 可显示图像内容
+- 可通过 textual-web 作为服务部署, 并在任意浏览器使用
+- 简洁直观, 键盘友好, 且高效率的用户界面设计
+- 便于测试与调试程序库
 
 [查看屏幕截图](SCREENSHOTS.md)
 
@@ -62,32 +65,36 @@
 
 ### 从包管理器安装
 
-潜进(heurams) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本.
+潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本.
 
 #### 稳定版本
 
+安装适用于用户体验的可选依赖(推荐):
 ```
-python -m pip install heurams[basic] -i https://pypi.pluv27.top/root/stable/+simple/ # 安装适用于用户体验的可选依赖(推荐)
+python -m pip install heurams[basic] -i https://pypi.pluv27.top/root/stable/+simple/
 ```
+安装适用于一般计算机的通用音频模块(基于 playsound3):  
+(此项不适用于 termux 环境, termux 的音频支持是内建的)
 ```
-python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/stable/+simple/ # 安装适用于一般计算机的通用音频模块(不适用于 termux, termux 的音频支持是内建的)
+python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/stable/+simple/ 
 ```
 
 #### 开发版本
 
 > [!CAUTION]
 > 对于部分 Linux 发行版和 Android Termux 用户:  
-> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖  
-> 例如在 termux 上先运行 `pkg install cmake clang libzmq`  
-> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器  
+> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖.  
+> 例如在 termux 上先运行 `pkg install cmake clang libzmq`.  
+> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器.  
 
+安装全部可选依赖(推荐):
 ```
-python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ # 安装全部可选依赖(推荐)
+python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 ```
 
 #### 依赖组说明
 
-由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面提供的命令会安装所有可选依赖, 以下是依赖组列表
+由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面提供的命令会安装部分可选依赖, 以下是依赖组列表:
 
 | 依赖组 | 包含模块 | 说明 |
 |--------|----------|------|
@@ -95,8 +102,8 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ 
 | interface | textual, psutil | 基本用户界面依赖 |
 | algo-fsrs | py-fsrs | FSRS 算法模块 |
 | tts-edgetts | edge-tts | 微软文本转语音 |
-| llm | openai | OpenAI API 调用 |
-| audio-playsound | playsound, pygobject | 通用音频播放及依赖 |
+| llm | openai | OpenAI 式 API 调用 |
+| audio-playsound | playsound3 | 通用音频模块 |
 | dev | zmq, pytest, pytest-cov | 开发调试与测试工具 |
 | basic | [tts-edgetts], [llm-openai], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
 | all | 以上所有依赖 | 完整安装组 |
@@ -106,7 +113,7 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/ 
 我们提供原生 python 和 uv 两种安装方式.  
 详见[贡献指南](CONTRIBUTING.md).
 
-## 项目结构
+## 项目架构
 
 详见[架构说明](ARCHITECTURE.md).
 
