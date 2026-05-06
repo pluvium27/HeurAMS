@@ -13,7 +13,7 @@
 
 > [!NOTE]
 > 我们已经着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目  
-> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android 和 Plasma Mobile 提供现代用户界面  
+> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android, iOS 和 Plasma Mobile 提供现代用户界面  
 > 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发  
 
 ## 特性
@@ -44,6 +44,7 @@
   - 在间隔重复研究尚被 SuperMemo 系列独占的时代, Wozniak 就早已表示 "如果不能理解知识, 就无需记忆它". 今天, 我们依然相信理解是记忆的基石
 - 云同步与分享优化: 由于我们的记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持分享内容的版本控制, 如果您想分享单文件, 我们也支持导出为压缩包或合并单文本文件以通过纯文本文件形式在 pastebin 等平台分享
 - 性能提升: 得益于现代且支持分块的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
+- AI 友好: 想象您有一些 .apkg 牌组或一大段教材内容, 您可以方便且高效率地使用 AI 工具生成可在 HeurAMS 使用的单元集
 
 ### 实用用户界面
 

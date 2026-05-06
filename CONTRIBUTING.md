@@ -4,7 +4,7 @@
 
 > [!NOTE]
 > 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目  
-> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android 和 Plasma Mobile 提供现代用户界面
+> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android, iOS 和 Plasma Mobile 提供现代用户界面
 > 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发
 
 ## 开发规范
@@ -86,11 +86,10 @@ python3 -m heurams.interface # 启动 TUI
 
 贡献者拥有其贡献部分的版权同意其贡献将在 AGPL-3.0 许可证(包括附加的本机 API 调用豁免条款)下发布.
 
-如果您认为有必要引入其他开源的 vendor, 请在 PR 中注明或手动联系以便我们审查 vendor 许可证并更改此处和网站上的关于与版权声明
-
-如果您认为有必要引入其他专有的网络服务(就像现在项目中的 edgetts), 请也在 PR 中注明
-
-如果您认为有必要升级某个依赖或运行环境的版本, 请也在 PR 中注明
+如有以下情况, 请在 PR 描述中注明:
+- 如果需要引入其他开源 vendor
+- 如果需要引入其他专有的网络服务(例如当前项目中的 edgetts)
+- 如果需要升级某个依赖或运行环境的版本
 
 ## 新的用户界面前端
 

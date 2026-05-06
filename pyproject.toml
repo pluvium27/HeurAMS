@@ -14,6 +14,7 @@ license-files = ["LICENSE"]
 
 dependencies = [ # 这些依赖只能驱动 kernel 程序库
     "tabulate>=0.10.0",
+    "textual>=8.2.5",
     "toml>=0.10.2",
     "transitions>=0.9.3",
 ]
@@ -48,6 +49,10 @@ basic = ["heurams[algo-fsrs]", "heurams[tts-edgetts]", "heurams[llm]"]
 [project.urls]
 Homepage = "https://ams.pluv.top"
 Issues = "https://github.com/heurams/heurams/issues"
+
+[[tool.uv.index]]
+url = "https://mirrors.ustc.edu.cn/pypi/simple"
+default = true
 
 [project.scripts]
 heurams = "heurams.__main__:main"

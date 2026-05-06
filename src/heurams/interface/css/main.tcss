@@ -23,3 +23,14 @@ NavigatorScreen {
     width: 8;
     padding: 0;
 }
+
+.memoqueue-container {
+    padding: 1 2;
+    width: auto;
+}
+
+.memoqueue-container > * {
+    border: heavy $secondary;
+    width: 1fr;
+    padding: 0 1 0 1;
+}

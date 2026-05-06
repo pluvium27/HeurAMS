@@ -50,36 +50,32 @@ class AboutScreen(Screen):
             memory_info = self._get_memory_info()
 
             about_text = f"""
-# 关于 "潜进"  
+# 关于 HeurAMS "潜进"  
 
 主程序库版本: `{version.ver}-python`  
 用户界面分支: `Textual TUI (基本用户界面)`  
 用户界面版本: `{version.ver}`  
 API 版本代号: `{version.codename.capitalize()}`
 
-一个基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
-一个开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  
+> 一个基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
+> 一个开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  
 
-您正使用的 TUI 用户界面是 python 版本程序库自带的基本用户界面, 以作为第一个全功能前端实现与程序库测试套件, 位于程序库下 interface 目录.  
+您可在项目主页 https://ams.pluv27.top 获取用户指南, 开发文档与软件更新, 并参与到软件的开发与改进工作.  
 
-您可在项目主页 https://ams.pluv27.top 获取用户指南, 开发文档与软件更新.  
+以 GNU Affero 通用公共许可证 (第3版) 开放源代码, 并有一条豁免本机 API 调用的附加条款, 用于其他前端到程序库的接口调用.  
 
-以 GNU Affero 通用公共许可证 (第3版) 开放源代码.  
+您正使用程序库内置的终端用户界面, 它是第一个全功能前端实现与程序库测试套件, 位于程序库的 interface 子目录.  
 
-如果您觉得这个软件有用, 可以考虑参与贡献, 或在它的源代码仓库给它添加一个星标 :)  
+开发人员列表:
 
-您的慷慨支持, 我们必当涌泉相报.  
+- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): 项目发起与主要开发者  
 
-开发人员列表:  
-
-- Wang Zhiyu([@pluvium27](https://github.com/pluvium27)): 发起项目与主要维护者  
-
-特别感谢以下人士, 他们的算法与理论构成了此软件现有算法的基石:  
+感谢以下人士与团体, 他们的算法与理论构成了此软件现有算法的基石:  
 
 - [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论
-- [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 实现
-- [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 中文文献参考
-
+- [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 逆向实现
+- [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 间隔重复文献参考
+- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS 算法底层实现
 
 # 运行环境信息
 
@@ -89,7 +85,7 @@ Textual 框架版本: {textual_version}
 终端模拟器: {terminal_info}  
 操作系统版本: {os_version}  
 存储余量: {disk_usage}  
-内存大小: {memory_info}  
+内存总量: {memory_info}  
 
 报告问题时, 请复制这些信息到问题描述, 并上传软件日志 `heurams.log` 作为附件, 以协助开发者定位错误  
 """

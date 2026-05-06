@@ -74,7 +74,7 @@ class MemScreen(Screen):
             yield Header(
                 show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
             )
-        with ScrollableContainer():
+        with ScrollableContainer(classes="memoqueue-container"):
             yield Label(self._get_progress_text(), id="head_stat")
             yield ScrollableContainer(id="puzzle_container")
         yield Footer()
@@ -105,12 +105,13 @@ class MemScreen(Screen):
             return Static(f"无法生成谜题 {e}")
 
     def _get_progress_text(self):
-        s = f"阶段: {self.procession.route.name}\n"
-        # 收藏状态
+        s = ""
         if self.repo is not None:
             fav_status = "已收藏" if self._is_current_atom_favorited() else "未收藏"
-            s += f"收藏: {fav_status}\n"
-        s += f"进度: {self.procession.process() + 1}/{self.procession.total_length()}"
+            s += f"[{fav_status}] "
+        s += f"[{self.procession.process() + 1}/{self.procession.total_length()}] \[{self.procession.route.name}]\n"
+        if self.procession.cursor - 1 >= 0:
+            s += f"上一个: [d]{self.procession.atoms[self.procession.cursor - 1]['ident']}[/d]"
         return s
 
     def update_display(self):
