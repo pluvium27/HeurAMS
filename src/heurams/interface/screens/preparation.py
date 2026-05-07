@@ -1,15 +1,26 @@
-#!/usr/bin/env python3
+"""记忆准备界面"""
+
 from textual.app import ComposeResult
-from textual.containers import ScrollableContainer
-from textual.reactive import reactive
+from textual.containers import ScrollableContainer, Horizontal
 from textual.screen import Screen
-from textual.widget import Widget
-from textual.widgets import Button, Footer, Header, Label, Markdown, Static
+from textual.widgets import (
+    Button,
+    Footer,
+    Header,
+    Label,
+    Markdown,
+    Static,
+    Sparkline,
+)
+from textual.lazy import Reveal
+
+from textual import events, on
 
 import heurams.kernel.particles as pt
-import heurams.services.hasher as hasher
 from heurams.context import *
 from heurams.context import config_var
+from heurams.kernel.repolib import *
+from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
@@ -21,48 +32,71 @@ class PreparationScreen(Screen):
 
     BINDINGS = [
         ("q", "go_back", "返回"),
-        ("p", "precache", "预缓存音频"),
+        ("p", "precache", "缓存"),
         ("d", "toggle_dark", ""),
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
 
-    scheduled_num = reactive(config_var.get()["scheduled_num"])
+    CSS_PATH = rootdir / "interface" / "css" / "screens" / "preparation.tcss"
 
-    def __init__(self, nucleon_file: pathlib.Path, electron_file: pathlib.Path) -> None:
+    def __init__(self, repo: Repo) -> None:
         super().__init__(name=None, id=None, classes=None)
-        self.nucleon_file = nucleon_file
-        self.electron_file = electron_file
-        self.nucleons_with_orbital = pt.load_nucleon(self.nucleon_file)
-        self.electrons = pt.load_electron(self.electron_file)
+        self.repo = repo
+        self.load_data()
+
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
-        with ScrollableContainer(id="vice_container"):
-            yield Label(f"准备就绪: [b]{self.nucleon_file.stem}[/b]\n")
-            yield Label(
-                f"内容源文件: {config_var.get()['paths']['nucleon_dir']}/[b]{self.nucleon_file.name}[/b]"
-            )
-            yield Label(
-                f"元数据文件: {config_var.get()['paths']['electron_dir']}/[b]{self.electron_file.name}[/b]"
-            )
-            yield Label(f"\n单元数量: {len(self.nucleons_with_orbital)}\n")
-            yield Label(f"单次记忆数量: {self.scheduled_num}", id="schnum_label")
+        from heurams.services.attic import Attic
 
-            yield Button(
-                "开始记忆",
-                id="start_memorizing_button",
-                variant="primary",
-                classes="start-button",
+        a = Attic("ana", {"openpre": 0})
+        a.data["openpre"] += 1
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
             )
-            yield Button(
-                "预缓存音频",
-                id="precache_button",
-                variant="success",
-                classes="precache-button",
+        with ScrollableContainer(id="main_container"):
+            yield Markdown(
+                f"**准备就绪**: `{self.repo.manifest['title']}`\n", id="title"
+            )
+            yield Label(f"单元集路径: {self.repo.source}")
+            yield Label(
+                f"学习完成度: {self.repo.progress['touched']}/{len(self.repo)} [d]\\[{round(self.repo.progress['touched']/self.repo.progress['total']*100, 1)}%][/d]"
+            )
+            yield Label(
+                f"调度算法: {self.repo.config["algorithm"]} {algorithms[self.repo.config["algorithm"]].desc}"
+            )
+            yield Label(
+                f"学习数量: {self.repo.preview['review'] + self.scheduled_num} = {self.repo.preview['review']} [d][复习][/d] + {self.scheduled_num} [d][新识记][/d]\n",
+                id="schnum_label",
             )
 
-            yield Static(f"\n单元预览:\n")
-            yield Markdown(self._get_full_content().replace("/", ""), classes="full")
+            yield Horizontal(
+                Button(
+                    "开始记忆",
+                    id="start_memorizing_button",
+                    variant="primary",
+                    classes="btn",
+                ),
+                Button(
+                    "管理缓存",
+                    id="precache_button",
+                    variant="success",
+                    classes="btn",
+                ),
+                id="operations",
+            )
+
+            yield Static()
+            yield Sparkline(self.spark_line_arr, summary_function=max)
+            # yield Static(str(self.spark_line_arr))
+            with Reveal(ScrollableContainer(id="previewer_container")):
+                for i in self.content.splitlines():
+                    yield Static(i, classes="unit-statline")
         yield Footer()
 
     # def watch_scheduled_num(self, old_scheduled_num, new_scheduled_num):
@@ -73,13 +107,31 @@ class PreparationScreen(Screen):
     #    except:
     #        pass
 
-    def _get_full_content(self):
+    def load_data(self):
+        self.scheduled_num = self.repo.config["scheduled_num"]
         content = ""
-        for nucleon, orbital in self.nucleons_with_orbital:
-            nucleon: pt.Nucleon
-            # print(nucleon.payload)
-            content += " - " + nucleon["content"] + "  \n"
-        return content
+        spark_line_arr = []
+        for i in self.repo.ident_index:
+            n = pt.Nucleon.from_data(
+                nucleonic_data=self.repo.nucleonic_data_lict.get_itemic_unit(i)
+            )
+            e = pt.Electron.from_data(
+                electronic_data=self.repo.electronic_data_lict.get_itemic_unit(i),
+                algo_name=self.repo.config["algorithm"],
+            )
+            statstr = ""
+
+            if e.is_activated():
+                statstr = "[#00ff00]A[/]"
+                if e.is_due():
+                    statstr = "[#ffff00]R[/]"
+                # statstr += ('[dim]' + str(e.rept(real_rept=True)).zfill(2)+'[/]')
+            else:
+                statstr = "[#ff0000]U[/]"
+            spark_line_arr.append(e.rept(real_rept=True))
+            content += f" {statstr} {n['content'].replace('/', '')}  \n"
+        self.content = content
+        self.spark_line_arr = spark_line_arr
 
     def action_go_back(self):
         self.app.pop_screen()
@@ -88,9 +140,13 @@ class PreparationScreen(Screen):
         from ..screens.precache import PrecachingScreen
 
         lst = list()
-        for i in self.nucleons_with_orbital:
-            lst.append(i[0])
-        precache_screen = PrecachingScreen(lst)
+        for i in self.repo.ident_index:
+            lst.append(
+                pt.Nucleon.from_data(self.repo.nucleonic_data_lict.get_itemic_unit(i))
+            )
+        precache_screen = PrecachingScreen(
+            nucleons=lst, desc=self.repo.manifest["title"]
+        )
         self.app.push_screen(precache_screen)
 
     def action_quit_app(self):
@@ -100,39 +156,42 @@ class PreparationScreen(Screen):
         event.stop()
         logger.debug("按下按钮")
         if event.button.id == "start_memorizing_button":
-            atoms = list()
-            for nucleon, orbital in self.nucleons_with_orbital:
-                atom = pt.Atom(nucleon.ident)
-                atom.link("nucleon", nucleon)
-                try:
-                    atom.link("electron", self.electrons[nucleon.ident])
-                except KeyError:
-                    atom.link("electron", pt.Electron(nucleon.ident))
-                atom.link("orbital", orbital)
-                atom.link("nucleon_fmt", "toml")
-                atom.link("electron_fmt", "json")
-                atom.link("orbital_fmt", "toml")
-                atom.link("nucleon_path", self.nucleon_file)
-                atom.link("electron_path", self.electron_file)
-                atom.link("orbital_path", None)
-                atoms.append(atom)
-            atoms_to_provide = list()
-            left_new = self.scheduled_num
-            for i in atoms:
-                i: pt.Atom
-                if i.registry["electron"].is_due():
-                    atoms_to_provide.append(i)
-                else:
-                    if i.registry["electron"].is_activated():
-                        pass
-                    else:
-                        left_new -= 1
-                        if left_new >= 0:
-                            atoms_to_provide.append(i)
-            logger.debug(f"ATP: {atoms_to_provide}")
-            from .memorizor import MemScreen
+            launch(repo=self.repo, app=self.app, scheduled_num=self.scheduled_num)
 
-            memscreen = MemScreen(atoms_to_provide)
-            self.app.push_screen(memscreen)
         elif event.button.id == "precache_button":
             self.action_precache()
+
+
+def launch(repo, app, scheduled_num):
+    if scheduled_num == -1:
+        scheduled_num = config_var.get()["interface"]["global"]["scheduled_num"]
+    atoms = list()
+    for i in repo.ident_index:
+        n = pt.Nucleon.from_data(
+            nucleonic_data=repo.nucleonic_data_lict.get_itemic_unit(i)
+        )
+        e = pt.Electron.from_data(
+            electronic_data=repo.electronic_data_lict.get_itemic_unit(i),
+            algo_name=repo.config["algorithm"],
+        )
+        a = pt.Atom(n, e, repo.orbitic_data)
+        atoms.append(a)
+
+    atoms_to_provide = list()
+    left_new = scheduled_num
+    for i in atoms:
+        i: pt.Atom
+        if i.registry["electron"].is_activated():
+            if i.registry["electron"].is_due():
+                atoms_to_provide.append(i)
+        else:
+            left_new -= 1
+            if left_new >= 0:
+                atoms_to_provide.append(i)
+    import heurams.kernel.reactor as rt
+
+    from .memoqueue import MemScreen
+
+    router = rt.Router(atoms_to_provide)
+    memscreen = MemScreen(router=router, repo=repo)
+    app.push_screen(memscreen)

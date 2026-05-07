@@ -1,0 +1,7 @@
+provider = "edgetts"
+_provider_desc = "文本转语音驱动类型"
+
+[_provider_candidate]
+edgetts = "微软神经网络语音合成, 依赖微软网络服务"
+espeak = "低保真度本地语音合成"
+none = "不使用文本转语音"

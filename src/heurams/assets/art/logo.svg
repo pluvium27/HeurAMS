@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 554.4 554.4" version="1.1">
+  <defs>
+    <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+  </defs>
+  <title>HeurAMS Logo</title>
+  <desc>The logo of the HeurAMS Project</desc>
+  <g id="figure_1">
+    <g id="patch_1">
+      <path d="M 0 554.4 L 554.4 554.4 L 554.4 0 L 0 0 L 0 554.4 z" style="fill: none"/>
+    </g>
+    <g id="axes_1">
+      <g id="patch_2">
+        <path d="M 66.528 487.872 L 199.584 487.872 L 199.584 354.816 L 66.528 354.816 z" clip-path="url(#p4da876c7a0)" style="fill: #1660a5; stroke: #1660a5; stroke-linejoin: miter"/>
+      </g>
+      <g id="patch_3">
+        <path d="M 199.584 354.816 L 487.872 354.816 L 487.872 66.528 L 199.584 66.528 z" clip-path="url(#p4da876c7a0)" style="fill: #545f70; stroke: #545f70; stroke-linejoin: miter"/>
+      </g>
+    </g>
+  </g>
+  <defs>
+    <clipPath id="p4da876c7a0">
+      <rect x="0" y="0" width="554.4" height="554.4"/>
+    </clipPath>
+  </defs>
+</svg>

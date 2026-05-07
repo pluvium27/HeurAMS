@@ -1,0 +1,8 @@
+#puzzle_container > * {
+    height: auto;
+    width: auto;
+}
+
+.hori {
+    height: auto;
+}

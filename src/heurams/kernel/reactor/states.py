@@ -1,11 +1,11 @@
-from enum import Enum, auto
+from enum import Enum
 
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-class PhaserState(Enum):
+class RouterState(Enum):
     UNSURE = "unsure"
     QUICK_REVIEW = "quick_review"
     RECOGNITION = "recognition"
@@ -14,8 +14,13 @@ class PhaserState(Enum):
 
 
 class ProcessionState(Enum):
-    RUNNING = auto()
-    FINISHED = auto()
+    ACTIVE = "active"
+    FINISHED = "finished"
+
+
+class ExpanderState(Enum):
+    EXAMMODE = "exammode"
+    RETRONLY = "retronly"
 
 
 logger.debug("状态枚举定义已加载")

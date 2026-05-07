@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
+"""同步工具界面"""
+
 import pathlib
 import time
 
 from textual.app import ComposeResult
 from textual.containers import Horizontal, ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, ProgressBar, Static
+from textual.widgets import Button, Footer, Header, ProgressBar, Static
 from textual.worker import get_current_worker
 
-import heurams.kernel.particles as pt
-import heurams.services.hasher as hasher
+from textual import events, on
+
 from heurams.context import *
 
 
@@ -25,8 +26,18 @@ class SyncScreen(Screen):
         self.log_messages = []
         self.max_log_lines = 50
 
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
+
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
+
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer(id="sync_container"):
             # 标题和连接状态
             yield Static("同步工具", classes="title")
@@ -119,7 +130,7 @@ class SyncScreen(Screen):
             log_widget = self.query_one("#log_output")
             log_widget.update("\n".join(self.log_messages))  # type: ignore
         except Exception:
-            pass  # 如果组件未就绪，忽略错误
+            pass  # 如果组件未就绪, 忽略错误
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """处理按钮点击事件"""
@@ -139,7 +150,7 @@ class SyncScreen(Screen):
     def test_connection(self):
         """测试 WebDAV 服务器连接"""
         if not self.sync_service:
-            self.log_message("同步服务未初始化，请检查配置", is_error=True)
+            self.log_message("同步服务未初始化, 请检查配置", is_error=True)
             self.update_status("❌ 同步服务未初始化")
             return
 
@@ -161,7 +172,7 @@ class SyncScreen(Screen):
     def start_sync(self):
         """开始同步"""
         if not self.sync_service:
-            self.log_message("同步服务未初始化，无法开始同步", is_error=True)
+            self.log_message("同步服务未初始化, 无法开始同步", is_error=True)
             return
 
         if self.is_syncing:

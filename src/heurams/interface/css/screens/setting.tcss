@@ -1,0 +1,23 @@
+.foot {
+    align-vertical: bottom;
+}
+
+.setting-switch {
+    dock: right;
+}
+
+Select {
+    width: 55%;
+    dock: right;
+}
+
+Input {
+    width: 55%;
+    dock: right;
+}
+
+.setting-item {
+    width: 100%;
+    height: 4;
+    padding: 0 0 1 0;
+}

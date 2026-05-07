@@ -1,0 +1,36 @@
+NavigatorScreen {
+    align: center middle;
+}
+
+
+#dialog {
+    grid-size: 2;
+    grid-gutter: 1 1;
+    grid-rows: 1fr 3;
+    padding: 0 1;
+    width: 46;
+    height: 12;
+    border: thick $background 80%;
+    background: $surface;
+}
+
+.favorite-item {
+    height: auto;
+}
+
+.favorite-item-btn {
+    dock: right;
+    width: 8;
+    padding: 0;
+}
+
+.memoqueue-container {
+    padding: 1 2;
+    width: auto;
+}
+
+.memoqueue-container > * {
+    border: heavy $secondary;
+    width: 1fr;
+    padding: 0 1 0 1;
+}

@@ -10,6 +10,7 @@ logger = get_logger(__name__)
 
 class SM2Algorithm(BaseAlgorithm):
     algo_name = "SM-2"
+    desc = "SuperMemo2 (1987) 简单间隔重复调度器"
 
     class AlgodataDict(TypedDict):
         efactor: float
@@ -116,7 +117,7 @@ class SM2Algorithm(BaseAlgorithm):
         return result
 
     @classmethod
-    def rate(cls, algodata):
+    def get_rating(cls, algodata):
         efactor = algodata[cls.algo_name]["efactor"]
         logger.debug("SM2.rate: efactor=%f", efactor)
         return str(efactor)

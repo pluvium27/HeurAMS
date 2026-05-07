@@ -1,29 +1,21 @@
-"""
-Particle 模块 - 粒子对象系统
-
-提供闪卡所需对象, 使用物理学粒子的领域驱动设计
-"""
-
-from heurams.services.logger import get_logger
-
-logger = get_logger(__name__)
-logger.debug("粒子模块已加载")
-
-from .atom import Atom, atom_registry
+from .atom import Atom
 from .electron import Electron
-from .loader import load_electron, load_nucleon
 from .nucleon import Nucleon
-from .orbital import Orbital
-from .probe import probe_all, probe_by_filename
+from .placeholders import (
+    AtomPlaceholder,
+    ElectronPlaceholder,
+    NucleonPlaceholder,
+    orbital_placeholder,
+)
+
+# from .orbital import Orbital
 
 __all__ = [
+    "Atom",
     "Electron",
     "Nucleon",
-    "Orbital",
-    "Atom",
-    "probe_all",
-    "probe_by_filename",
-    "load_nucleon",
-    "load_electron",
-    "atom_registry",
+    "AtomPlaceholder",
+    "NucleonPlaceholder",
+    "ElectronPlaceholder",
+    "orbital_placeholder",
 ]

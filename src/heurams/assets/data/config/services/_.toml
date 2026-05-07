@@ -1,0 +1,5 @@
+_audio_desc = '音频服务'
+_llm_desc = '语言模型服务'
+_sync_desc = '数据同步服务'
+_timer_desc = '时间服务'
+_tts_desc = '文本转语音服务'

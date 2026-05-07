@@ -1,0 +1,2 @@
+class WTFException(Exception):
+    pass

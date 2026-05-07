@@ -1,7 +1,7 @@
 # 单项选择题
 from typing import TypedDict
 
-from textual.containers import Container, ScrollableContainer
+from textual.containers import ScrollableContainer
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
@@ -9,7 +9,7 @@ import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
 from heurams.services.hasher import hash
 from heurams.services.logger import get_logger
-
+from textual.events import Key
 from .base_puzzle_widget import BasePuzzleWidget
 
 logger = get_logger(__name__)
@@ -51,40 +51,49 @@ class MCQPuzzle(BasePuzzleWidget):
         self.hashmap = dict()
         self.cursor = 0
         self.atom = atom
+        self.btn_shortcuts = {}
         self._load()
 
     def _load(self):
-        cfg = self.atom.registry["orbital"]["puzzles"][self.alia]
+        cfg = self.atom.registry["nucleon"]["puzzles"][self.alia]
+        if cfg["mapping"] == {}:
+            self.screen.rating = 5  # type: ignore
         self.puzzle = pz.MCQPuzzle(
             cfg["mapping"], cfg["jammer"], int(cfg["max_riddles_num"]), cfg["prefix"]
         )
         self.puzzle.refresh()
 
     def compose(self):
-        setting: Setting = self.atom.registry["nucleon"].metadata["orbital"]["puzzles"][
-            self.alia
-        ]
-        logger.debug(f"Puzzle Setting: {setting}")
-        logger.debug(f"WIRED INDEX: {len(self.inputlist)}")
+        setting: Setting = self.atom.registry["nucleon"]["puzzles"][self.alia]
         if len(self.inputlist) > len(self.puzzle.options):
             logger.debug("ERR IDX")
             logger.debug(self.inputlist)
             logger.debug(self.puzzle.options)
         else:
             current_options = self.puzzle.options[len(self.inputlist)]
-        yield Label(setting["primary"], id="sentence")
-        yield Label(self.puzzle.wording[len(self.inputlist)], id="puzzle")
-        yield Label(f"当前输入: {self.inputlist}", id="inputpreview")
+            yield Label(setting["primary"], id="sentence")
+            yield Label(self.puzzle.wording[len(self.inputlist)], id="puzzle")
+            yield Label(f"当前输入: {self.inputlist}", id="inputpreview")
 
         # 渲染当前问题的选项
-        with Container(id="btn-container"):
+        c = 0
+        with ScrollableContainer(id="btn-container") as s:
             for i in current_options:
-                self.hashmap[str(hash(i))] = i
-                btnid = f"sel{str(self.cursor).zfill(3)}-{hash(i)}"
+                if i in [" ", ""]:
+                    continue
+                c += 1
+                h = str(hash(i))
+                self.hashmap[h] = i
+                btnid = f"sel{str(self.cursor).zfill(3)}-{h}"
                 logger.debug(f"建立按钮 {btnid}")
-                yield Button(i, id=f"{btnid}")
+                self.btn_shortcuts[f"{c}"] = f"{btnid}"
+                yield Button(f"[{c}] " + i, id=f"{btnid}")
+            s.focus()
+            yield Button("退格", id="delete")
 
-        yield Button("退格", id="delete")
+        self.btn_shortcuts["0"] = f"delete"
+        self.btn_shortcuts["delete"] = f"delete"
+        self.btn_shortcuts["backspace"] = f"delete"
 
     def update_display(self, error=0):
         # 更新预览标签
@@ -142,20 +151,25 @@ class MCQPuzzle(BasePuzzleWidget):
             for child in container.children
             if hasattr(child, "id") and child.id and child.id.startswith("sel")
         ]
-
+        container.focus()
         for button in buttons_to_remove:
             logger.info(button)
             container.remove_children("#" + button.id)  # type: ignore
 
         # 添加当前题目的选项按钮
+        c = 0
         current_question_index = len(self.inputlist)
         if current_question_index < len(self.puzzle.options):
             current_options = self.puzzle.options[current_question_index]
             for option in current_options:
+                if option in ["", " "]:
+                    continue
+                c += 1
                 button_id = f"sel{str(self.cursor).zfill(3)}-{hash(option)}"
                 if button_id not in self.hashmap:
-                    self.hashmap[button_id] = option
-                new_button = Button(option, id=button_id)
+                    self.hashmap[button_id[7:]] = option
+                new_button = Button(f"[{c}] " + option, id=button_id)
+                self.btn_shortcuts[f"{c}"] = button_id
                 container.mount(new_button)
 
     def handler(self, rating):
@@ -163,3 +177,10 @@ class MCQPuzzle(BasePuzzleWidget):
             pass
         else:
             self.atom.minimize(rating)
+
+    def on_key(self, event: Key) -> None:
+        self.notify(event.key)
+        if event.key in self.btn_shortcuts:
+            btn_id = self.btn_shortcuts.get(event.key)
+            btn_id = "#" + btn_id
+            self.query_one(btn_id, Button).press()

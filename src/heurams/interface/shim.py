@@ -1,33 +1,10 @@
 """Kernel 操作辅助函数库"""
 
-import random
-from typing import TypedDict
-
 import heurams.interface.widgets as pzw
-import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
-
-staging = {}  # 细粒度缓存区, 是 ident -> quality 的封装
-
-
-def report_to_staging(atom: pt.Atom, quality):
-    staging[atom.ident] = min(quality, staging[atom.ident])
-
-
-def clear():
-    staging = dict()
-
-
-def deploy_to_electron():
-    for atom_ident, quality in staging.items():
-        if pt.atom_registry[atom_ident].registry["electron"].is_activated:
-            pt.atom_registry[atom_ident].registry["electron"].revisor(quality=quality)
-        else:
-            pt.atom_registry[atom_ident].registry["electron"].revisor(
-                quality=quality, is_new_activation=True
-            )
-    clear()
-
+import platform
+import os
+from heurams.context import config_var
 
 puzzle2widget = {
     pz.RecognitionPuzzle: pzw.Recognition,
@@ -35,3 +12,13 @@ puzzle2widget = {
     pz.MCQPuzzle: pzw.MCQPuzzle,
     pz.BasePuzzle: pzw.BasePuzzleWidget,
 }
+
+
+def set_term_title(title):
+    if not config_var.get()["interface"]["global"]["change_window_title"]:
+        return
+    system = platform.system()
+    if system == "Windows":
+        os.system(f"title {title}")
+    else:  # Linux, Mac, etc.
+        os.write(2, f"\033]2;{title}\007".encode("utf-8"))

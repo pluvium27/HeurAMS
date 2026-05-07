@@ -6,45 +6,43 @@
 import pathlib
 from contextvars import ContextVar
 
-from heurams.services.config import ConfigFile
+from heurams.services.config import ConfigDict
 from heurams.services.logger import get_logger
 
-# 默认配置文件路径规定: 以包目录为准
-# 用户配置文件路径规定: 以运行目录为准
-# 数据文件路径规定: 以运行目录为准
+# 默认数据目录, 以包目录下的 data 为准
+# 用户数据目录, 以运行目录下的 data 为准
 
-rootdir = pathlib.Path(__file__).parent
-print(f"rootdir: {rootdir}")
-logger = get_logger(__name__)
-logger.debug(f"项目根目录: {rootdir}")
+rootdir: pathlib.Path = pathlib.Path(__file__).parent
+"""包目录路径, 也就是 heurams 目录."""
+
 workdir = pathlib.Path.cwd()
-print(f"workdir: {workdir}")
+"""工作目录路径."""
+
+logger = get_logger(__name__)
+logger.debug(f"包目录: {rootdir}")
 logger.debug(f"工作目录: {workdir}")
-config_var: ContextVar[ConfigFile] = ContextVar(
-    "config_var", default=ConfigFile(rootdir / "default" / "config" / "config.toml")
+
+default_data = rootdir / "assets" / "data"
+user_data = workdir / "data"
+if not user_data.exists():
+    logger.info("初始化数据目录: %s", user_data)
+    import shutil
+
+    shutil.copytree(default_data, user_data)
+else:
+    (workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
+
+config_var: ContextVar[ConfigDict] = ContextVar(
+    "config_var",
+    default=ConfigDict(workdir / "data" / "config"),
 )
-try:
-    config_var: ContextVar[ConfigFile] = ContextVar(
-        "config_var", default=ConfigFile(workdir / "config" / "config.toml")
-    )  # 配置文件
-    print("已加载自定义用户配置")
-    logger.info("已加载自定义用户配置, 路径: %s", workdir / "config" / "config.toml")
-except Exception as e:
-    print("未能加载自定义用户配置")
-    logger.warning("未能加载自定义用户配置, 错误: %s", e)
-if pathlib.Path(workdir / "config" / "config_dev.toml").exists():
-    print("使用开发设置")
-    logger.debug("使用开发设置")
-    config_var: ContextVar[ConfigFile] = ContextVar(
-        "config_var", default=ConfigFile(workdir / "config" / "config_dev.toml")
-    )
-# runtime_var: ContextVar = ContextVar('runtime_var', default=dict()) # 运行时共享数据
+"""配置对象的全局引用对象."""
 
 
 class ConfigContext:
     """
     功能完备的上下文管理器
-    用于临时切换配置的作用域, 支持嵌套使用
+    用于临时切换配置引用对象的作用域, 支持嵌套使用
 
     Example:
         >>> with ConfigContext(test_config):
@@ -52,7 +50,7 @@ class ConfigContext:
         >>> get_daystamp()  # 恢复原配置
     """
 
-    def __init__(self, config_provider: ConfigFile):
+    def __init__(self, config_provider: ConfigDict):
         self.config_provider = config_provider
         self._token = None
 
