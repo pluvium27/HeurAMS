@@ -10,7 +10,7 @@ from heurams.services.exceptions import WTFException
 logger = get_logger(__name__)
 
 
-class ConfigDict(UserDict):  # 舒服了
+class ConfigDict(UserDict):
     _instances = {}  # 必须使用单例模式, 不然有严重的多实例导致的配置无法持久化问题
 
     def __new__(cls, config_path: pathlib.Path, dict=None):

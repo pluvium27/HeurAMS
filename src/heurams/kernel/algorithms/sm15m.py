@@ -611,7 +611,7 @@ def _get_global_sm():
             with open(_GLOBAL_STATE_FILE, "r", encoding="utf-8") as f:
                 return SM.load(json.load(f))
         except Exception:
-            logger.warning("SM-15M 全局状态文件加载失败，创建新实例")
+            logger.warning("SM-15M 全局状态文件加载失败, 创建新实例")
     sm = SM()
     _save_global_sm(sm)
     return sm
@@ -646,7 +646,7 @@ class SM15MAlgorithm(BaseAlgorithm):
         # 毫秒精度（子日排程）
         last_date_ms: int
         next_date_ms: int
-        # BaseAlgorithm 兼容（天精度，向后兼容）
+        # BaseAlgorithm 兼容（天精度, 向后兼容）
         real_rept: int
         rept: int
         interval: int
@@ -694,7 +694,7 @@ class SM15MAlgorithm(BaseAlgorithm):
             opt_days * 24 * 60 * 60 * 1000 if opt_days > 0 else sm.interval_base
         )
 
-        # 毫秒精度优先，退化至天精度
+        # 毫秒精度优先, 退化至天精度
         last_date_ms = data.get("last_date_ms", 0)
         if last_date_ms:
             item.previous_date = datetime.datetime(1970, 1, 1) + datetime.timedelta(

@@ -130,7 +130,7 @@ class SyncScreen(Screen):
             log_widget = self.query_one("#log_output")
             log_widget.update("\n".join(self.log_messages))  # type: ignore
         except Exception:
-            pass  # 如果组件未就绪，忽略错误
+            pass  # 如果组件未就绪, 忽略错误
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """处理按钮点击事件"""
@@ -150,7 +150,7 @@ class SyncScreen(Screen):
     def test_connection(self):
         """测试 WebDAV 服务器连接"""
         if not self.sync_service:
-            self.log_message("同步服务未初始化，请检查配置", is_error=True)
+            self.log_message("同步服务未初始化, 请检查配置", is_error=True)
             self.update_status("❌ 同步服务未初始化")
             return
 
@@ -172,7 +172,7 @@ class SyncScreen(Screen):
     def start_sync(self):
         """开始同步"""
         if not self.sync_service:
-            self.log_message("同步服务未初始化，无法开始同步", is_error=True)
+            self.log_message("同步服务未初始化, 无法开始同步", is_error=True)
             return
 
         if self.is_syncing:

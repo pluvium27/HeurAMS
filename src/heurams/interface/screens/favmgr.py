@@ -85,7 +85,7 @@ class FavoriteManagerScreen(Screen):
 
     def _encode_favorite_key(self, repo_path: str, ident: str) -> str:
         """编码仓库路径和标识符为安全的按钮 ID 部分"""
-        # 使用 \x00 分隔两部分，然后进行 base64 编码
+        # 使用 \x00 分隔两部分, 然后进行 base64 编码
         combined = f"{repo_path}\x00{ident}"
         encoded = base64.urlsafe_b64encode(combined.encode()).decode()
         # 去掉填充的等号
@@ -114,7 +114,7 @@ class FavoriteManagerScreen(Screen):
 
         # 创建安全的按钮 ID
         button_key = self._encode_favorite_key(fav.repo_path, fav.ident)
-        # 创建列表项，包含移除按钮
+        # 创建列表项, 包含移除按钮
         container = Horizontal(
             Label(display_text, classes="favorite-content"),
             Button("移除", id=f"remove-{button_key}", variant="error", flat=True, classes="favorite-item-btn"),

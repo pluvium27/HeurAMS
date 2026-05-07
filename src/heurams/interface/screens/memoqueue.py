@@ -237,14 +237,14 @@ class MemScreen(Screen):
         """获取仓库相对路径（相对于 data/repo）"""
         if self.repo is None:
             return ""
-        # self.repo.source 是 Path 对象，指向仓库目录
+        # self.repo.source 是 Path 对象, 指向仓库目录
         repo_full_path = self.repo.source
         data_repo_path = Path(config_var.get()["global"]["paths"]["data"]) / "repo"
         try:
             rel_path = repo_full_path.relative_to(data_repo_path)
             return str(rel_path)
         except ValueError:
-            # 如果不在 data/repo 下，则返回完整路径（字符串形式）
+            # 如果不在 data/repo 下, 则返回完整路径（字符串形式）
             return str(repo_full_path)
 
     def _is_current_atom_favorited(self) -> bool:

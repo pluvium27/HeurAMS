@@ -24,7 +24,7 @@ logger.debug(f"工作目录: {workdir}")
 
 (workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
 
-config_var: ContextVar[ConfigDict].get = ContextVar(
+config_var: ContextVar[ConfigDict] = ContextVar(
     "config_var",
     default=ConfigDict(workdir / "data" / "config"),
 )

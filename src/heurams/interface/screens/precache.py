@@ -14,7 +14,7 @@ import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
 
-# 兼容性缓存路径：优先使用 paths.cache，否则使用 data/cache
+# 兼容性缓存路径：优先使用 paths.cache, 否则使用 data/cache
 paths = config_var.get()["global"]["paths"]
 cache_dir = pathlib.Path(paths.get("cache", paths["data"] + "/cache")) / "voice"
 
@@ -55,7 +55,7 @@ class PrecachingScreen(Screen):
         self.precache_worker = None
         self.cancel_flag = 0
         self.desc = desc
-        # 不再需要缓存配置，保留配置读取以兼容
+        # 不再需要缓存配置, 保留配置读取以兼容
         self.cache_stats = {
             "total_size": 0,
             "file_count": 0,

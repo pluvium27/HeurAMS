@@ -27,8 +27,8 @@ class OpenAILLM(BaseLLM):
             try:
                 from openai import AsyncOpenAI
             except ImportError:
-                logger.error("未安装 openai 库，请运行: pip install openai")
-                raise ImportError("未安装 openai 库，请运行: pip install openai")
+                logger.error("未安装 openai 库, 请运行: pip install openai")
+                raise ImportError("未安装 openai 库, 请运行: pip install openai")
 
             self._client = AsyncOpenAI(
                 api_key=self.api_key if self.api_key else None,
@@ -49,7 +49,7 @@ class OpenAILLM(BaseLLM):
             "max_tokens": kwargs.get("max_tokens", 1000),
         }
 
-        # 合并参数，优先使用传入的 kwargs
+        # 合并参数, 优先使用传入的 kwargs
         request_kwargs = {**default_kwargs, **kwargs}
         request_kwargs["messages"] = messages
 

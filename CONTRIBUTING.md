@@ -53,17 +53,12 @@
 ## 设置开发环境
 
 ```bash
-# 克隆仓库
 git clone https://git.pluv27.top/pluv/HeurAMS
-
 cd HeurAMS
-
-# 可能需要切换到 dev 分支
 git checkout dev
 
 # 如果决定使用 uv (推荐)
 
-## 首先要安装uv, 例如通过 pip 或者其他包管理器
 python3 -m pip install uv
 
 uv sync --all-extras # 同步开发运行环境
@@ -72,13 +67,12 @@ uv run heurams # 验证包安装
 
 uv run heurams-tui # 启动 TUI
 
-# 如果决定使用原生 python 环境 (不推荐, 但我们保留了这种方式以便在不便支持 uv 与硬链接的环境和文件系统(例如 termux)运行 HeurAMS)
+# 如果决定使用原生 python 环境 (不推荐, 但我们保留了这种方式以便在不便支持 uv 与硬链接的环境和文件系统(例如 termux)上运行)
 
-## 安装依赖并将 HeurAMS 安装为本地包
-python3 -m pip install -r requirements.txt
-python3 -m pip install -e .
+python3 -m pip install -e .[all] # 安装依赖并将 HeurAMS 安装为本地包
 
 python3 -m heurams # 验证安装
+
 python3 -m heurams.interface # 启动 TUI
 ```
 
@@ -109,10 +103,9 @@ HeurAMS 被设计为一个可独立于前端的程序库, 这意味着:
 
 您可以:
 
-- 协助创建各种语言的翻译来翻译软件的界面 (但我们目前还没有 i18n 平台, 所以如果您想贡献翻译, 可能需要手动联系我们)
-- 制作图像、主题、音效乃至制作开放的记忆单元集给其他用户使用
+- 协助创建或核对各种语言的翻译来翻译软件的界面和文档
+- 制作开放的记忆单元集(包括但不限于文字、图像、音效)给其他用户使用
 - 改进软件配套的文档
-- 维护软件的开发/交流群组
 - 给其他用户答疑解惑或分享自己的经验
 - 在讨论区提出新想法或反馈问题
 

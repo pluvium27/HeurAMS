@@ -26,14 +26,14 @@ class BaseLLM:
         """发送聊天消息并获取响应
 
         Args:
-            messages: 消息列表，每个消息为 {"role": "user"|"assistant"|"system", "content": "消息内容"}
-            **kwargs: 其他参数，如 temperature, max_tokens 等
+            messages: 消息列表, 每个消息为 {"role": "user"|"assistant"|"system", "content": "消息内容"}
+            **kwargs: 其他参数, 如 temperature, max_tokens 等
 
         Returns:
             模型返回的文本响应
         """
         logger.debug("BaseLLM.chat: messages=%d, kwargs=%s", len(messages), kwargs)
-        logger.warning("BaseLLM.chat 是基类方法，未实现具体功能")
+        logger.warning("BaseLLM.chat 是基类方法, 未实现具体功能")
         await asyncio.sleep(0)  # 避免未使用异步的警告
         return "BaseLLM 未实现具体功能"
 
@@ -50,6 +50,6 @@ class BaseLLM:
         logger.debug(
             "BaseLLM.chat_stream: messages=%d, kwargs=%s", len(messages), kwargs
         )
-        logger.warning("BaseLLM.chat_stream 是基类方法，未实现具体功能")
+        logger.warning("BaseLLM.chat_stream 是基类方法, 未实现具体功能")
         await asyncio.sleep(0)
         yield "BaseLLM 未实现流式功能"

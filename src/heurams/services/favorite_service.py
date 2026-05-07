@@ -73,7 +73,7 @@ class FavoriteManager:
                 with open(self._file_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 self._favorites = [FavoriteItem.from_dict(item) for item in data]
-                logger.debug("收藏列表加载成功，共 %d 项", len(self._favorites))
+                logger.debug("收藏列表加载成功, 共 %d 项", len(self._favorites))
             except Exception as e:
                 logger.error("加载收藏列表失败: %s", e)
                 self._favorites = []
@@ -86,7 +86,7 @@ class FavoriteManager:
             data = [item.to_dict() for item in self._favorites]
             with open(self._file_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-            logger.debug("收藏列表保存成功，共 %d 项", len(self._favorites))
+            logger.debug("收藏列表保存成功, 共 %d 项", len(self._favorites))
         except Exception as e:
             logger.error("保存收藏列表失败: %s", e)
 

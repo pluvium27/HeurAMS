@@ -26,7 +26,7 @@
 - 此外, 算法模块是 "潜进" 内核 (heurams.kernel) 中的一等公民, 内核天然支持插拔各型算法
 - 无需安装繁杂的插件即可分单元集完成算法快速切换与调优, 研究者可以方便地修改算法模块以便捷地进行研究与测试
 - 默认使用 `SM-2` 简单间隔重复算法, 此算法亦用作 `Anki` 闪卡记忆软件的默认闪卡调度器
-- 还内置 `NSP-0` 筛选用非间隔重复算法以便快速筛选记忆内容, `FSRS` 先进间隔重复算法作为效率更高的调度器, 与 `SM-15M (移植自 sm.js 项目)` 复杂间隔重复算法(逆向工程)
+- 内置 `NSP-0` 筛选用非间隔重复算法以便快速筛选记忆内容, `FSRS` 先进间隔重复算法作为效率更高的调度器, 与 `SM-15M (移植自 sm.js 项目)` 复杂间隔重复算法(逆向工程)
 - 算法模块可以标记记忆项目, 也可以动态规划每个记忆单元的记忆间隔时间表, 动态跟踪记忆反馈数据, 以优化长期记忆保留率与稳定性
 - 得益于项目的模块化架构与单元集结构设计, 一个项目甚至可以与任意种算法共存并互通, 这对研究者及想探索/实验高效率方法的用户极其友好
 
@@ -54,9 +54,11 @@
 
 - 跨平台, 并支持触屏/鼠标/键盘多操作模式
 - 与几乎所有现代终端模拟器相容
-- 对于[支持 sixel 协议的终端模拟器](https://www.arewesixelyet.com/), 可显示图像内容
+- 对于<a href="https://www.arewesixelyet.com/" target="_blank" rel="noopener noreferrer">支持 sixel 协议的终端模拟器</a>, 可显示图像内容
 - 可通过 textual-web 作为服务部署, 并在任意浏览器使用
-- 简洁直观, 键盘友好, 且高效率的用户界面设计
+- 简洁直观, 键盘友好, 全功能且高效率的用户界面设计
+- 易于嵌入: 可在 getty/kmscon 中运行而无需任何桌面图形服务
+- 资源占用小, 运行流畅, 不拖泥带水
 - 便于测试与调试程序库
 
 [查看屏幕截图](SCREENSHOTS.md)
@@ -98,7 +100,7 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 
 | 依赖组 | 包含模块 | 说明 |
 |--------|----------|------|
-| 最小化安装 | tabulate, toml, transitions | 核心驱动程序库，始终必需 |
+| 最小化安装 | tabulate, toml, transitions | 核心驱动程序库, 始终必需 |
 | interface | textual, psutil | 基本用户界面依赖 |
 | algo-fsrs | py-fsrs | FSRS 算法模块 |
 | tts-edgetts | edge-tts | 微软文本转语音 |
@@ -113,6 +115,10 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 我们提供原生 python 和 uv 两种安装方式.  
 详见[贡献指南](CONTRIBUTING.md).
 
+## 常见问题 (FAQ)
+
+详见[常见问题](FAQ.md).
+
 ## 项目架构
 
 详见[架构说明](ARCHITECTURE.md).
@@ -120,13 +126,14 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 ## 参与项目
 
 欢迎参与到项目协作中!  
-请参阅[贡献指南](CONTRIBUTING.md).
+详见[贡献指南](CONTRIBUTING.md).
 
 ## 许可证
 
 ### 项目本身
 
-本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款.  
+本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款, 较标准 AGPL-3.0 更松.  
+
 详见根目录下 [LICENSE](LICENSE) 文件.  
 
 ### 第三方代码

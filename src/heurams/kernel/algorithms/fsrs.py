@@ -26,13 +26,13 @@ _SCHEDULER_STATE_FILE = pathlib.Path(
 
 
 def _get_global_scheduler():
-    """获取全局 FSRS Scheduler 实例，从文件加载或创建新的"""
+    """获取全局 FSRS Scheduler 实例, 从文件加载或创建新的"""
     if os.path.exists(_SCHEDULER_STATE_FILE):
         try:
             with open(_SCHEDULER_STATE_FILE, "r", encoding="utf-8") as f:
                 return Scheduler.from_json(f.read())
         except Exception:
-            logger.warning("FSRS Scheduler 状态文件加载失败，创建新实例")
+            logger.warning("FSRS Scheduler 状态文件加载失败, 创建新实例")
     return Scheduler()
 
 
@@ -80,7 +80,7 @@ class FSRSAlgorithm(BaseAlgorithm):
         # FSRS 特有字段
         fsrs_state: int        # State 枚举值: 1=Learning, 2=Review, 3=Relearning
         fsrs_step: int         # 当前学习步进索引, -1 表示 None (Review 状态)
-        fsrs_stability: float  # 稳定性（秒），0.0 表示尚未计算
+        fsrs_stability: float  # 稳定性（秒）, 0.0 表示尚未计算
         fsrs_difficulty: float # 难度 [1.0, 10.0], 0.0 表示尚未计算
         # 标准 BaseAlgorithm 兼容字段
         real_rept: int
@@ -194,7 +194,7 @@ class FSRSAlgorithm(BaseAlgorithm):
 
         if is_new_activation:
             card = Card()
-            logger.debug("新激活，创建新 Card")
+            logger.debug("新激活, 创建新 Card")
         else:
             card = cls._algodata_to_card(algodata)
 
