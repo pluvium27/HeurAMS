@@ -102,7 +102,7 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 |--------|----------|------|
 | 最小化安装 | tabulate, toml, transitions | 核心驱动程序库, 始终必需 |
 | interface | textual, psutil | 基本用户界面依赖 |
-| algo-fsrs | py-fsrs | FSRS 算法模块 |
+| algo-fsrs | fsrs | FSRS 算法模块 |
 | tts-edgetts | edge-tts | 微软文本转语音 |
 | llm | openai | OpenAI 式 API 调用 |
 | audio-playsound | playsound3 | 通用音频模块 |

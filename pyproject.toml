@@ -14,14 +14,13 @@ license-files = ["LICENSE"]
 
 dependencies = [ # 这些依赖只能驱动 kernel 程序库
     "tabulate>=0.10.0",
-    "textual>=8.2.5",
     "toml>=0.10.2",
     "transitions>=0.9.3",
 ]
 
 [project.optional-dependencies]
 interface = [ # 基本用户界面依赖
-    "textual>=8.2.3",
+    "textual>=8.2.5",
     "psutil>=7.2.2",
 ]
 algo-fsrs = [
