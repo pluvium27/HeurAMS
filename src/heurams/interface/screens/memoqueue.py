@@ -140,7 +140,11 @@ class MemScreen(Screen):
 
         if config_var.get()["interface"]["global"]["persist_to_file"]:
             self.repo.persist_to_repodir()
-        container.mount(Finished(is_saved=config_var.get()["interface"]["global"]["persist_to_file"]))
+        container.mount(
+            Finished(
+                is_saved=config_var.get()["interface"]["global"]["persist_to_file"]
+            )
+        )
 
     def on_button_pressed(self, event):
         event.stop()
@@ -162,6 +166,7 @@ class MemScreen(Screen):
             play_by_path(path)
         else:
             from heurams.services.tts_service import convertor
+
             convertor(self.atom.registry["nucleon"]["tts_text"], path)
             play_by_path(path)
 
@@ -224,6 +229,7 @@ class MemScreen(Screen):
 
     def action_go_back_notif(self):
         self.notify("确定吗? 按下大写 Q 以返回")
+
     def action_go_back(self):
         self.app.pop_screen()
 

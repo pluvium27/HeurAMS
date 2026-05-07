@@ -25,9 +25,18 @@ class TestElectronInit:
         assert e.algodata["SM-2"]["efactor"] == 2.5
 
     def test_existing_data_preserved(self, timer_context):
-        data = {"SM-2": {"efactor": 1.5, "rept": 3, "real_rept": 5, "interval": 10,
-                          "last_date": 100, "next_date": 200, "is_activated": 1,
-                          "last_modify": 1e9}}
+        data = {
+            "SM-2": {
+                "efactor": 1.5,
+                "rept": 3,
+                "real_rept": 5,
+                "interval": 10,
+                "last_date": 100,
+                "next_date": 200,
+                "is_activated": 1,
+                "last_modify": 1e9,
+            }
+        }
         e = Electron("test-id", data)
         assert e.algodata["SM-2"]["efactor"] == 1.5
         assert e.algodata["SM-2"]["rept"] == 3

@@ -3,7 +3,7 @@ FSRS 算法模块 — 基于 py-fsrs 的现代间隔重复调度器
 
 基于: https://github.com/open-spaced-repetition/py-fsrs
 """
-import json
+
 import os
 import pathlib
 from datetime import datetime, timezone, timedelta
@@ -20,9 +20,10 @@ from .base import BaseAlgorithm
 logger = get_logger(__name__)
 
 # 全局 Scheduler 状态文件路径
-_SCHEDULER_STATE_FILE = pathlib.Path(
-    config_var.get()["global"]["paths"]["misc"]
-) / "fsrs_scheduler_state.json"
+_SCHEDULER_STATE_FILE = (
+    pathlib.Path(config_var.get()["global"]["paths"]["misc"])
+    / "fsrs_scheduler_state.json"
+)
 
 
 def _get_global_scheduler():
@@ -78,10 +79,10 @@ class FSRSAlgorithm(BaseAlgorithm):
 
     class AlgodataDict(TypedDict):
         # FSRS 特有字段
-        fsrs_state: int        # State 枚举值: 1=Learning, 2=Review, 3=Relearning
-        fsrs_step: int         # 当前学习步进索引, -1 表示 None (Review 状态)
+        fsrs_state: int  # State 枚举值: 1=Learning, 2=Review, 3=Relearning
+        fsrs_step: int  # 当前学习步进索引, -1 表示 None (Review 状态)
         fsrs_stability: float  # 稳定性（秒）, 0.0 表示尚未计算
-        fsrs_difficulty: float # 难度 [1.0, 10.0], 0.0 表示尚未计算
+        fsrs_difficulty: float  # 难度 [1.0, 10.0], 0.0 表示尚未计算
         # 标准 BaseAlgorithm 兼容字段
         real_rept: int
         rept: int
@@ -92,7 +93,7 @@ class FSRSAlgorithm(BaseAlgorithm):
         last_modify: float
 
     defaults = {
-        "fsrs_state": 1,          # State.Learning
+        "fsrs_state": 1,  # State.Learning
         "fsrs_step": 0,
         "fsrs_stability": 0.0,
         "fsrs_difficulty": 0.0,
@@ -136,9 +137,7 @@ class FSRSAlgorithm(BaseAlgorithm):
 
         # last_review
         last_date = data.get("last_date", 0)
-        card.last_review = (
-            _daystamp_to_datetime(last_date) if last_date > 0 else None
-        )
+        card.last_review = _daystamp_to_datetime(last_date) if last_date > 0 else None
 
         return card
 
@@ -160,9 +159,7 @@ class FSRSAlgorithm(BaseAlgorithm):
             if card.last_review
             else data.get("last_date", 0)
         )
-        data["next_date"] = (
-            _datetime_to_daystamp(card.due) if card.due else 0
-        )
+        data["next_date"] = _datetime_to_daystamp(card.due) if card.due else 0
         data["interval"] = max(0, data["next_date"] - data["last_date"])
         data["last_modify"] = get_timestamp()
         return algodata
@@ -209,8 +206,7 @@ class FSRSAlgorithm(BaseAlgorithm):
             algodata[cls.algo_name]["rept"] += 1
 
         logger.debug(
-            "FSRS.revisor 完成: stability=%s, difficulty=%s, state=%s, "
-            "next_date=%d",
+            "FSRS.revisor 完成: stability=%s, difficulty=%s, state=%s, " "next_date=%d",
             card.stability,
             card.difficulty,
             card.state,

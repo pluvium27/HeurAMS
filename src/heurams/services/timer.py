@@ -43,9 +43,9 @@ def get_timestamp_ms() -> int:
 
 def daystamp_to_datetime(daystamp: int) -> datetime.datetime:
     """将日戳转换为 UTC datetime (当日午夜)"""
-    return datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc) + datetime.timedelta(
-        days=daystamp
-    )
+    return datetime.datetime(
+        1970, 1, 1, tzinfo=datetime.timezone.utc
+    ) + datetime.timedelta(days=daystamp)
 
 
 def datetime_to_daystamp(dt: datetime.datetime) -> int:

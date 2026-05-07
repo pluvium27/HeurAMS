@@ -81,10 +81,10 @@ class ClozePuzzle(BasePuzzleWidget):
                 btnid = f"sel000-{h}"
                 logger.debug(f"建立按钮 {btnid}")
                 self.btn_shortcuts[f"{c}"] = btnid
-                btns.append(Button(f"{i}", id=f"{btnid}", classes='cloze-option-btn'))
-            for i in range((len(btns)+1)//2):
+                btns.append(Button(f"{i}", id=f"{btnid}", classes="cloze-option-btn"))
+            for i in range((len(btns) + 1) // 2):
                 if 2 * i + 1 + 1 <= len(btns):
-                    yield Horizontal(btns[i], btns[len(btns) - 1 - i], classes='hori')
+                    yield Horizontal(btns[i], btns[len(btns) - 1 - i], classes="hori")
                 else:
                     yield btns[i]
             s.focus()
@@ -136,7 +136,7 @@ class ClozePuzzle(BasePuzzleWidget):
             self.atom.minimize(rating)
 
     def on_key(self, event: Key) -> None:
-        #self.notify(event.key)
+        # self.notify(event.key)
         if event.key in self.btn_shortcuts:
             btn_id = self.btn_shortcuts.get(event.key)
             btn_id = "#" + btn_id

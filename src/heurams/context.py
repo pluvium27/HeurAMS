@@ -27,6 +27,7 @@ user_data = workdir / "data"
 if not user_data.exists():
     logger.info("初始化数据目录: %s", user_data)
     import shutil
+
     shutil.copytree(default_data, user_data)
 else:
     (workdir / "data" / "config").mkdir(parents=True, exist_ok=True)

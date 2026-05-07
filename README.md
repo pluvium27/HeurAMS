@@ -2,19 +2,19 @@
 
 ## 概述
 
-"潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,  
+"潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,\
 也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.
 
 ## 关于此仓库
 
-此仓库为 "潜进" 的核心程序库在 python 语言下的实现  
-包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)  
+此仓库为 "潜进" 的核心程序库在 python 语言下的实现\
+包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)\
 除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库或使用 `RPC` 与 `heurams` 程序库实例通讯, 使用框架构建其他辅助记忆功能前端或其他应用程序
 
 > [!NOTE]
-> 我们已经着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目  
-> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android, iOS 和 Plasma Mobile 提供现代用户界面  
-> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发  
+> 我们已经着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目\
+> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android, iOS 和 Plasma Mobile 提供现代用户界面\
+> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发
 
 ## 特性
 
@@ -72,11 +72,14 @@
 #### 稳定版本
 
 安装适用于用户体验的可选依赖(推荐):
+
 ```
 python -m pip install heurams[basic] -i https://pypi.pluv27.top/root/stable/+simple/
 ```
-安装适用于一般计算机的通用音频模块(基于 playsound3):  
+
+安装适用于一般计算机的通用音频模块(基于 playsound3):\
 (此项不适用于 termux 环境, termux 的音频支持是内建的)
+
 ```
 python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/stable/+simple/ 
 ```
@@ -84,12 +87,13 @@ python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/s
 #### 开发版本
 
 > [!CAUTION]
-> 对于部分 Linux 发行版和 Android Termux 用户:  
-> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖.  
-> 例如在 termux 上先运行 `pkg install cmake clang libzmq`.  
-> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器.  
+> 对于部分 Linux 发行版和 Android Termux 用户:\
+> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖.\
+> 例如在 termux 上先运行 `pkg install cmake clang libzmq`.\
+> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器.
 
 安装全部可选依赖(推荐):
+
 ```
 python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 ```
@@ -112,7 +116,7 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 
 ### 从源码安装
 
-我们提供原生 python 和 uv 两种安装方式.  
+我们提供原生 python 和 uv 两种安装方式.\
 详见[贡献指南](CONTRIBUTING.md).
 
 ## 常见问题 (FAQ)
@@ -125,8 +129,8 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 
 ## 参与项目
 
-欢迎参与到项目协作中!  
-详见[贡献指南](CONTRIBUTING.md).  
+欢迎参与到项目协作中!\
+详见[贡献指南](CONTRIBUTING.md).\
 关于 AI 辅助开发的说明, 请参阅 [AGENTS.md](AGENTS.md).
 
 ## 项目标识
@@ -145,9 +149,9 @@ HeurAMS 项目标识如下, 矢量图文件位于 `./src/heurams/assets/art/` �
 
 ### 项目本身
 
-本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款, 较标准 AGPL-3.0 更松.  
+本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款, 较标准 AGPL-3.0 更松.
 
-详见根目录下 [LICENSE](LICENSE) 文件.  
+详见根目录下 [LICENSE](LICENSE) 文件.
 
 ### 第三方代码
 

@@ -16,7 +16,6 @@ from textual.widgets import (
     Label,
     ListItem,
     ListView,
-    Markdown,
     Static,
 )
 
@@ -117,7 +116,13 @@ class FavoriteManagerScreen(Screen):
         # 创建列表项, 包含移除按钮
         container = Horizontal(
             Label(display_text, classes="favorite-content"),
-            Button("移除", id=f"remove-{button_key}", variant="error", flat=True, classes="favorite-item-btn"),
+            Button(
+                "移除",
+                id=f"remove-{button_key}",
+                variant="error",
+                flat=True,
+                classes="favorite-item-btn",
+            ),
             classes="favorite-item",
         )
         return ListItem(container)

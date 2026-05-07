@@ -7,6 +7,7 @@ logger = get_logger(__name__)
 
 _registry: dict[str, type["BaseAlgorithm"]] = {}
 
+
 class BaseAlgorithm:
     algo_name = "BaseAlgorithm"
     desc = "算法基类"

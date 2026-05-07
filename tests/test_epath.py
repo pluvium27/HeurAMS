@@ -65,8 +65,6 @@ class TestEpathModify:
 
     def test_modify_list_index_with_parents(self):
         d = {"items": []}
-        result = epath(
-            d, "items.[3]", enable_modify=True, new_value=42, parents=True
-        )
+        result = epath(d, "items.[3]", enable_modify=True, new_value=42, parents=True)
         assert result == 42
         assert d["items"] == [None, None, None, 42]

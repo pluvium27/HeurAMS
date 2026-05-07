@@ -4,6 +4,7 @@ SM-15M — 基于 sm.js 的间隔重复算法
 基于: https://github.com/slaypni/sm.js
 原始 CoffeeScript (c) 2014 Kazuaki Tanida, MIT 许可证
 """
+
 import datetime
 import json
 import math
@@ -19,7 +20,6 @@ from heurams.services.timer import (
     get_timestamp_ms,
     daystamp_to_datetime,
     datetime_to_daystamp,
-    get_now_datetime,
 )
 
 from .base import BaseAlgorithm
@@ -111,7 +111,7 @@ def power_law_model(a, b):
     """y = a * x^b"""
 
     def y_func(x):
-        return a * (x ** b)
+        return a * (x**b)
 
     def x_func(y):
         if a == 0 or b == 0:
@@ -134,7 +134,7 @@ def fixed_point_power_law_regression(points, fixed_point):
     sum_sqX = sum(x * x for x in X)
     b = sumXY / sum_sqX if sum_sqX else 0
 
-    return power_law_model(q / (p ** b), b)
+    return power_law_model(q / (p**b), b)
 
 
 # ============================================================================
@@ -161,7 +161,7 @@ class FI_G:
     def _register_point(self, fi, grade):
         self.points.append([fi, grade + self.GRADE_OFFSET])
         if len(self.points) > self.MAX_POINTS_COUNT:
-            self.points = self.points[-self.MAX_POINTS_COUNT:]
+            self.points = self.points[-self.MAX_POINTS_COUNT :]
         self._graph = None
 
     def update(self, grade, item, now):
@@ -203,7 +203,7 @@ class ForgettingCurve:
         is_remembered = grade >= THRESHOLD_RECALL
         self.points.append([uf, self.REMEMBERED if is_remembered else self.FORGOTTEN])
         if len(self.points) > self.MAX_POINTS_COUNT:
-            self.points = self.points[-self.MAX_POINTS_COUNT:]
+            self.points = self.points[-self.MAX_POINTS_COUNT :]
         self._curve = None
 
     def retention(self, uf):
@@ -253,9 +253,9 @@ class ForgettingCurves:
                         pts = []
                         for i in range(21):
                             v = MIN_AF + NOTCH_AF * i
-                            y = math.exp(
-                                -1.0 / (10 + 1 * (a + 1)) * (i - a ** 0.6)
-                            ) * (self.REMEMBERED - self.sm.requested_fi)
+                            y = math.exp(-1.0 / (10 + 1 * (a + 1)) * (i - a**0.6)) * (
+                                self.REMEMBERED - self.sm.requested_fi
+                            )
                             pts.append([v, min(self.REMEMBERED, y)])
                         partial = [[0, self.REMEMBERED]] + pts
                 row.append(ForgettingCurve(partial))
@@ -427,7 +427,9 @@ class Item:
             now = datetime.datetime.now()
         af_idx = self.lapse if self.repetition == 0 else self.af_index()
         of_val = self.sm.ofm.of(self.repetition, af_idx)
-        self.of = max(1.0, (of_val - 1) * (self.interval(now) / self.optimum_interval) + 1)
+        self.of = max(
+            1.0, (of_val - 1) * (self.interval(now) / self.optimum_interval) + 1
+        )
         self.optimum_interval = round(self.optimum_interval * self.of)
         self.previous_date = now
         self.due_date = now + datetime.timedelta(milliseconds=self.optimum_interval)
@@ -443,7 +445,7 @@ class Item:
             estimated_af = max(MIN_AF, min(MAX_AF, corrected_uf))
         self._afs.append(estimated_af)
         if len(self._afs) > self.MAX_AFS_COUNT:
-            self._afs = self._afs[-self.MAX_AFS_COUNT:]
+            self._afs = self._afs[-self.MAX_AFS_COUNT :]
         wsum = sum(af * (i + 1) for i, af in enumerate(self._afs))
         wtotal = sum(range(1, len(self._afs) + 1))
         self.af(wsum / wtotal if wtotal else estimated_af)
@@ -600,7 +602,10 @@ class SM:
 # Global state management
 # ============================================================================
 
-_GLOBAL_STATE_FILE = pathlib.Path(config_var.get()["global"]["paths"]["misc"]) / "sm15m_global_state.json"
+_GLOBAL_STATE_FILE = (
+    pathlib.Path(config_var.get()["global"]["paths"]["misc"])
+    / "sm15m_global_state.json"
+)
 
 
 def _get_global_sm():
@@ -702,7 +707,8 @@ class SM15MAlgorithm(BaseAlgorithm):
             last_date = data.get("last_date", 0)
             item.previous_date = (
                 daystamp_to_datetime(last_date).replace(tzinfo=None)
-                if last_date > 0 else None
+                if last_date > 0
+                else None
             )
 
         next_date_ms = data.get("next_date_ms", 0)
@@ -743,9 +749,7 @@ class SM15MAlgorithm(BaseAlgorithm):
             data["last_date"] = datetime_to_daystamp(item.previous_date)
         data["next_date_ms"] = int(item.due_date.timestamp() * 1000)
         data["next_date"] = datetime_to_daystamp(item.due_date)
-        data["interval"] = max(
-            0, data["next_date"] - (data.get("last_date", 0) or 0)
-        )
+        data["interval"] = max(0, data["next_date"] - (data.get("last_date", 0) or 0))
         data["last_modify"] = get_timestamp()
         return algodata
 

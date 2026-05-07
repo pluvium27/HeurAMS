@@ -11,6 +11,7 @@ from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
 
+
 def play_by_path(path: pathlib.Path):
     logger.debug("playsound_audio.play_by_path: 开始播放 %s", path)
     try:

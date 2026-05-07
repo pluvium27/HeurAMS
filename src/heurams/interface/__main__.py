@@ -7,6 +7,7 @@ import pickle
 
 logger = get_logger(__name__)
 
+
 def start_debug_server(app):
     logger = get_logger("zmq_debug")
     context = zmq.Context()
