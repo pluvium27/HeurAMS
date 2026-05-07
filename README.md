@@ -126,7 +126,8 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 ## 参与项目
 
 欢迎参与到项目协作中!  
-详见[贡献指南](CONTRIBUTING.md).
+详见[贡献指南](CONTRIBUTING.md).  
+关于 AI 辅助开发的说明, 请参阅[AGENTS.md](AGENTS.md).
 
 ## 许可证
 

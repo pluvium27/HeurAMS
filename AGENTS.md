@@ -1,12 +1,12 @@
 # AI 编程工具说明
 
-本文档为 AI 工具以及在使用 AI 辅助向 HeurAMS 项目贡献代码时的开发者提供指导.  
+本文档为 AI 工具以及在使用 AI 辅助向 HeurAMS 项目贡献代码的开发者提供指导, 一般而言此文件会被自动读入多种 AI 工具的上下文.  
 
-AI 工具必须完整阅读此 `/AGENTS.md` 文件.
+AI 工具应当完整阅读此 `/AGENTS.md` 文件.
 
 ## 查阅开发文档
 
-在帮助进行 HeurAMS 开发时，AI 工具应遵循标准的开发规范与流程, 应当自动查看或是在用户发出"初始化"指令后查看:  
+在帮助进行 HeurAMS 开发时，AI 工具应遵循标准的开发规范与流程, 应当自动查看或是在用户发出"初始化/init"指令后查看:  
 
 - [贡献指南](/CONTRIBUTING.md)
 - [自述文件](/README.md)
@@ -18,11 +18,11 @@ AI 工具必须完整阅读此 `/AGENTS.md` 文件.
 2. 禁止 AI 在未经人工确认的情况下修改现有代码
 3. 禁止 AI 不使用格式化工具而生成格式化文件的行为
 4. 禁止 AI 修复任何"bug", 而不经人工确认
-5. 绝对禁止修改此 `/AGENTS.md` 文件
-6. 禁止一切不遵循项目设计原则, 另造独立库的 "糊屎" 行为
-7. 禁止 AI 直接操作 pip, uv, apt 等工具修改外部依赖或工具, 而应让人类开发者自己操作依赖
-8. 禁止使用不同于任何现有文件的现有注释语言的其他语言写新注释
-9. 禁止不读文件就直接覆写
+5. 禁止一切不遵循项目设计原则, 另造独立库的 "糊屎" 行为
+6. 禁止 AI 直接操作 pip, uv, apt 等工具修改外部依赖或工具, 而应让人类开发者自己操作依赖
+7. 禁止使用不同于任何现有文件的现有注释语言的其他语言写新注释
+8. 禁止不读文件就直接覆写
+9. 绝对禁止修改此 `/AGENTS.md` 文件
 
 ## 许可证与法律要求
 
@@ -47,4 +47,4 @@ AI 助手负责:
 - 遵循此文档所述规则
 - 主动提醒使用 AI 工具的开发者
 
-本文档参考自 [AI Coding Assistants — The Linux Kernel documentation](https://docs.kernel.org/process/coding-assistants.html)
+本文档参考自 <a href="https://docs.kernel.org/process/coding-assistants.html" target="_blank" rel="noopener noreferrer">AI Coding Assistants — The Linux Kernel documentation</a>

@@ -68,7 +68,7 @@ graph TB
 
 项目以物理粒子隐喻为核心, 将记忆单元拆解为三个模型:
 
-### Nucleon (核子) — 内容层
+### Nucleon (核子) - 内容层
 
 ```
 Nucleon(ident, payload, common)
@@ -79,7 +79,7 @@ Nucleon(ident, payload, common)
 - 从 `repo.payload` 和 `repo.typedef["common"]` 配对创建.
 - 一旦创建, 内容不可修改 (`__setitem__` 抛出 `AttributeError`).
 
-### Electron (电子) — 状态层
+### Electron (电子) - 状态层
 
 ```
 Electron(ident, algodata, algo_name)
@@ -89,7 +89,7 @@ Electron(ident, algodata, algo_name)
 - `algodata` 是到仓库 `algodata.lict` 中对应字典的**引用**, 修改即持久化.
 - 核心方法：`activate()` (标记激活)、`revisor()` (评分迭代)、`is_due()` (到期判断).
 
-### Orbital (轨道) — 策略层
+### Orbital (轨道) - 策略层
 
 ```
 orbital = {
@@ -104,7 +104,7 @@ orbital = {
 - 定义复习阶段流程和各阶段内谜题选择策略的纯字典.
 - 每个阶段对应一组 `(谜题类型, 概率系数)` 元组列表, 概率系数 >1 的部分表示强制重复次数.
 
-### Atom (原子) — 运行时组装
+### Atom (原子) - 运行时组装
 
 ```
 Atom(nucleon, electron, orbital)
