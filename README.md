@@ -135,8 +135,8 @@ HeurAMS 项目标识如下, 矢量图文件位于 `./src/heurams/assets/art/` �
 
 <div style="display: flex; flex-wrap: wrap; gap: 5px;">
   <img src="src/heurams/assets/art/logo.svg" height="96px">
-  <img src="src/heurams/assets/art/logo-mono-dark.svg" height="96px">
   <img src="src/heurams/assets/art/logo-mono-light.svg" height="96px">
+  <img src="src/heurams/assets/art/logo-mono-dark.svg" height="96px">
 </div>
 
 颜色分别是: `#1660A5 (海蓝色)` `#545F70 (蓝灰色)` `#1A1A1A (暗色单色图标深黑色)` `#FFFFFF (明亮单色图标白色)`.
