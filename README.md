@@ -127,7 +127,19 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 
 欢迎参与到项目协作中!  
 详见[贡献指南](CONTRIBUTING.md).  
-关于 AI 辅助开发的说明, 请参阅[AGENTS.md](AGENTS.md).
+关于 AI 辅助开发的说明, 请参阅 [AGENTS.md](AGENTS.md).
+
+## 项目标识
+
+HeurAMS 项目标识如下, 矢量图文件位于 `./src/heurams/assets/art/` 目录.
+
+<div style="display: flex; flex-wrap: wrap; gap: 5px;">
+  <img src="src/heurams/assets/art/logo.svg" height="96px">
+  <img src="src/heurams/assets/art/logo-mono-dark.svg" height="96px">
+  <img src="src/heurams/assets/art/logo-mono-light.svg" height="96px">
+</div>
+
+颜色分别是: `#1660A5 (海蓝色)` `#545F70 (蓝灰色)` `#1A1A1A (暗色单色图标深黑色)` `#FFFFFF (明亮单色图标白色)`.
 
 ## 许可证
 
