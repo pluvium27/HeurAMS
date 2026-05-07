@@ -22,7 +22,14 @@ logger = get_logger(__name__)
 logger.debug(f"包目录: {rootdir}")
 logger.debug(f"工作目录: {workdir}")
 
-(workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
+default_data = rootdir / "assets" / "data"
+user_data = workdir / "data"
+if not user_data.exists():
+    logger.info("初始化数据目录: %s", user_data)
+    import shutil
+    shutil.copytree(default_data, user_data)
+else:
+    (workdir / "data" / "config").mkdir(parents=True, exist_ok=True)
 
 config_var: ContextVar[ConfigDict] = ContextVar(
     "config_var",
