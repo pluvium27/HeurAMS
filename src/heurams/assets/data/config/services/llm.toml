@@ -1,4 +1,4 @@
-provider = "openai"
+provider = "none"
 _provider_desc = "模型接口类型"
 
 [_provider_candidate]

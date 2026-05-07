@@ -66,10 +66,10 @@ class DashboardScreen(Screen):
                 Vertical(
                     Label(f"已加载 {len(self.repos)} 个单元集"),
                     Label(
-                        f"共计 {reduce(lambda x, y: x + y, map(lambda x: x.progress['total'], self.repos))} 个单元"
+                        f"共计 {reduce(lambda x, y: x + y, map(lambda x: x.progress['total'], self.repos)) if self.repos else 0} 个单元"
                     ),
                     Label(
-                        f"已激活 {reduce(lambda x, y: x + y, map(lambda x: x.progress['touched'], self.repos))} 个单元"
+                        f"已激活 {reduce(lambda x, y: x + y, map(lambda x: x.progress['touched'], self.repos)) if self.repos else 0} 个单元"
                     ),
                     Label(f""),
                     classes="right",
@@ -160,8 +160,8 @@ class DashboardScreen(Screen):
             repo_list_widget.append(
                 ListItem(
                     Static(
-                        f"在 {config_var.get()['global']['paths']['repo']} 中未找到任何仓库.\n"
-                        "请导入仓库后重启应用, 或者新建空的仓库."
+                        f"在 {config_var.get()['global']['paths']['repo']} 中未找到任何单元集仓库目录.\n"
+                        "请导入单元集后重启应用, 或者新建单元集."
                     ),
                     id="not-found",
                 )

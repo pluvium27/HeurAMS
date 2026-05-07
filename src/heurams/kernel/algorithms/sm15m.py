@@ -600,9 +600,7 @@ class SM:
 # Global state management
 # ============================================================================
 
-_GLOBAL_STATE_FILE = pathlib.Path(
-    config_var.get()["global"]["paths"]["data"]
-) / "global" / "sm15m_global_state.json"
+_GLOBAL_STATE_FILE = pathlib.Path(config_var.get()["global"]["paths"]["misc"]) / "sm15m_global_state.json"
 
 
 def _get_global_sm():

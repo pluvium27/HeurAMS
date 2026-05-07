@@ -439,7 +439,6 @@ version = "0.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "tabulate" },
-    { name = "textual" },
     { name = "toml" },
     { name = "transitions" },
 ]
@@ -499,8 +498,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.0.0" },
     { name = "tabulate", specifier = ">=0.10.0" },
-    { name = "textual", specifier = ">=8.2.5" },
-    { name = "textual", marker = "extra == 'interface'", specifier = ">=8.2.3" },
+    { name = "textual", marker = "extra == 'interface'", specifier = ">=8.2.5" },
     { name = "toml", specifier = ">=0.10.2" },
     { name = "transitions", specifier = ">=0.9.3" },
     { name = "zmq", marker = "extra == 'dev'", specifier = ">=0.0.0" },

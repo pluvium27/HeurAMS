@@ -21,8 +21,8 @@ logger = get_logger(__name__)
 
 # 全局 Scheduler 状态文件路径
 _SCHEDULER_STATE_FILE = pathlib.Path(
-    config_var.get()["global"]["paths"]["data"]
-) / "global" / "fsrs_scheduler_state.json"
+    config_var.get()["global"]["paths"]["misc"]
+) / "fsrs_scheduler_state.json"
 
 
 def _get_global_scheduler():

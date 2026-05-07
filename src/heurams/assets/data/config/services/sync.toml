@@ -1,4 +1,4 @@
-provider = "webdav"
+provider = "none"
 _provider_desc = "同步服务驱动类型"
 
 [_provider_candidate]
