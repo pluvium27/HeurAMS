@@ -1,0 +1,4 @@
+_global_desc = "用户界面通用设置"
+_widgets_desc = "组件设置"
+_screens_desc = "界面设置"
+_puzzles_desc = "谜题生成器设置"

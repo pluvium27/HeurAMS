@@ -1,0 +1,23 @@
+.repo-list {
+
+}
+
+#header {
+    height: 3;
+}
+
+#analysis {
+    margin: 0;
+    padding: 0;
+} 
+
+.repo-list-item {
+    layout: grid;
+    grid-size: 1;
+    height: 3;
+}
+
+.repo-list-item-shortcut {
+    dock: right;
+    offset: -5% 0
+}

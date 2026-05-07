@@ -1,57 +1,99 @@
-# 配置文件服务
 import pathlib
-import typing
 
 import toml
+from collections import UserDict
 
 from heurams.services.logger import get_logger
+from heurams.services.exceptions import WTFException
+
+# 我们的流程是: 找到文件名: 返回文件名里头的数据; 找不到: 继续查索引; 所以 self.data 除了存本级各种索引球用没得
+logger = get_logger(__name__)
 
 
-class ConfigFile:
-    def __init__(self, path: pathlib.Path):
-        self.logger = get_logger(__name__)
-        self.path = path
-        if not self.path.exists():
-            self.path.touch()
-            self.logger.debug("创建配置文件: %s", self.path)
-        self.data = dict()
-        self._load()
+class ConfigDict(UserDict):
+    _instances = {}  # 必须使用单例模式, 不然有严重的多实例导致的配置无法持久化问题
 
-    def _load(self):
-        """从文件加载配置数据"""
-        with open(self.path, "r") as f:
-            try:
-                self.data = toml.load(f)
-                self.logger.debug("配置文件加载成功: %s", self.path)
-            except toml.TomlDecodeError as e:
-                print(f"{e}")
-                self.logger.error("TOML解析错误: %s", e)
-                self.data = {}
+    def __new__(cls, config_path: pathlib.Path, dict=None):
+        if dict:
+            raise WTFException("不要放默认值...")
 
-    def modify(self, key: str, value: typing.Any):
-        """修改配置值并保存"""
-        self.data[key] = value
-        self.logger.debug("修改配置项: %s = %s", key, value)
-        self.save()
+        # 规范化路径, 免得单例存在"别名"
+        path_key = config_path.resolve()
 
-    def save(self, path: typing.Union[str, pathlib.Path] = ""):
-        """保存配置到文件"""
-        save_path = pathlib.Path(path) if path else self.path
-        with open(save_path, "w") as f:
+        if path_key in cls._instances:
+            return cls._instances[path_key]
+
+        instance = super().__new__(cls)
+        cls._instances[path_key] = instance
+        return instance
+
+    def __init__(self, config_path: pathlib.Path, dict=None):  # 需要自己把自己提起来
+        # 避免重复初始化
+        if hasattr(self, "_initialized"):
+            return
+        self._initialized = True
+        if dict:
+            raise WTFException("不要放默认值...")
+        super().__init__(dict)
+        logger = get_logger(__name__)
+        self.path = config_path
+        self.is_dir = self.path.is_dir()
+        if self.is_dir:
+            self.update_index()
+        else:
+            with open(self.path, "r+") as f:  # TODO: 给这个做缓存
+                try:
+                    self.data = toml.load(f)
+                except:
+                    self.data = {}
+                    self.persist = lambda: False  # 不修改错误的配置文件
+
+    def __getitem__(self, key):
+        # 我们实现了先进的懒狗加载
+        value = super().__getitem__(key)
+        if isinstance(value, pathlib.Path):
+            return ConfigDict(value)
+        return value
+
+    def __contains__(self, key):
+        return super().__contains__(key)
+
+    def __setitem__(self, key, value):
+        origvalue = super().__getitem__(key)  # 所以你不该访问不存在的对象
+        if isinstance(origvalue, ConfigDict):
+            if origvalue.path.is_dir():
+                raise WTFException("你怎么能变更目录配置的内容呢?!")
+            else:
+                # 对文件, 我们允许这种覆写存在
+                # 但是不准变类型
+                origvalue.data = value
+        super().__setitem__(key, value)
+
+    def update_index(
+        self,
+    ):  # 如果有人没事干在config里面创建指向config的符号链接 这玩意会崩溃 但是不要修复: 需要这个符号链接特性
+        for i in self.path.iterdir():
+            if i.name.startswith("_"):
+                if i.name == "_.toml" and not i.is_dir():
+                    with open(self.path / "_.toml", "r+") as f:
+                        self.data.update(dict(toml.load(f)))
+                continue
+            if i.is_dir():
+                self.data[i.name] = i
+            else:
+                if i.suffix == ".toml":
+                    self.data[i.stem] = i
+                else:
+                    logger.debug(f"配置目录中有无效的文件 {i.stem}")  # what's up bro
+
+    def persist(self):
+        if self.is_dir:
+            for i in self.data.keys():
+                j = self[i]
+                if isinstance(j, ConfigDict):
+                    j.persist()
+            logger.debug("完成配置持久化")
+            return
+
+        with open(self.path, "w+") as f:
             toml.dump(self.data, f)
-        self.logger.debug("配置文件已保存: %s", save_path)
-
-    def get(self, key: str, default: typing.Any = None) -> typing.Any:
-        """获取配置值, 如果不存在返回默认值"""
-        return self.data.get(key, default)
-
-    def __getitem__(self, key: str) -> typing.Any:
-        return self.data[key]
-
-    def __setitem__(self, key: str, value: typing.Any):
-        self.data[key] = value
-        self.save()
-
-    def __contains__(self, key: str) -> bool:
-        """支持 in 语法"""
-        return key in self.data

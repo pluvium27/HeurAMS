@@ -1,30 +1,17 @@
-from typing import TypedDict
+"""轨道对象"""
 
-from heurams.services.logger import get_logger
+# 似乎没有实现这个类的必要...
+# 那不妨在这儿写点文档
 
-logger = get_logger(__name__)
-logger.debug("Orbital 类型定义模块已加载")
+"""
+orbital, 即轨道, 是定义队列式复习阶段流程的数据结构, 其实就是个字典, 至于为何不用typeddict, 因为懒.
 
-
-class OrbitalSchedule(TypedDict):
-    quick_review: list
-    recognition: list
-    final_review: list
-
-
-class Orbital(TypedDict):
-    schedule: OrbitalSchedule
-    puzzles: dict
-
-
-"""一份示例
-["__metadata__.orbital.puzzles"] # 谜题定义
-"Recognition" = { __origin__ = "recognition", __hint__ = "", primary = "eval:nucleon['content']", secondery = ["eval:nucleon['keyword_note']", "eval:nucleon['note']"], top_dim = ["eval:nucleon['translation']"] }
-"SelectMeaning" = { __origin__ = "mcq", __hint__ = "eval:nucleon['content']", jammer = "eval:nucleon['keyword_note']", max_riddles_num = "eval:default['mcq']['max_riddles_num']", prefix = "选择正确项: " }
-"FillBlank" = { __origin__ = "cloze", __hint__ = "", text = "eval:nucleon['content']", delimiter = "eval:metadata['formation']['delimiter']", min_denominator = "eval:default['cloze']['min_denominator']"}
-
-["__metadata__.orbital.schedule"] # 内置的推荐学习方案
-quick_review = [["FillBlank", "1.0"], ["SelectMeaning", "0.5"], ["recognition", "1.0"]]
-recognition = [["recognition", "1.0"]]
-final_review = [["FillBlank", "0.7"], ["SelectMeaning", "0.7"], ["recognition", "1.0"]]
+orbital_example = {
+    "schedule": [列表 存储阶段(routes)名称]
+    "routes":{
+        阶段名称 = [["谜题(puzzle 现称 Puzzles 评估器)名称", "概率系数 可大于1(整数部分为重复次数) 注意使用字符串包裹(toml 规范)"], ...],
+        ...
+    }
+}
+至于谜题定义 放在 nucleon['puzzles'], 这样设计是为了兼容多种不同谜题实现的记忆单元, 尽管如此, 你也可见其谜题调度方式必须是相同的.
 """

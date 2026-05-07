@@ -1,80 +1,101 @@
-#!/usr/bin/env python3
+"""关于界面"""
+
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, Markdown, Static
+from textual.widgets import Button, Footer, Header, Label, Markdown
+
+from textual import events, on
 
 import heurams.services.version as version
 from heurams.context import *
+import platform
+import shutil
+import psutil
+import os
+import sys
 
 
 class AboutScreen(Screen):
+    BINDINGS = [
+        ("q", "go_back", "返回"),
+        ("z", "go_back", "关于"),
+    ]
+    SUB_TITLE = "关于"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    @on(events.ScreenResume)
+    def post_active(self, event):
+        from heurams.interface import shim
+
+        shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
+
+        if config_var.get()["interface"]["global"]["show_header"]:
+            yield Header(
+                show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
+            )
         with ScrollableContainer(id="about_container"):
             yield Label("[b]关于与版本信息[/b]")
+
+            # 获取系统信息
+            textual_version = self._get_textual_version()
+            terminal_info = self._get_terminal_info()
+            python_version = self._get_python_version()
+            os_version = self._get_os_version()
+            disk_usage = self._get_disk_usage()
+            memory_info = self._get_memory_info()
+
             about_text = f"""
-# 关于 "潜进"  
+# 关于 HeurAMS "潜进"  
 
-版本 {version.ver} {version.stage.capitalize()}
-  
-开发代号: {version.codename.capitalize()}  
+主程序库版本: `{version.ver}-python`  
+用户界面分支: `Textual TUI (基本用户界面)`  
+用户界面版本: `{version.ver}`  
+API 版本代号: `{version.codename.capitalize()}`
 
-一个基于启发式算法的开放源代码记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
+> 一个基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
+> 一个开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  
 
-以 AGPL-3.0 开放源代码  
+您可在项目主页 https://ams.pluv27.top 获取用户指南, 开发文档与软件更新, 并参与到软件的开发与改进工作.  
 
-开发人员:  
+以 GNU Affero 通用公共许可证 (第3版) 开放源代码, 并有一条豁免本机 API 调用的附加条款, 用于其他前端到程序库的接口调用.  
 
-- Wang Zhiyu([@pluvium27](https://github.com/pluvium27)): 项目作者  
+您正使用程序库内置的终端用户界面, 它是第一个全功能前端实现与程序库测试套件, 位于程序库的 interface 子目录.  
 
-特别感谢:
+开发人员列表:
+
+- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): 项目发起与主要开发者  
+
+感谢以下人士与团体, 他们的算法与理论构成了此软件现有算法的基石:  
 
 - [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论
-- [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 实现
-- [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 文献参考
+- [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 逆向实现
+- [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 间隔重复文献参考
+- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS 算法底层实现
 
-# 参与贡献
+# 运行环境信息
 
-我们是一个年轻且包容的社区, 由技术人员, 设计师, 文书工作者, 以及创意人员共同构成,  
+Python 解释器版本: {python_version}  
+Python 解释器路径: {sys.executable}  
+Textual 框架版本: {textual_version}  
+终端模拟器: {terminal_info}  
+操作系统版本: {os_version}  
+存储余量: {disk_usage}  
+内存总量: {memory_info}  
 
-通过我们协力开发的软件为所有人谋取福祉.  
-
-上述工作不可避免地让我们确立了下列价值观 (取自 KDE 宣言):  
-
- - 开放治理 确保更多人能参与我们的领导和决策进程;  
-
- - 自由软件 确保我们的工作成果随时能为所有人所用;  
-
- - 多样包容 确保所有人都能加入社区并参加工作;  
-
- - 创新精神 确保新思路能不断涌现并服务于所有人;  
-
- - 共同产权 确保我们能团结一致;  
-
- - 迎合用户 确保我们的成果对所有人有用.  
-
-综上所述, 在为我们共同目标奋斗的过程中, 我们认为上述价值观反映了我们社区的本质, 是我们始终如一地保持初心的关键所在.  
-
-这是一项立足于协作精神的事业, 它的运作和产出不受任何单一个人或者机构的操纵.  
-
-我们的共同目标是为人人带来高品质的辅助记忆 & 学习软件.
-
-不管您来自何方, 我们都欢迎您加入社区并做出贡献.
+报告问题时, 请复制这些信息到问题描述, 并上传软件日志 `heurams.log` 作为附件, 以协助开发者定位错误  
 """
-
-            # """
-            # 学术数据
-
-            # "潜进" 的用户数据可用于科学方面的研究, 我们将在未来版本添加学术数据的收集和展示平台
-            # """
             yield Markdown(about_text, classes="about-markdown")
 
             yield Button(
                 "返回主界面",
                 id="back_button",
                 variant="primary",
+                flat=True,
                 classes="back-button",
             )
         yield Footer()
@@ -86,3 +107,72 @@ class AboutScreen(Screen):
         event.stop()
         if event.button.id == "back_button":
             self.action_go_back()
+
+    def _get_textual_version(self) -> str:
+        """获取 Textual 框架版本"""
+        try:
+            import textual
+
+            return textual.__version__
+        except (ImportError, AttributeError):
+            return "未知"
+
+    def _get_terminal_info(self) -> str:
+        """获取终端模拟器信息"""
+        terminal = shutil.which("terminal")
+        if terminal:
+            return terminal
+        # 尝试从环境变量获取
+        terminal_env = os.environ.get("TERM_PROGRAM") or os.environ.get("TERM")
+        return terminal_env or "未知"
+
+    def _get_python_version(self) -> str:
+        """获取 Python 解释器版本"""
+        return platform.python_version()
+
+    def _get_os_version(self) -> str:
+        """获取操作系统版本"""
+        try:
+            if platform.system() == "Darwin":
+                # macOS
+                import subprocess
+
+                result = subprocess.run(
+                    ["sw_vers", "-productVersion"], capture_output=True, text=True
+                )
+                return f"macOS {result.stdout.strip()}"
+            elif platform.system() == "Windows":
+                # Windows
+                return f"Windows {platform.release()}"
+            elif platform.system() == "Linux":
+                # Linux - 尝试获取发行版信息
+                try:
+                    import distro
+
+                    return f"{distro.name()} {distro.version()}"
+                except (ImportError, AttributeError):
+                    return platform.platform()
+            else:
+                return platform.platform()
+        except Exception:
+            return platform.platform()
+
+    def _get_disk_usage(self) -> str:
+        """获取磁盘使用情况"""
+        try:
+            usage = psutil.disk_usage("/")
+            free_gb = usage.free / (1024**3)
+            total_gb = usage.total / (1024**3)
+            percent_free = (free_gb / total_gb) * 100
+            return f"{free_gb:.1f} GB ({percent_free:.1f}%)"
+        except Exception:
+            return "未知"
+
+    def _get_memory_info(self) -> str:
+        """获取内存信息"""
+        try:
+            memory = psutil.virtual_memory()
+            total_gb = memory.total / (1024**3)
+            return f"{total_gb:.1f} GB"
+        except Exception:
+            return "未知"

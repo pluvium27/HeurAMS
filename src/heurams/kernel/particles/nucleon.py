@@ -1,56 +1,78 @@
+from copy import deepcopy
+
+from heurams.context import config_var
 from heurams.services.logger import get_logger
+from heurams.kernel.auxiliary.evalizor import Evalizer
 
 logger = get_logger(__name__)
 
 
 class Nucleon:
-    """原子核: 材料元数据"""
+    """原子核: 带有运行时隔离的模板化只读材料元数据容器"""
 
-    def __init__(self, ident: str, payload: dict, metadata: dict = {}):
-        """初始化原子核 (记忆内容)
-
-        Args:
-            ident: 唯一标识符
-            payload: 记忆内容信息
-            metadata: 可选元数据信息
-        """
-        logger.debug(
-            "创建 Nucleon 实例, ident: '%s', payload keys: %s, metadata keys: %s",
-            ident,
-            list(payload.keys()) if payload else [],
-            list(metadata.keys()) if metadata else [],
-        )
-        self.metadata = metadata
-        self.payload = payload
+    def __init__(self, ident, payload, common):
         self.ident = ident
-        logger.debug("Nucleon 初始化完成")
+        try:
+            data_safe = deepcopy((payload | common))
+            data_puz = deepcopy(data_safe["puzzles"])
+            data_safe["puzzles"] = {}
+            env = {
+                "payload": data_safe,
+                "default": config_var.get()["interface"]["puzzles"],
+                "nucleon": data_safe,
+            }
+            self.evalizer = Evalizer(environment=env)
+            data_safe = self.evalizer(deepcopy(data_safe))
+            env = {
+                "payload": data_safe,
+                "default": config_var.get()["interface"]["puzzles"],
+                "nucleon": data_safe,
+            }
+            self.evalizer = Evalizer(environment=env)
+            data_puz = self.evalizer(deepcopy(data_puz))
+            data_safe["puzzles"] = data_puz  # type: ignore
+            self.data: dict = data_safe  # type: ignore
+        except Exception:
+            self.data = payload | common
 
     def __getitem__(self, key):
-        logger.debug("Nucleon.__getitem__: key='%s'", key)
-        if key == "ident":
-            logger.debug("返回 ident: '%s'", self.ident)
-            return self.ident
-        if key in self.payload:
-            value = self.payload[key]
-            logger.debug(
-                "返回 payload['%s'], value type: %s", key, type(value).__name__
-            )
-            return value
+        if isinstance(key, str):
+            if key == "ident":
+                return self.ident
+            return self.data[key]
         else:
-            logger.error("键 '%s' 未在 payload 中找到", key)
-            raise KeyError(f"Key '{key}' not found in payload.")
+            raise AttributeError
+
+    def __setitem__(self, key, value):
+        raise AttributeError("应为只读")
+
+    def __delitem__(self, key):
+        raise AttributeError("应为只读")
 
     def __iter__(self):
-        yield from self.payload.keys()
+        return iter(self.data)
+
+    def __contains__(self, key):
+        return key in (self.data)
+
+    def get(self, key, default=None):
+        if key in self:
+            return self[key]
+        return default
 
     def __len__(self):
-        return len(self.payload)
+        return len(self.data)
 
-    def __hash__(self):
-        return hash(self.ident)
+    def __repr__(self):
+        from pprint import pformat
+
+        s = pformat(self.data, indent=4)
+        return s
 
     @staticmethod
-    def placeholder():
-        """生成一个占位原子核"""
-        logger.debug("创建 Nucleon 占位符")
-        return Nucleon("核子对象样例内容", {})
+    def from_data(nucleonic_data: tuple):
+        _data = nucleonic_data
+        payload = _data[1][0]
+        common = _data[1][1]
+        ident = _data[0]  # TODO:实现eval
+        return Nucleon(ident, payload, common)

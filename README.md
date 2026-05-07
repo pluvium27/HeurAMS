@@ -1,201 +1,165 @@
-# 潜进 (HeurAMS) - 启发式辅助记忆程序
+# 潜进 (HeurAMS) - 启发式辅助记忆调度器
 
 ## 概述
-"潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是为习题册, 古诗词, 及其他问答/记忆/理解型知识设计的多用途辅助记忆软件, 提供动态规划的优化记忆方案  
+
+"潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,  
+也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.
 
 ## 关于此仓库
-"潜进" 软件组项目包含多个子项目  
-此仓库包含了 "潜进" 项目的核心和基于 Textual 的基本用户界面的实现  
 
-## 开发进程
-- 0.0.x: 简易调度器实现与最小原型.  
-- 0.1.x: 命令行操作的调度器.  
-- 0.2.x: 使用 Textual 构建富文本终端用户界面, 项目可行性验证, 采用 SM-2 原始算法, 评估方式为用户自评估的原型.  
-- 0.3.x: 简单的多文件项目, 创建了记忆内容/算法数据结构, 基于 SM-2 改进算法的自动复习测评评估. 重点设计古诗文记忆理解功能, 以及 TUI 界面实现, 简单的 TTS 集成.  
-- 0.4.x: 使用模块管理解耦设计, 增加文档与类型标注, 采用上下文设计模式的隐式依赖注入与遵从 IoC, 注册器设计的算法与功能实现, 支持其他调度算法模块 (SM-2, FSRS) 与谜题模块, 采用日志调试, 更新文件格式, 引入动态数据模式(宏驱动的动态内容生成), 与基于文件的策略调控, 更佳的用户数据处理, 加入模块化扩展集成, 将算法数据格式换为 json 提高性能, 采用 provider-service 抽象架构, 支持切换服务提供者, 整体兼容性改进.  
-> 下一步?  
-> 使用 Flutter 构建酷酷的现代化前端, 增加云同步/文档源服务...
+此仓库为 "潜进" 的核心程序库在 python 语言下的实现  
+包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)  
+除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库或使用 `RPC` 与 `heurams` 程序库实例通讯, 使用框架构建其他辅助记忆功能前端或其他应用程序
+
+> [!NOTE]
+> 我们已经着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目  
+> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android, iOS 和 Plasma Mobile 提供现代用户界面  
+> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发  
 
 ## 特性
 
-### 间隔迭代算法
-> 许多出版物都广泛讨论了不同重复间隔对学习效果的影响. 特别是, 间隔效应被认为是一种普遍现象. 间隔效应是指, 如果重复的间隔是分散/稀疏的, 而不是集中重复, 那么学习任务的表现会更好. 因此, 有观点提出, 学习中使用的最佳重复间隔是**最长的、但不会导致遗忘的间隔**. 
-- 采用经实证的 SM-2 间隔迭代算法, 此算法亦用作 Anki 闪卡记忆软件的默认闪卡调度器
-- 动态规划每个记忆单元的记忆间隔时间表
-- 动态跟踪记忆反馈数据, 优化长期记忆保留率与稳定性
+### 间隔重复调度器
 
-### 学习进程优化
-- 逐字解析: 支持逐字详细释义解析
-- 语法分析: 接入生成式人工智能, 支持古文结构交互式解析
-- 自然语音: 集成微软神经网络文本转语音 (TTS) 技术
-- 多种谜题类型: 选择题 (MCQ)、填空题 (Cloze)、识别题 (Recognition)
-- 动态内容生成: 支持宏驱动的模板系统, 根据上下文动态生成题目
-- 云同步支持: 通过 WebDAV 协议同步数据到远程服务器
+> 许多出版物都广泛讨论了不同重复间隔对学习效果的影响. 特别是, 间隔效应被认为是一种普遍现象. 间隔效应是指, 如果重复的间隔是分散/稀疏的, 而不是集中重复, 那么学习任务的表现会更好. 因此, 有观点提出, 学习中使用的最佳重复间隔是**最长的, 但不会导致遗忘的间隔**.
 
-### 实用用户界面
-- 响应式 Textual 框架构建的跨平台 TUI 界面
-- 支持触屏/鼠标/键盘多操作模式
-- 简洁直观的复习流程设计
+- 软件开箱即用, 无需多加配置即可使用默认的 `SM-2` 算法进行学习
+- 此外, 算法模块是 "潜进" 内核 (heurams.kernel) 中的一等公民, 内核天然支持插拔各型算法
+- 无需安装繁杂的插件即可分单元集完成算法快速切换与调优, 研究者可以方便地修改算法模块以便捷地进行研究与测试
+- 默认使用 `SM-2` 简单间隔重复算法, 此算法亦用作 `Anki` 闪卡记忆软件的默认闪卡调度器
+- 内置 `NSP-0` 筛选用非间隔重复算法以便快速筛选记忆内容, `FSRS` 先进间隔重复算法作为效率更高的调度器, 与 `SM-15M (移植自 sm.js 项目)` 复杂间隔重复算法(逆向工程)
+- 算法模块可以标记记忆项目, 也可以动态规划每个记忆单元的记忆间隔时间表, 动态跟踪记忆反馈数据, 以优化长期记忆保留率与稳定性
+- 得益于项目的模块化架构与单元集结构设计, 一个项目甚至可以与任意种算法共存并互通, 这对研究者及想探索/实验高效率方法的用户极其友好
 
-### 架构特性
-- 模块化设计: 算法、谜题、服务提供者可插拔替换
-- 上下文管理: 使用 ContextVar 实现隐式依赖注入
-- 数据持久化: TOML 配置与内容, JSON 算法状态
-- 服务抽象: 音频播放、TTS、LLM 通过 provider 架构支持多种后端
-- 完整日志系统: 带轮转的日志记录, 便于调试
+### 多模态学习进程
 
-## 安装
+与 Anki 的 SQLite `.apkg` 包不同, 我们坚持使用人类可读的文件夹组织单元集, 这带来了若干好处, 包括:
+
+- 人类可读: 您可以用任意工具, 乃至一个记事本自由修改记忆载荷数据而无需打开软件
+- 元数据配置: 配置自由度极高, 可以任意组合, 重造, 乃至创造新内容
+- 测验, 算法与知识互相隔离: 一条知识不再是单一的闪卡, 不仅可以用若干不同的算法规划, 还可以用多种并行的谜题类型测验, 极大地提升学习效果和丰富度. 作为学习者, 您无需担忧概念复杂--仅需从云端下载单元集即可开箱即用上述特性!
+- 多模态学习
+  - 软件自身集成了文本转语音 (TTS) , 音频与语言模型 (LLM) 模块, 这些功能乃至功能本身都是可插拔, 可扩展, 可切换驱动的, 这为内容创建了极大的丰富度
+  - 软件内置多种谜题类型, 包括选择题 (MCQ), 填空题 (Cloze) 与识别题 (Recognition), 您可在同一单元应用多种, 或是选择性启用
+  - 软件天然支持动态内容生成, 支持宏驱动的模板系统, 根据上下文乃至语言模型动态生成知识点的解析
+  - 在间隔重复研究尚被 SuperMemo 系列独占的时代, Wozniak 就早已表示 "如果不能理解知识, 就无需记忆它". 今天, 我们依然相信理解是记忆的基石
+- 云同步与分享优化:
+  - 由于记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持版本控制
+  - 如果您想分享单文件, 软件也支持导出为压缩包或合并成单文本文件以通过纯文本文件形式在 pastebin 等平台分享
+- 性能提升: 得益于现代且支持分块的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
+- AI 辅助友好: 想象您有一些 .apkg 牌组或一大段教材内容, 您可以方便且高效率地使用 AI 工具创建可在 HeurAMS 使用的单元集
+
+### 内置实用用户界面
+
+尽管不是唯一前端, 但响应式 Textual 框架构建的内置终端用户界面在多种场景下仍具有独特优势:
+
+- 跨平台, 并支持触屏/鼠标/键盘多操作模式
+- 与几乎所有现代终端模拟器相容
+- 对于<a href="https://www.arewesixelyet.com/" target="_blank" rel="noopener noreferrer">支持 sixel 协议的终端模拟器</a>, 可显示图像内容
+- 可通过 textual-web 作为服务部署, 并在任意浏览器使用
+- 简洁直观, 键盘友好, 全功能且高效率的用户界面设计
+- 易于嵌入: 可在 getty/kmscon 中运行而无需任何桌面图形服务
+- 资源占用小, 运行流畅, 不拖泥带水
+- 便于测试与调试程序库
+
+[查看屏幕截图](SCREENSHOTS.md)
+
+## 快速开始
+
+### 从包管理器安装
+
+潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用我们的基础设施安装稳定版和开发版本.
+
+#### 稳定版本
+
+安装适用于用户体验的可选依赖(推荐):
+```
+python -m pip install heurams[basic] -i https://pypi.pluv27.top/root/stable/+simple/
+```
+安装适用于一般计算机的通用音频模块(基于 playsound3):  
+(此项不适用于 termux 环境, termux 的音频支持是内建的)
+```
+python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/stable/+simple/ 
+```
+
+#### 开发版本
+
+> [!CAUTION]
+> 对于部分 Linux 发行版和 Android Termux 用户:  
+> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖.  
+> 例如在 termux 上先运行 `pkg install cmake clang libzmq`.  
+> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器.  
+
+安装全部可选依赖(推荐):
+```
+python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
+```
+
+#### 依赖组说明
+
+由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面提供的命令会安装部分可选依赖, 以下是依赖组列表:
+
+| 依赖组 | 包含模块 | 说明 |
+|--------|----------|------|
+| 最小化安装 | tabulate, toml, transitions | 核心驱动程序库, 始终必需 |
+| interface | textual, psutil | 基本用户界面依赖 |
+| algo-fsrs | fsrs | FSRS 算法模块 |
+| tts-edgetts | edge-tts | 微软文本转语音 |
+| llm | openai | OpenAI 式 API 调用 |
+| audio-playsound | playsound3 | 通用音频模块 |
+| dev | zmq, pytest, pytest-cov | 开发调试与测试工具 |
+| basic | [tts-edgetts], [llm-openai], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
+| all | 以上所有依赖 | 完整安装组 |
 
 ### 从源码安装
-1. 克隆仓库: 
-   ```bash
-   git clone https://gitea.imwangzhiyu.xyz/ajax/HeurAMS
-   cd HeurAMS
-   ```
 
-2. 安装依赖: 
-   ```bash
-   pip install -r requirements.txt
-   ```
+我们提供原生 python 和 uv 两种安装方式.  
+详见[贡献指南](CONTRIBUTING.md).
 
-3. 以开发模式安装包: 
-   ```bash
-   pip install -e .
-   ```
+## 常见问题 (FAQ)
 
-## 使用
+详见[常见问题](FAQ.md).
 
-### 启动应用
-```bash
-# 在任一目录(建议是空目录或者包根目录, 将被用作存放数据)下运行
-python -m heurams.interface
-```
+## 项目架构
 
-### 数据目录结构
-应用会在工作目录下创建以下数据目录: 
-- `data/nucleon/`: 记忆内容 (TOML 格式)
-- `data/electron/`: 算法状态 (JSON 格式)
-- `data/orbital/`: 策略配置 (TOML 格式)
-- `data/cache/`: 音频缓存文件
-- `data/template/`: 内容模板
+详见[架构说明](ARCHITECTURE.md).
 
-首次运行时会自动创建这些目录.
+## 参与项目
 
-## 配置
+欢迎参与到项目协作中!  
+详见[贡献指南](CONTRIBUTING.md).  
+关于 AI 辅助开发的说明, 请参阅 [AGENTS.md](AGENTS.md).
 
-配置文件位于 `config/config.toml`(相对于工作目录). 如果不存在, 会使用内置的默认配置.
+## 项目标识
 
-### 同步配置
-同步功能支持 WebDAV 协议，可在配置文件的 `[sync.webdav]` 段进行配置：
-```toml
-[sync.webdav]
-enabled = false
-url = ""                    # WebDAV 服务器地址
-username = ""               # 用户名
-password = ""               # 密码
-remote_path = "/heurams/"   # 远程路径
-sync_mode = "bidirectional" # 同步模式: bidirectional/upload_only/download_only
-conflict_strategy = "newer" # 冲突策略: newer/ask/keep_both
-verify_ssl = true           # SSL 证书验证
-```
+HeurAMS 项目标识如下, 矢量图文件位于 `./src/heurams/assets/art/` 目录.
 
-启用同步后，可通过应用内的同步工具进行数据备份和恢复。 
+<div style="display: flex; flex-wrap: wrap; gap: 5px;">
+  <img src="src/heurams/assets/art/logo.svg" height="96px">
+  <img src="src/heurams/assets/art/logo-mono-light.svg" height="96px">
+  <img src="src/heurams/assets/art/logo-mono-dark.svg" height="96px">
+</div>
 
-## 项目结构
-
-### 架构图
-
-以下 Mermaid 图展示了 HeurAMS 的主要组件及其关系: 
-
-```mermaid
-graph TB
-    subgraph "用户界面层 (TUI)"
-        TUI[Textual TUI]
-        Widgets[界面组件]
-        Screens[应用屏幕]
-    end
-
-    subgraph "服务层"
-        Config[配置管理]
-        Logger[日志系统]
-        Timer[时间服务]
-        AudioService[音频服务]
-        TTSService[TTS服务]
-        SyncService[同步服务]
-        OtherServices[其他服务]
-    end
-
-    subgraph "内核层"
-        Algorithms[算法模块]
-        Particles[数据模型]
-        Puzzles[谜题模块]
-        Reactor[调度反应器]
-    end
-
-    subgraph "提供者层"
-        AudioProvider[音频提供者]
-        TTSProvider[TTS提供者]
-        OtherProviders[其他提供者]
-    end
-
-    subgraph "数据层"
-        Files[本地文件数据]
-    end
-
-    subgraph "上下文管理"
-        Context[ConfigContext]
-        CtxVar[config_var]
-    end
-
-    TUI --> Config
-    TUI --> Logger
-    TUI --> AudioService
-    TUI --> TTSService
-    TUI --> OtherServices
-    Config --> Files
-    Config --> Context
-    AudioService --> AudioProvider
-    TTSService --> TTSProvider
-    OtherServices --> OtherProviders
-    Reactor --> Algorithms
-    Reactor --> Particles
-    Reactor --> Puzzles
-    Particles --> Files
-    Algorithms --> Files
-```
-
-### 目录结构
-```
-src/heurams/
-├── __init__.py              # 包入口点
-├── context.py               # 全局上下文、路径、配置上下文管理器
-├── services/                # 核心服务
-│   ├── config.py            # 配置管理
-│   ├── logger.py            # 日志系统
-│   ├── timer.py             # 时间服务
-│   ├── audio_service.py     # 音频播放抽象
-│   ├── tts_service.py       # 文本转语音抽象
-│   └── sync_service.py      # WebDAV 同步服务
-├── kernel/                  # 核心业务逻辑
-│   ├── algorithms/          # 间隔重复算法 (FSRS, SM2)
-│   ├── particles/           # 数据模型 (Atom, Electron, Nucleon, Orbital)
-│   ├── puzzles/             # 谜题类型 (MCQ, cloze, recognition)
-│   └── reactor/             # 调度和处理逻辑
-├── providers/               # 外部服务提供者
-│   ├── audio/               # 音频播放实现
-│   ├── tts/                 # 文本转语音实现
-│   └── llm/                 # LLM 集成
-├── interface/               # Textual TUI 界面
-│   ├── widgets/             # UI 组件
-│   ├── screens/             # 应用屏幕
-│   └── __main__.py          # 应用入口点
-└── default/                 # 默认配置和数据模板
-```
-
-## 贡献
-
-欢迎贡献！请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解贡献指南. 
+颜色分别是: `#1660A5 (海蓝色)` `#545F70 (蓝灰色)` `#1A1A1A (暗色单色图标深黑色)` `#FFFFFF (明亮单色图标白色)`.
 
 ## 许可证
 
-本项目基于 AGPL-3.0 许可证开源. 详见 [LICENSE](LICENSE) 文件. 
+### 项目本身
+
+本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款, 较标准 AGPL-3.0 更松.  
+
+详见根目录下 [LICENSE](LICENSE) 文件.  
+
+### 第三方代码
+
+项目在 `src/heurams/vendor/` 目录下嵌入或在其他位置间接使用了以下第三方代码(可能有修改):
+
+#### SM.js (slaypni)
+
+- 上游版本: commit `6e3bb4afaf484426deb4a9fa3bcffe42ac066b45` (2015年2月4日上游已停止维护)
+- 引用方式: 将 coffeescript 重写为 python 并间接引用, 数学原理一致; 并对重写后代码进行逻辑, 性能与标准化 API 改进
+- 位置: `src/heurams/kernel/algorithms/sm15m*.py`
+- 原项目: [SM.js](https://github.com/slaypni/SM-15)
+- 原版权: Copyright (c) 2014 Kazuaki Tanida
+- 原许可证: MIT License
+
+本项目受益于他们无私且优秀的工作.

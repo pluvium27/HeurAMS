@@ -2,8 +2,6 @@ import re
 from typing import Dict, List, TypedDict
 
 from textual.containers import Center
-from textual.message import Message
-from textual.reactive import reactive
 from textual.widget import Widget
 from textual.widgets import Button, Label, Markdown, Static
 
@@ -51,11 +49,11 @@ class Recognition(BasePuzzleWidget):
     def compose(self):
         from heurams.context import config_var
 
-        autovoice = config_var.get()["interface"]["memorizor"]["autovoice"]
+        autovoice = config_var.get()["interface"]["widgets"]["recognition"]["autovoice"]
         if autovoice:
             self.screen.action_play_voice()  # type: ignore
-        cfg: RecognitionConfig = self.atom.registry["orbital"]["puzzles"][self.alia]
-        delim = self.atom.registry["nucleon"].metadata["formation"]["delimiter"]
+        cfg: RecognitionConfig = self.atom.registry["nucleon"]["puzzles"][self.alia]
+        delim = self.atom.registry["nucleon"]["delimiter"]
         replace_dict = {
             ", ": ",",
             ". ": ".",
@@ -68,8 +66,6 @@ class Recognition(BasePuzzleWidget):
             f":{delim}": ":",
         }
 
-        nucleon = self.atom.registry["nucleon"]
-        metadata = self.atom.registry["nucleon"].metadata
         primary = cfg["primary"]
 
         with Center():
@@ -90,30 +86,21 @@ class Recognition(BasePuzzleWidget):
         for item in cfg["secondary"]:
             if isinstance(item, list):
                 for j in item:
-                    yield Markdown(f"### {metadata['annotation'][item]}: {j}")
+                    yield Markdown(f"### 笔记: {j}")  # TODO ANNOTATION
                     continue
             if isinstance(item, Dict):
                 total = ""
                 for j, k in item.items():  # type: ignore
-                    total += f"> **{j}**: {k}  \n"
+                    total += f"> {j}: {k}  \n"
                 yield Markdown(total)
             if isinstance(item, str):
                 yield Markdown(item)
 
-        with Center():
-            yield Button("我已知晓", id="ok")
+        with Center() as c:
+            with Button("我已知晓", id="ok") as b:
+                b.focus()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "ok":
             self.screen.rating = 5  # type: ignore
             self.handler(5)
-
-    def handler(self, rating):
-        if not self.atom.registry["runtime"]["locked"]:
-            if not self.atom.registry["electron"].is_activated():
-                self.atom.registry["electron"].activate()
-                logger.debug(f"激活原子 {self.atom}")
-                self.atom.lock(1)
-                self.atom.minimize(5)
-        else:
-            pass

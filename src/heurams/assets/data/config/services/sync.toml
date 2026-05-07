@@ -1,0 +1,7 @@
+provider = "none"
+_provider_desc = "同步服务驱动类型"
+
+[_provider_candidate]
+webdav = "WebDAV 兼容网络文件系统 (包括 webdavs)"
+official = "官方同步服务器"
+none = "不使用同步服务器"

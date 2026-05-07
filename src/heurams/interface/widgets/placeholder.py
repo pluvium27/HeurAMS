@@ -11,7 +11,7 @@ class Placeholder(Widget):
         id: str | None = None,
         classes: str | None = None,
         disabled: bool = False,
-        markup: bool = True
+        markup: bool = True,
     ) -> None:
         super().__init__(
             *children,
@@ -19,7 +19,7 @@ class Placeholder(Widget):
             id=id,
             classes=classes,
             disabled=disabled,
-            markup=markup
+            markup=markup,
         )
 
     def compose(self):
