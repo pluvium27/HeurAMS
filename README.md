@@ -62,7 +62,7 @@
 - 资源占用小, 运行流畅, 不拖泥带水
 - 便于测试与调试程序库
 
-[查看屏幕截图](SCREENSHOTS.md)
+查看[屏幕截图](SCREENSHOTS.md).
 
 ## 快速开始
 
@@ -136,15 +136,17 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 
 ## 项目标识
 
-HeurAMS 项目标识如下, 矢量图文件位于 `./src/heurams/assets/art/` 目录.
+HeurAMS 项目标识如下, 文件(位图和矢量图)位于 `./src/heurams/assets/art/` 目录.
 
+<img src="src/heurams/assets/art/banner128-light.png" height="96px" title="位图横幅(不透明)">
 <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-  <img src="src/heurams/assets/art/logo.svg" height="96px">
-  <img src="src/heurams/assets/art/logo-mono-light.svg" height="96px">
-  <img src="src/heurams/assets/art/logo-mono-dark.svg" height="96px">
+  <img src="src/heurams/assets/art/logo.svg" height="96px" title="矢量图标">
+  <img src="src/heurams/assets/art/logo-mono-light.svg" height="96px" title="单色明亮矢量图标">
+  <img src="src/heurams/assets/art/logo-mono-dark.svg" height="96px" title="单色暗色矢量图标">
 </div>
 
-颜色分别是: `#1660A5 (海蓝色)` `#545F70 (蓝灰色)` `#1A1A1A (暗色单色图标深黑色)` `#FFFFFF (明亮单色图标白色)`.
+颜色分别是: `#1660A5 (海蓝色)` `#545F70 (蓝灰色)` `#FFFFFF (单色明亮图标白色)` `#1A1A1A (单色暗色图标深黑色)` `#2f2f35 (文字颜色)`.
+
 
 ## 许可证
 

@@ -57,9 +57,9 @@
 ## 设置开发环境
 
 ```bash
-git clone https://git.pluv27.top/pluv/HeurAMS
+git clone https://git.pluv27.top/pluv/HeurAMS # 默认分支为 dev, 所以不必切换分支
+
 cd HeurAMS
-git checkout dev
 
 # 如果决定使用 uv (推荐)
 
