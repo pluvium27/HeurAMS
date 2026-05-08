@@ -54,7 +54,8 @@
 
 - 跨平台, 并支持触屏/鼠标/键盘多操作模式
 - 与几乎所有现代终端模拟器相容
-- 对于<a href="https://www.arewesixelyet.com/" target="_blank" rel="noopener noreferrer">支持 sixel 协议的终端模拟器</a>, 可显示图像内容
+- 对于<a href="https://www.arewesixelyet.com/" target="_blank" rel="noopener noreferrer">支持 sixel 协议的终端模拟器</a>, 可高清显示图像内容
+- 对于不支持 sixel 协议的终端模拟器, 也支持图片低清的兼容显示模式
 - 可通过 textual-web 作为服务部署, 并在任意浏览器使用
 - 简洁直观, 键盘友好, 全功能且高效率的用户界面设计
 - 易于嵌入: 可在 getty/kmscon 中运行而无需任何桌面图形服务
@@ -108,10 +109,10 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 | interface | textual, psutil | 基本用户界面依赖 |
 | algo-fsrs | fsrs | FSRS 算法模块 |
 | tts-edgetts | edge-tts | 微软文本转语音 |
-| llm | openai | OpenAI 式 API 调用 |
+| llm | llms-py | API 调用 |
 | audio-playsound | playsound3 | 通用音频模块 |
 | dev | zmq, pytest, pytest-cov | 开发调试与测试工具 |
-| basic | [tts-edgetts], [llm-openai], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
+| basic | [tts-edgetts], [llm], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
 | all | 以上所有依赖 | 完整安装组 |
 
 ### 从源码安装

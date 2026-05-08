@@ -34,7 +34,7 @@ class NavigatorScreen(ModalScreen):
 
     OTHERS = [
         ("退出程序", "self.app.exit()"),
-        ("项目主页", "webbrowser.open('https://ams.imwangzhiyu.xyz')"),
+        ("项目主页", "webbrowser.open('https://ams.pluv27.top')"),
     ]
 
     def compose(self) -> ComposeResult:

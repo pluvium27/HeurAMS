@@ -1,6 +1,10 @@
 # 贡献指南与二次开发
 
-欢迎为此项目做出贡献!
+欢迎支持此项目!
+
+目前, 项目仓库主服务器为<a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">作者的 Gitea 实例</a>, 以保证可用性并同时接受来自多个社区的协作, 并在 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a> 和 <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 设置了镜像同步.  
+
+这丝毫不影响项目接受来自 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a> 和 <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 的 PR, 在 GitHub 与 KDE Invent 所接受的 PR 会保留贡献者标识并按原样同步回所有平台, 欢迎在任意平台为项目做出贡献.  
 
 > [!NOTE]
 > 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目\
