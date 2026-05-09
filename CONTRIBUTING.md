@@ -2,9 +2,9 @@
 
 欢迎支持此项目!
 
-目前, 项目仓库主服务器为<a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">作者的 Gitea 实例</a>, 以保证可用性并同时接受来自多个社区的协作, 并在 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a> 和 <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 设置了镜像同步.  
+目前, 项目仓库主服务器为<a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">作者的 Gitea 实例</a>, 它负责管理同步, 保证可用性并同时接受来自多个社区的协作, 并在 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 和 <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a> 设置了镜像同步.  
 
-这丝毫不影响项目接受来自 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a> 和 <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 的 PR, 在 GitHub 与 KDE Invent 所接受的 PR 会保留贡献者标识并按原样同步回所有平台, 欢迎在任意平台为项目做出贡献.  
+这丝毫不影响项目接受来自 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 和 <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a> 的 PR, 在 GitHub, KDE Invent 和 Gitee 所接受的 PR 会保留贡献者标识并按原样同步回所有平台, 欢迎在任意平台为项目做出贡献.  
 
 > [!NOTE]
 > 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目\
@@ -15,9 +15,9 @@
 
 分支划分:
 
-- `dev` 分支(也是默认分支): 主线开发分支, 自身仅用于非重构的问题修复和整合功能分支, 拉取请求在该分支合并
-- `master` 分支: 稳定版本, 仅当稳定版本释出或修补版本时将 `dev` 合并到 `master` 上
-- 功能与重构分支: 从 `dev` 分支创建, 命名格式为 `feature/描述` 或 `fix/描述` 或 `refactor/v版本号`
+- `dev` 分支(仓库默认分支): 主线开发分支, 自身仅用于非重构的问题修复和整合功能分支, 拉取请求在该分支合并
+- `master` 分支: 主线稳定版本, 仅当稳定版本释出或修补版本时将 `dev` 合并到 `master` 上
+- 功能与重构分支: 从 `dev` 分支创建, 命名格式为 `feature/描述` 或 `fix/描述` 或 `refactor/描述` 或 `next/版本号`
 - 功能与重构分支应先合并至 `dev`, 再合并至 `master`
 
 代码格式化:
@@ -53,6 +53,10 @@
 
 - 为了一致性和可追溯性, 项目自 v0.4.0 重构后重新初始化仓库起就禁止使用 Fast-forward 合并
 - 可以设置 `git config merge.ff false`
+
+提交署名方式:  
+由于 KDE Invent 设施的奇怪 git hook, commit 的 Author 字段需要看起来像个真名(例如 Wang Zhiyu 不能写为 wangzhiyu, 否则 KDE Invent 的 hook 会拒绝 push),  
+所以请确保您的 git 配置使用了类似正式姓名的格式 (例如 git config user.name "Li Hua", 也即中间需要空格), 不一定要真实姓名, 邮箱无要求, 也可以将单名重复使用两次 (例如 Thura Thura) 以通过检测.
 
 ## 设置开发环境
 
