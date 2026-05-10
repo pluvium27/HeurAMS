@@ -2,9 +2,9 @@
 
 ## 概述
 
-"潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,\
+"潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,  
 也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  
-<a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a> <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a> <a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">作者的 Gitea 实例</a>
+<a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>  <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a>  <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a>  <a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">作者的 Gitea 实例</a>
 
 ## 关于此仓库
 
@@ -12,10 +12,17 @@
 包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)\
 除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库或使用 `RPC` 与 `heurams` 程序库实例通讯, 使用框架构建其他辅助记忆功能前端或其他应用程序
 
-> [!NOTE]
-> 我们已经着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目\
-> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android, iOS 和 Plasma Mobile 提供现代用户界面\
-> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发
+潜进项目的所有仓库如下:
+
+| 项目名称 | 状态 | 说明 | 包名 | 技术栈 | 目标平台 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| HeurAMS | 开发中<br/>原型可用 | Python 核心程序库与基本用户界面 | `heurams` | Python | 跨平台 |
+| KiriMemo | 开发中<br/>原型可用 | 现代跨平台前端 | `org.kde.kirimemo` | Qt6, Kirigami, PyOtherSide | 桌面与移动设备 |
+| HeurStudio | 计划中 | AI 辅助的单体单元集高级创建与编辑工具 | `top.pluv27.heurstudio` | Qt6, Kirigami, PyOtherSide | 桌面 |
+| HeurSync | 开发中 | 用户数据同步服务器<br/>集成 Web 前端与排行榜 | `heurrepo` | Go, SQLite | 网页与服务器 |
+| HeurRepo | 计划中 | 单元集文档源服务器<br/>与单元集分享平台 | `heurrepo` | Go, SQLite | 网页与服务器 |
+
+尽管现在后三样有点画大饼的意思, 但是我们的路线是明了的  
 
 ## 特性
 
