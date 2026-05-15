@@ -114,7 +114,7 @@ python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
 | 依赖组 | 包含模块 | 说明 |
 |--------|----------|------|
 | 最小化安装 | tabulate, toml, transitions | 核心驱动程序库, 始终必需 |
-| interface | textual, psutil | 基本用户界面依赖 |
+| interface | textual | 基本用户界面依赖 |
 | algo-fsrs | fsrs | FSRS 算法模块 |
 | tts-edgetts | edge-tts | 微软文本转语音 |
 | llm | llms-py | API 调用 |
@@ -170,7 +170,7 @@ HeurAMS 项目标识如下, 文件(位图和矢量图)位于 `./src/heurams/asse
 
 #### SM.js (slaypni)
 
-- 上游版本: commit `6e3bb4afaf484426deb4a9fa3bcffe42ac066b45` (2015年2月4日上游已停止维护)
+- 上游版本: commit `6e3bb4a` (2015年2月4日上游已停止维护)
 - 引用方式: 将 coffeescript 重写为 python 并间接引用, 数学原理一致; 并对重写后代码进行逻辑, 性能与标准化 API 改进
 - 位置: `src/heurams/kernel/algorithms/sm15m*.py`
 - 原项目: [SM.js](https://github.com/slaypni/SM-15)

@@ -1,6 +1,6 @@
 [project]
 name = "heurams"
-version = "0.5.0"
+version = "0.5.1"
 authors = [{ name = "pluvium27", email = "pluvium27@outlook.com" }]
 description = "Heuristic Auxiliary Memory Scheduler"
 readme = "README.md"
