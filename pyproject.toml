@@ -1,7 +1,7 @@
 [project]
 name = "heurams"
 version = "0.5.1"
-authors = [{ name = "pluvium27", email = "pluvium27@outlook.com" }]
+authors = [{ name = "Wang Zhiyu", email = "pluvium27@outlook.com" }]
 description = "Heuristic Auxiliary Memory Scheduler"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -13,6 +13,7 @@ license = "AGPL-3.0-or-later"
 license-files = ["LICENSE"]
 
 dependencies = [ # 这些依赖只能驱动 kernel 程序库
+    "click>=8.3.3",
     "tabulate>=0.10.0",
     "toml>=0.10.2",
     "transitions>=0.9.3",

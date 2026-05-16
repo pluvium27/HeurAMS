@@ -4,7 +4,12 @@
 
 "潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,  
 也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  
-<a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>  <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a>  <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a>  <a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">作者的 Gitea 实例</a>
+<p align="left">
+<a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-fafafa?style=for-the-badge&logo=github&logoColor=181717" alt="GitHub" /></a>
+<a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/KDE_Invent-1D99F3?style=for-the-badge&logo=kde&logoColor=white" alt="KDE Invent" /></a>
+<a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Gitee-C71D23?style=for-the-badge&logo=gitee&logoColor=white" alt="Gitee" /></a>
+<a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/git.pluv27.top-609926?style=for-the-badge&logo=gitea&logoColor=white" alt="git.pluv27.top" /></a>
+</p>
 
 ## 关于此仓库
 
@@ -16,11 +21,12 @@
 
 | 项目名称 | 状态 | 说明 | 包名 | 技术栈 | 目标平台 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| HeurAMS | 开发中<br/>原型可用 | Python 核心程序库与基本用户界面 | `heurams` | Python | 跨平台 |
-| KiriMemo | 开发中<br/>原型可用 | 现代跨平台前端 | `org.kde.kirimemo` | Qt6, Kirigami, PyOtherSide | 桌面与移动设备 |
-| HeurStudio | 计划中 | AI 辅助的单体单元集高级创建与编辑工具 | `top.pluv27.heurstudio` | Qt6, Kirigami, PyOtherSide | 桌面 |
-| HeurSync | 开发中 | 用户数据同步服务器<br/>集成 Web 前端与排行榜 | `heurrepo` | Go, SQLite | 网页与服务器 |
-| HeurRepo | 计划中 | 单元集文档源服务器<br/>与单元集分享平台 | `heurrepo` | Go, SQLite | 网页与服务器 |
+| HeurAMS | 开发中<br/>原型可用 | 提供通用核心程序库与基本用户界面 | `heurams` | Python | 标准 Python 环境 |
+| KiriMemo | 开发中<br/>原型可用 | 基于 KDE 技术的现代跨平台前端 | `org.kde.kirimemo` | C++, Qt6, Kirigami, PyOtherSide | 桌面与移动设备 |
+| ArkMemo | 开发中 | 基于 ArkUI 的现代跨平台前端 | `top.pluv27.arkmemo` | ArkTS, ArkUI | 移动设备 |
+| HeurStudio | 计划中 | AI 辅助的单体单元集高级创建与编辑工具 | `top.pluv27.heurstudio` | C++, Qt6, Kirigami, PyOtherSide | 桌面 |
+| HeurSync | 开发中 | 用户数据同步服务器<br/>集成 Web 前端与排行榜 | `heursync` | Go, SQL | 网页与服务器 |
+| HeurRepo | 开发中 | 单元集文档源服务器<br/>与单元集分享平台 | `heurrepo` | Go, SQL | 网页与服务器 |
 
 尽管现在后三样有点画大饼的意思, 但是我们的路线是明了的  
 
@@ -31,12 +37,12 @@
 > 许多出版物都广泛讨论了不同重复间隔对学习效果的影响. 特别是, 间隔效应被认为是一种普遍现象. 间隔效应是指, 如果重复的间隔是分散/稀疏的, 而不是集中重复, 那么学习任务的表现会更好. 因此, 有观点提出, 学习中使用的最佳重复间隔是**最长的, 但不会导致遗忘的间隔**.
 
 - 软件开箱即用, 无需多加配置即可使用默认的 `SM-2` 算法进行学习
-- 此外, 算法模块是 "潜进" 内核 (heurams.kernel) 中的一等公民, 内核天然支持插拔各型算法
+- 算法模块是 "潜进" 内核 (heurams.kernel) 中的一等公民, 内核天然支持插拔各型算法
 - 无需安装繁杂的插件即可分单元集完成算法快速切换与调优, 研究者可以方便地修改算法模块以便捷地进行研究与测试
 - 默认使用 `SM-2` 简单间隔重复算法, 此算法亦用作 `Anki` 闪卡记忆软件的默认闪卡调度器
-- 内置 `NSP-0` 筛选用非间隔重复算法以便快速筛选记忆内容, `FSRS` 先进间隔重复算法作为效率更高的调度器, 与 `SM-15M (移植自 sm.js 项目)` 复杂间隔重复算法(逆向工程)
+- 还内置了 `NSP-0` 筛选用非间隔重复算法以便快速筛选记忆内容, `FSRS` 先进间隔重复算法作为效率更高的调度器, 与 `SM-15M (移植自 sm.js 项目)` 复杂间隔重复算法(逆向工程)
 - 算法模块可以标记记忆项目, 也可以动态规划每个记忆单元的记忆间隔时间表, 动态跟踪记忆反馈数据, 以优化长期记忆保留率与稳定性
-- 得益于项目的模块化架构与单元集结构设计, 一个项目甚至可以与任意种算法共存并互通, 这对研究者及想探索/实验高效率方法的用户极其友好
+- 得益于项目的模块化架构与单元集结构设计, 同一个单元集可以与任意种算法共存并互通, 这对研究者及想探索/实验高效率方法的用户极其友好
 
 ### 多模态学习进程
 
@@ -54,7 +60,7 @@
   - 由于记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持版本控制
   - 如果您想分享单文件, 软件也支持导出为压缩包或合并成单文本文件以通过纯文本文件形式在 pastebin 等平台分享
 - 性能提升: 得益于现代且支持分块的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
-- AI 辅助友好: 想象您有一些 .apkg 牌组或一大段教材内容, 您可以方便且高效率地使用 AI 工具创建可在 HeurAMS 使用的单元集
+- AI 辅助友好: 想象您有一些 `.apkg` 牌组或一大段教材内容, 您可以方便且高效率地使用 AI 工具以创建可在 HeurAMS 使用的单元集
 
 ### 内置实用用户界面
 
@@ -80,17 +86,17 @@
 
 #### 稳定版本
 
-安装适用于用户体验的可选依赖(推荐):
+从 `master` 分支安装, 并安装适用于用户体验的可选依赖(推荐):
 
 ```
-python -m pip install heurams[basic] -i https://pypi.pluv27.top/root/stable/+simple/
+pip install --upgrade 'heurams[all] @ git+https://git.pluv27.top/pluv/heurams.git@master'
 ```
 
 安装适用于一般计算机的通用音频模块(基于 playsound3):\
 (此项不适用于 termux 环境, termux 的音频支持是内建的)
 
 ```
-python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/stable/+simple/ 
+pip install --upgrade 'heurams[audio-playsound] @ git+https://git.pluv27.top/pluv/heurams.git@master'
 ```
 
 #### 开发版本
@@ -101,10 +107,10 @@ python -m pip install heurams[audio-playsound] -i https://pypi.pluv27.top/root/s
 > 例如在 termux 上先运行 `pkg install cmake clang libzmq`.\
 > 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器.
 
-安装全部可选依赖(推荐):
+从 `dev` 分支安装, 并安装全部可选依赖(推荐):
 
 ```
-python -m pip install heurams[all] -i https://pypi.pluv27.top/root/dev/+simple/
+pip install --upgrade 'heurams[all] @ git+https://git.pluv27.top/pluv/heurams.git@dev'
 ```
 
 #### 依赖组说明

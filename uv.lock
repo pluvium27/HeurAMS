@@ -185,6 +185,18 @@ wheels = [
 ]
 
 [[package]]
+name = "click"
+version = "8.3.3"
+source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://mirrors.ustc.edu.cn/pypi/packages/bb/63/f9e1ea081ce35720d8b92acde70daaedace594dc93b693c869e0d5910718/click-8.3.3.tar.gz", hash = "sha256:398329ad4837b2ff7cbe1dd166a4c0f8900c3ca3a218de04466f38f6497f18a2", size = 328061, upload-time = "2026-04-22T15:11:27.506Z" }
+wheels = [
+    { url = "https://mirrors.ustc.edu.cn/pypi/packages/ae/44/c1221527f6a71a01ec6fbad7fa78f1d50dfa02217385cf0fa3eec7087d59/click-8.3.3-py3-none-any.whl", hash = "sha256:a2bf429bb3033c89fa4936ffb35d5cb471e3719e1f3c8a7c3fff0b8314305613", size = 110502, upload-time = "2026-04-22T15:11:25.044Z" },
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://mirrors.ustc.edu.cn/pypi/simple" }
@@ -398,6 +410,7 @@ name = "heurams"
 version = "0.5.1"
 source = { editable = "." }
 dependencies = [
+    { name = "click" },
     { name = "tabulate" },
     { name = "toml" },
     { name = "transitions" },
@@ -442,6 +455,7 @@ tts-edgetts = [
 
 [package.metadata]
 requires-dist = [
+    { name = "click", specifier = ">=8.3.3" },
     { name = "edge-tts", marker = "extra == 'tts-edgetts'", specifier = ">=7.2.8" },
     { name = "fsrs", marker = "extra == 'algo-fsrs'", specifier = ">=6.3.1" },
     { name = "heurams", extras = ["algo-fsrs"], marker = "extra == 'all'" },
