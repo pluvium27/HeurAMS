@@ -46,6 +46,24 @@
 
 查看[屏幕截图](SCREENSHOTS.md).
 
+
+## 包依赖组说明
+
+由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面提供的命令会安装部分可选依赖, 以下是依赖组列表:
+
+| 依赖组 | 包含模块 | 说明 |
+|--------|----------|------|
+| 构建系统 | hatchling | 构建时安装 |
+| 最小化安装 | tabulate, toml, transitions, click | 核心驱动程序库, 始终必需 |
+| interface | textual | 基本用户界面依赖 |
+| algo-fsrs | fsrs | FSRS 算法模块 |
+| tts-edgetts | edge-tts | 微软文本转语音 |
+| llm | llms-py | API 调用 |
+| audio-playsound | playsound3 | 通用音频模块 |
+| dev | zmq, pytest, pytest-cov | 开发调试与测试工具 |
+| basic | [tts-edgetts], [llm], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
+| all | 以上所有依赖 | 完整安装组 |
+
 ## 关于此仓库
 
 此仓库为 "潜进" 的核心程序库在 python 语言下的实现\

@@ -57,21 +57,7 @@ pip install --upgrade -e 'heurams[all] @ git+https://git.pluv27.top/pluv/heurams
 
 > 您也可以从 `refactor/...` 等特定分支安装
 
-#### 依赖组说明
-
-由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面提供的命令会安装部分可选依赖, 以下是依赖组列表:
-
-| 依赖组 | 包含模块 | 说明 |
-|--------|----------|------|
-| 最小化安装 | tabulate, toml, transitions | 核心驱动程序库, 始终必需 |
-| interface | textual | 基本用户界面依赖 |
-| algo-fsrs | fsrs | FSRS 算法模块 |
-| tts-edgetts | edge-tts | 微软文本转语音 |
-| llm | llms-py | API 调用 |
-| audio-playsound | playsound3 | 通用音频模块 |
-| dev | zmq, pytest, pytest-cov | 开发调试与测试工具 |
-| basic | [tts-edgetts], [llm], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
-| all | 以上所有依赖 | 完整安装组 |
+[依赖组说明](INTRODUCTION.md#包依赖组说明)
 
 ### 从源码安装
 
