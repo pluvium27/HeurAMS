@@ -5,8 +5,6 @@
 
 import pathlib
 
-import playsound3
-
 from heurams.services.logger import get_logger
 
 logger = get_logger(__name__)
@@ -15,6 +13,7 @@ logger = get_logger(__name__)
 def play_by_path(path: pathlib.Path):
     logger.debug("playsound_audio.play_by_path: 开始播放 %s", path)
     try:
+        import playsound3
         playsound3.playsound(str(path))
         logger.debug("播放完成: %s", path)
     except Exception as e:
