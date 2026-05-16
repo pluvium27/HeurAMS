@@ -1,19 +1,23 @@
+import platform
+
 import click
 from heurams.services.version import ver, stage, codename, codename_cn
 
 
 @click.group(
     invoke_without_command=True,
+    help=(
+        f"HeurAMS {ver} - 启发式辅助记忆调度器"
+    ),
     context_settings={"help_option_names": ["-h", "--help"]},
 )
 @click.version_option(
     ver, "-v", "--version",
     prog_name="HeurAMS",
-    message=f"%(prog)s %(version)s ({codename}/{codename_cn}), 阶段: {stage}",
+    message=f"%(prog)s %(version)s {stage} ({codename}/{codename_cn}), {platform.system()}",
 )
 @click.pass_context
 def cli(ctx):
-    """HeurAMS - 启发式辅助记忆调度器"""
     if ctx.invoked_subcommand is None:
         click.echo(cli.get_help(ctx))
         ctx.exit(0)

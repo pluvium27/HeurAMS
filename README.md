@@ -3,7 +3,7 @@
 ## 概述
 
 "潜进" (HeurAMS: Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,  
-也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  
+也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的调查实验与研究.  
 
 [详细介绍](INTRODUCTION.md) [屏幕截图](SCREENSHOTS.md)
 
@@ -18,7 +18,7 @@
 
 ### 从包管理器安装
 
-潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用 pip 支持的 git 协议安装稳定版和开发版本, 这要求您的电脑上安装了 python 环境 (建议版本 3.12.13 及之后).
+潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用 pip 支持的 git 协议安装稳定版和开发版本, 这要求您的电脑上安装了 python 环境 (建议 3.12.13 及之后版本).
 
 #### 面向用户的安装
 
@@ -31,7 +31,7 @@ pip install --upgrade 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/arch
 从较前沿, 大致稳定的 `dev` 分支安装, 并安装适用于用户体验的可选依赖(如果您追求较前沿的改进):
 
 ```
-pip install --upgrade 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
+pip install --force-reinstall --no-deps 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
 ```
 
 安装适用于一般计算机的通用音频模块(基于 playsound3):\
@@ -52,7 +52,7 @@ pip install --upgrade 'heurams[audio-playsound] @ https://git.pluv27.top/pluv/He
 从 `dev` 分支进行基于 git 的可编辑安装, 并安装全部可选依赖(推荐):
 
 ```
-pip install --upgrade 'heurams[all] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
+pip install --force-reinstall --no-deps 'heurams[all] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
 ```
 
 > 您也可以从 `refactor/...` 等特定分支安装
