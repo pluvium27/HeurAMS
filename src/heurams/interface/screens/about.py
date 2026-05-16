@@ -4,14 +4,12 @@ from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Markdown
-
 from textual import events, on
 
 import heurams.services.version as version
 from heurams.context import *
 import platform
 import shutil
-import psutil
 import os
 import sys
 
@@ -40,14 +38,12 @@ class AboutScreen(Screen):
             )
         with ScrollableContainer(id="about_container"):
             yield Label("[b]关于与版本信息[/b]")
-
             # 获取系统信息
             textual_version = self._get_textual_version()
             terminal_info = self._get_terminal_info()
             python_version = self._get_python_version()
             os_version = self._get_os_version()
             disk_usage = self._get_disk_usage()
-            memory_info = self._get_memory_info()
 
             about_text = f"""
 # 关于 HeurAMS "潜进"  
@@ -67,7 +63,6 @@ API 版本代号: `{version.codename.capitalize()}`
 您正使用程序库内置的终端用户界面, 它是第一个全功能前端实现与程序库测试套件, 位于程序库的 interface 子目录.  
 
 开发人员列表:
-
 - Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): 项目发起与主要开发者  
 
 感谢以下人士与团体, 他们的算法与理论构成了此软件现有算法的基石:  
@@ -85,12 +80,10 @@ Textual 框架版本: {textual_version}
 终端模拟器: {terminal_info}  
 操作系统版本: {os_version}  
 存储余量: {disk_usage}  
-内存总量: {memory_info}  
 
 报告问题时, 请复制这些信息到问题描述, 并上传软件日志 `heurams.log` 作为附件, 以协助开发者定位错误  
 """
             yield Markdown(about_text, classes="about-markdown")
-
             yield Button(
                 "返回主界面",
                 id="back_button",
@@ -159,20 +152,9 @@ Textual 框架版本: {textual_version}
 
     def _get_disk_usage(self) -> str:
         """获取磁盘使用情况"""
-        try:
-            usage = psutil.disk_usage("/")
-            free_gb = usage.free / (1024**3)
-            total_gb = usage.total / (1024**3)
-            percent_free = (free_gb / total_gb) * 100
-            return f"{free_gb:.1f} GB ({percent_free:.1f}%)"
-        except Exception:
-            return "未知"
-
-    def _get_memory_info(self) -> str:
-        """获取内存信息"""
-        try:
-            memory = psutil.virtual_memory()
-            total_gb = memory.total / (1024**3)
-            return f"{total_gb:.1f} GB"
-        except Exception:
-            return "未知"
+        usage = shutil.disk_usage("/")
+        free_gb = usage.free / (1024**3)
+        total_gb = usage.total / (1024**3)
+        percent_free = (free_gb / total_gb) * 100
+        #print(f"{free_gb:.1f} GB ({percent_free:.1f}%)")
+        return f"{free_gb:.1f} GB ({percent_free:.1f}%)"

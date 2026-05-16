@@ -1,4 +1,4 @@
-print("欢迎使用 HeurAMS 及其组件!")
+#print("欢迎使用 HeurAMS 及其组件!")
 
 # 补充日志记录
 from heurams.services.logger import get_logger

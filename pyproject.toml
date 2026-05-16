@@ -1,7 +1,7 @@
 [project]
 name = "heurams"
-version = "0.5.0"
-authors = [{ name = "pluvium27", email = "pluvium27@outlook.com" }]
+version = "0.5.1"
+authors = [{ name = "Wang Zhiyu", email = "pluvium27@outlook.com" }]
 description = "Heuristic Auxiliary Memory Scheduler"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -13,6 +13,7 @@ license = "AGPL-3.0-or-later"
 license-files = ["LICENSE"]
 
 dependencies = [ # 这些依赖只能驱动 kernel 程序库
+    "click>=8.3.3",
     "tabulate>=0.10.0",
     "toml>=0.10.2",
     "transitions>=0.9.3",
@@ -21,15 +22,15 @@ dependencies = [ # 这些依赖只能驱动 kernel 程序库
 [project.optional-dependencies]
 interface = [ # 基本用户界面依赖
     "textual>=8.2.5",
-    "psutil>=7.2.2",
 ]
+
 algo-fsrs = [
     "fsrs>=6.3.1", # FSRS 算法底层依赖
 ]
 tts-edgetts = [
     "edge-tts>=7.2.8", # 微软 TTS
 ]
-llm = ["openai>=2.32.0"]
+llm = ["llms-py>=3.0.0"]
 audio-playsound = ["playsound3>=3.3.1"]
 dev = [ # 调试所需依赖
     "zmq>=0.0.0",        # 用于 ZMQ 远程调试服务器, 在 linux 上建议先安装 libzmq
@@ -43,10 +44,15 @@ all = [
     "heurams[audio-playsound]",
     "heurams[dev]",
 ]
-basic = ["heurams[algo-fsrs]", "heurams[tts-edgetts]", "heurams[llm]"]
+basic = [
+    "heurams[algo-fsrs]",
+    "heurams[interface]",
+    "heurams[tts-edgetts]",
+    "heurams[llm]",
+]
 
 [project.urls]
-Homepage = "https://ams.pluv.top"
+Homepage = "https://ams.pluv27.top"
 Issues = "https://github.com/heurams/heurams/issues"
 
 [[tool.uv.index]]
@@ -55,7 +61,6 @@ default = true
 
 [project.scripts]
 heurams = "heurams.__main__:main"
-heurams-tui = "heurams.interface.__main__:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -67,5 +72,5 @@ markers = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.7.19"]
-build-backend = "uv_build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
