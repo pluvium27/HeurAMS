@@ -2,13 +2,13 @@ from heurams.interface import *
 from heurams.context import config_var
 from heurams.services.logger import get_logger
 import threading
-import zmq
 import pickle
 
 logger = get_logger(__name__)
 
 
 def start_debug_server(app):
+    import zmq
     logger = get_logger("zmq_debug")
     context = zmq.Context()
     socket = context.socket(zmq.REP)
