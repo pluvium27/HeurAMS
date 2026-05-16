@@ -31,7 +31,7 @@ pip install --upgrade 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/arch
 从较前沿, 大致稳定的 `dev` 分支安装, 并安装适用于用户体验的可选依赖(如果您追求较前沿的改进):
 
 ```
-pip install --upgrade 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
+pip install --force-reinstall 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
 ```
 
 安装适用于一般计算机的通用音频模块(基于 playsound3):\
@@ -52,7 +52,7 @@ pip install --upgrade 'heurams[audio-playsound] @ https://git.pluv27.top/pluv/He
 从 `dev` 分支进行基于 git 的可编辑安装, 并安装全部可选依赖(推荐):
 
 ```
-pip install --upgrade 'heurams[all] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
+pip install --force-reinstall 'heurams[all] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
 ```
 
 > 您也可以从 `refactor/...` 等特定分支安装
