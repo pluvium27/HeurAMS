@@ -61,7 +61,6 @@ default = true
 
 [project.scripts]
 heurams = "heurams.__main__:main"
-heurams-tui = "heurams.interface.__main__:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
