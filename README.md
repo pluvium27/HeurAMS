@@ -16,29 +16,29 @@
 
 ## 快速开始
 
-### 从 PIP 安装
+### 从包管理器安装
 
-潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用 pip 支持的 git 协议安装稳定版和开发版本, 这要求您的电脑上安装了 Python 环境 (推荐 3.12.13 及以上) 和 git.
+潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用 pip 支持的 git 协议安装稳定版和开发版本, 这要求您的电脑上安装了 python 环境 (建议版本 3.12.13 及之后).
 
 #### 面向用户的安装
 
 从稳定的 `master` 分支安装, 并安装适用于用户体验的可选依赖(推荐):
 
 ```
-pip install --upgrade 'heurams[basic] @ git+https://git.pluv27.top/pluv/heurams.git@master'
+pip install --upgrade 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/archive/master.zip'
 ```
 
 从较前沿, 大致稳定的 `dev` 分支安装, 并安装适用于用户体验的可选依赖(如果您追求较前沿的改进):
 
 ```
-pip install --upgrade 'heurams[basic] @ git+https://git.pluv27.top/pluv/heurams.git@dev'
+pip install --upgrade 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
 ```
 
 安装适用于一般计算机的通用音频模块(基于 playsound3):\
 (此项不适用于 termux 环境, termux 的音频支持是内建的)
 
 ```
-pip install --upgrade 'heurams[audio-playsound] @ git+https://git.pluv27.top/pluv/heurams.git@master'
+pip install --upgrade 'heurams[audio-playsound] @ https://git.pluv27.top/pluv/HeurAMS/archive/master.zip'
 ```
 
 #### 面向开发者的安装
@@ -49,10 +49,10 @@ pip install --upgrade 'heurams[audio-playsound] @ git+https://git.pluv27.top/plu
 > 例如在 termux 上先运行 `pkg install cmake clang libzmq`.\
 > 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器.
 
-从 `dev` 分支进行可编辑安装, 并安装全部可选依赖(推荐):
+从 `dev` 分支进行基于 git 的可编辑安装, 并安装全部可选依赖(推荐):
 
 ```
-pip install --upgrade -e 'heurams[all] @ git+https://git.pluv27.top/pluv/heurams.git@dev'
+pip install --upgrade 'heurams[all] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
 ```
 
 > 您也可以从 `refactor/...` 等特定分支安装
