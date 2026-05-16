@@ -89,7 +89,7 @@
 从 `master` 分支安装, 并安装适用于用户体验的可选依赖(推荐):
 
 ```
-pip install --upgrade 'heurams[all] @ git+https://git.pluv27.top/pluv/heurams.git@master'
+pip install --upgrade 'heurams[basic] @ git+https://git.pluv27.top/pluv/heurams.git@master'
 ```
 
 安装适用于一般计算机的通用音频模块(基于 playsound3):\
