@@ -72,9 +72,8 @@ class HeurAMSApp(App):
     ) -> None:  # 用来给没使用/禁用的快捷键占位, 因为 Binding 删除不了
         pass
 
-    # 移除烦人的 "rich traceback"
-    # Textual 官方不会管这破事, 写 Rich 写入脑了导致的
-    # 不知道哪来的自信改标准库的 traceback
+'''
+    # 移除烦人的 "rich traceback", 但可能导致未定义行为出现, 所以注释掉
     # https://github.com/Textualize/textual/discussions/6255
     # NOTE: 进行 textual 版本升级时, 确保查看过上游代码, 尤其是 App 的 _exception
     # 如果行为变了就把下面的删了 (虽然有 fallback)
@@ -89,3 +88,4 @@ class HeurAMSApp(App):
             self._close_messages_no_wait()
             raise self._exception
         super().panic(*args)  # ditto
+'''
