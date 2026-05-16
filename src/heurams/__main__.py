@@ -2,7 +2,10 @@ import click
 from heurams.services.version import ver, stage, codename, codename_cn
 
 
-@click.group(invoke_without_command=True)
+@click.group(
+    invoke_without_command=True,
+    context_settings={"help_option_names": ["-h", "--help"]},
+)
 @click.version_option(
     ver, "-v", "--version",
     prog_name="HeurAMS",
@@ -36,7 +39,7 @@ def version():
     _print_version()
 
 
-@cli.command(name="ver")
+@cli.command(name="ver", hidden=True)
 def ver_cmd():
     """输出版本信息"""
     _print_version()
