@@ -68,8 +68,8 @@ API 版本代号: `{version.codename.capitalize()}`
 感谢以下人士与团体, 他们的算法与理论构成了此软件现有算法的基石:  
 
 - [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论
+- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS 算法与间隔重复理论文献参考
 - [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 逆向实现
-- [Thoughts Memo](https://www.zhihu.com/people/L.M.Sherlock): 间隔重复文献参考
 - [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS 算法底层实现
 
 # 运行环境信息

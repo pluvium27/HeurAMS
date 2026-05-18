@@ -4,6 +4,7 @@
 
 - Textual 基本用户界面 (heurams.interface): 基于 Python Textual 框架构建的程序库内置跨平台 TUI 界面, 支持触屏、鼠标、键盘多操作模式, 是当前开箱即用的默认前端.
 - KiriMemo (org.kde.kirimemo): 基于 KDE Kirigami 框架的现代跨平台前端, 使用 C++ 和 QML 构建, 通过 `PyOtherSide` 直接复用 Python 内核, 为多种平台提供原生体验 (尚未稳定).
+<!--- ArkMemo (top.pluv27.arkmemo): 基于 ArkUI 的现代移动设备前端, 使用 ArkTS 构建, 通过 API 调用 Python 内核, 为 Android, HarmonyOS, iOS 平台提供原生体验 (尚未稳定)-->
 
 欢迎为现有前端贡献代码, 或开发您自己的前端.\
 详见[贡献指南](CONTRIBUTING.md#%E6%96%B0%E7%9A%84%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E5%89%8D%E7%AB%AF).

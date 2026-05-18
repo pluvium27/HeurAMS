@@ -8,19 +8,17 @@
 [详细介绍](INTRODUCTION.md) [屏幕截图](SCREENSHOTS.md)
 
 <p align="left">
-<a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-fafafa?style=for-the-badge&logo=github&logoColor=181717" alt="GitHub" /></a>
-<a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/KDE_Invent-1D99F3?style=for-the-badge&logo=kde&logoColor=white" alt="KDE Invent" /></a>
-<a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Gitee-C71D23?style=for-the-badge&logo=gitee&logoColor=white" alt="Gitee" /></a>
-<a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/git.pluv27.top-609926?style=for-the-badge&logo=gitea&logoColor=white" alt="git.pluv27.top" /></a>
+<a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-fafafa?style=for-the-badge&logo=github&logoColor=181717" alt="GitHub" /></a><a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/KDE_Invent-1D99F3?style=for-the-badge&logo=kde&logoColor=white" alt="KDE Invent" /></a><a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Gitee-C71D23?style=for-the-badge&logo=gitee&logoColor=white" alt="Gitee" /></a><a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/git.pluv27.top-609926?style=for-the-badge&logo=gitea&logoColor=white" alt="git.pluv27.top" /></a>
 </p>
 
 ## 快速开始
 
-### 从包管理器安装
+### 安装软件
 
-潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI, 但您可以用 pip 支持的 git 协议安装稳定版和开发版本, 这要求您的电脑上安装了 python 环境 (建议 3.12.13 及之后版本).
+#### 从包管理器安装
 
-#### 面向用户的安装
+潜进 (包名是 `heurams`) 处于早期开发考虑, 尚未上架 PyPI.  
+但可以用 pip 从仓库安装稳定版和开发版本, 这要求设备上安装了 python 环境 (建议 3.12.13 及之后版本).
 
 从稳定的 `master` 分支安装, 并安装适用于用户体验的可选依赖(推荐):
 
@@ -34,35 +32,63 @@ pip install --upgrade 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/arch
 pip install --force-reinstall --no-deps 'heurams[basic] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
 ```
 
-安装适用于一般计算机的通用音频模块(基于 playsound3):\
+安装适用于一般计算机的通用音频模块 (基于 playsound3):\
 (此项不适用于 termux 环境, termux 的音频支持是内建的)
 
 ```
 pip install --upgrade 'heurams[audio-playsound] @ https://git.pluv27.top/pluv/HeurAMS/archive/master.zip'
 ```
 
-#### 面向开发者的安装
+> 您也可以从 `refactor/...` 等特定分支安装以测试某项更改
 
-> [!CAUTION]
-> 对于部分 Linux 发行版和 Android Termux 用户:\
-> 您需要先行安装 `cmake` 和 `libzmq` 才能正确安装项目的 `zmq` 依赖.\
-> 例如在 termux 上先运行 `pkg install cmake clang libzmq`.\
-> 项目功能本身不依赖它, 但需要该依赖用于启动可选的调试服务器.
+[依赖分组说明](INTRODUCTION.md#包依赖组说明)
 
-从 `dev` 分支进行基于 git 的可编辑安装, 并安装全部可选依赖(推荐):
+#### 从源码安装
+
+我们提供原生 python 和 uv 两种源码安装方式.\
+详见[贡献指南 - 设置开发环境](CONTRIBUTING.md#设置开发环境).
+
+### 使用软件
+
+在终端中运行 `heurams`, 您会看到一系列帮助信息, 例如:
+
+```plain
+~ $ heurams
+Usage: heurams [OPTIONS] COMMAND [ARGS]...
+
+  HeurAMS 0.5.1 - 启发式辅助记忆调度器
+
+Options:
+  -v, --version  Show the version and exit.
+  -h, --help     Show this message and exit.
+
+Commands:
+  help     显示此帮助信息
+  tui      启动内置基本用户界面 (TUI)
+  version  输出版本信息
+```
+
+可以通过键入 `heurams tui` 启动基本用户界面, 例如:
+
+```plain
+~ $ heurams tui
+欢迎使用基本用户界面!
+加载配置与上下文... 已完成! (耗时: 33ms)
+加载用户界面框架... 已完成! (耗时: 169ms)
+加载用户界面布局... 已完成! (耗时: 165ms)
+组件目录: <软件包所在目录>
+工作目录: <运行目录, 将在此目录下建立 ./data 文件夹>
+前置工作共计耗时: 142ms
+
+(此时您的终端将转为呈现美观的 TUI 基本用户界面)
+```
+
+通过键入 `heurams -v` 查看版本:
 
 ```
-pip install --force-reinstall --no-deps 'heurams[all] @ https://git.pluv27.top/pluv/HeurAMS/archive/dev.zip'
+~ $ heurams -v
+HeurAMS 0.5.1 stable (fulcrum/支点), Linux
 ```
-
-> 您也可以从 `refactor/...` 等特定分支安装
-
-[依赖组说明](INTRODUCTION.md#包依赖组说明)
-
-### 从源码安装
-
-我们提供原生 python 和 uv 两种安装方式.\
-详见[贡献指南](CONTRIBUTING.md).
 
 ## 常见问题 (FAQ)
 
@@ -96,19 +122,19 @@ HeurAMS 项目标识如下, 文件(位图和矢量图)位于 `./src/heurams/asse
 
 ### 项目本身
 
-本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款, 较标准 AGPL-3.0 更松.
+本项目基于 AGPL-3.0 许可证开放源代码, 并有一个豁免本机 API 调用的附加条款, 较标准 AGPL-3.0 更宽松.
 
 详见根目录下 [LICENSE](LICENSE) 文件.
 
 ### 第三方代码
 
-项目在 `src/heurams/vendor/` 目录下嵌入或在其他位置间接使用了以下第三方代码(可能有修改):
+项目在 `src/heurams/vendor/` 目录下嵌入或在其他位置直接使用了以下第三方代码或其衍生作品 (可能有修改):
 
-#### SM.js (slaypni)
+#### SM.js
 
 - 上游版本: commit `6e3bb4a` (2015年2月4日上游已停止维护)
 - 引用方式: 将 coffeescript 重写为 python 并间接引用, 数学原理一致; 并对重写后代码进行逻辑, 性能与标准化 API 改进
-- 位置: `src/heurams/kernel/algorithms/sm15m*.py`
+- 位置: `src/heurams/kernel/algorithms/sm15m.py`
 - 原项目: [SM.js](https://github.com/slaypni/SM-15)
 - 原版权: Copyright (c) 2014 Kazuaki Tanida
 - 原许可证: MIT License
