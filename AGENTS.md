@@ -10,7 +10,7 @@ When assisting with HeurAMS development, AI tools should follow standard develop
 
 - [Contributing Guide](/CONTRIBUTING.md)
 - [README](/README.md)
-- [Architecture Overview](/ARCHITECTURE.md)
+- [Architecture Overview](/docs/ARCHITECTURE.md)
 
 ## Prohibited Actions
 

@@ -7,7 +7,7 @@
 HeurAMS "潜进" (Heuristic Auxiliary Memorizing Scheduler, 启发式记忆辅助调度器) 是一种基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划,  
 也是一种开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的调查实验与研究.  
 
-[详细介绍](INTRODUCTION_zh.md) [屏幕截图](SCREENSHOTS_zh.md)
+[详细介绍](docs/INTRODUCTION_zh.md) [屏幕截图](docs/SCREENSHOTS_zh.md)
 
 <p align="left">
 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-fafafa?style=for-the-badge&logo=github&logoColor=181717" alt="GitHub" /></a><a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/KDE_Invent-1D99F3?style=for-the-badge&logo=kde&logoColor=white" alt="KDE Invent" /></a><a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Gitee-C71D23?style=for-the-badge&logo=gitee&logoColor=white" alt="Gitee" /></a><a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/git.pluv27.top-609926?style=for-the-badge&logo=gitea&logoColor=white" alt="git.pluv27.top" /></a>
@@ -43,7 +43,7 @@ pip install --upgrade 'heurams[audio-playsound] @ https://git.pluv27.top/pluv/He
 
 > 您也可以从 `refactor/...` 等特定分支安装以测试某项更改
 
-[依赖分组说明](INTRODUCTION_zh.md#包依赖组说明)
+[依赖分组说明](docs/INTRODUCTION_zh.md#包依赖组说明)
 
 #### 从源码安装
 
@@ -94,11 +94,11 @@ HeurAMS 0.5.1 stable (fulcrum/支点), Linux
 
 ## 常见问题 (FAQ)
 
-详见[常见问题](FAQ_zh.md).
+详见[常见问题](docs/FAQ_zh.md).
 
 ## 项目架构
 
-详见[架构说明](ARCHITECTURE_zh.md).
+详见[架构说明](docs/ARCHITECTURE_zh.md).
 
 ## 参与项目
 

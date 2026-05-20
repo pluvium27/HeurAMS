@@ -7,7 +7,7 @@
 HeurAMS "潜进" (Heuristic Auxiliary Memorizing Scheduler) is an auxiliary memorizing scheduler based on heuristic algorithms and cognitive science theories, designed to help users memorize and plan learning more efficiently.  
 It is also an open, elegant, and extensible spaced repetition scheduler experiment platform, intended to help researchers conduct investigations, experiments, and research on cutting-edge memory algorithms more efficiently.
 
-[Detailed Introduction](INTRODUCTION.md) | [Screenshots](SCREENSHOTS.md)
+[Detailed Introduction](docs/INTRODUCTION.md) | [Screenshots](docs/SCREENSHOTS.md)
 
 <p align="left">
 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-fafafa?style=for-the-badge&logo=github&logoColor=181717" alt="GitHub" /></a><a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/KDE_Invent-1D99F3?style=for-the-badge&logo=kde&logoColor=white" alt="KDE Invent" /></a><a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Gitee-C71D23?style=for-the-badge&logo=gitee&logoColor=white" alt="Gitee" /></a><a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/git.pluv27.top-609926?style=for-the-badge&logo=gitea&logoColor=white" alt="git.pluv27.top" /></a>
@@ -43,7 +43,7 @@ pip install --upgrade 'heurams[audio-playsound] @ https://git.pluv27.top/pluv/He
 
 > You can also install from specific branches like `refactor/...` to test particular changes.
 
-[Dependency Group Reference](INTRODUCTION.md#package-dependency-groups)
+[Dependency Group Reference](docs/INTRODUCTION.md#package-dependency-groups)
 
 #### Install from Source
 
@@ -94,11 +94,11 @@ HeurAMS 0.5.1 stable (fulcrum/支点), Linux
 
 ## Frequently Asked Questions (FAQ)
 
-See [FAQ](FAQ.md).
+See [FAQ](docs/FAQ.md).
 
 ## Project Architecture
 
-See [Architecture Overview](ARCHITECTURE.md).
+See [Architecture Overview](docs/ARCHITECTURE.md).
 
 ## Contributing
 
