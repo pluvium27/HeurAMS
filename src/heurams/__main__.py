@@ -31,6 +31,21 @@ def tui():
     tui_module.main()
 
 
+@cli.command()
+@click.option("--host", default="127.0.0.1", help="监听地址")
+@click.option("--port", default=8821, help="监听端口", type=int)
+@click.option("--reload", is_flag=True, help="开发模式热重载")
+def serve(host, port, reload):
+    """启动 API 服务 (unifront)"""
+    from heurams.unifront.server import create_app
+
+    app = create_app()
+    click.echo(f"unifront API 服务启动: http://{host}:{port}")
+    import uvicorn
+
+    uvicorn.run(app, host=host, port=port, reload=reload, log_level="info")
+
+
 def _print_version():
     click.echo(
         f"HeurAMS {ver} ({codename}/{codename_cn}), 阶段: {stage}"

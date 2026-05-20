@@ -14,9 +14,11 @@ license-files = ["LICENSE"]
 
 dependencies = [ # 这些依赖只能驱动 kernel 程序库
     "click>=8.3.3",
+    "fastapi>=0.136.1",
     "tabulate>=0.10.0",
     "toml>=0.10.2",
     "transitions>=0.9.3",
+    "uvicorn[standard]>=0.47.0",
 ]
 
 [project.optional-dependencies]
@@ -74,3 +76,8 @@ markers = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+]

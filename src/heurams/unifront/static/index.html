@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HeurAMS 潜进</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- 顶栏 -->
+<nav id="navbar">
+    <button id="nav-toggle" onclick="toggleSidebar()">&equiv;</button>
+    <span id="nav-title">仪表盘</span>
+    <span id="nav-version"></span>
+    <button id="theme-btn" onclick="toggleTheme()" class="btn-icon">&#9788;</button>
+</nav>
+
+<!-- 主体 -->
+<div id="main-wrap">
+
+    <!-- 侧边栏 -->
+    <aside id="sidebar">
+        <ul class="sidenav">
+            <li class="active" id="nav-lobby"><a href="#" onclick="switchView('lobby')">仪表盘</a></li>
+            <li id="nav-favs"><a href="#" onclick="switchView('favs')">收藏夹</a></li>
+            <li id="nav-cache"><a href="#" onclick="switchView('cache')">缓存管理</a></li>
+            <li id="nav-settings"><a href="#" onclick="switchView('settings')">设置</a></li>
+            <li id="nav-about"><a href="#" onclick="switchView('about')">关于</a></li>
+        </ul>
+    </aside>
+
+    <!-- 内容区 -->
+    <main id="main">
+
+        <!-- 错误 -->
+        <div id="error-box"></div>
+
+        <!-- ===== 仪表盘 ===== -->
+        <div id="view-lobby" class="view">
+            <div class="stat-row" id="lobby-stats"></div>
+            <div id="lobby-analysis" class="dim sm tc" style="margin-bottom:12px;"></div>
+            <p id="loading-lobby" class="dim tc">加载仓库...</p>
+            <p id="empty-lobby" class="dim tc hidden">没有找到仓库</p>
+            <div id="repo-list"></div>
+        </div>
+
+        <!-- ===== 仓库详情 ===== -->
+        <div id="view-prep" class="view hidden">
+            <p id="loading-prep" class="dim tc">加载仓库数据...</p>
+            <div id="prep-content" class="hidden">
+                <h2 id="prep-title"></h2>
+                <p class="dim" id="prep-meta"></p>
+
+                <div class="stat-row" id="prep-summary"></div>
+
+                <div class="bar-wrap"><div class="bar-fill" id="prep-bar"></div></div>
+                <p class="dim sm" id="prep-pct"></p>
+
+                <div class="h-group">
+                    <label>每次复习量:</label>
+                    <input type="number" id="prep-num" value="10" min="1" max="200">
+                    <button class="btn pri" onclick="startReviewFromPrep()">开始记忆</button>
+                </div>
+
+                <div id="prep-list"></div>
+            </div>
+        </div>
+
+        <!-- ===== 复习 ===== -->
+        <div id="view-review" class="view hidden">
+            <div class="h-group sb">
+                <div class="h-group">
+                    <strong id="review-repo"></strong>
+                    <span id="review-phase" class="tag"></span>
+                    <button id="fav-btn" class="btn-link" onclick="toggleFav()">&#9734;</button>
+                    <button id="tts-btn" class="btn-link" onclick="playTTS()" title="朗读">&#9654;</button>
+                </div>
+                <span id="review-status" class="tag">断开</span>
+            </div>
+            <div class="bar-wrap sm"><div class="bar-fill" id="review-bar"></div></div>
+            <p class="dim sm tc" id="review-pos"></p>
+
+            <div id="screen-start" class="empty-state">
+                <h3>准备就绪</h3>
+                <p class="dim">开始复习</p>
+                <button class="btn pri" onclick="startReview()">开始复习</button>
+            </div>
+
+            <div id="screen-puzzle" class="hidden">
+                <div id="puzzle-card"></div>
+                <div class="tc">
+                    <p class="dim sm">自评记忆程度</p>
+                    <div id="rating-group"></div>
+                    <div class="h-group jc">
+                        <button class="btn sm suc" onclick="quickPass()">正确 (5)</button>
+                        <button class="btn sm err" onclick="quickFail()">错误 (2)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-finished" class="hidden empty-state">
+                <p class="ok-icon">&#10003;</p>
+                <h3>本次记忆进程结束</h3>
+                <p class="dim" id="finish-info"></p>
+                <p class="dim sm" id="finish-saved"></p>
+                <button class="btn pri" onclick="goBack()" style="margin-top:16px;">返回</button>
+            </div>
+        </div>
+
+        <!-- ===== 收藏夹 ===== -->
+        <div id="view-favs" class="view hidden">
+            <p id="loading-favs" class="dim tc">加载收藏...</p>
+            <p id="empty-favs" class="dim tc hidden">暂无收藏</p>
+            <div id="favs-list"></div>
+        </div>
+
+        <!-- ===== 缓存管理 ===== -->
+        <div id="view-cache" class="view hidden">
+            <p id="loading-cache" class="dim tc">加载缓存信息...</p>
+            <div id="cache-content" class="hidden">
+                <div class="cache-stats">
+                    <div class="stat-row" id="cache-stats-cards"></div>
+                </div>
+                <div class="cache-detail">
+                    <p class="dim sm" id="cache-path"></p>
+                </div>
+                <div class="h-group mt">
+                    <button class="btn pri" id="cache-precache-btn" onclick="startPrecache()">生成缓存</button>
+                    <button class="btn" id="cache-refresh-btn" onclick="loadCache()">刷新</button>
+                    <button class="btn err" id="cache-clear-btn" onclick="clearCache()">清空缓存</button>
+                </div>
+                <p id="cache-msg" class="dim sm mt"></p>
+            </div>
+        </div>
+
+        <!-- ===== 设置 ===== -->
+        <div id="view-settings" class="view hidden">
+            <p id="loading-settings" class="dim tc">加载设置...</p>
+            <div id="settings-content" class="hidden"></div>
+        </div>
+
+        <!-- ===== 关于 ===== -->
+        <div id="view-about" class="view hidden">
+            <div class="about-section">
+                <h2>HeurAMS 潜进</h2>
+                <p class="dim" id="about-version"></p>
+                <p class="dim sm" id="about-codename"></p>
+                <p class="mt">一个基于启发式算法与认知科学理论的辅助记忆调度器。</p>
+                <p class="dim sm mt">以 GNU AGPL-3.0 许可证开放源代码，并含本机 API 调用豁免条款。</p>
+            </div>
+            <div class="about-section">
+                <h3>开发人员</h3>
+                <p class="dim sm">Wang Zhiyu (<a href="https://github.com/pluvium27" target="_blank">@pluvium27</a>)</p>
+                <p class="dim sm mt">项目发起与主要开发者</p>
+            </div>
+            <div class="about-section">
+                <h3>运行环境</h3>
+                <table class="info-table" id="about-env"></table>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
