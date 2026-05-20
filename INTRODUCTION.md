@@ -1,84 +1,83 @@
-## 特性
+## Features
 
-### 间隔重复调度器
+### Spaced Repetition Scheduler
 
-> 许多出版物都广泛讨论了不同重复间隔对学习效果的影响. 特别是, 间隔效应被认为是一种普遍现象. 间隔效应是指, 如果重复的间隔是分散/稀疏的, 而不是集中重复, 那么学习任务的表现会更好. 因此, 有观点提出, 学习中使用的最佳重复间隔是**最长的, 但不会导致遗忘的间隔**.
+> Numerous publications have extensively discussed the effects of different repetition intervals on learning outcomes. In particular, the spacing effect is considered a universal phenomenon. The spacing effect refers to the fact that learning performance improves when repetitions are distributed/spaced rather than massed. Therefore, it has been proposed that the optimal repetition interval for learning is the **longest interval that does not lead to forgetting**.
 
-- 软件开箱即用, 无需多加配置即可使用默认的 `SM-2` 算法进行学习
-- 算法模块是 "潜进" 内核 (heurams.kernel) 中的一等公民, 内核天然支持插拔各型算法
-- 无需安装繁杂的插件即可分单元集完成算法快速切换与调优, 研究者可以方便地修改算法模块以便捷地进行研究与测试
-- 默认使用 `SM-2` 简单间隔重复算法, 此算法亦用作 `Anki` 闪卡记忆软件的默认闪卡调度器
-- 还内置了 `NSP-0` 筛选用非间隔重复算法以便快速筛选记忆内容, `FSRS` 先进间隔重复算法作为效率更高的调度器, 与 `SM-15M (移植自 sm.js 项目)` 复杂间隔重复算法(逆向工程)
-- 算法模块可以标记记忆项目, 也可以动态规划每个记忆单元的记忆间隔时间表, 动态跟踪记忆反馈数据, 以优化长期记忆保留率与稳定性
-- 得益于项目的模块化架构与单元集结构设计, 同一个单元集可以与任意种算法共存并互通, 这对研究者及想探索/实验高效率方法的用户极其友好
+- The software works out of the box, using the default `SM-2` algorithm for learning without additional configuration
+- The algorithm module is a first-class citizen in the kernel (`heurams.kernel`), which natively supports pluggable algorithms of various types
+- No complicated plugins required — algorithms can be quickly switched and tuned per unit set, enabling researchers to easily modify algorithm modules for convenient research and testing
+- Defaults to the `SM-2` simple spaced repetition algorithm, also used as the default flashcard scheduler for Anki
+- Also includes `NSP-0` non-spaced filtering algorithm for rapid content screening, `FSRS` advanced spaced repetition algorithm as a more efficient scheduler, and `SM-15M` (ported from sm.js project) complex spaced repetition algorithm (reverse-engineered)
+- Algorithm modules can tag memorization items, dynamically plan memory interval schedules for each unit, and track memory feedback data to optimize long-term retention and stability
+- Thanks to the modular architecture and unit set structure design, the same unit set can coexist and interoperate with any algorithm — extremely friendly for researchers and users exploring/experimenting with efficient methods
 
-### 多模态学习进程
+### Multimodal Learning Process
 
-与 Anki 的 SQLite `.apkg` 包不同, 我们坚持使用人类可读的文件夹组织单元集, 这带来了若干好处, 包括:
+Unlike Anki's SQLite `.apkg` packages, we insist on using human-readable folder-organized unit sets, which brings several benefits:
 
-- 人类可读: 您可以用任意工具, 乃至一个记事本自由修改记忆载荷数据而无需打开软件
-- 元数据配置: 配置自由度极高, 可以任意组合, 重造, 乃至创造新内容
-- 测验, 算法与知识互相隔离: 一条知识不再是单一的闪卡, 不仅可以用若干不同的算法规划, 还可以用多种并行的谜题类型测验, 极大地提升学习效果和丰富度. 作为学习者, 您无需担忧概念复杂--仅需从云端下载单元集即可开箱即用上述特性!
-- 多模态学习
-  - 软件自身集成了文本转语音 (TTS) , 音频与语言模型 (LLM) 模块, 这些功能乃至功能本身都是可插拔, 可扩展, 可切换驱动的, 这为内容创建了极大的丰富度
-  - 软件内置多种谜题类型, 包括选择题 (MCQ), 填空题 (Cloze) 与识别题 (Recognition), 您可在同一单元应用多种, 或是选择性启用
-  - 软件天然支持动态内容生成, 支持宏驱动的模板系统, 根据上下文乃至语言模型动态生成知识点的解析
-  - 在间隔重复研究尚被 SuperMemo 系列独占的时代, Wozniak 就早已表示 "如果不能理解知识, 就无需记忆它". 今天, 我们依然相信理解是记忆的基石
-- 云同步与分享优化:
-  - 由于记忆数据和单元集文件都是文本文件, 故可进行快速的增量同步而无需完整地上传所有文件, 并且设计天然支持版本控制
-  - 如果您想分享单文件, 软件也支持导出为压缩包或合并成单文本文件以通过纯文本文件形式在 pastebin 等平台分享
-- 性能提升: 得益于现代且支持分块的文件组织结构, 潜进能在保持高自由度的同时仅使用 python 就能达到敏捷且低占用的用户体验
-- AI 辅助友好: 想象您有一些 `.apkg` 牌组或一大段教材内容, 您可以方便且高效率地使用 AI 工具以创建可在 HeurAMS 使用的单元集
+- **Human-readable**: You can freely modify memorization payload data with any tool, even a simple text editor, without opening the software
+- **Metadata configuration**: Extremely flexible configuration — you can freely combine, remix, or even create new content
+- **Quiz, algorithm, and knowledge isolation**: A piece of knowledge is no longer a single flashcard; it can not only be scheduled with different algorithms but also tested with multiple parallel puzzle types, greatly enhancing learning effectiveness and richness. As a learner, you don't need to worry about complexity — just download a unit set from the cloud and use these features out of the box!
+- **Multimodal learning**
+  - The software integrates Text-to-Speech (TTS), audio, and LLM modules — all pluggable, extensible, and driver-switchable, creating great content richness
+  - Built-in puzzle types include Multiple Choice Questions (MCQ), Cloze Deletion, and Recognition, all applicable to the same unit or selectively enabled
+  - Natively supports dynamic content generation with macro-driven template systems that generate knowledge point explanations based on context or even LLMs
+  - In the era when SuperMemo series dominated spaced repetition research, Wozniak already stated, "If you cannot understand knowledge, you don't need to memorize it." Today, we still believe understanding is the foundation of memorization
+- **Cloud sync and sharing optimized**:
+  - Since memory data and unit set files are text files, fast incremental sync is possible without uploading all files, and the design natively supports version control
+  - If you want to share a single file, the software supports exporting as a compressed package or merging into a single text file for sharing on platforms like pastebin
+- **Performance**: Thanks to the modern, chunked file organization structure, "潜进" achieves agile and low-footprint user experience using only Python while maintaining high flexibility
+- **AI-assisted friendly**: Imagine you have some `.apkg` decks or a large amount of textbook content — you can conveniently and efficiently use AI tools to create HeurAMS-compatible unit sets
 
-### 内置实用用户界面
+### Built-in Practical User Interface
 
-尽管不是唯一前端, 但响应式 Textual 框架构建的内置终端用户界面在多种场景下仍具有独特优势:
+Although not the only frontend, the responsive Textual framework-based built-in terminal user interface has unique advantages in many scenarios:
 
-- 跨平台, 并支持触屏/鼠标/键盘多操作模式
-- 与几乎所有现代终端模拟器相容
-- 对于<a href="https://www.arewesixelyet.com/" target="_blank" rel="noopener noreferrer">支持 sixel 协议的终端模拟器</a>, 可高清显示图像内容
-- 对于不支持 sixel 协议的终端模拟器, 也支持图片低清的兼容显示模式
-- 可通过 textual-web 作为服务部署, 并在任意浏览器使用
-- 简洁直观, 键盘友好, 全功能且高效率的用户界面设计
-- 易于嵌入: 可在 getty/kmscon 中运行而无需任何桌面图形服务
-- 资源占用小, 运行流畅, 不拖泥带水
-- 便于测试与调试程序库
+- Cross-platform, with touch/mouse/keyboard multi-operation modes
+- Compatible with almost all modern terminal emulators
+- High-quality image display on terminal emulators that [support the sixel protocol](https://www.arewesixelyet.com/)
+- Low-resolution compatibility display mode for terminals that don't support sixel
+- Deployable as a service via textual-web, usable from any browser
+- Clean, intuitive, keyboard-friendly, full-featured, and efficient UI design
+- Easy to embed: can run in getty/kmscon without any desktop graphics service
+- Low resource footprint, smooth operation
+- Convenient for testing and debugging the library
 
-查看[屏幕截图](SCREENSHOTS.md).
+View [Screenshots](SCREENSHOTS.md).
 
+## Package Dependency Groups
 
-## 包依赖组说明
+Since some dependencies are only needed by a few features, we split optional dependencies into fine-grained groups. Here are the dependency groups:
 
-由于部分依赖只被少数功能需要, 所以我们把可选依赖分得比较细, 前面提供的命令会安装部分可选依赖, 以下是依赖组列表:
+| Dependency Group | Included Modules | Description |
+|------------------|------------------|-------------|
+| Build System | hatchling | Build-time installation |
+| Minimal | tabulate, toml, transitions, click | Core driver libraries, always required |
+| interface | textual | Basic user interface dependencies |
+| algo-fsrs | fsrs | FSRS algorithm module |
+| tts-edgetts | edge-tts | Microsoft Text-to-Speech |
+| llm | llms-py | API calls |
+| audio-playsound | playsound3 | General audio module |
+| dev | zmq, pytest, pytest-cov | Development, debugging, and testing tools |
+| basic | [tts-edgetts], [llm], [algo-fsrs | Lighter dependency group for user experience (recommended) |
+| all | All of the above | Complete installation group |
 
-| 依赖组 | 包含模块 | 说明 |
-|--------|----------|------|
-| 构建系统 | hatchling | 构建时安装 |
-| 最小化安装 | tabulate, toml, transitions, click | 核心驱动程序库, 始终必需 |
-| interface | textual | 基本用户界面依赖 |
-| algo-fsrs | fsrs | FSRS 算法模块 |
-| tts-edgetts | edge-tts | 微软文本转语音 |
-| llm | llms-py | API 调用 |
-| audio-playsound | playsound3 | 通用音频模块 |
-| dev | zmq, pytest, pytest-cov | 开发调试与测试工具 |
-| basic | [tts-edgetts], [llm], [algo-fsrs] | 适用于用户体验的较轻依赖组(推荐) |
-| all | 以上所有依赖 | 完整安装组 |
+## About This Repository
 
-## 关于此仓库
+This repository is the Python implementation of the HeurAMS "潜进" core library.  
+It contains data models and framework, and includes a built-in frontend based on the Textual framework (interface submodule).  
+Besides learning through the built-in frontend, developers can import the `heurams` library in a Python environment or communicate with `heurams` library instances via `RPC`, using the framework to build other auxiliary memory frontends or applications.
 
-此仓库为 "潜进" 的核心程序库在 python 语言下的实现\
-包含数据模型与框架, 并内置了基于 textual 框架的前端实现 (interface 子模块)\
-除了通过内置前端进行学习外, 开发者也能在 python 环境中导入 `heurams` 库或使用 `RPC` 与 `heurams` 程序库实例通讯, 使用框架构建其他辅助记忆功能前端或其他应用程序
+All repositories of the project group:
 
-潜进项目的所有仓库如下:
-
-| 项目名称 | 状态 | 说明 | 包名 | 技术栈 | 目标平台 |
+| Project Name | Status | Description | Package Name | Tech Stack | Target Platform |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| HeurAMS | 开发中<br/>原型可用 | 提供通用核心程序库与基本用户界面 | `heurams` | Python | 标准 Python 环境 |
-| KiriMemo | 开发中<br/>原型可用 | 基于 KDE 技术的现代跨平台前端 | `org.kde.kirimemo` | C++, Qt6, Kirigami, PyOtherSide | 桌面与移动设备 |
-| ArkMemo | 开发中 | 基于 ArkUI 的现代跨平台前端 | `top.pluv27.arkmemo` | ArkTS, ArkUI | 移动设备 |
-| HeurStudio | 计划中 | AI 辅助的单体单元集高级创建与编辑工具 | `top.pluv27.heurstudio` | C++, Qt6, Kirigami, PyOtherSide | 桌面 |
-| HeurSync | 开发中 | 用户数据同步服务器<br/>集成 Web 前端与排行榜 | `heursync` | Go, SQL | 网页与服务器 |
-| HeurRepo | 开发中 | 单元集文档源服务器<br/>与单元集分享平台 | `heurrepo` | Go, SQL | 网页与服务器 |
+| HeurAMS | In Development<br/>Prototype Usable | General core library with basic UI | `heurams` | Python | Standard Python Environment |
+| KiriMemo | In Development<br/>Prototype Usable | Modern cross-platform frontend based on KDE technology | `org.kde.kirimemo` | C++, Qt6, Kirigami, PyOtherSide | Desktop & Mobile |
+| ArkMemo | In Development | Modern cross-platform frontend based on ArkUI | `top.pluv27.arkmemo` | ArkTS, ArkUI | Mobile Devices |
+| HeurStudio | Planned | AI-assisted single-unit set advanced creation and editing tool | `top.pluv27.heurstudio` | C++, Qt6, Kirigami, PyOtherSide | Desktop |
+| HeurSync | In Development | User data sync server<br/>with Web frontend and leaderboard | `heursync` | Go, SQL | Web & Server |
+| HeurRepo | In Development | Unit set document source server<br/>and sharing platform | `heurrepo` | Go, SQL | Web & Server |
 
-尽管现在后三样有点画大饼的意思, 但是我们的路线是明了的  
+Although the last three might sound a bit ambitious, our roadmap is clear.

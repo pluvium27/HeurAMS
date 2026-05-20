@@ -1,69 +1,69 @@
-# 常见问题
+# Frequently Asked Questions
 
-## 什么是终端模拟器?
+## What is a terminal emulator?
 
-终端模拟器是在图形桌面环境中模拟并使用终端的应用程序, 例如 KDE Konsole, GNOME Terminal, Windows Terminal, iTerm2 等.
+A terminal emulator is an application that simulates and uses a terminal within a graphical desktop environment, e.g., KDE Konsole, GNOME Terminal, Windows Terminal, iTerm2, etc.
 
-较旧 Windows 的那个很寒酸的小黑窗口也是终端模拟器(conhost.exe), 但它对此软件基本用户界面(以及一切现代终端应用)支持不佳, 建议在 Windows 平台使用 WezTerm (支持 sixel) 或 Windows Terminal (不支持 sixel).
+The old, modest little black window on older Windows (conhost.exe) is also a terminal emulator, but it has poor support for this software's basic user interface (and all modern terminal applications). We recommend using WezTerm (supports sixel) or Windows Terminal (does not support sixel) on Windows.
 
-## 软件支持移动设备吗?
+## Does the software support mobile devices?
 
-基本用户界面 (Textual TUI) 可在 Android Termux 中良好运行.
+The basic user interface (Textual TUI) works well in Android Termux.
 
-此外, 正在开发的 KiriMemo 前端基于 KDE Kirigami 框架, 将原生支持 Android 和 iOS.
+Additionally, the KiriMemo frontend under development is based on the KDE Kirigami framework and will natively support Android and iOS.
 
-## HeurAMS 和 Anki 有什么区别?
+## What is the difference between HeurAMS and Anki?
 
-大体地说:
+At a high level:
 
-| 方面 | HeurAMS | Anki |
-|------|---------|------|
-| 数据格式 | 文本文件 (TOML/JSON), 人类可读 | SQLite 和资源文件组成的专有压缩格式 (.apkg) |
-| 复习模式 | 多阶段流程 + 多种谜题类型 | 单面/双面闪卡 |
-| 算法系统 | 模块化, 可插拔, 多种算法可选 | 内置 SM-2 / FSRS |
-| 插件生态 | 较少, 体现于类似微内核架构的"能力扩展", 例如新算法或新服务 | 多, 但为不受限的"猴子补丁" |
-| 用户基数 | 少 | 多 |
-| 现有资源丰富度 | 少 | 多 |
-| AI 辅助产生单元集/牌组 | 原生支持 | 困难 |
-| 协议 | AGPL-3.0, 有一个附加豁免条款 | AGPL-3.0 |
+| Aspect | HeurAMS | Anki |
+|--------|---------|------|
+| Data format | Text files (TOML/JSON), human-readable | Proprietary compressed format with SQLite and resources (.apkg) |
+| Review modes | Multi-phase flow + multiple puzzle types | Single/double-sided flashcards |
+| Algorithm system | Modular, pluggable, multiple algorithm options | Built-in SM-2 / FSRS |
+| Plugin ecosystem | Smaller, manifests as "capability extensions" like new algorithms or services | Larger, but uses unrestricted "monkey patching" |
+| User base | Small | Large |
+| Existing resource richness | Low | High |
+| AI-assisted unit set/deck creation | Natively supported | Difficult |
+| License | AGPL-3.0 with additional exemption clause | AGPL-3.0 |
 
-## 软件是免费的吗?
+## Is the software free?
 
-是的, 完全免费, 且开源. 您无需支付任何费用即可使用全部功能.
+Yes, completely free and open source. You can use all features without paying anything.
 
-## 黑乎乎的这个界面我怎么用?
+## How do I use this dark-looking interface?
 
-首先, 如果您只是想要一个亮色模式, 可以直接按下 `d` 键或点击 "d 主题" 按钮, 这会让您的界面变得白乎乎的(  
+First, if you just want a light color scheme, press the `d` key or click the "d theme" button to switch to a light interface. :)
 
-得益于微软几十年对用户进行的"命令行即落后"教育, 以及 `conhost.exe` 和 `cmd.exe` 的糟糕体验, 您对终端用户界面感到不适应是完全正常的.
+Thanks to Microsoft's decades of "the command line is outdated" education, and the poor experience of `conhost.exe` and `cmd.exe`, it's completely normal to feel uncomfortable with a terminal user interface.
 
-但实际上, 虽然看起来像老式电脑屏幕, Textual 和终端标准其实比您想象得要现代一些.
+But in reality, even though it looks like an old computer screen, Textual and terminal standards are more modern than you might think.
 
-### 可以用鼠标
+### You can use the mouse
 
-现代终端模拟器 (如 Windows Terminal、Konsole、iTerm2、WezTerm 等) 支持一个叫做 "鼠标跟踪" (Mouse Tracking) 的功能, 而 Textual 启动时会发送特殊指令给终端让它报告鼠标事件.
+Modern terminal emulators (such as Windows Terminal, Konsole, iTerm2, WezTerm, etc.) support a feature called "Mouse Tracking". When Textual starts, it sends special instructions to the terminal to report mouse events.
 
-所以可能和您的想象不同, 您事实上可以直接用鼠标点击按钮, 就像使用普通软件一样.
+So contrary to what you might expect, you can actually click buttons with your mouse, just like in regular software.
 
-### 也可以用键盘
+### You can also use the keyboard
 
-- `Tab` 键在不同区域之间切换焦点
-- `方向键` 在列表中上下移动
-- `Enter` 确认选择
-- `q` 返回
-- 屏幕上会有按键提示, 例如 `[n] 导航器` 表示按 `n` 键打开导航器
+- `Tab` key switches focus between different areas
+- `Arrow keys` move up and down in lists
+- `Enter` confirms a selection
+- `q` goes back
+- Key hints are displayed on screen, e.g., `[n] Navigator` means pressing `n` opens the navigator
 
-### 触屏也可以
+### Touchscreen also works
 
-在平板或手机 Termux 中, 您可以触摸或者滑动屏幕操作.
+On tablets or phones in Termux, you can touch or swipe to operate.
 
-## 我怎么启动这个软件?
+## How do I start the software?
 
-首先需要确保系统中安装了 Python (推荐 3.12.13 版本) 并安装了 HeurAMS 的所需组件.
+First, ensure Python (3.12.13 recommended) is installed on your system along with the required HeurAMS components.
 
 ### Windows
 
-打开"命令提示符"或"PowerShell", 输入以下命令后按回车, 或者把这玩意另存为快捷方式:
+Open "Command Prompt" or "PowerShell", enter the following command and press Enter, or save it as a shortcut:
 
 ```
 python -m heurams.interface
@@ -71,346 +71,346 @@ python -m heurams.interface
 
 ### macOS
 
-打开"终端"应用程序, 输入以上命令.
+Open the "Terminal" application and enter the above command.
 
 ### Linux
 
-打开您的终端模拟器 (一般是按 Ctrl + Alt + T), 输入以上命令.
+Open your terminal emulator (usually Ctrl + Alt + T) and enter the above command.
 
-如果您觉得每次输入命令太麻烦, 可以创建一个桌面快捷方式或脚本文件, 详见网上的相关教程.
+If you find typing the command every time too cumbersome, you can create a desktop shortcut or script file. See online tutorials for details.
 
-## 我怎么退出软件?
+## How do I exit the software?
 
-按键盘上的 `q` 键返回主界面后退出.
+Press the `q` key to return to the main screen, then exit.
 
-您的学习进度会自动保存, 不会丢失.
+Your learning progress is saved automatically and will not be lost.
 
-## 图片像素很大, 模糊得像马赛克一样怎么办?
+## Images are very pixelated and blurry, what should I do?
 
-这说明图像以 Halfcell 兼容模式显示  
+This means the image is being displayed in Halfcell compatibility mode.
 
-终端模拟器需要支持 sixel 图像协议才能高清地显示图片, 对于不支持的图片, 软件只能以低清的兼容模式显示.
+The terminal emulator needs to support the sixel image protocol for high-quality image display. For terminals that don't support it, the software can only display images in low-quality compatibility mode.
 
-- WezTerm (适用于几乎所有操作系统): 支持
-- KDE Konsole: 支持
-- GNOME Terminal: 不支持
-- iTerm2 (macOS): 支持
-- Windows Terminal: 不支持
-- mintty (Windows): 支持
+- WezTerm (all major OS): Supported
+- KDE Konsole: Supported
+- GNOME Terminal: Not supported
+- iTerm2 (macOS): Supported
+- Windows Terminal: Not supported
+- mintty (Windows): Supported
 
-如果您的终端不支持图片, 软件的其他功能不受影响, 只是记忆内容中的图片无法显示.
+If your terminal doesn't support images, other software features are unaffected — only images in memorization content won't be displayed.
 
-## 中文显示成乱码或方框怎么办?
+## Chinese characters display as garbled text or boxes?
 
-这说明您没有正确设置终端中文字体. 请检查:
+This means your terminal's Chinese font is not set correctly. Please check:
 
-1. 您没有使用 getty 和 xterm 这种明确不支持非 ASCII 字体的终端
-2. 终端设置中的字体选项, 选择一款支持中文的字体, 例如 "Noto Sans SC", "微软雅黑", "Source Han Sans"
-3. 确保终端的字符编码设置为 UTF-8 (通常是默认值)
+1. You are not using terminals like getty or xterm that explicitly do not support non-ASCII fonts
+2. In the terminal settings, choose a font that supports Chinese, such as "Noto Sans SC", "Microsoft YaHei", "Source Han Sans"
+3. Ensure the terminal's character encoding is set to UTF-8 (usually the default)
 
-## 我的数据存哪里了? 会不会丢?
+## Where is my data stored? Will it be lost?
 
-数据存储在软件安装目录下的 `data/` 文件夹中:
+Data is stored in the `data/` folder under the software installation directory:
 
-- 您可以用记事本直接打开查看和修改
-- 复制粘贴 `data/` 文件夹到 U 盘或网盘即可完成备份 (推荐定期备份)
-- 即使软件卸载了, 只要保留 `data/` 文件夹, 重新安装后复制回去, 所有学习记录都在
+- You can open and modify files directly with a text editor
+- Copy the `data/` folder to a USB drive or cloud storage for backup (regular backups recommended)
+- Even if the software is uninstalled, as long as you keep the `data/` folder, all learning records will be preserved when you reinstall and copy it back
 
-## 怎么跟朋友分享我的单元集?
+## How do I share my unit sets with friends?
 
-找到 `data/repo/` 下的对应文件夹, 复制整个文件夹发给朋友即可. 对方把它放到自己的 `data/repo/` 目录下就能用.
+Find the corresponding folder under `data/repo/`, copy the entire folder, and send it to your friend. They can place it in their own `data/repo/` directory to use it.
 
-您也可以导出为单一文本文件或压缩包, 通过微信、QQ、邮件等方式分享.
+You can also export as a single text file or compressed archive and share via messaging apps, email, etc.
 
-## 我复制粘贴不了内容?
+## I can't copy/paste content?
 
-一般来说, 在终端中:
+Generally, in a terminal:
 
-- 复制: Ctrl+Shift+C
-- 粘贴: Ctrl+Shift+V
+- Copy: Ctrl+Shift+C
+- Paste: Ctrl+Shift+V
 
-这和普通软件的操作习惯不太一样(因为 Ctrl + C 在终端中的语义是 "中断进程"), 但稍加适应即可.
+This differs from regular software habits (because Ctrl+C means "interrupt process" in terminal semantics), but you'll get used to it quickly.
 
-## 字体太小/太大怎么办?
+## The font is too small/large?
 
-在您的终端模拟器设置中找到"字体大小"选项进行调整.
+Adjust the "font size" option in your terminal emulator settings.
 
-软件会跟随终端的字体设置.
+The software follows the terminal's font settings.
 
-## 为什么我的界面和截图不一样?
+## Why does my interface look different from the screenshots?
 
-截图使用的是 KDE Plasma 桌面上的 Konsole, 80x25 字符尺寸, Cascadia Code 和 Noto Sans SC 字体.
+The screenshots were taken using Konsole on KDE Plasma desktop, 80x25 character size, with Cascadia Code and Noto Sans SC fonts.
 
-如果您的终端尺寸更大, 界面会更宽裕; 如果使用不同字体或者不同操作系统, 视觉效果会略有差异.
+If your terminal size is larger, the interface will have more room. Using different fonts or operating systems may result in slight visual differences.
 
-功能上完全一致.
+Functionality is identical.
 
-## 评分 (1-5) 是什么意思? 我该怎么打分?
+## What do the ratings (1-5) mean? How should I rate?
 
-需要说明的是, 我们非常不鼓励这种类似 Anki, 让用户自己直接给自己评分的单元集设计(在我们的程序中, 这种方式的实现被称为 `basic_puzzle`, 基本只用于算法测试).
+We should note that we strongly discourage the Anki-like approach of having users directly self-rate their performance (implemented as `basic_puzzle` in our program, used primarily for algorithm testing).
 
-因为我们认为这种方式非常主观, 而且还需要您思考"我是多少分""我是不是乐观了""我是不是分低了""我要是把分评错了怎么办"这一系列打断记忆进程且令人焦虑的问题, 这本质上是把责任推给用户, 并且违背了认知科学原理.
+We believe this approach is highly subjective and requires you to think about "What score am I?", "Am I being too optimistic?", "Am I scoring too low?", "What if I rate incorrectly?" — a series of questions that interrupt the memorization process and cause anxiety. This essentially shifts responsibility to the user and contradicts cognitive science principles.
 
-并且这种方式于学术研究与实验不利, 用户自评分产生的数据是不可靠的.
+Moreover, this approach is detrimental to academic research and experimentation, as user self-rated data is unreliable.
 
-因此 HeurAMS 的前端内建了基于用户行为分析的自动评分系统, 也就是"谜题".
+Therefore, HeurAMS frontends have built-in automatic rating systems based on user behavior analysis, i.e., "puzzles".
 
-它会根据题目本身难度和您的答题行为(包括但不限于正确性, 操作回退次数, 有效答题时间)并自动为您评分.
+It automatically rates you based on the difficulty of the question and your answering behavior (including but not limited to correctness, number of operations undone, effective answering time).
 
-但如果您或者某个单元集选择使用 `basic_puzzle`, 或者打算自己实现自动评分系统, 分数含义如下:
+However, if you or a unit set chooses to use `basic_puzzle`, or if you plan to implement your own automatic rating system, the meaning of scores is as follows:
 
-| 分数 | 含义 | 说明 |
-|------|------|------|
-| 1 | 完全忘了 | 一点都没想起来, 跟没学过一样 |
-| 2 | 模糊 | 好像见过, 但答不上来 |
-| 3 | 有点印象 | 想了一会儿才答对, 不太确定 |
-| 4 | 比较顺利 | 能答对, 但稍微犹豫了一下 |
-| 5 | 非常轻松 | 立刻反应过来, 毫不费力 |
+| Score | Meaning | Description |
+|-------|---------|-------------|
+| 1 | Completely forgotten | Couldn't recall at all, as if never learned |
+| 2 | Vague | Seems familiar, but couldn't answer |
+| 3 | Some impression | Recalled after thinking for a while, not very certain |
+| 4 | Relatively smooth | Could answer, but hesitated slightly |
+| 5 | Very easy | Immediately recalled, no effort |
 
-- 打 **1-2 分**: 软件会认为您还没掌握, 短期内会再次安排复习
-- 打 **3 分**: 正常掌握, 按计划间隔复习
-- 打 **4-5 分**: 掌握得很好, 下次复习间隔会拉长
+- Scoring **1-2**: The software considers you haven't mastered it and will schedule another review soon
+- Scoring **3**: Normal mastery, review at the planned interval
+- Scoring **4-5**: Well mastered, the next review interval will be extended
 
-我们建议您不要纠结, 凭第一感觉打分就好, 软件会根据您的评分自动调整复习节奏.
+We suggest you don't overthink it, just score based on your first instinct — the software will automatically adjust the review pace based on your ratings.
 
-当然我们还是建议尽量避免这种方式并尽量使用其他谜题评测.
+Of course, we still recommend avoiding this approach and using other puzzle types for evaluation when possible.
 
-您可能认为那种方式可以让用户直接"干预"算法, 类似百词斩的"斩"功能用于跳过已经熟悉的内容, 实际上您并不需要那样做: 我们内建了"快速通过/正确应答"功能, 等同于直接选择"5".
+You might think this method allows users to directly "intervene" with the algorithm, similar to Baicizhan's "斩" (chop) feature for skipping familiar content. In reality, you don't need to do that: we have built-in "quick pass/correct response" functionality, equivalent to directly selecting "5".
 
-## 我每天都要打开软件吗? 不学会怎样?
+## Do I need to open the software every day? What if I don't study?
 
-理论上不需要每天打开. 软件会自动记录每个知识点下次该复习的时间.
+In theory, you don't need to open it every day. The software automatically records when each knowledge point is due for review next.
 
-但建议您每天打开软件看下状态.
+However, it is recommended to open the software daily to check your status.
 
-即使隔了几天甚至几周没学:
+Even if you skip studying for days or weeks:
 
-- 已经记住的知识点不会消失, 只是下次复习时会多复习几次
-- 学习记录完好保存在 `data/` 文件夹里, 不会丢失
+- Knowledge points you've already learned won't disappear — they'll just need a few more reviews next time
+- Learning records are safely stored in the `data/` folder and won't be lost
 
-建议尽量按软件的提醒复习, 效果最好; 但忙的时候跳过几天也没关系.
+For best results, try to follow the software's review reminders; but it's okay to skip a few days when you're busy.
 
-## 能同时学多个科目吗?
+## Can I study multiple subjects simultaneously?
 
-可以.
+Yes.
 
-每个科目或课程可以做成独立的"单元集".
+Each subject or course can be made into an independent "unit set".
 
-## 我换电脑了, 怎么迁移数据?
+## I changed computers. How do I migrate data?
 
-1. 在旧电脑上复制整个 `data/` 文件夹到 U 盘或网盘
-2. 在新电脑上安装好 HeurAMS
-3. 用 U 盘里的 `data/` 文件夹覆盖新电脑上的 `data/` 文件夹
+1. On the old computer, copy the entire `data/` folder to a USB drive or cloud storage
+2. Install HeurAMS on the new computer
+3. Overwrite the new computer's `data/` folder with the one from the USB drive
 
-所有学习记录、配置、单元集全部迁移完毕.
+All learning records, configurations, and unit sets are fully migrated.
 
-## 一些术语听不懂
+## I don't understand some terminology
 
-| 术语 | 意思 |
-|------|--------|
-| **单元集** | 相当于"一本书"或"一门课", 包含一系列知识点 |
-| **谜题** | 测试您的题目类型 (选择题、填空题等) |
-| **算法** | 决定什么时候该复习哪个知识点的"智能排课表" |
-| **复习队列** | 今天需要复习的知识点列表 |
-| **激活** | 第一次开始学习某个知识点 |
-| **到期** | 到了该复习这个知识点的时间了 |
+| Term | Meaning |
+|------|---------|
+| **Unit Set** | Like a "book" or "course", containing a series of knowledge points |
+| **Puzzle** | A question type to test you (MCQ, Cloze, etc.) |
+| **Algorithm** | The "intelligent scheduler" that decides when to review which knowledge point |
+| **Review Queue** | The list of knowledge points due for review today |
+| **Activation** | Starting to learn a knowledge point for the first time |
+| **Due** | A knowledge point is due for review |
 
-## 软件卡住了/没反应怎么办?
+## The software is stuck/unresponsive?
 
-1. 建议先等片刻
-2. 如果不行, 直接关闭终端窗口
-3. 重新打开软件
-4. 如果您有时间的话, 欢迎报告问题, 我们为此深表歉意
+1. First, wait a moment
+2. If that doesn't work, close the terminal window directly
+3. Reopen the software
+4. If you have time, please report the issue. We apologize for the inconvenience.
 
-## 同时用 Anki 和 HeurAMS 会冲突吗?
+## Will using both Anki and HeurAMS cause conflicts?
 
-不会.
+No.
 
-两者是独立的软件, 数据互不影响. 您可以逐步将内容迁移到 HeurAMS, 也可以两个一起用.
+They are independent software programs with no data interference. You can gradually migrate content to HeurAMS, or use both together.
 
-## 我需要安装 Python 吗?
+## Do I need to install Python?
 
-需要的, HeurAMS 是基于 Python 的软件.
+Yes. HeurAMS is a Python-based software.
 
-- Windows/macOS: 从 python.org 下载安装即可
-- Linux: 系统通常已自带 Python
-- Android: 安装 Termux 应用, 然后在 Termux 中安装 Python (运行 `pkg in python`)
+- Windows/macOS: Download and install from python.org
+- Linux: Python is usually pre-installed
+- Android: Install the Termux app, then install Python within Termux (run `pkg in python`)
 
-如果看到"python 不是内部或外部命令"的提示, 说明 Python 没有正确安装或添加到系统路径, 搜索"Python 安装教程"按步骤操作即可.
+If you see an error like "python is not recognized as an internal or external command", Python is not properly installed or added to your system PATH. Search for "Python installation tutorial" and follow the steps.
 
-HeurAMS 建议的 Python 版本是 3.12.13.
+The recommended Python version for HeurAMS is 3.12.13.
 
-## 软件安全吗? 会不会有病毒?
+## Is the software safe? Could it contain viruses?
 
-HeurAMS 是开源软件, 所有代码公开可查阅, 不会有病毒或后门.
+HeurAMS is open source software. All code is publicly available for inspection and contains no viruses or backdoors.
 
-它只读写自己的 `data/` 文件夹, 不会动您电脑上的其他文件.
+It only reads and writes to its own `data/` folder and will not touch other files on your computer.
 
-## 软件报错, 出现一堆我看不懂的英文怎么办?
+## The software shows an error with a lot of text I don't understand?
 
-1. 把错误信息复制下来
-2. 先找一下这个页面有没有收录您遇到的问题
-3. 如果没有, 可以和软件日志一起上传到 issues, 我们会尽快处理
+1. Copy the error message
+2. First check if this page covers your issue
+3. If not, upload it along with the software logs to issues, and we will handle it as soon as possible
 
-## 复习到一半可以暂停吗? 下次会从头开始吗?
+## Can I pause mid-review? Will it restart from the beginning?
 
-暂时没有保存中间状态的功能, 但我们很快会添加.
+There is currently no save-state functionality, but we will add it soon.
 
-## 怎么看我学了多少? 有统计吗?
+## How do I see how much I've learned? Are there statistics?
 
-仪表盘界面会显示统计信息.
+The dashboard interface displays statistical information.
 
-您可以通过导航器随时回到仪表盘查看.
+You can return to the dashboard anytime via the navigator.
 
-## 我觉得复习太快/太慢了, 能调吗?
+## I feel the review is too fast/slow. Can I adjust it?
 
-可以. 您可以通过切换算法或调整算法参数或改变记忆单元数来改变复习节奏.
+Yes. You can change the review pace by switching algorithms, adjusting algorithm parameters, or changing the number of memory units.
 
-在设置界面可以找到相关设置.
+Relevant settings can be found in the settings interface.
 
-## 能换界面颜色/主题吗?
+## Can I change the interface color/theme?
 
-能的, Textual 框架提供了多种主题.
+Yes. The Textual framework provides various themes.
 
-## 我不小心删了东西, 能恢复吗?
+## I accidentally deleted something. Can I recover it?
 
-这取决于您系统是否启用回收站, 软件本身没有自动备份功能.
+This depends on whether your system has a recycle bin enabled. The software itself does not have an auto-backup function.
 
-## 能把软件放 U 盘随身带吗?
+## Can I carry the software on a USB drive?
 
-可以. 将整个 HeurAMS 文件夹复制到 U 盘, 在任意电脑上安装 Python 后运行即可. `data/` 目录下的学习数据也会一同携带.
+Yes. Copy the entire HeurAMS folder to a USB drive, install Python on any computer, and run it. Learning data in the `data/` directory will also be carried along.
 
-## 怎么关掉语音朗读?
+## How do I turn off voice reading?
 
-在设置界面中找到 TTS 相关选项, 将其关闭即可.
+Find the TTS-related option in the settings interface and disable it.
 
-## 哪里可以下载别人做好的单元集?
+## Where can I download unit sets made by others?
 
-目前项目还没有官方的单元集市场.
+Currently, there is no official unit set marketplace.
 
-但随着社区发展, 未来可能会有用户分享的单元集, 您也可以和朋友互相分享.
+However, as the community grows, users may share unit sets in the future. You can also share unit sets with friends.
 
-## 我能把学习内容导出打印吗?
+## Can I export learning content for printing?
 
-可以.
+Yes.
 
-软件本身支持将单元集导出为单一文本文件, 您可以用任何文本编辑器打开并打印. 也可以直接复制内容到 Word 等软件.
+The software supports exporting unit sets as a single text file, which you can open and print with any text editor. You can also copy content directly into software like Word.
 
-## 我想从头重新学, 怎么重置?
+## I want to start over from scratch. How do I reset?
 
-删除 `data/repo/` 下对应单元集文件夹中的 `algodata.json` 文件即可重置所有学习进度.
+Delete the `algodata.json` file in the corresponding unit set folder under `data/repo/` to reset all learning progress.
 
-## 如何创建自己的单元集?
+## How do I create my own unit set?
 
-在 `data/repo/` 目录下创建一个新文件夹, 包含以下文件即可:
+Create a new folder under `data/repo/` with the following files:
 
 ```
 data/repo/my_pack/
-├── manifest.toml    # 元信息: title, author 等
-├── typedef.toml     # 通用字段定义和谜题配置
-├── payload.toml     # 记忆条目内容
-├── algodata.json    # 算法状态数据 (可留空)
-└── schedule.toml    # 复习策略配置
+├── manifest.toml    # Meta info: title, author, etc.
+├── typedef.toml     # Common field definitions and puzzle configuration
+├── payload.toml     # Memory item content
+├── algodata.json    # Algorithm state data (can be empty)
+└── schedule.toml    # Review strategy configuration
 ```
 
-您也可以使用我们提供的工具从 CSV 等格式转换, 或利用 AI 工具生成.
+You can also use the tools we provide to convert from CSV format, or use AI tools to generate unit sets.
 
-## 如何切换算法?
+## How do I switch algorithms?
 
-设置界面中有详细的说明.
+Detailed instructions are available in the settings interface.
 
-## 如何从 Anki 导入?
+## How do I import from Anki?
 
-暂时没有迁移工具, 因为两个软件的设计思路不同.
+There is currently no migration tool, as the design philosophies of the two software programs differ.
 
-但欢迎关注 HeurStudio 项目, 它能从根本上解决内容创建与迁移问题 :)
+But keep an eye on the HeurStudio project — it will fundamentally solve content creation and migration issues. :)
 
-## 为什么不用 Flutter?
+## Why not Flutter?
 
-Flutter 是构建跨平台图形界面的优秀框架, HeurAMS 的设计目标之一是保持核心程序库独立于特定前端.
+Flutter is an excellent framework for building cross-platform graphical interfaces. One of HeurAMS's design goals is to keep the core library independent of any specific frontend.
 
-但 Flutter 在 "集成 python" 方面不如 PyOtherSide, 只能通过 RPC 标准件和程序库通讯, 并且 Flutter 的桌面多窗口一直以来没有被官方稳定支持, 所以我们暂时放弃了 Flutter 而选择了 Kirigami.
+However, Flutter is not as good as PyOtherSide when it comes to "integrating Python" — it can only communicate with the library through RPC standard components. Additionally, Flutter's desktop multi-window support has not been officially and stably supported, so we temporarily abandoned Flutter in favor of Kirigami.
 
-当前我们优先开发了基于 Textual 的 TUI 前端和基于 Kirigami 的原生前端, 但这不排除未来出现 Flutter 或其他框架前端的可能性.
+Currently, we have prioritized the development of a Textual-based TUI frontend and a Kirigami-based native frontend. However, this does not preclude the possibility of a Flutter or other framework frontend in the future.
 
-如果您有兴趣开发 Flutter 前端, 欢迎参考[贡献指南](CONTRIBUTING.md#%E6%96%B0%E7%9A%84%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E5%89%8D%E7%AB%AF).
+If you are interested in developing a Flutter frontend, please refer to the [Contributing Guide](CONTRIBUTING.md#new-user-interface-frontends).
 
-## 软件需要联网吗?
+## Does the software need internet access?
 
-核心复习功能完全离线可用. 以下功能需要联网:
+Core review functionality works completely offline. The following features require internet:
 
-- 文本转语音 (TTS) 的 Edge TTS 提供者
-- LLM 提供者 (如 OpenAI 兼容 API)
-- 从远程仓库下载单元集
+- Edge TTS provider for Text-to-Speech
+- LLM providers (e.g., OpenAI compatible API)
+- Downloading unit sets from remote repositories
 
-## 许可证中的"本机 API 调用豁免"是什么?
+## What is the "local API call exemption" in the license?
 
-简言之, 如果您在自己的程序中通过本地进程间 API 方式的通信 (如同一主机上的 RPC 调用) 使用 HeurAMS, 而无需通过网络转发, 则您的程序不受 AGPL-3.0 许可证的约束.
+In short, if you use HeurAMS in your own program through local inter-process API communication (such as RPC calls on the same host) without network forwarding, your program is not bound by the AGPL-3.0 license.
 
-这项附加条款旨在鼓励第三方前端和工具的开发.
+This additional clause is designed to encourage the development of third-party frontends and tools.
 
-所以 HeurAMS 的许可证实质上是比原始的 AGPL-3.0 松一点的.
+Therefore, HeurAMS's license is effectively more permissive than the original AGPL-3.0.
 
-## HeurAMS 和百词斩有什么区别?
+## What is the difference between HeurAMS and Baicizhan?
 
-大体地说:
+At a high level:
 
-| 方面 | HeurAMS | 百词斩 |
-|------|---------|--------|
-| 使用场景 | 电脑/终端 | 手机 App |
-| 学习内容 | 任何知识, 不限语言和科目 | 英语单词 |
-| 记忆策略 | 多算法可选, 可自定义复习流程 | 固定算法, 不可调 |
-| 测验方式 | 选择题/填空题/识别题等多种谜题 | 看图选词/听音选义等多种谜题 |
-| 内容创建 | 自己创建或导入, 完全自由 | 仅官方提供词书 |
-| 费用 | 完全免费, 无内购 | 免费记忆功能 + 付费课程 |
-| 数据所有权 | 数据在您自己手上, 文本文件 | 数据不可被提取 |
-| 离线使用 | 核心功能完全离线 | 部分功能需联网 |
-| 学习统计 | 基础统计 | 打卡/排行榜/社交 |
+| Aspect | HeurAMS | Baicizhan |
+|--------|---------|-----------|
+| Usage scenario | Computer/Terminal | Mobile App |
+| Learning content | Any knowledge, unlimited languages and subjects | English vocabulary |
+| Memory strategy | Multiple algorithms, customizable review flow | Fixed algorithm, not adjustable |
+| Quiz methods | Multiple puzzle types: MCQ, Cloze, Recognition | Picture-word matching, audio-meaning selection, etc. |
+| Content creation | Self-created or imported, completely free | Official word books only |
+| Cost | Completely free, no in-app purchases | Free memorization + paid courses |
+| Data ownership | Data in your hands, text files | Data cannot be extracted |
+| Offline use | Core functionality fully offline | Some features require internet |
+| Learning statistics | Basic statistics | Check-in/Leaderboard/Social |
 
-## 百词斩有图片联想记忆, HeurAMS 也有吗?
+## Baicizhan has picture association memory. Does HeurAMS have it too?
 
-支持.
+Yes.
 
-如果您的终端支持图片显示 (如 Konsole 或者 WezTerm), 单元集中可以包含图片, 复习时会直接展示.
+If your terminal supports image display (such as Konsole or WezTerm), unit sets can include images that will be displayed during review.
 
-但图片需要您自己放入单元集.
+However, you need to add images to the unit set yourself.
 
-## 百词斩有打卡和排行榜, HeurAMS 有吗?
+## Baicizhan has check-ins and leaderboards. Does HeurAMS have them?
 
-目前没有.
+Currently no.
 
-HeurAMS 不设打卡、排行榜或社交功能, 也不向任何人收集您的学习数据.
+HeurAMS does not have check-ins, leaderboards, or social features, and does not collect your learning data.
 
-## 百词斩有现成的词书, HeurAMS 去哪找内容?
+## Baicizhan has ready-made word books. Where can I find content for HeurAMS?
 
-百词斩的课程是官方制作好的, HeurAMS 的内容需要您自己创建或从社区获取.
+Baicizhan's courses are officially made. HeurAMS content needs to be created by yourself or obtained from the community.
 
-详见"如何创建自己的单元集?".
+See "How do I create my own unit set?" for details.
 
-## 百词斩在手机上用很方便, HeurAMS 能在手机用吗?
+## Baicizhan is convenient to use on mobile. Can HeurAMS be used on mobile?
 
-可以, 但现阶段需要您"折腾"一下.
+Yes, but at this stage it requires some setup.
 
-Android 手机安装 Termux 后可运行 HeurAMS 的基本用户界面.
+Android users can install Termux to run HeurAMS's basic user interface.
 
-此外, 正在开发的 KiriMemo 前端将原生支持 Android 和 iOS, 这就不需要用户去折腾了.
+Additionally, the KiriMemo frontend under development will natively support Android and iOS, requiring no setup from users.
 
-## 百词斩能背单词, HeurAMS 还能学什么?
+## Baicizhan helps with vocabulary. What else can HeurAMS be used for?
 
-任何需要记忆的知识都可以: 外语单词、医学名词、法律条文、历史年代、化学方程式、编程语法、乐谱符号...
+Any knowledge that requires memorization: foreign language vocabulary, medical terminology, legal texts, historical dates, chemical equations, programming syntax, musical notation...
 
-单元集的内容完全由您自己定义.
+Unit set content is entirely defined by you.
 
-## 百词斩学英语效果很好, 换成 HeurAMS 会不会效果差?
+## Baicizhan is effective for learning English. Will HeurAMS be less effective?
 
-考虑到百词斩的算法和词库是事实上闭源的, 我们无从得知算法来源.
+Considering that Baicizhan's algorithms and vocabulary database are effectively closed-source, we have no way of knowing the algorithm source.
 
-但 HeurAMS 的架构设计可保证单元集制成后效果不比百词斩差, 甚至优于百词斩.
+However, HeurAMS's architecture design ensures that once a unit set is created, it can be at least as effective as Baicizhan — or even better.
 
-HeurAMS 的间隔重复算法基于相同的认知科学原理, 且算法透明可调, 您可以自由选择最适合自己的调度策略.
+HeurAMS's spaced repetition algorithms are based on the same cognitive science principles, and the algorithms are transparent and adjustable, allowing you to freely choose the scheduling strategy that best suits you.
 
-## 如何参与项目?
+## How do I participate in the project?
 
-详见[贡献指南](CONTRIBUTING.md).
+See the [Contributing Guide](CONTRIBUTING.md).
 
-即使不是开发者, 您也可以通过编写文档、制作记忆单元集、翻译界面、答疑等方式参与.
+Even if you are not a developer, you can participate by writing documentation, creating memory unit sets, translating the interface, answering questions, and more.

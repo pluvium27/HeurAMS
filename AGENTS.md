@@ -1,50 +1,50 @@
-# AI 编程工具说明
+# AI Coding Assistant Guide
 
-本文档为 AI 工具以及在使用 AI 辅助向 HeurAMS 项目贡献代码的开发者提供指导, 一般而言此文件会被自动读入多种 AI 工具的上下文.
+This document provides guidance for AI tools and developers using AI assistance to contribute code to the HeurAMS project. Generally, this file will be automatically loaded into the context of various AI tools.
 
-AI 工具应当完整阅读此 `/AGENTS.md` 文件.
+AI tools should read this `/AGENTS.md` file in its entirety.
 
-## 查阅开发文档
+## Reference Documents
 
-在帮助进行 HeurAMS 开发时，AI 工具应遵循标准的开发规范与流程, 应当自动查看或是在用户发出"初始化/init"指令后查看:
+When assisting with HeurAMS development, AI tools should follow standard development practices and procedures. They should automatically check, or check upon user issuing an "init/初始化" command:
 
-- [贡献指南](/CONTRIBUTING.md)
-- [自述文件](/README.md)
-- [项目架构](/ARCHITECTURE.md)
+- [Contributing Guide](/CONTRIBUTING.md)
+- [README](/README.md)
+- [Architecture Overview](/ARCHITECTURE.md)
 
-## 明确禁止行为
+## Prohibited Actions
 
-1. 禁止 AI 自动生成 PR 或 patch 文件
-2. 禁止 AI 在未经人工确认的情况下修改现有代码
-3. 禁止 AI 不使用格式化工具而生成格式化文件的行为
-4. 禁止 AI 修复任何"bug", 而不经人工确认
-5. 禁止一切不遵循项目设计原则, 另造独立库的 "糊屎" 行为
-6. 禁止 AI 直接操作 pip, uv, apt 等工具修改外部依赖或工具, 而应让人类开发者自己操作依赖
-7. 禁止使用不同于任何现有文件的现有注释语言的其他语言写新注释
-8. 禁止不读文件就直接覆写
-9. 绝对禁止修改此 `/AGENTS.md` 文件
+1. AI must not automatically generate PR or patch files
+2. AI must not modify existing code without human confirmation
+3. AI must not generate formatted files without using formatting tools
+4. AI must not fix any "bugs" without human confirmation
+5. AI must not engage in any "cowboy coding" that bypasses project design principles or creates separate libraries
+6. AI must not directly operate pip, uv, apt, or other tools to modify external dependencies or tools — human developers should handle dependencies themselves
+7. AI must not write new comments in a language different from the existing comment language of any existing file
+8. AI must not overwrite files without reading them first
+9. **Modification of this `/AGENTS.md` file is absolutely forbidden**
 
-## 许可证与法律要求
+## License & Legal Requirements
 
-所有贡献必须符合许可要求, 所有代码必须与 AGPL-3.0-or-later 许可以及项目附加豁免条款(位于 LICENSE 文件尾部 237 至 245 行)兼容.
+All contributions must comply with licensing requirements. All code must be compatible with the AGPL-3.0-or-later license and the project's additional exemption clause (located at lines 237-245 at the end of the LICENSE file).
 
-## Signed-off-by 与 DCO
+## Signed-off-by & DCO
 
-AI 代理**严禁添加** Signed-off-by 标签.
+AI agents are **strictly forbidden** from adding Signed-off-by tags.
 
-只有人类能够合法地认证 DCO.
+Only humans can legally certify the DCO.
 
-人类提交者负责:
+Human committers are responsible for:
 
-- 审阅所有 AI 生成的代码
-- 确保符合许可要求
-- 添加自己的 Signed-off-by 标签以认证 DCO
-- 对贡献负责任
+- Reviewing all AI-generated code
+- Ensuring compliance with licensing requirements
+- Adding their own Signed-off-by tag to certify the DCO
+- Taking responsibility for contributions
 
-AI 助手负责:
+AI assistants are responsible for:
 
-- 了解运行环境, 例如操作系统或具体发行版
-- 遵循此文档所述规则
-- 主动提醒使用 AI 工具的开发者
+- Understanding the runtime environment, such as the operating system or specific distribution
+- Following the rules outlined in this document
+- Proactively reminding developers using AI tools
 
-本文档参考自 <a href="https://docs.kernel.org/process/coding-assistants.html" target="_blank" rel="noopener noreferrer">AI Coding Assistants — The Linux Kernel documentation</a>
+This document references <a href="https://docs.kernel.org/process/coding-assistants.html" target="_blank" rel="noopener noreferrer">AI Coding Assistants — The Linux Kernel documentation</a>

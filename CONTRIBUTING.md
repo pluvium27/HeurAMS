@@ -1,119 +1,119 @@
-# 贡献指南与二次开发
+# Contributing Guide & Development
 
-欢迎支持此项目!
+Welcome and thank you for supporting this project!
 
-目前, 项目仓库主服务器为<a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">作者的 Gitea 实例</a>, 它负责管理同步, 保证可用性并同时接受来自多个社区的协作, 并在 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 和 <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a> 设置了镜像同步.  
+Currently, the primary project repository server is the <a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">author's Gitea instance</a>, which manages synchronization, ensures availability, and accepts collaboration from multiple communities. Mirror syncs are set up on <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a>, and <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a>.
 
-这丝毫不影响项目接受来自 <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a> 和 <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a> 的 PR, 在 GitHub, KDE Invent 和 Gitee 所接受的 PR 会保留贡献者标识并按原样同步回所有平台, 欢迎在任意平台为项目做出贡献.  
+This does not affect the project's acceptance of PRs from <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a>, and <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a>. PRs accepted on GitHub, KDE Invent, and Gitee will retain contributor attribution and be synced back to all platforms as-is. Contributions on any platform are welcome.
 
 > [!NOTE]
-> 我们已经开始着手于基于 KDE 用户界面框架 `Kirigami` 的现代跨平台前端开发, 称作 "KiriMemo", 包名是 "org.kde.kirimemo", 但其并非 KDE 项目\
-> 它通过 `PyOtherSide` 直接复用 python 内核, 为 Windows, Linux, macOS, Android, iOS 和 Plasma Mobile 提供现代用户界面
-> 如果您善于开发 C++, QML, Qt 与 KDE 框架, 欢迎加入到 KiriMemo 项目的开发
+> We have begun development of a modern cross-platform frontend based on the KDE UI framework `Kirigami`, called "KiriMemo" (package name "org.kde.kirimemo"). Note that it is not a KDE project.\
+> It directly reuses the Python kernel via `PyOtherSide`, providing a modern UI for Windows, Linux, macOS, Android, iOS, and Plasma Mobile.\
+> If you are skilled in C++, QML, Qt, and KDE frameworks, you are welcome to join the KiriMemo project development.
 
-## 开发规范
+## Development Conventions
 
-分支划分:
+Branch structure:
 
-- `dev` 分支(仓库默认分支): 主线开发分支, 自身仅用于非重构的问题修复和整合功能分支, 拉取请求在该分支合并
-- `master` 分支: 主线稳定版本, 仅当稳定版本释出或修补版本时将 `dev` 合并到 `master` 上
-- 功能与重构分支: 从 `dev` 分支创建, 命名格式为 `feature/描述` 或 `fix/描述` 或 `refactor/描述` 或 `next/版本号`
-- 功能与重构分支应先合并至 `dev`, 再合并至 `master`
+- `dev` branch (default branch): Mainline development branch. Used only for non-refactoring bug fixes and integration of feature branches. Pull requests are merged into this branch.
+- `master` branch: Mainline stable version. `dev` is merged into `master` only when a stable version is released or a patch version is prepared.
+- Feature and refactoring branches: Created from `dev`, named as `feature/description` or `fix/description` or `refactor/description` or `next/version`.
+- Feature and refactoring branches should first be merged into `dev`, then into `master`.
 
-代码格式化:
+Code formatting:
 
-- 安装工具:
+- Install tools:
   ```bash
   python -m pip install black autoflake mdformat
   ```
-- 对于 Python, 使用 `black` 与 `autoflake` 格式化\
-  命令:
+- For Python, use `black` and `autoflake`.\
+  Commands:
   ```bash
-  # black 的多线程在某些环境下有兼容性问题
+  # black's multi-threading may have compatibility issues in some environments
   black . --workers=1
   ```
   ```bash
-  # autoflake 注意排除 __init__.py
+  # autoflake: note to exclude __init__.py
   autoflake --in-place --remove-all-unused-imports --recursive ./src/ --exclude __init__.py
   ```
-- 对于 Markdown, 使用 `mdformat` 格式化
-  命令:
+- For Markdown, use `mdformat`.\
+  Command:
   ```bash
   mdformat --number .
   ```
-- 对于 Textual CSS, 可以使用 `prettier` 格式化
-- 格式化不是必需的, 可以整合入一次 `style` 提交, 但 `master` 和 `dev` 分支上的代码应尽量整洁, 以便合并时审查
+- For Textual CSS, use `prettier`.
+- Formatting is not mandatory and can be consolidated into a single `style` commit, but code on `master` and `dev` branches should be kept clean for review.
 
-提交消息:
+Commit messages:
 
-- 使用简体中文或英文撰写清晰的提交消息
-- 提交消息格式: 遵循 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) 规范, 建议使用 `koji` 工具
+- Write clear commit messages in Simplified Chinese or English.
+- Commit message format: Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. The `koji` tool is recommended.
 
-合并方式:
+Merge method:
 
-- 为了一致性和可追溯性, 项目自 v0.4.0 重构后重新初始化仓库起就禁止使用 Fast-forward 合并
-- 可以设置 `git config merge.ff false`
+- For consistency and traceability, Fast-forward merges have been prohibited since the repository was re-initialized after the v0.4.0 refactoring.
+- You can set `git config merge.ff false`.
 
-提交署名方式:  
-由于 KDE Invent 设施的奇怪 git hook, commit 的 Author 字段需要看起来像个真名(例如 Wang Zhiyu 不能写为 wangzhiyu, 否则 KDE Invent 的 hook 会拒绝 push),  
-所以请确保您的 git 配置使用了类似正式姓名的格式 (例如 git config user.name "Li Hua", 也即中间需要空格), 不一定要真实姓名, 邮箱无要求, 也可以将单名重复使用两次 (例如 Thura Thura) 以通过检测.
+Commit author format:\
+Due to the quirky git hook on KDE Invent infrastructure, the commit Author field must appear to be a real name (e.g., "Wang Zhiyu" instead of "wangzhiyu"; otherwise, KDE Invent's hook will reject the push).\
+Therefore, please ensure your git configuration uses a proper name-like format (e.g., `git config user.name "Li Hua"`, i.e., must include a space). A real name is not required; the email field has no restrictions. You can also repeat a single name twice (e.g., "Thura Thura") to pass the check.
 
-## 设置开发环境
+## Setting Up Development Environment
 
 ```bash
-git clone https://git.pluv27.top/pluv/HeurAMS # 默认分支为 dev, 所以不必切换分支
+git clone https://git.pluv27.top/pluv/HeurAMS # Default branch is dev, no need to switch
 
 cd HeurAMS
 
-# 如果决定使用 uv (推荐)
+# If using uv (recommended)
 
 python3 -m pip install uv
 
-uv sync --all-extras # 同步开发运行环境
+uv sync --all-extras # Sync development environment
 
 uv run heurams
 
-# 如果决定使用原生 python 环境 (不推荐, 但我们保留了这种方式以便在不便支持 uv 与硬链接的环境和文件系统(例如 termux)上运行)
+# If using native Python environment (not recommended, but retained for environments where uv and hardlinks are not supported, e.g., termux)
 
-python3 -m pip install -e .[all] # 安装依赖并将 HeurAMS 安装为本地包
+python3 -m pip install -e .[all] # Install dependencies and HeurAMS as a local package
 
-python3 -m heurams # 验证安装
+python3 -m heurams # Verify installation
 
-python3 -m heurams.interface # 启动 TUI
+python3 -m heurams.interface # Launch TUI
 ```
 
-## 许可证与外部引用
+## License & External References
 
-贡献者拥有其贡献部分的版权同意其贡献将在 AGPL-3.0 许可证(包括附加的本机 API 调用豁免条款)下发布.
+Contributors retain copyright of their contributions and agree that their contributions will be released under the AGPL-3.0 license (including the additional local API call exemption clause).
 
-如有以下情况, 请在 PR 描述中注明:
+Please note in your PR description if:
 
-- 如果需要引入其他开源 vendor
-- 如果需要引入其他专有的网络服务(例如当前项目中的 edgetts)
-- 如果需要升级某个依赖或运行环境的版本
+- You need to introduce other open-source vendor code
+- You need to introduce other proprietary online services (e.g., edgetts in the current project)
+- You need to upgrade a dependency or runtime environment version
 
-## 新的用户界面前端
+## New User Interface Frontends
 
-HeurAMS 被设计为一个可独立于前端的程序库, 这意味着:
+HeurAMS is designed as a frontend-independent library, meaning:
 
-- 我们的内置 Textual TUI 前端不是唯一可用的前端
+- Our built-in Textual TUI frontend is not the only available frontend.
 
-- 如果您有一个自己开发的且可用的 HeurAMS 前端 (例如未实现的 Flutter 前端), 并且以 AGPL-3.0/GPL-3.0 开放源代码, 可以联系我们将它转移到 HeurAMS 的官方仓库中以便共同维护, 您将保留您的版权并可主导该仓库下的开发工作 :)
+- If you have developed a usable HeurAMS frontend (e.g., a not-yet-implemented Flutter frontend) and open-sourced it under AGPL-3.0/GPL-3.0, you can contact us to transfer it to the HeurAMS official repository for joint maintenance. You will retain your copyright and can lead development under that repository. :)
 
-- 您还可以在自己的项目中以独立进程/服务调用 HeurAMS, 根据 AGPL-3.0 及本项目的附加许可条款, 如果调用发生在同一主机上且不涉及外部网络转发, 则可豁免许可证规定的特定义务而免于受 AGPL-3.0 "污染". 为了这点, 我们正在完善可选择启用的跨进程 RPC 模块, 这将成为潜进内核的跨平台标准件.
+- You can also call HeurAMS as an independent process/service in your own projects. Per AGPL-3.0 and this project's additional license terms, if the call occurs on the same host and does not involve external network forwarding, it is exempt from specific obligations of the license and will not be "contaminated" by AGPL-3.0. To this end, we are improving the optional cross-process RPC module, which will become a cross-platform standard component of the "潜进" kernel.
 
-- 如果您通过独立进程/服务调用方式开发了另外的软件, 开源但不愿使用 AGPL-3.0/GPL-3.0 许可证, 也可以联系我们, 我们乐于将您的项目链接添加到友链中
+- If you develop another piece of software through independent process/service invocation and open-source it but prefer not to use the AGPL-3.0/GPL-3.0 license, you can also contact us. We would be happy to add your project link to our friendly links.
 
-## 软件开发之外的贡献
+## Non-Software Contributions
 
-即使您不是软件开发人员, 我们也欢迎您加入贡献!
+Even if you are not a software developer, you are welcome to contribute!
 
-您可以:
+You can:
 
-- 协助创建或核对各种语言的翻译来翻译软件的界面和文档
-- 制作开放的记忆单元集(包括但不限于文字、图像、音效)给其他用户使用
-- 改进软件配套的文档
-- 给其他用户答疑解惑或分享自己的经验
-- 在讨论区提出新想法或反馈问题
+- Help create or proofread translations for the software interface and documentation in various languages
+- Create open memory unit sets (including but not limited to text, images, and audio) for other users
+- Improve the software documentation
+- Answer questions from other users or share your experience
+- Propose new ideas or report issues in the discussion area
 
-您的角色您来定!
+You decide your role!
