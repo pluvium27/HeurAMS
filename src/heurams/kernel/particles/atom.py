@@ -63,7 +63,7 @@ class Atom:
         )
 
     def lock(self, locked=-1):
-        logger.debug(f"锁定参数 {locked}")
+        logger.debug(f"Lock atom: {locked}")
         """锁定, 效果等同于 self.registry['runtime']['locked'] = locked 或者返回是否锁定"""
         if locked == 1:
             self.registry["runtime"]["locked"] = True
@@ -80,13 +80,13 @@ class Atom:
         PuzzleWidget 的 handler 除了测试, 严禁直接执行 Electron 的 revisor 函数, 否则造成逻辑混乱
         """
         if self.registry["runtime"]["locked"]:
-            logger.debug(f"允许总评分: {self.registry['runtime']['min_rate']}")
+            logger.debug(f"Rating allowed: {self.registry['runtime']['min_rate']}")
             self.registry["electron"].revisor(
                 self.registry["runtime"]["min_rate"],
                 is_new_activation=self.registry["runtime"]["new_activation"],
             )
         else:
-            logger.debug("禁止总评分")
+            logger.debug("Rating disallowed")
 
     def __getitem__(self, key):
         return self.registry[key]

@@ -2,7 +2,7 @@
 
 Welcome and thank you for supporting this project!
 
-Currently, the primary project repository server is the <a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">author's Gitea instance</a>, which manages synchronization, ensures availability, and accepts collaboration from multiple communities. Mirror syncs are set up on <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a>, and <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a>.
+Currently, the primary project repository server is <a href="https://git.pluv27.top/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">git.pluv27.top</a>, which manages synchronization, ensures availability, and accepts collaboration from multiple communities. Mirror syncs are set up on <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a>, and <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a>.
 
 This does not affect the project's acceptance of PRs from <a href="https://github.com/pluvium27/HeurAMS" target="_blank" rel="noopener noreferrer">GitHub</a>, <a href="https://invent.kde.org/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">KDE Invent</a>, and <a href="https://gitee.com/pluv/HeurAMS" target="_blank" rel="noopener noreferrer">Gitee</a>. PRs accepted on GitHub, KDE Invent, and Gitee will retain contributor attribution and be synced back to all platforms as-is. Contributions on any platform are welcome.
 
@@ -100,7 +100,7 @@ HeurAMS is designed as a frontend-independent library, meaning:
 
 - If you have developed a usable HeurAMS frontend (e.g., a not-yet-implemented Flutter frontend) and open-sourced it under AGPL-3.0/GPL-3.0, you can contact us to transfer it to the HeurAMS official repository for joint maintenance. You will retain your copyright and can lead development under that repository. :)
 
-- You can also call HeurAMS as an independent process/service in your own projects. Per AGPL-3.0 and this project's additional license terms, if the call occurs on the same host and does not involve external network forwarding, it is exempt from specific obligations of the license and will not be "contaminated" by AGPL-3.0. To this end, we are improving the optional cross-process RPC module, which will become a cross-platform standard component of the "潜进" kernel.
+- You can also call HeurAMS as an independent process/service in your own projects. Per AGPL-3.0 and this project's additional license terms, if the call occurs on the same host and does not involve external network forwarding, it is exempt from specific obligations of the license and will not be "contaminated" by AGPL-3.0. To this end, we are improving the optional cross-process RPC module, which will become a cross-platform standard component of the HeurAMS kernel.
 
 - If you develop another piece of software through independent process/service invocation and open-source it but prefer not to use the AGPL-3.0/GPL-3.0 license, you can also contact us. We would be happy to add your project link to our friendly links.
 

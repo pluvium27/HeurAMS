@@ -1,6 +1,6 @@
-"""
-全局上下文管理模块
-以及基准路径
+"""全局上下文模块
+
+初始化并管理基准路径, 程序配置对象, 并提供调试所需上下文管理器
 """
 
 import pathlib
@@ -19,13 +19,14 @@ workdir = pathlib.Path.cwd()
 """工作目录路径."""
 
 logger = get_logger(__name__)
-logger.debug(f"包目录: {rootdir}")
-logger.debug(f"工作目录: {workdir}")
+logger.info(f"rootdir: {rootdir}")
+logger.info(f"workdir: {workdir}")
 
 default_data = rootdir / "assets" / "data"
 user_data = workdir / "data"
+
 if not user_data.exists():
-    logger.info("初始化数据目录: %s", user_data)
+    logger.info("Create a new data directory: %s", user_data)
     import shutil
 
     shutil.copytree(default_data, user_data)

@@ -1,6 +1,8 @@
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
+from heurams.i18n import _
+
 
 class Placeholder(Widget):
     def __init__(
@@ -23,8 +25,8 @@ class Placeholder(Widget):
         )
 
     def compose(self):
-        yield Label("示例标签", id="testlabel")
-        yield Button("示例按钮", id="testbtn", classes="choice")
+        yield Label(_("Sample Label"), id="testlabel")
+        yield Button(_("Sample Button"), id="testbtn", classes="choice")
 
     def on_button_pressed(self, event):
         pass

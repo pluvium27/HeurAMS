@@ -1,4 +1,4 @@
-"""仪表盘界面"""
+"""Dashboard screen"""
 
 from functools import reduce
 from pathlib import Path
@@ -14,6 +14,7 @@ import heurams.kernel.particles as pt
 import heurams.services.timer as timer
 import heurams.services.version as version
 from heurams.context import *
+from heurams.i18n import _
 from heurams.kernel.particles import *
 from heurams.kernel.repolib import *
 from heurams.services.logger import get_logger
@@ -25,11 +26,11 @@ logger = get_logger(__name__)
 
 
 class DashboardScreen(Screen):
-    """主仪表盘屏幕"""
+    """Main dashboard screen"""
 
-    SUB_TITLE = "仪表盘"
+    SUB_TITLE = _("Dashboard")
     BINDINGS = [
-        ("q", "go_back", "返回"),
+        ("q", "go_back", _("Back")),
     ]
 
     CSS_PATH = rootdir / "interface" / "css" / "screens" / "dashboard.tcss"
@@ -46,45 +47,50 @@ class DashboardScreen(Screen):
         self._load_data()
 
     def compose(self) -> ComposeResult:
-        """组合界面组件"""
+        """Compose UI components"""
         if config_var.get()["interface"]["global"]["show_header"]:
             yield Header(
                 show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
             )
         with ScrollableContainer():
-            yield Horizontal(  # 顶部的状态
+            yield Horizontal(
                 Vertical(
-                    Label(f"当前日时间戳: {timer.get_daystamp()}"),
+                    Label(_("Current daystamp: {ds}").format(ds=timer.get_daystamp())),
                     Label(
-                        f"应用时区修正: UTC+{str(config_var.get()['services']['timer']['timezone_offset'] / 3600).removesuffix('.0')}"
+                        _("Timezone offset: UTC+{offset}").format(offset=str(config_var.get()['services']['timer']['timezone_offset'] / 3600).removesuffix('.0'))
                     ),
                     Label(
-                        f"默认算法设置: {config_var.get()['interface']['global']['algorithm']}",
+                        _("Default algorithm: {algo}").format(algo=config_var.get()['interface']['global']['algorithm']),
                     ),
                     classes="left",
                 ),
                 Vertical(
-                    Label(f"已加载 {len(self.repos)} 个单元集"),
+                    Label(_("Loaded {n} repo(s)").format(n=len(self.repos))),
                     Label(
-                        f"共计 {reduce(lambda x, y: x + y, map(lambda x: x.progress['total'], self.repos)) if self.repos else 0} 个单元"
+                        _("Total {n} unit(s)").format(n=reduce(lambda x, y: x + y, map(lambda x: x.progress['total'], self.repos)) if self.repos else 0)
                     ),
                     Label(
-                        f"已激活 {reduce(lambda x, y: x + y, map(lambda x: x.progress['touched'], self.repos)) if self.repos else 0} 个单元"
+                        _("Activated {n} unit(s)").format(n=reduce(lambda x, y: x + y, map(lambda x: x.progress['touched'], self.repos)) if self.repos else 0)
                     ),
                     Label(f""),
                     classes="right",
                 ),
                 id="header",
             )
-            yield ListView(id="repo_list", classes="repo-list")  # 单元集选择
+            yield ListView(id="repo_list", classes="repo-list")
             from heurams.services.attic import Attic
 
             a = Attic("ana", {"totaltime": 0, "openpuzzles": 0, "puzzles_err": 0})
-            yield Label(f"版本 {version.ver}-{version.stage}")  # 版本信息
+            yield Label(_("Version {ver}-{stage}").format(ver=version.ver, stage=version.stage))
             yield Label(
-                f"在 {round(a.data['totaltime'], 2)} 秒内处理了 {a.data['openpuzzles']} 个谜题, 正确率{'无法求解' if not a.data['openpuzzles'] else ' ' + str(round(100 * (1 - a.data['puzzles_err']/a.data['openpuzzles']), 2)) + '%'}, 平均速度{'无法求解' if not a.data['totaltime'] else ' ' + str(round(a.data['openpuzzles']/a.data['totaltime'], 2)) + ' 个每秒'}",
+                _("Processed {puzzles} puzzles in {time}s, accuracy {accuracy}, speed {speed} puzzle(s)/s").format(
+                    puzzles=a.data['openpuzzles'],
+                    time=round(a.data['totaltime'], 2),
+                    accuracy=_("N/A") if not a.data['openpuzzles'] else str(round(100 * (1 - a.data['puzzles_err']/a.data['openpuzzles']), 2)) + '%',
+                    speed=_("N/A") if not a.data['totaltime'] else str(round(a.data['openpuzzles']/a.data['totaltime'], 2)),
+                ),
                 id="analysis",
-            )  # 版本信息
+            )  # Version info
         yield Footer()
 
     @on(events.ScreenResume)
@@ -140,9 +146,28 @@ class DashboardScreen(Screen):
                     repo.preview["review"] += 1
                 # initial_time = min(initial_time, e.)
         repo.need_review = timer.get_daystamp() >= repo.nearest_review_time
-        repo.prompt = f"""{repo.manifest['title']} \\[{repo.config['algorithm']}]
-  [d]进度: {repo.progress['touched']}/{repo.progress['total']} ({round(repo.progress['touched']/repo.progress['total']*100, 1)}%)[/d]
-  [d]{f'需要学习: {repo.preview['review']}R + {repo.preview['new']}U' if repo.need_review else (f"暂未开始: 0R + {repo.preview['new']}U" if not repo.progress['have_activated_ever'] else '无需操作')}[/d]"""
+        repo.prompt = _(
+            """{title} [{algo}]
+  [d]Progress: {touched}/{total} ({pct}%)[/d]
+  [d]{status}[/d]"""
+        ).format(
+            title=repo.manifest["title"],
+            algo=repo.config["algorithm"],
+            touched=repo.progress["touched"],
+            total=repo.progress["total"],
+            pct=round(repo.progress["touched"] / repo.progress["total"] * 100, 1),
+            status=(
+                _("Due: {review}R + {new}U").format(
+                    review=repo.preview["review"], new=repo.preview["new"]
+                )
+                if repo.need_review
+                else (
+                    _("Not started: 0R + {new}U").format(new=repo.preview["new"])
+                    if not repo.progress["have_activated_ever"]
+                    else _("Up to date")
+                )
+            ),
+        )
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""
@@ -160,8 +185,7 @@ class DashboardScreen(Screen):
             repo_list_widget.append(
                 ListItem(
                     Static(
-                        f"在 {config_var.get()['global']['paths']['repo']} 中未找到任何单元集仓库目录.\n"
-                        "请导入单元集后重启应用, 或者新建单元集."
+                        _("No repo directories found in {path}.\nPlease import a repo and restart, or create a new one.").format(path=config_var.get()['global']['paths']['repo'])
                     ),
                     id="not-found",
                 )
@@ -175,7 +199,7 @@ class DashboardScreen(Screen):
             list_item = ListItem(
                 *[Label(line) for line in r.prompt.splitlines()],
                 Button(
-                    f"开始学习",
+                    _("Start Learning"),
                     flat=True,
                     variant="primary",
                     id=f"slaunch_repo_{r.manifest['package']}",
@@ -210,7 +234,6 @@ class DashboardScreen(Screen):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """处理按钮点击事件"""
-        logger.debug(f"event.button.id: {event.button.id}")
         if event.button.id.startswith("slaunch_repo_"):  # type: ignore
             from .preparation import launch
 

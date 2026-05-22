@@ -1,4 +1,4 @@
-"""同步工具界面"""
+"""Sync tool screen"""
 
 import pathlib
 import time
@@ -12,11 +12,12 @@ from textual.worker import get_current_worker
 from textual import events, on
 
 from heurams.context import *
+from heurams.i18n import _
 
 
 class SyncScreen(Screen):
 
-    BINDINGS = [("q", "go_back", "返回")]
+    BINDINGS = [("q", "go_back", _("Back"))]
 
     def __init__(self, nucleons: list = [], desc: str = ""):
         super().__init__(name=None, id=None, classes=None)
@@ -39,67 +40,67 @@ class SyncScreen(Screen):
                 show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
             )
         with ScrollableContainer(id="sync_container"):
-            # 标题和连接状态
-            yield Static("同步工具", classes="title")
+            # Title and connection status
+            yield Static(_("Sync Tool"), classes="title")
             yield Static("", id="status_label", classes="status")
 
-            # 配置信息
-            yield Static(f"同步协议: {config_var.get()['services']['sync']}")
-            yield Static("服务器配置:", classes="section_title")
+            # Config info
+            yield Static(_("Sync protocol: {proto}").format(proto=config_var.get()['services']['sync']))
+            yield Static(_("Server Configuration:"), classes="section_title")
             with Horizontal(classes="config_info"):
-                yield Static("远程服务器:", classes="config_label")
+                yield Static(_("Remote server:"), classes="config_label")
                 yield Static("", id="server_url", classes="config_value")
             with Horizontal(classes="config_info"):
-                yield Static("远程路径:", classes="config_label")
+                yield Static(_("Remote path:"), classes="config_label")
                 yield Static("", id="remote_path", classes="config_value")
 
             with Horizontal(classes="control_buttons"):
-                yield Button("测试连接", id="test_connection", variant="primary")
-                yield Button("开始同步", id="start_sync", variant="success")
-                yield Button("暂停", id="pause_sync", variant="warning", disabled=True)
-                yield Button("取消", id="cancel_sync", variant="error", disabled=True)
+                yield Button(_("Test Connection"), id="test_connection", variant="primary")
+                yield Button(_("Start Sync"), id="start_sync", variant="success")
+                yield Button(_("Pause"), id="pause_sync", variant="warning", disabled=True)
+                yield Button(_("Cancel"), id="cancel_sync", variant="error", disabled=True)
 
-            yield Static("同步进度", classes="section_title")
+            yield Static(_("Sync Progress"), classes="section_title")
             yield ProgressBar(id="progress_bar", show_percentage=True, total=100)
             yield Static("", id="progress_label", classes="progress_text")
 
-            yield Static("同步日志", classes="section_title")
+            yield Static(_("Sync Log"), classes="section_title")
             yield Static("", id="log_output", classes="log_output")
 
         yield Footer()
 
     def on_mount(self):
-        """挂载时初始化状态"""
+        """Initialise state on mount"""
         self.update_ui_from_config()
-        self.log_message("同步工具已启动")
+        self.log_message(_("Sync tool started"))
 
     def update_ui_from_config(self):
-        """更新 UI 显示配置信息"""
+        """Update UI with config info"""
         try:
             sync_cfg: dict = config_var.get()["providers"]["sync"]["webdav"]
-            # 更新服务器 URL
-            url = sync_cfg.get("url", "未配置")
+            # Update server URL
+            url = sync_cfg.get("url", _("Not configured"))
             url_widget = self.query_one("#server_url")
             url_widget.update(url)  # type: ignore
-            # 更新远程路径
+            # Update remote path
             remote_path = sync_cfg.get("remote_path", "/")
             path_widget = self.query_one("#remote_path")
             path_widget.update(remote_path)  # type: ignore
 
-            # 更新状态标签
+            # Update status label
             status_widget = self.query_one("#status_label")
             if self.sync_service and self.sync_service.client:
-                status_widget.update("✅ 同步服务已就绪")  # type: ignore
+                status_widget.update(_("✅ Sync service ready"))  # type: ignore
                 status_widget.add_class("ready")
             else:
-                status_widget.update("❌ 同步服务未配置或未启用")  # type: ignore
+                status_widget.update(_("❌ Sync service not configured or not enabled"))  # type: ignore
                 status_widget.add_class("error")
 
         except Exception as e:
-            self.log_message(f"更新 UI 失败: {e}", is_error=True)
+            self.log_message(_("Failed to update UI: {error}").format(error=e), is_error=True)
 
     def update_status(self, status, current_item="", progress=None):
-        """更新状态显示"""
+        """Update status display"""
         try:
             status_widget = self.query_one("#status_label")
             status_widget.update(status)  # type: ignore
@@ -112,28 +113,28 @@ class SyncScreen(Screen):
                 progress_label.update(f"{progress}% - {current_item}" if current_item else f"{progress}%")  # type: ignore
 
         except Exception as e:
-            self.log_message(f"更新状态失败: {e}", is_error=True)
+            self.log_message(_("Failed to update status: {error}").format(error=e), is_error=True)
 
     def log_message(self, message: str, is_error: bool = False):
-        """添加日志消息并更新显示"""
+        """Add log message and update display"""
         timestamp = time.strftime("%H:%M:%S")
         prefix = "[ERROR]" if is_error else "[INFO]"
         log_line = f"{timestamp} {prefix} {message}"
 
         self.log_messages.append(log_line)
-        # 保持日志行数不超过最大值
+        # Keep log lines under max
         if len(self.log_messages) > self.max_log_lines:
             self.log_messages = self.log_messages[-self.max_log_lines :]
 
-        # 更新日志显示
+        # Update log display
         try:
             log_widget = self.query_one("#log_output")
             log_widget.update("\n".join(self.log_messages))  # type: ignore
         except Exception:
-            pass  # 如果组件未就绪, 忽略错误
+            pass  # Ignore if widget not ready
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        """处理按钮点击事件"""
+        """Handle button press events"""
         button_id = event.button.id
 
         if button_id == "test_connection":
@@ -148,124 +149,133 @@ class SyncScreen(Screen):
         event.stop()
 
     def test_connection(self):
-        """测试 WebDAV 服务器连接"""
+        """Test WebDAV server connection"""
         if not self.sync_service:
-            self.log_message("同步服务未初始化, 请检查配置", is_error=True)
-            self.update_status("❌ 同步服务未初始化")
+            self.log_message(_("Sync service not initialised, please check configuration"), is_error=True)
+            self.update_status(_("❌ Sync service not initialised"))
             return
 
-        self.log_message("正在测试 WebDAV 连接...")
-        self.update_status("正在测试连接...")
+        self.log_message(_("Testing WebDAV connection..."))
+        self.update_status(_("Testing connection..."))
 
         try:
             success = self.sync_service.test_connection()
             if success:
-                self.log_message("连接测试成功")
-                self.update_status("✅ 连接正常")
+                self.log_message(_("Connection test successful"))
+                self.update_status(_("✅ Connection OK"))
             else:
-                self.log_message("连接测试失败", is_error=True)
-                self.update_status("❌ 连接失败")
+                self.log_message(_("Connection test failed"), is_error=True)
+                self.update_status(_("❌ Connection failed"))
         except Exception as e:
-            self.log_message(f"连接测试异常: {e}", is_error=True)
-            self.update_status("❌ 连接异常")
+            self.log_message(_("Connection test error: {error}").format(error=e), is_error=True)
+            self.update_status(_("❌ Connection error"))
 
     def start_sync(self):
-        """开始同步"""
+        """Start syncing"""
         if not self.sync_service:
-            self.log_message("同步服务未初始化, 无法开始同步", is_error=True)
+            self.log_message(_("Sync service not initialised, cannot start sync"), is_error=True)
             return
 
         if self.is_syncing:
-            self.log_message("同步已在进行中", is_error=True)
+            self.log_message(_("Sync already in progress"), is_error=True)
             return
 
         self.is_syncing = True
         self.is_paused = False
         self.update_button_states()
 
-        self.log_message("开始同步数据...")
-        self.update_status("正在同步...", progress=0)
+        self.log_message(_("Starting data sync..."))
+        self.update_status(_("Syncing..."), progress=0)
 
-        # 启动后台同步任务
+        # Start background sync task
         self.run_worker(self.perform_sync, thread=True)
 
     def perform_sync(self):
-        """执行同步任务（在后台线程中运行）"""
+        """Execute sync task (runs in background thread)"""
         worker = get_current_worker()
 
         try:
-            # 获取需要同步的本地目录
+            # Get local directories to sync
             from heurams.context import config_var
 
             config = config_var.get()
             paths = config.get("paths", {})
 
-            # 同步 nucleon 目录
+            # Sync nucleon directory
             nucleon_dir = pathlib.Path(paths.get("nucleon_dir", "./data/nucleon"))
             if nucleon_dir.exists():
-                self.log_message(f"同步 nucleon 目录: {nucleon_dir}")
-                self.update_status(f"同步 nucleon 目录...", progress=10)
+                self.log_message(_("Syncing nucleon directory: {dir}").format(dir=nucleon_dir))
+                self.update_status(_("Syncing nucleon directory..."), progress=10)
 
                 result = self.sync_service.sync_directory(nucleon_dir)  # type: ignore
                 if result.get("success"):
                     self.log_message(
-                        f"nucleon 同步完成: 上传 {result.get('uploaded', 0)} 个, 下载 {result.get('downloaded', 0)} 个"
+                        _("nucleon sync complete: uploaded {up}, downloaded {down}").format(
+                            up=result.get('uploaded', 0),
+                            down=result.get('downloaded', 0),
+                        )
                     )
                 else:
                     self.log_message(
-                        f"nucleon 同步失败: {result.get('error', '未知错误')}",
+                        _("nucleon sync failed: {err}").format(err=result.get('error', _('Unknown error'))),
                         is_error=True,
                     )
 
-            # 同步 electron 目录
+            # Sync electron directory
             electron_dir = pathlib.Path(paths.get("electron_dir", "./data/electron"))
             if electron_dir.exists():
-                self.log_message(f"同步 electron 目录: {electron_dir}")
-                self.update_status(f"同步 electron 目录...", progress=60)
+                self.log_message(_("Syncing electron directory: {dir}").format(dir=electron_dir))
+                self.update_status(_("Syncing electron directory..."), progress=60)
 
                 result = self.sync_service.sync_directory(electron_dir)  # type: ignore
                 if result.get("success"):
                     self.log_message(
-                        f"electron 同步完成: 上传 {result.get('uploaded', 0)} 个, 下载 {result.get('downloaded', 0)} 个"
+                        _("electron sync complete: uploaded {up}, downloaded {down}").format(
+                            up=result.get('uploaded', 0),
+                            down=result.get('downloaded', 0),
+                        )
                     )
                 else:
                     self.log_message(
-                        f"electron 同步失败: {result.get('error', '未知错误')}",
+                        _("electron sync failed: {err}").format(err=result.get('error', _('Unknown error'))),
                         is_error=True,
                     )
 
-            # 同步 orbital 目录（如果存在）
+            # Sync orbital directory (if exists)
             orbital_dir = pathlib.Path(paths.get("orbital_dir", "./data/orbital"))
             if orbital_dir.exists():
-                self.log_message(f"同步 orbital 目录: {orbital_dir}")
-                self.update_status(f"同步 orbital 目录...", progress=80)
+                self.log_message(_("Syncing orbital directory: {dir}").format(dir=orbital_dir))
+                self.update_status(_("Syncing orbital directory..."), progress=80)
 
                 result = self.sync_service.sync_directory(orbital_dir)  # type: ignore
                 if result.get("success"):
                     self.log_message(
-                        f"orbital 同步完成: 上传 {result.get('uploaded', 0)} 个, 下载 {result.get('downloaded', 0)} 个"
+                        _("orbital sync complete: uploaded {up}, downloaded {down}").format(
+                            up=result.get('uploaded', 0),
+                            down=result.get('downloaded', 0),
+                        )
                     )
                 else:
                     self.log_message(
-                        f"orbital 同步失败: {result.get('error', '未知错误')}",
+                        _("orbital sync failed: {err}").format(err=result.get('error', _('Unknown error'))),
                         is_error=True,
                     )
 
-            # 同步完成
-            self.update_status("同步完成", progress=100)
-            self.log_message("所有目录同步完成")
+            # Sync complete
+            self.update_status(_("Sync complete"), progress=100)
+            self.log_message(_("All directories synced"))
 
         except Exception as e:
-            self.log_message(f"同步过程中发生错误: {e}", is_error=True)
-            self.update_status("同步失败")
+            self.log_message(_("Error during sync: {error}").format(error=e), is_error=True)
+            self.update_status(_("Sync failed"))
         finally:
-            # 重置同步状态
+            # Reset sync state
             self.is_syncing = False
             self.is_paused = False
             self.update_button_states()  # type: ignore
 
     def pause_sync(self):
-        """暂停同步"""
+        """Pause sync"""
         if not self.is_syncing:
             return
 
@@ -273,14 +283,14 @@ class SyncScreen(Screen):
         self.update_button_states()
 
         if self.is_paused:
-            self.log_message("同步已暂停")
-            self.update_status("同步已暂停")
+            self.log_message(_("Sync paused"))
+            self.update_status(_("Sync paused"))
         else:
-            self.log_message("同步已恢复")
-            self.update_status("正在同步...")
+            self.log_message(_("Sync resumed"))
+            self.update_status(_("Syncing..."))
 
     def cancel_sync(self):
-        """取消同步"""
+        """Cancel sync"""
         if not self.is_syncing:
             return
 
@@ -288,11 +298,11 @@ class SyncScreen(Screen):
         self.is_paused = False
         self.update_button_states()
 
-        self.log_message("同步已取消")
-        self.update_status("同步已取消")
+        self.log_message(_("Sync cancelled"))
+        self.update_status(_("Sync cancelled"))
 
     def update_button_states(self):
-        """更新按钮状态"""
+        """Update button states"""
         try:
             start_button = self.query_one("#start_sync")
             pause_button = self.query_one("#pause_sync")
@@ -302,14 +312,14 @@ class SyncScreen(Screen):
                 start_button.disabled = True
                 pause_button.disabled = False
                 cancel_button.disabled = False
-                pause_button.label = "继续" if self.is_paused else "暂停"  # type: ignore
+                pause_button.label = _("Resume") if self.is_paused else _("Pause")  # type: ignore
             else:
                 start_button.disabled = False
                 pause_button.disabled = True
                 cancel_button.disabled = True
 
         except Exception as e:
-            self.log_message(f"更新按钮状态失败: {e}", is_error=True)
+            self.log_message(_("Failed to update button state: {error}").format(error=e), is_error=True)
 
     def action_go_back(self):
         self.app.pop_screen()

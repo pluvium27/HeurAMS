@@ -614,7 +614,7 @@ def _get_global_sm():
             with open(_GLOBAL_STATE_FILE, "r", encoding="utf-8") as f:
                 return SM.load(json.load(f))
         except Exception:
-            logger.warning("SM-15M 全局状态文件加载失败, 创建新实例")
+            logger.warning("Failed to load SM-15M global state file, creating new instance")
     sm = SM()
     _save_global_sm(sm)
     return sm
@@ -626,7 +626,7 @@ def _save_global_sm(sm):
         with open(_GLOBAL_STATE_FILE, "w", encoding="utf-8") as f:
             json.dump(sm.data(), f, indent=2)
     except Exception:
-        logger.exception("SM-15M 全局状态保存失败")
+        logger.error("Failed to save SM-15M global state")
 
 
 # ============================================================================
@@ -758,7 +758,7 @@ class SM15MAlgorithm(BaseAlgorithm):
         cls, algodata: dict, feedback: int = 5, is_new_activation: bool = False
     ):
         logger.debug(
-            "SM-15M.revisor 开始, feedback=%d, is_new_activation=%s",
+            "SM-15M.revisor, feedback=%d, is_new_activation=%s",
             feedback,
             is_new_activation,
         )
@@ -788,7 +788,7 @@ class SM15MAlgorithm(BaseAlgorithm):
             algodata[cls.algo_name]["rept"] += 1
 
         logger.debug(
-            "SM-15M.revisor 完成: repetition=%d, of=%.4f, next_date=%d",
+            "SM-15M.revisor: repetition=%d, of=%.4f, next_date=%d",
             item.repetition,
             item.of,
             algodata[cls.algo_name]["next_date"],

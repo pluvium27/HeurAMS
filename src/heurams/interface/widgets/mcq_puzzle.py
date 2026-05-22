@@ -1,4 +1,4 @@
-# 单项选择题
+# Multiple-choice puzzle
 from typing import TypedDict
 
 from textual.containers import ScrollableContainer
@@ -8,6 +8,7 @@ from textual.widgets import Button, Label
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
 from heurams.services.hasher import hash
+from heurams.i18n import _
 from heurams.services.logger import get_logger
 from textual.events import Key
 from .base_puzzle_widget import BasePuzzleWidget
@@ -65,15 +66,10 @@ class MCQPuzzle(BasePuzzleWidget):
 
     def compose(self):
         setting: Setting = self.atom.registry["nucleon"]["puzzles"][self.alia]
-        if len(self.inputlist) > len(self.puzzle.options):
-            logger.debug("ERR IDX")
-            logger.debug(self.inputlist)
-            logger.debug(self.puzzle.options)
-        else:
-            current_options = self.puzzle.options[len(self.inputlist)]
-            yield Label(setting["primary"], id="sentence")
-            yield Label(self.puzzle.wording[len(self.inputlist)], id="puzzle")
-            yield Label(f"当前输入: {self.inputlist}", id="inputpreview")
+        current_options = self.puzzle.options[len(self.inputlist)]
+        yield Label(setting["primary"], id="sentence")
+        yield Label(self.puzzle.wording[len(self.inputlist)], id="puzzle")
+        yield Label(_("Current input: {input}").format(input=self.inputlist), id="inputpreview")
 
         # 渲染当前问题的选项
         c = 0
@@ -85,21 +81,19 @@ class MCQPuzzle(BasePuzzleWidget):
                 h = str(hash(i))
                 self.hashmap[h] = i
                 btnid = f"sel{str(self.cursor).zfill(3)}-{h}"
-                logger.debug(f"建立按钮 {btnid}")
                 self.btn_shortcuts[f"{c}"] = f"{btnid}"
                 yield Button(f"[{c}] " + i, id=f"{btnid}")
             s.focus()
-            yield Button("退格", id="delete")
+            yield Button(_("Backspace"), id="delete")
 
         self.btn_shortcuts["0"] = f"delete"
         self.btn_shortcuts["delete"] = f"delete"
         self.btn_shortcuts["backspace"] = f"delete"
 
     def update_display(self, error=0):
-        # 更新预览标签
+        # Update preview label
         preview = self.query_one("#inputpreview")
-        preview.update(f"当前输入: {self.inputlist}")  # type: ignore
-        logger.debug("已经更新预览标签")
+        preview.update(_("Current input: {input}").format(input=self.inputlist))  # type: ignore
         # 更新问题标签
         puzzle_label = self.query_one("#puzzle")
         current_question_index = len(self.inputlist)
@@ -122,7 +116,7 @@ class MCQPuzzle(BasePuzzleWidget):
             # 选项选择处理
             answer_text = self.hashmap[button_id[7:]]  # type: ignore
             self.inputlist.append(answer_text)
-            logger.debug(f"{self.inputlist}")
+            logger.debug(f"Input list: {self.inputlist}")
             # 检查是否完成所有题目
             if len(self.inputlist) >= len(self.puzzle.answer):
                 is_correct = self.inputlist == self.puzzle.answer
@@ -143,7 +137,6 @@ class MCQPuzzle(BasePuzzleWidget):
     def refresh_buttons(self):
         """刷新按钮显示(用于题目切换)"""
         # 移除所有选项按钮
-        logger.debug("刷新按钮")
         self.cursor += 1
         container = self.query_one("#btn-container")
         buttons_to_remove = [
@@ -153,7 +146,6 @@ class MCQPuzzle(BasePuzzleWidget):
         ]
         container.focus()
         for button in buttons_to_remove:
-            logger.info(button)
             container.remove_children("#" + button.id)  # type: ignore
 
         # 添加当前题目的选项按钮

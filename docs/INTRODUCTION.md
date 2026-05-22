@@ -27,7 +27,7 @@ Unlike Anki's SQLite `.apkg` packages, we insist on using human-readable folder-
 - **Cloud sync and sharing optimized**:
   - Since memory data and unit set files are text files, fast incremental sync is possible without uploading all files, and the design natively supports version control
   - If you want to share a single file, the software supports exporting as a compressed package or merging into a single text file for sharing on platforms like pastebin
-- **Performance**: Thanks to the modern, chunked file organization structure, "潜进" achieves agile and low-footprint user experience using only Python while maintaining high flexibility
+- **Performance**: Thanks to the modern, chunked file organization structure, HeurAMS achieves agile and low-footprint user experience using only Python while maintaining high flexibility
 - **AI-assisted friendly**: Imagine you have some `.apkg` decks or a large amount of textbook content — you can conveniently and efficiently use AI tools to create HeurAMS-compatible unit sets
 
 ### Built-in Practical User Interface
@@ -65,7 +65,7 @@ Since some dependencies are only needed by a few features, we split optional dep
 
 ## About This Repository
 
-This repository is the Python implementation of the HeurAMS "潜进" core library.  
+This repository is the Python implementation of the HeurAMS core library.  
 It contains data models and framework, and includes a built-in frontend based on the Textual framework (interface submodule).  
 Besides learning through the built-in frontend, developers can import the `heurams` library in a Python environment or communicate with `heurams` library instances via `RPC`, using the framework to build other auxiliary memory frontends or applications.
 

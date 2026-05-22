@@ -14,7 +14,7 @@ class Router(Machine):
     """全局调度阶段路由器"""
 
     def __init__(self, atoms: list[pt.Atom]) -> None:
-        logger.debug(f"Router.__init__: 原子数量={len(atoms)}")
+        logger.debug(f"number of atoms={len(atoms)}")
 
         self.atoms = atoms
         new_atoms = list()
@@ -26,7 +26,7 @@ class Router(Machine):
             else:
                 old_atoms.append(i)
 
-        logger.debug(f"新原子数量={len(new_atoms)}, 旧原子数量={len(old_atoms)}")
+        logger.debug(f"number of new atoms={len(new_atoms)}, number of old atoms={len(old_atoms)}")
 
         self.processions = list()
         """路由中的所有队列"""
@@ -35,17 +35,14 @@ class Router(Machine):
             self.processions.append(
                 Procession(old_atoms, RouterState.QUICK_REVIEW, "初始复习")
             )
-            logger.debug("创建初始复习 Procession")
 
         if len(new_atoms):
             self.processions.append(
                 Procession(new_atoms, RouterState.RECOGNITION, "新记忆")
             )
-            logger.debug("创建新记忆 Procession")
 
         self.processions.append(Procession(atoms, RouterState.FINAL_REVIEW, "总体复习"))
-        logger.debug("创建总体复习 Procession")
-        logger.debug("Router 初始化完成, processions 数量=%d", len(self.processions))
+        logger.debug("Router inited, number of processions =%d", len(self.processions))
 
         # 设置transitions状态机
         states = [
@@ -91,29 +88,27 @@ class Router(Machine):
 
     def on_unsure(self):
         """进入UNSURE状态时的回调"""
-        logger.debug("Router 进入 UNSURE 状态")
+        pass
 
     def on_quick_review(self):
         """进入QUICK_REVIEW状态时的回调"""
-        logger.debug("Router 进入 QUICK_REVIEW 状态")
+        pass
 
     def on_recognition(self):
         """进入RECOGNITION状态时的回调"""
-        logger.debug("Router 进入 RECOGNITION 状态")
+        pass
 
     def on_final_review(self):
         """进入FINAL_REVIEW状态时的回调"""
-        logger.debug("Router 进入 FINAL_REVIEW 状态")
+        pass
 
     def on_finished(self):
         """进入FINISHED状态时的回调"""
         for i in self.atoms:
             i.lock(1)
             i.revise()
-        logger.debug("Router 进入 FINISHED 状态")
 
     def current_procession(self):
-        logger.debug("Router.current_procession 被调用")
         for i in self.processions:
             i: Procession
             if i.state != ProcessionState.FINISHED.value:
@@ -125,12 +120,10 @@ class Router(Machine):
                 elif i.route == RouterState.FINAL_REVIEW:
                     self.to_final_review()
 
-                logger.debug("找到未完成的 Procession: route=%s", i.route)
                 return i
 
         # 所有Procession都已完成
         self.to_finished()
-        logger.debug("所有 Procession 已完成, 状态设置为 FINISHED")
         return Procession([AtomPlaceholder()], RouterState.FINISHED)
 
     def __repr__(self, style="pipe", ends="\n"):

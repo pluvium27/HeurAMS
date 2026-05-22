@@ -4,6 +4,7 @@ from textual.screen import ModalScreen
 from textual.widgets import Button, Label, ListItem, ListView, Static
 
 
+from heurams.i18n import _
 from heurams.services.logger import get_logger
 
 from .favmgr import FavoriteManagerScreen
@@ -12,36 +13,33 @@ logger = get_logger(__name__)
 
 
 class NavigatorScreen(ModalScreen):
-    """导航器模态窗口"""
+    """Navigator modal screen"""
 
     BINDINGS = [
-        ("q", "go_back", "返回"),
-        ("escape", "go_back", "返回"),
-        ("n", "go_back", "切换"),
+        ("q", "go_back", _("Back")),
+        ("escape", "go_back", _("Back")),
+        ("n", "go_back", _("Switch")),
     ]
 
     SCREENS = [
-        ("仪表盘", "dashboard"),
-        #        ("创建仓库", "repo_creator"),
-        ("缓存管理器", "precache_all"),
-        ("收藏夹", FavoriteManagerScreen),
-        ("设置页面", "setting"),
-        # ("调试日志", "logviewer"),
-        ("同步工具", "synctool"),
-        ("关于此软件", "about"),
-        #        ("仓库编辑器", "repo_editor"),
+        (_("Dashboard"), "dashboard"),
+        (_("Cache Manager"), "precache_all"),
+        (_("Favorites"), FavoriteManagerScreen),
+        (_("Settings Page"), "setting"),
+        (_("Sync Tool"), "synctool"),
+        (_("About"), "about"),
     ]
 
     OTHERS = [
-        ("退出程序", "self.app.exit()"),
-        ("项目主页", "webbrowser.open('https://ams.pluv27.top')"),
+        (_("Exit"), "self.app.exit()"),
+        (_("Project Homepage"), "webbrowser.open('https://ams.pluv27.top')"),
     ]
 
     def compose(self) -> ComposeResult:
-        """组合界面组件"""
+        """Compose UI components"""
         with Grid(id="dialog"):
             yield Label(
-                "[b]请选择要跳转的功能\n或记忆会话实例[/b]\n\n将在此处显示提示",
+                _("[b]Select a function to navigate to\nor a memorization session instance[/b]\n\nTips will be displayed here"),
                 classes="title-label",
             )
             yield ListView(
@@ -49,9 +47,9 @@ class NavigatorScreen(ModalScreen):
                 id="nav-list",
                 classes="nav-list-view",
             )
-            yield Static("按下回车以完成切换\n所有会话将被保存")
+            yield Static(_("Press Enter to switch\nAll sessions will be saved"))
             yield Button(
-                "关闭 (n)",
+                _("Close (n)"),
                 id="close_button",
                 variant="primary",
                 classes="close-button",

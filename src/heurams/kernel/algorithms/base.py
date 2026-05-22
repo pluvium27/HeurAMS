@@ -44,38 +44,21 @@ class BaseAlgorithm:
         cls, algodata: dict, feedback: int = 5, is_new_activation: bool = False
     ) -> None:
         """迭代记忆数据"""
-        logger.debug(
-            "BaseAlgorithm.revisor 被调用, algodata keys: %s, feedback: %d, is_new_activation: %s",
-            list(algodata.keys()) if algodata else [],
-            feedback,
-            is_new_activation,
-        )
 
     @classmethod
     def is_due(cls, algodata) -> int:
         """是否应该复习"""
-        logger.debug(
-            "BaseAlgorithm.is_due 被调用, algodata keys: %s",
-            list(algodata.keys()) if algodata else [],
-        )
         return 1
 
     @classmethod
     def get_rating(cls, algodata) -> str:
         """获取评分信息"""
-        logger.debug(
-            "BaseAlgorithm.rate 被调用, algodata keys: %s",
-            list(algodata.keys()) if algodata else [],
-        )
+
         return ""
 
     @classmethod
     def nextdate(cls, algodata) -> int:
         """获取下一次记忆时间戳"""
-        logger.debug(
-            "BaseAlgorithm.nextdate 被调用, algodata keys: %s",
-            list(algodata.keys()) if algodata else [],
-        )
         return -1
 
     @classmethod

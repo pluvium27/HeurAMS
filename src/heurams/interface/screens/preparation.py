@@ -1,4 +1,4 @@
-"""记忆准备界面"""
+"""Memorization preparation screen"""
 
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Horizontal
@@ -19,6 +19,7 @@ from textual import events, on
 import heurams.kernel.particles as pt
 from heurams.context import *
 from heurams.context import config_var
+from heurams.i18n import _
 from heurams.kernel.repolib import *
 from heurams.kernel.algorithms import algorithms
 from heurams.services.logger import get_logger
@@ -28,11 +29,11 @@ logger = get_logger(__name__)
 
 class PreparationScreen(Screen):
 
-    SUB_TITLE = "准备记忆集"
+    SUB_TITLE = _("Prepare Repository")
 
     BINDINGS = [
-        ("q", "go_back", "返回"),
-        ("p", "precache", "缓存"),
+        ("q", "go_back", _("Back")),
+        ("p", "precache", _("Cache")),
         ("d", "toggle_dark", ""),
         ("0,1,2,3", "app.push_screen('about')", ""),
     ]
@@ -61,29 +62,40 @@ class PreparationScreen(Screen):
             )
         with ScrollableContainer(id="main_container"):
             yield Markdown(
-                f"**准备就绪**: `{self.repo.manifest['title']}`\n", id="title"
+                _("**Ready**: `{title}`\n").format(title=self.repo.manifest['title']), id="title"
             )
-            yield Label(f"单元集路径: {self.repo.source}")
+            yield Label(_("Repo path: {path}").format(path=self.repo.source))
             yield Label(
-                f"学习完成度: {self.repo.progress['touched']}/{len(self.repo)} [d]\\[{round(self.repo.progress['touched']/self.repo.progress['total']*100, 1)}%][/d]"
+                _("Progress: {touched}/{total} [{pct}%]").format(
+                    touched=self.repo.progress['touched'],
+                    total=len(self.repo),
+                    pct=round(self.repo.progress['touched'] / self.repo.progress['total'] * 100, 1)
+                )
             )
             yield Label(
-                f"调度算法: {self.repo.config["algorithm"]} {algorithms[self.repo.config["algorithm"]].desc}"
+                _("Scheduling algorithm: {algo} {desc}").format(
+                    algo=self.repo.config["algorithm"],
+                    desc=algorithms[self.repo.config["algorithm"]].desc
+                )
             )
             yield Label(
-                f"学习数量: {self.repo.preview['review'] + self.scheduled_num} = {self.repo.preview['review']} [d][复习][/d] + {self.scheduled_num} [d][新识记][/d]\n",
+                _("Study count: {total} = {review} [d][Review][/d] + {new} [d][New][/d]\n").format(
+                    total=self.repo.preview['review'] + self.scheduled_num,
+                    review=self.repo.preview['review'],
+                    new=self.scheduled_num,
+                ),
                 id="schnum_label",
             )
 
             yield Horizontal(
                 Button(
-                    "开始记忆",
+                    _("Start Memorizing"),
                     id="start_memorizing_button",
                     variant="primary",
                     classes="btn",
                 ),
                 Button(
-                    "管理缓存",
+                    _("Manage Cache"),
                     id="precache_button",
                     variant="success",
                     classes="btn",
@@ -98,14 +110,6 @@ class PreparationScreen(Screen):
                 for i in self.content.splitlines():
                     yield Static(i, classes="unit-statline")
         yield Footer()
-
-    # def watch_scheduled_num(self, old_scheduled_num, new_scheduled_num):
-    #    logger.debug("响应", old_scheduled_num, "->", new_scheduled_num)
-    #    try:
-    #        one = self.query_one("#schnum_label")
-    #        one.update(f"单次记忆数量: {new_scheduled_num}") # type: ignore
-    #    except:
-    #        pass
 
     def load_data(self):
         self.scheduled_num = self.repo.config["scheduled_num"]
@@ -154,7 +158,6 @@ class PreparationScreen(Screen):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         event.stop()
-        logger.debug("按下按钮")
         if event.button.id == "start_memorizing_button":
             launch(repo=self.repo, app=self.app, scheduled_num=self.scheduled_num)
 

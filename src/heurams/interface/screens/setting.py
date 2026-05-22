@@ -1,4 +1,4 @@
-"""设置页面"""
+"""Settings screen"""
 
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer, Horizontal
@@ -16,6 +16,7 @@ from textual.widgets import (
 from textual import events, on
 
 from heurams.context import *
+from heurams.i18n import _
 from heurams.kernel.particles import *
 from heurams.kernel.repolib import *
 from heurams.services.logger import get_logger
@@ -26,12 +27,12 @@ logger = get_logger(__name__)
 
 
 class SettingScreen(Screen):
-    """设置页面屏幕"""
+    """Settings screen"""
 
-    SUB_TITLE = "设置"
+    SUB_TITLE = _("Settings")
     BINDINGS = [
-        ("q", "go_back", "返回"),
-        ("s", "go_back", "设置"),
+        ("q", "go_back", _("Back")),
+        ("s", "go_back", _("Settings")),
     ]
     CSS_PATH = rootdir / "interface" / "css" / "screens" / "setting.tcss"
 
@@ -50,13 +51,13 @@ class SettingScreen(Screen):
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def compose(self) -> ComposeResult:
-        """组合界面组件"""
+        """Compose UI components"""
         if config_var.get()["interface"]["global"]["show_header"]:
             yield Header(
                 show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
             )
         with ScrollableContainer():
-            yield Label("[b]设置页面[/b]")
+            yield Label("[b]" + _("Settings") + "[/b]")
             for i in config_var.get():
                 if i.startswith("_"):
                     continue
@@ -67,7 +68,7 @@ class SettingScreen(Screen):
                         title=i + f'\n[d]{config_var.get().get(f"_{i}_desc", "")}[/d]',
                     )
         yield Label(
-            "退出页面时, 所作的更改会立即保存, 但仍建议重启软件以确保新的配置得到应用",
+            _("Changes are saved immediately when you leave this page, but restart is recommended to ensure the new configuration is applied."),
             classes="foot",
         )
         yield Footer()
@@ -138,7 +139,7 @@ class SettingScreen(Screen):
                                 Label(i + f'\n[d]{parent.get(f"_{i}_desc", "")}[/d]'),
                                 Input(
                                     value=str(parent[i]),
-                                    placeholder="要求一个浮点数",
+                                    placeholder=_("Requires a float"),
                                     type="number",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
@@ -151,7 +152,7 @@ class SettingScreen(Screen):
                                 Label(i + f'\n[d]{parent.get(f"_{i}_desc", "")}[/d]'),
                                 Input(
                                     value=parent[i],
-                                    placeholder="要求一个字符串",
+                                    placeholder=_("Requires a string"),
                                     type="text",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
@@ -176,7 +177,7 @@ class SettingScreen(Screen):
                                 Label(i + f'\n[d]{parent.get(f"_{i}_desc", "")}[/d]'),
                                 Input(
                                     value=str(parent[i]),
-                                    placeholder="要求一个整数",
+                                    placeholder=_("Requires an integer"),
                                     type="integer",
                                     id=domize(f"{parent_epath}.{i}"),
                                 ),
@@ -186,9 +187,9 @@ class SettingScreen(Screen):
                     elif isinstance(parent[i], list):
                         pass
                     else:
-                        lst.append(Label("未知类型"))
+                        lst.append(Label(_("Unknown type")))
             return lst
-        return [Label("无子项")]
+        return [Label(_("No sub-items"))]
 
     def on_mount(self) -> None:
         """挂载组件时初始化"""

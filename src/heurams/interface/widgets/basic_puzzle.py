@@ -5,6 +5,7 @@ from textual.widgets import Button, Label, Static
 
 import heurams.kernel.particles as pt
 
+from heurams.i18n import _
 from .base_puzzle_widget import BasePuzzleWidget
 
 
@@ -32,49 +33,49 @@ class BasicEvaluation(BasePuzzleWidget):
 
     class RatingChanged(Message):
         def __init__(self, rating: int) -> None:
-            self.rating = rating  # 评分值 (0-5)
+            self.rating = rating  # Rating value (0-5)
             super().__init__()
 
-    # 反馈映射表
+    # Feedback mapping
     feedback_mapping = {
-        "feedback_5": {"rating": 5, "text": "完美回想"},
-        "feedback_4": {"rating": 4, "text": "犹豫后正确"},
-        "feedback_3": {"rating": 3, "text": "困难地正确"},
-        "feedback_2": {"rating": 2, "text": "错误但熟悉"},
-        "feedback_1": {"rating": 1, "text": "错误且不熟"},
-        "feedback_0": {"rating": 0, "text": "完全空白"},
+        "feedback_5": {"rating": 5, "text": _("Perfect recall")},
+        "feedback_4": {"rating": 4, "text": _("Correct after hesitation")},
+        "feedback_3": {"rating": 3, "text": _("Correct with difficulty")},
+        "feedback_2": {"rating": 2, "text": _("Wrong but familiar")},
+        "feedback_1": {"rating": 1, "text": _("Wrong and unfamiliar")},
+        "feedback_0": {"rating": 0, "text": _("Complete blank")},
     }
 
     def compose(self):
-        # 显示主要内容
+        # Show main content
         yield Label(self.atom.registry["nucleon"]["content"], id="main")
 
-        # 显示评估说明(可选)
-        yield Static("请评估你对这个内容的记忆程度: ", classes="instruction")
+        # Show instruction (optional)
+        yield Static(_("Evaluate how well you remember this content: "), classes="instruction")
 
-        # 按钮容器
+        # Button container
         with ScrollableContainer(id="button_container"):
             btn = {}
             btn["5"] = Button(
-                "完美回想", variant="success", id="feedback_5", classes="choice"
+                _("Perfect recall"), variant="success", id="feedback_5", classes="choice"
             )
             btn["4"] = Button(
-                "犹豫后正确", variant="success", id="feedback_4", classes="choice"
+                _("Correct after hesitation"), variant="success", id="feedback_4", classes="choice"
             )
             btn["3"] = Button(
-                "困难地正确", variant="warning", id="feedback_3", classes="choice"
+                _("Correct with difficulty"), variant="warning", id="feedback_3", classes="choice"
             )
             btn["2"] = Button(
-                "错误但熟悉", variant="warning", id="feedback_2", classes="choice"
+                _("Wrong but familiar"), variant="warning", id="feedback_2", classes="choice"
             )
             btn["1"] = Button(
-                "错误且不熟", variant="error", id="feedback_1", classes="choice"
+                _("Wrong and unfamiliar"), variant="error", id="feedback_1", classes="choice"
             )
             btn["0"] = Button(
-                "完全空白", variant="error", id="feedback_0", classes="choice"
+                _("Complete blank"), variant="error", id="feedback_0", classes="choice"
             )
 
-            # 布局按钮
+            # Layout buttons
             yield Horizontal(btn["5"], btn["4"])
             yield Horizontal(btn["3"], btn["2"])
             yield Horizontal(btn["1"], btn["0"])

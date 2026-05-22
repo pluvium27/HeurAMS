@@ -13,9 +13,9 @@ logger = get_logger(__name__)
 # from .protocol import PlayFunctionProtocol
 
 def play_by_path(path: pathlib.Path):
-    logger.debug("termux_audio.play_by_path: 开始播放 %s", path)
+    logger.debug("termux_audio.play_by_path: playing %s", path)
     try:
         os.system(f"play-audio {path.resolve()}")
-        logger.debug("播放命令已执行: %s", path)
+        logger.debug("Play audio: %s", path)
     except Exception as e:
-        logger.error("播放失败: %s, 错误: %s", path, e)
+        logger.error("Failed to play audio: %s, error: %s", path, e)

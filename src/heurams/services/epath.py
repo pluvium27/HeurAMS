@@ -19,14 +19,12 @@ def epath(
     path = path.lstrip(".")
     target = dct
     keys = path.split(".")
-    logger.debug(f"处理 EPATH {path}, {new_value}")
+    logger.debug(f"Proceeding EPATH {path}, {new_value}")
     for idx, i in enumerate(keys):
         is_last = idx == len(keys) - 1
 
         # 处理字典键
-        logger.debug(
-            f"处理 {i}, {(isinstance(target, dict) or isinstance(target, ConfigDict))} {i in target}"
-        )
+        logger.debug(f"Proceeding in detail: {i}, {(isinstance(target, dict) or isinstance(target, ConfigDict))} {i in target}")
 
         if is_last and enable_modify:
             # 最后一次循环执行修改

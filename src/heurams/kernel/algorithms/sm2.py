@@ -45,13 +45,13 @@ class SM2Algorithm(BaseAlgorithm):
             quality (int): 记忆保留率量化参数
         """
         logger.debug(
-            "SM2.revisor 开始, feedback: %d, is_new_activation: %s",
+            "SM2.revisor, feedback: %d, is_new_activation: %s",
             feedback,
             is_new_activation,
         )
 
         if feedback == -1:
-            logger.debug("feedback 为 -1, 跳过更新")
+            logger.debug("feedback = -1, update skipped")
             return
 
         algodata[cls.algo_name]["efactor"] = algodata[cls.algo_name]["efactor"] + (
@@ -60,7 +60,7 @@ class SM2Algorithm(BaseAlgorithm):
         algodata[cls.algo_name]["efactor"] = max(
             1.3, algodata[cls.algo_name]["efactor"]
         )
-        logger.debug("更新 efactor: %f", algodata[cls.algo_name]["efactor"])
+        logger.debug("Update efactor: %f", algodata[cls.algo_name]["efactor"])
 
         if feedback < 3:
             algodata[cls.algo_name]["rept"] = 0
@@ -68,28 +68,28 @@ class SM2Algorithm(BaseAlgorithm):
             logger.debug("feedback < 3, 重置 rept 和 interval")
         else:
             algodata[cls.algo_name]["rept"] += 1
-            logger.debug("递增 rept: %d", algodata[cls.algo_name]["rept"])
+            logger.debug("Increase rept: %d", algodata[cls.algo_name]["rept"])
 
         algodata[cls.algo_name]["real_rept"] += 1
-        logger.debug("递增 real_rept: %d", algodata[cls.algo_name]["real_rept"])
+        logger.debug("Increase real_rept: %d", algodata[cls.algo_name]["real_rept"])
 
         if is_new_activation:
             algodata[cls.algo_name]["rept"] = 0
             algodata[cls.algo_name]["efactor"] = 2.5
-            logger.debug("新激活, 重置 rept 和 efactor")
+            logger.debug("New activation, reset rept and efactor")
 
         if algodata[cls.algo_name]["rept"] == 0:
             algodata[cls.algo_name]["interval"] = 1
-            logger.debug("rept=0, 设置 interval=1")
+            logger.debug("rept=0, set interval=1")
         elif algodata[cls.algo_name]["rept"] == 1:
             algodata[cls.algo_name]["interval"] = 6
-            logger.debug("rept=1, 设置 interval=6")
+            logger.debug("rept=1, set interval=6")
         else:
             algodata[cls.algo_name]["interval"] = round(
                 algodata[cls.algo_name]["interval"] * algodata[cls.algo_name]["efactor"]
             )
             logger.debug(
-                "rept>1, 计算 interval: %d", algodata[cls.algo_name]["interval"]
+                "rept>1, providing interval: %d", algodata[cls.algo_name]["interval"]
             )
 
         algodata[cls.algo_name]["last_date"] = timer.get_daystamp()
@@ -99,7 +99,7 @@ class SM2Algorithm(BaseAlgorithm):
         algodata[cls.algo_name]["last_modify"] = timer.get_timestamp()
 
         logger.debug(
-            "更新日期: last_date=%d, next_date=%d, last_modify=%f",
+            "Update date: last_date=%d, next_date=%d, last_modify=%f",
             algodata[cls.algo_name]["last_date"],
             algodata[cls.algo_name]["next_date"],
             algodata[cls.algo_name]["last_modify"],

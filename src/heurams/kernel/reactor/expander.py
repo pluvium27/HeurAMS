@@ -48,7 +48,7 @@ class Expander(Machine):
         self.puzzles_inf = list()
         self.min_ratings = []
         for item, possibility in orbital_schedule:  # type: ignore
-            logger.debug(f"开始处理: {item}")
+            logger.debug(f"Process: {item}")
 
             puzzle = puz.puzzles[orbital_puzzles[item]["__origin__"]]
 

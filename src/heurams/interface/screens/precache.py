@@ -1,4 +1,4 @@
-"""缓存工具界面"""
+"""Cache tool screen"""
 
 import pathlib
 
@@ -13,14 +13,15 @@ from textual import events, on
 import heurams.kernel.particles as pt
 import heurams.services.hasher as hasher
 from heurams.context import *
+from heurams.i18n import _
 
-# 兼容性缓存路径：优先使用 paths.cache, 否则使用 data/cache
+# Compatibility cache path: prefer paths.cache, otherwise data/cache
 paths = config_var.get()["global"]["paths"]
 cache_dir = pathlib.Path(paths.get("cache", paths["data"] + "/cache")) / "voice"
 
 
 def human_size(bytes_num: int) -> str:
-    """将字节数格式化为人类可读的字符串"""
+    """Format byte count as human-readable string"""
     for unit in ["B", "KB", "MB", "GB", "TB"]:
         if bytes_num < 1024.0:
             return f"{bytes_num:.2f} {unit}"
@@ -29,18 +30,18 @@ def human_size(bytes_num: int) -> str:
 
 
 class PrecachingScreen(Screen):
-    """预缓存音频文件屏幕
+    """Audio file pre-caching screen
 
-    缓存记忆单元音频文件, 全部(默认) 或部分记忆单元(可选参数传入)
+    Cache memory unit audio files, all (default) or some memory units (optional params)
 
     Args:
-        nucleons (list): 可选列表, 仅包含 Nucleon 对象
-        desc (list): 可选字符串, 包含对此次调用的文字描述
+        nucleons (list): Optional list containing Nucleon objects only
+        desc (list): Optional string containing description of this call
     """
 
-    SUB_TITLE = "缓存管理器"
+    SUB_TITLE = _("Cache Manager")
     BINDINGS = [
-        ("q", "go_back", "返回"),
+        ("q", "go_back", _("Back")),
     ]
 
     def __init__(self, nucleons: list = [], desc: str = ""):
@@ -67,7 +68,7 @@ class PrecachingScreen(Screen):
         self._update_cache_stats()
 
     def _get_total_units(self) -> int:
-        """获取所有仓库的总单元数"""
+        """Get total units across all repos"""
         from heurams.context import config_var
         from heurams.kernel.repolib import Repo
 
@@ -89,7 +90,7 @@ class PrecachingScreen(Screen):
         shim.set_term_title(f"{self.app.TITLE} - {self.SUB_TITLE}")
 
     def _update_cache_stats(self) -> None:
-        """更新缓存统计信息"""
+        """Update cache statistics"""
         total_size = 0
         file_count = 0
         cached_units = 0
@@ -117,21 +118,25 @@ class PrecachingScreen(Screen):
                 show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
             )
         with ScrollableContainer(id="precache_container"):
-            yield Label("[b]音频预缓存[/b]", classes="title-label")
+            yield Label(_("[b]Audio Pre-cache[/b]"), classes="title-label")
             with Container():
                 yield Static(
-                    f"缓存率: {self.cache_stats.get('cache_rate', 0):.1f}% (已缓存 {self.cache_stats.get('cached_units', 0)} / {self.cache_stats.get('total_units', 0)} 个单元)",
+                    _("Cache rate: {rate:.1f}% ({cached} / {total} units)").format(
+                        rate=self.cache_stats.get('cache_rate', 0),
+                        cached=self.cache_stats.get('cached_units', 0),
+                        total=self.cache_stats.get('total_units', 0),
+                    ),
                     classes="cache-usage-text",
                 )
                 if self.nucleons:
                     yield Static(
-                        f"目标单元归属: [b]{self.desc}[/b]", classes="target-info"
+                        _("Target units from: [b]{desc}[/b]").format(desc=self.desc), classes="target-info"
                     )
                     yield Static(
-                        f"单元数量: {len(self.nucleons)}", classes="target-info"
+                        _("Unit count: {n}").format(n=len(self.nucleons)), classes="target-info"
                     )
                 else:
-                    yield Static("目标: 所有单元", classes="target-info")
+                    yield Static(_("Target: all units"), classes="target-info")
 
                 yield Static(id="status", classes="status-info")
                 yield Static(id="current_item", classes="current-item")
@@ -139,69 +144,72 @@ class PrecachingScreen(Screen):
                 with Horizontal(classes="button-group"):
                     if not self.is_precaching:
                         yield Button(
-                            "开始预缓存", id="start_precache", variant="primary"
+                            _("Start Pre-cache"), id="start_precache", variant="primary"
                         )
                     else:
                         yield Button(
-                            "取消预缓存", id="cancel_precache", variant="error"
+                            _("Cancel Pre-cache"), id="cancel_precache", variant="error"
                         )
-                    yield Button("清空缓存", id="clear_cache", variant="warning")
-                    yield Button("返回", id="go_back", variant="default")
+                    yield Button(_("Clear Cache"), id="clear_cache", variant="warning")
+                    yield Button(_("Back"), id="go_back", variant="default")
             with Container(classes="cache-info"):
-                yield Static(f"缓存路径: {cache_dir}", classes="cache-path")
+                yield Static(_("Cache path: {path}").format(path=cache_dir), classes="cache-path")
                 yield Static(
-                    f"文件数: {self.cache_stats['file_count']}", classes="cache-count"
+                    _("Files: {n}").format(n=self.cache_stats['file_count']), classes="cache-count"
                 )
                 yield Static(
-                    f"总大小: {self.cache_stats['human_size']}", classes="cache-size"
+                    _("Total size: {size}").format(size=self.cache_stats['human_size']), classes="cache-size"
                 )
                 yield Button(
-                    "刷新", id="refresh_cache_stats", variant="default", flat=True
+                    _("Refresh"), id="refresh_cache_stats", variant="default", flat=True
                 )
-                yield Static("若您离开此界面, 未完成的缓存进程会自动停止.")
-                yield Static('缓存程序支持 "断点续传".')
+                yield Static(_("If you leave this screen, ongoing cache processes will stop automatically."))
+                yield Static(_('Cache supports "resume from break".'))
 
         yield Footer()
 
     def on_mount(self):
-        """挂载时初始化状态"""
-        self.update_status("就绪", "等待开始...")
+        """Initialise state on mount"""
+        self.update_status(_("Ready"), _("Waiting to start..."))
         self._update_cache_display()
 
     def update_status(self, status, current_item="", progress=None):
-        """更新状态显示"""
+        """Update status display"""
         status_widget = self.query_one("#status", Static)
         item_widget = self.query_one("#current_item", Static)
         progress_bar = self.query_one("#progress_bar", ProgressBar)
 
-        status_widget.update(f"状态: {status}")
-        item_widget.update(f"当前项目: {current_item}" if current_item else "")
+        status_widget.update(_("Status: {s}").format(s=status))
+        item_widget.update(_("Current item: {item}").format(item=current_item) if current_item else "")
 
         if progress is not None:
             progress_bar.progress = progress
-            progress_bar.advance(0)  # 刷新显示
+            progress_bar.advance(0)  # Refresh display
 
     def _update_cache_display(self) -> None:
-        """更新缓存信息显示"""
-        # 更新统计信息
+        """Update cache info display"""
+        # Update stats
         self._update_cache_stats()
-        # 更新缓存率进度条
-        # 更新缓存大小和文件数显示
+        # Update cache rate progress bar
+        # Update cache size and file count display
         cache_count_widget = self.query_one(".cache-count", Static)
         cache_size_widget = self.query_one(".cache-size", Static)
         cache_usage_text = self.query_one(".cache-usage-text", Static)
         if cache_count_widget:
-            cache_count_widget.update(f"文件数: {self.cache_stats['file_count']}")
+            cache_count_widget.update(_("Files: {n}").format(n=self.cache_stats['file_count']))
         if cache_size_widget:
-            cache_size_widget.update(f"总大小: {self.cache_stats['human_size']}")
+            cache_size_widget.update(_("Total size: {size}").format(size=self.cache_stats['human_size']))
         if cache_usage_text:
             cache_usage_text.update(
-                f"缓存率: {self.cache_stats.get('cache_rate', 0):.1f}% "
-                f"(已缓存 {self.cache_stats.get('cached_units', 0)} / {self.cache_stats.get('total_units', 0)} 个单元)"
+                _("Cache rate: {rate:.1f}% ({cached} / {total} units)").format(
+                    rate=self.cache_stats.get('cache_rate', 0),
+                    cached=self.cache_stats.get('cached_units', 0),
+                    total=self.cache_stats.get('total_units', 0),
+                )
             )
 
     def precache_by_text(self, text: str):
-        """预缓存单段文本的音频"""
+        """Pre-cache audio for a single text string"""
 
         cache_dir.mkdir(parents=True, exist_ok=True)
         cache_file = cache_dir / f"{hasher.get_md5(text)}.wav"
@@ -212,21 +220,21 @@ class PrecachingScreen(Screen):
                 convertor(text, cache_file)
                 return 1
             except Exception as e:
-                print(f"预缓存失败 '{text}': {e}")
+                print(f"Pre-cache failed '{text}': {e}")
                 return 0
         return 1
 
     def precache_by_nucleon(self, nucleon: pt.Nucleon):
-        """依据 Nucleon 缓存"""
+        """Cache based on Nucleon"""
         ret = self.precache_by_text(nucleon["tts_text"])
         return ret
 
     def precache_by_list(self, nucleons: list):
-        """依据 Nucleons 列表缓存"""
+        """Cache based on Nucleons list"""
         for idx, nucleon in enumerate(nucleons):
             # print(f"PROC: {nucleon}")
             worker = get_current_worker()
-            if worker and worker.is_cancelled:  # 函数在worker中执行且已被取消
+            if worker and worker.is_cancelled:  # Function running in worker and has been cancelled
                 return False
             text = nucleon["tts_text"]
             # self.current_item = text[:30] + "..." if len(text) > 50 else text
@@ -236,12 +244,12 @@ class PrecachingScreen(Screen):
             # print(self.total)
             progress = int((self.processed / self.total) * 100) if self.total > 0 else 0
             # print(progress)
-            self.update_status(f"正处理 ({idx + 1}/{len(nucleons)})", text, progress)
+            self.update_status(_("Processing ({i}/{total})").format(i=idx + 1, total=len(nucleons)), text, progress)
             ret = self.precache_by_nucleon(nucleon)
             if not ret:
                 self.update_status(
-                    "出错",
-                    f"处理失败, 跳过: {self.current_item}",
+                    _("Error"),
+                    _("Failed, skipping: {item}").format(item=self.current_item),
                 )
                 import time
 
@@ -286,7 +294,7 @@ class PrecachingScreen(Screen):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         event.stop()
         if event.button.id == "start_precache" and not self.is_precaching:
-            # 开始预缓存
+            # Start pre-cache
             if self.nucleons:
                 self.precache_worker = self.run_worker(
                     self.precache_by_nucleons,
@@ -303,32 +311,32 @@ class PrecachingScreen(Screen):
                 )
 
         elif event.button.id == "cancel_precache" and self.is_precaching:
-            # 取消预缓存
+            # Cancel pre-cache
             if self.precache_worker:
                 self.precache_worker.cancel()
             self.is_precaching = False
             self.processed = 0
             self.progress = 0
-            self.update_status("已取消", "预缓存操作被用户取消", 0)
+            self.update_status(_("Cancelled"), _("Pre-cache cancelled by user"), 0)
 
         elif event.button.id == "clear_cache":
-            # 清空缓存
+            # Clear cache
             try:
                 import shutil
 
                 shutil.rmtree(cache_dir, ignore_errors=True)
-                self.update_status("已清空", "音频缓存已清空", 0)
-                self._update_cache_display()  # 更新缓存统计显示
+                self.update_status(_("Cleared"), _("Audio cache cleared"), 0)
+                self._update_cache_display()  # Update cache stats display
             except Exception as e:
-                self.update_status("错误", f"清空缓存失败: {e}")
+                self.update_status(_("Error"), _("Failed to clear cache: {error}").format(error=e))
             self.cancel_flag = 1
             self.processed = 0
             self.progress = 0
 
         elif event.button.id == "refresh_cache_stats":
-            # 刷新缓存统计信息
+            # Refresh cache stats
             self._update_cache_display()
-            self.app.notify("缓存信息已刷新", severity="information")
+            self.app.notify(_("Cache info refreshed"), severity="information")
         elif event.button.id == "go_back":
             self.action_go_back()
 

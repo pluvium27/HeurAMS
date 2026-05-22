@@ -1,4 +1,4 @@
-"""队列式记忆工作界面"""
+"""Queue-based memorization screen"""
 
 from pathlib import Path
 
@@ -12,6 +12,7 @@ from textual import events, on
 
 import heurams.kernel.particles as pt
 from heurams.context import config_var, rootdir
+from heurams.i18n import _
 from heurams.kernel.reactor import *
 from heurams.services.favorite_service import favorite_manager
 from heurams.services.logger import get_logger
@@ -24,11 +25,11 @@ logger = get_logger(__name__)
 
 class MemScreen(Screen):
     BINDINGS = [
-        ("q", "go_back_notif", "返回"),
-        ("p", "prev", "查看上一个"),
+        ("q", "go_back_notif", _("Back")),
+        ("p", "prev", _("Previous")),
         ("d", "toggle_dark", ""),
-        ("v", "play_voice", "朗读"),
-        ("*", "toggle_favorite", "收藏"),
+        ("v", "play_voice", _("Read Aloud")),
+        ("*", "toggle_favorite", _("Favorite")),
         ("r", "resume_mark"),
         ("Q", "go_back"),
         ("n", "block_prompt"),
@@ -36,12 +37,12 @@ class MemScreen(Screen):
         ("z", "block_prompt"),
     ]
 
-    SUB_TITLE = "学习中"
+    SUB_TITLE = _("Learning")
     CSS_PATH = rootdir / "interface" / "css" / "screens" / "memoqueue.tcss"
 
     if config_var.get()["interface"]["global"]["quick_pass"]:
-        BINDINGS.append(("k", "quick_pass", "正确应答"))
-        BINDINGS.append(("f", "quick_fail", "错误应答"))
+        BINDINGS.append(("k", "quick_pass", _("Correct")))
+        BINDINGS.append(("f", "quick_fail", _("Incorrect")))
 
     rating = reactive(-1)
 
@@ -80,7 +81,7 @@ class MemScreen(Screen):
         yield Footer()
 
     def update_state(self):
-        """更新状态机"""
+        """Update state machine"""
         self.procession: Procession = self.router.current_procession()  # type: ignore
         self.atom: pt.Atom = self.procession.current_atom  # type: ignore
 
@@ -101,17 +102,17 @@ class MemScreen(Screen):
                 atom=self.atom, alia=puzzle["alia"]  # type: ignore
             )
         except Exception as e:
-            logger.debug(f"调度展开出错: {e}")
-            return Static(f"无法生成谜题 {e}")
+            logger.error(f"Failed to expand puzzle: {e}")
+            return Static(_("Failed to generate puzzle: {e}").format(e=e))
 
     def _get_progress_text(self):
         s = ""
         if self.repo is not None:
-            fav_status = "已收藏" if self._is_current_atom_favorited() else "未收藏"
+            fav_status = _("Favorited") if self._is_current_atom_favorited() else _("Not favorited")
             s += f"[{fav_status}] "
-        s += f"[{self.procession.process() + 1}/{self.procession.total_length()}] \[{self.procession.route.name}]\n"
+        s += f"[{self.procession.process() + 1}/{self.procession.total_length()}] \\[{self.procession.route.name}]\n"
         if self.procession.cursor - 1 >= 0:
-            s += f"上一个: [d]{self.procession.atoms[self.procession.cursor - 1]['ident']}[/d]"
+            s += _("Previous: {ident}").format(ident=f"[d]{self.procession.atoms[self.procession.cursor - 1]['ident']}[/d]")
         return s
 
     def update_display(self):
@@ -120,7 +121,7 @@ class MemScreen(Screen):
         progress_widget.update(self._get_progress_text())  # type: ignore
 
     def mount_puzzle(self):
-        """挂载当前谜题组件"""
+        """Mount current puzzle widget"""
         if self.procession.route == RouterState.FINISHED:
             self.mount_finished_widget()
             return
@@ -130,7 +131,7 @@ class MemScreen(Screen):
         container.mount(self.puzzle_widget())
 
     def mount_finished_widget(self):
-        """挂载已完成组件"""
+        """Mount finished widget"""
         a = Attic("ana", {"finished": 0})
         a.data["finished"] += 1
         container = self.query_one("#puzzle_container")
@@ -153,7 +154,7 @@ class MemScreen(Screen):
         self.run_worker(self.play_voice, exclusive=True, thread=True)
 
     def play_voice(self):
-        """朗读当前内容"""
+        """Read current content aloud"""
         from pathlib import Path
 
         from heurams.services.audio_service import play_by_path
@@ -161,7 +162,6 @@ class MemScreen(Screen):
 
         path = Path(config_var.get()["global"]["paths"]["data"]) / "cache" / "voice"
         path = path / f"{get_md5(self.atom.registry['nucleon']["tts_text"])}.wav"
-        logger.debug(str(path))
         if path.exists():
             play_by_path(path)
         else:
@@ -205,7 +205,7 @@ class MemScreen(Screen):
         if not self.atom.registry["runtime"]["locked"]:
             if not self.atom.registry["electron"].is_activated():
                 self.atom.registry["electron"].activate()
-                logger.debug(f"激活原子 {self.atom}")
+                logger.debug(f"Activated atom: {self.atom}")
                 self.atom.lock(1)
                 self.atom.minimize(5)
             else:
@@ -228,7 +228,7 @@ class MemScreen(Screen):
         self.expander = self.procession.get_expander()
 
     def action_go_back_notif(self):
-        self.notify("确定吗? 按下大写 Q 以返回")
+        self.notify(_("Are you sure? Press uppercase Q to go back."))
 
     def action_go_back(self):
         self.app.pop_screen()
@@ -240,44 +240,44 @@ class MemScreen(Screen):
         self.rating = 3
 
     def _get_repo_rel_path(self) -> str:
-        """获取仓库相对路径（相对于 data/repo）"""
+        """Get repo relative path (relative to data/repo)"""
         if self.repo is None:
             return ""
-        # self.repo.source 是 Path 对象, 指向仓库目录
+        # self.repo.source is the Path object pointing to the repo directory
         repo_full_path = self.repo.source
         data_repo_path = Path(config_var.get()["global"]["paths"]["data"]) / "repo"
         try:
             rel_path = repo_full_path.relative_to(data_repo_path)
             return str(rel_path)
         except ValueError:
-            # 如果不在 data/repo 下, 则返回完整路径（字符串形式）
+            # If not under data/repo, return the full path as string
             return str(repo_full_path)
 
     def _is_current_atom_favorited(self) -> bool:
-        """检查当前原子是否已收藏"""
+        """Check if current atom is favorited"""
         if self.repo is None:
             return False
         repo_path = self._get_repo_rel_path()
         return favorite_manager.has(repo_path, self.atom.ident)
 
     def action_toggle_favorite(self):
-        """切换收藏状态"""
+        """Toggle favorite status"""
         if self.repo is None:
-            self.app.notify("无法收藏：未关联仓库", severity="error")
+            self.app.notify(_("Cannot favorite: no repo associated"), severity="error")
             return
         repo_path = self._get_repo_rel_path()
         ident = self.atom.ident
         if favorite_manager.has(repo_path, ident):
             favorite_manager.remove(repo_path, ident)
-            self.app.notify(f"已取消收藏：{ident}", severity="information")
+            self.app.notify(_("Unfavorited: {ident}").format(ident=ident), severity="information")
         else:
             favorite_manager.add(repo_path, ident)
-            self.app.notify(f"已收藏：{ident}", severity="information")
-        # 更新显示（如果需要）
+            self.app.notify(_("Favorited: {ident}").format(ident=ident), severity="information")
+        # Update display if needed
         self.update_display()
 
     def action_block_prompt(self):
-        self.app.notify("功能在记忆界面中不可用, 完成或返回后再试", severity="error")
+        self.app.notify(_("This function is not available during memorization. Please finish or go back first."), severity="error")
 
     def action_resume_mark(self):
         from heurams.services.attic import Attic
@@ -286,4 +286,4 @@ class MemScreen(Screen):
         a = Attic("ana")
         l = a.data["last"]
         a.data["last"] = time.time()
-        self.app.notify(f"时间恢复已修正: {l} -> {a.data['last']}")
+        self.app.notify(_("Time resume corrected: {old} -> {new}").format(old=l, new=a.data['last']))

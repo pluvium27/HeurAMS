@@ -65,8 +65,8 @@ class MCQPuzzle(BasePuzzle):
             jammer: 传入的干扰项列表
         """
         # 合并正确答案和传入的干扰项, 并去重
-        logger.debug(f"答案映射: {self.mapping}, {type(self.mapping)}")
-        logger.debug(f"干扰项: {jammer}, {type(jammer)}")
+        logger.debug(f"Answer table: {self.mapping}, {type(self.mapping)}")
+        logger.debug(f"Jammers: {jammer}, {type(jammer)}")
         unique_jammers = set(jammer + list(self.mapping.values()))
         self.jammer = list(unique_jammers)
 
@@ -94,7 +94,7 @@ class MCQPuzzle(BasePuzzle):
         Raises:
             ValueError: 当mapping为空时不会抛出异常, 但会设置空谜题状态
         """
-        logger.debug("MCQPuzzle.refresh 开始, mapping size=%d", len(self.mapping))
+        logger.debug("MCQPuzzle.refresh, mapping size=%d", len(self.mapping))
         if not self.mapping:
             self._set_empty_puzzle()
             return

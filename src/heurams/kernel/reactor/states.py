@@ -21,6 +21,3 @@ class ProcessionState(Enum):
 class ExpanderState(Enum):
     EXAMMODE = "exammode"
     RETRONLY = "retronly"
-
-
-logger.debug("状态枚举定义已加载")

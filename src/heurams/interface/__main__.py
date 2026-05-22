@@ -1,5 +1,6 @@
 from heurams.interface import *
 from heurams.context import config_var
+from heurams.i18n import _
 from heurams.services.logger import get_logger
 import threading
 import pickle
@@ -21,7 +22,7 @@ def start_debug_server(app):
         code = pickle.loads(msg)
         namespace = {"app": app, "logger": logger, "config_var": config_var}
         if first:
-            app.title += " [调试已连接]"
+            app.title += _(" [Debug Connected]")
             first = 0
         try:
             # 先尝试 eval

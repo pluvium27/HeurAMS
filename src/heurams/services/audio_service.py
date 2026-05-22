@@ -11,7 +11,7 @@ logger = get_logger(__name__)
 play_by_path: Callable = prov[
     config_var.get()["services"]["audio"]["provider"]
 ].play_by_path
-logger.debug(
-    "音频服务初始化完成, 使用 Provider: %s",
+logger.info(
+    "TTS Service inited, using provider %s",
     config_var.get()["services"]["audio"]["provider"],
 )

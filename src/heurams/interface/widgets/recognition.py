@@ -6,6 +6,7 @@ from textual.widget import Widget
 from textual.widgets import Button, Label, Markdown, Static
 
 import heurams.kernel.particles as pt
+from heurams.i18n import _
 from heurams.services.logger import get_logger
 
 from .base_puzzle_widget import BasePuzzleWidget
@@ -86,7 +87,7 @@ class Recognition(BasePuzzleWidget):
         for item in cfg["secondary"]:
             if isinstance(item, list):
                 for j in item:
-                    yield Markdown(f"### 笔记: {j}")  # TODO ANNOTATION
+                    yield Markdown(_("### Note: {note}").format(note=j))  # TODO ANNOTATION
                     continue
             if isinstance(item, Dict):
                 total = ""
@@ -97,7 +98,7 @@ class Recognition(BasePuzzleWidget):
                 yield Markdown(item)
 
         with Center() as c:
-            with Button("我已知晓", id="ok") as b:
+            with Button(_("I know this"), id="ok") as b:
                 b.focus()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

@@ -1,0 +1,669 @@
+# Russian translations for HeurAMS.
+# Copyright (C) 2026 Wang Zhiyu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: heurams 0.5.1\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+msgid "Welcome to the basic user interface!"
+msgstr "Добро пожаловать в интерфейс!"
+
+msgid "Loading config and context... "
+msgstr "Загрузка конфигурации… "
+
+msgid "Done! ({time}ms)"
+msgstr "Готово! ({time}ms)"
+
+msgid "Loading UI framework... "
+msgstr "Загрузка UI… "
+
+msgid "Loading UI layout... "
+msgstr "Загрузка разметки… "
+
+msgid "Component directory: {path}"
+msgstr "Директория: {path}"
+
+msgid "Working directory: {path}"
+msgstr "Рабочая директория: {path}"
+
+msgid "Pre-work total: {time}ms"
+msgstr "Всего: {time}ms"
+
+msgid "Heuristic Auxiliary Memorizing Scheduler"
+msgstr "Эвристический планировщик запоминания"
+
+msgid "Quit"
+msgstr "Выход"
+
+msgid "Theme"
+msgstr "Тема"
+
+msgid "Navigate"
+msgstr "Навигация"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "About"
+msgstr "О программе"
+
+msgid "HeurAMS {ver} - Heuristic Auxiliary Memorizing Scheduler"
+msgstr "HeurAMS {ver} - Эвристический планировщик"
+
+msgid "Listening address"
+msgstr "Адрес"
+
+msgid "Listening port"
+msgstr "Порт"
+
+msgid "Development mode hot reload"
+msgstr "Горячая перезагрузка (dev)"
+
+msgid "Show this help message"
+msgstr "Показать справку"
+
+msgid "unifront API service started: http://{host}:{port}"
+msgstr "API запущен: http://{host}:{port}"
+
+msgid "Show the version and exit."
+msgstr "Показать версию и выйти."
+
+msgid "Explicitly specify locale (defaults to LANG env)."
+msgstr "Локаль (напр. en_US, ru). По умолчанию из LANG."
+
+msgid "Launch the built-in user interface (TUI)"
+msgstr "Запустить TUI"
+
+msgid "Launch the API service (unifront)"
+msgstr "Запустить API"
+
+msgid "Dashboard"
+msgstr "Панель"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Current daystamp: {ds}"
+msgstr "Дата: {ds}"
+
+msgid "Timezone offset: UTC+{offset}"
+msgstr "Смещение: UTC+{offset}"
+
+msgid "Default algorithm: {algo}"
+msgstr "Алгоритм: {algo}"
+
+msgid "Loaded {n} repo(s)"
+msgstr "Загружено: {n}"
+
+msgid "Total {n} unit(s)"
+msgstr "Всего单元: {n}"
+
+msgid "Activated {n} unit(s)"
+msgstr "Активно: {n}"
+
+msgid "Version {ver}-{stage}"
+msgstr "Версия {ver}-{stage}"
+
+msgid "Processed {puzzles} puzzles in {time}s, accuracy {accuracy}, speed {speed} puzzle(s)/s"
+msgstr "Обработано {puzzles} задач за {time}с, точность {accuracy}, скорость {speed} задач/с"
+
+msgid "N/A"
+msgstr "Н/Д"
+
+msgid ""
+"No repo directories found in {path}.\n"
+"Please import a repo and restart, or create a new one."
+msgstr ""
+"Репозитории не найдены в {path}.\n"
+"Импортируйте или создайте новый."
+
+msgid "Start Learning"
+msgstr "Начать"
+
+msgid ""
+"{title} [{algo}]\n"
+"  [d]Progress: {touched}/{total} ({pct}%)[/d]\n"
+"  [d]{status}[/d]"
+msgstr ""
+"{title} [{algo}]\n"
+"  [d]Прогресс: {touched}/{total} ({pct}%)[/d]\n"
+"  [d]{status}[/d]"
+
+msgid "Due: {review}R + {new}U"
+msgstr "К сроку: {review}R + {new}U"
+
+msgid "Not started: 0R + {new}U"
+msgstr "Не начато: 0R + {new}U"
+
+msgid "Up to date"
+msgstr "Актуально"
+
+msgid "[b]About & Version Info[/b]"
+msgstr "[b]О программе[/b]"
+
+msgid ""
+"# About HeurAMS\n"
+"\n"
+"Main library version: `{ver}-python`  \n"
+"UI frontend: `Textual TUI (Basic UI)`  \n"
+"UI version: `{ver}`  \n"
+"API codename: `{codename}`  \n"
+"\n"
+"> A heuristic auxiliary memorizing scheduler based on heuristic algorithms and cognitive science theories, designed to help users memorize and plan learning more efficiently.  \n"
+"> An open, elegant, and extensible spaced repetition scheduler experimental platform, designed to help researchers conduct investigations, experiments, and research on cutting-edge memory algorithms more efficiently.  \n"
+"\n"
+"You can visit the project homepage at https://ams.pluv27.top for user guides, development documentation and software updates, and participate in software development and improvement.  \n"
+"\n"
+"Open source under the GNU Affero General Public License (version 3), with an additional exemption clause for local API calls, used for other frontend to library interface calls.  \n"
+"\n"
+"You are using the built-in terminal user interface, which is the first full-featured frontend implementation and library test suite, located in the interface subdirectory of the library.  \n"
+"\n"
+"Developers:  \n"
+"- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): Project initiator and lead developer  \n"
+"\n"
+"Special thanks to the following individuals and groups; their algorithms and theories form the cornerstone of the current software algorithms:  \n"
+"\n"
+"- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 algorithm and SM-15 algorithm theory  \n"
+"- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS algorithm and spaced repetition theory references  \n"
+"- [Kazuaki Tanida](https://github.com/slaypni): CoffeeScript reverse implementation of SM-15 algorithm  \n"
+"- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS algorithm underlying implementation  \n"
+"\n"
+"# Runtime Environment\n"
+"\n"
+"Python interpreter version: {python_version}  \n"
+"Python interpreter path: {executable}  \n"
+"Textual framework version: {textual_version}  \n"
+"Terminal emulator: {terminal_info}  \n"
+"Operating system version: {os_version}  \n"
+"Disk free space: {disk_usage}  \n"
+"\n"
+"When reporting issues, please copy this information into the issue description and attach `heurams.log` as an attachment to help developers locate the error."
+msgstr ""
+"# О HeurAMS\n"
+"\n"
+"Версия: `{ver}-python`  \n"
+"UI: `Textual TUI`  \n"
+"Версия UI: `{ver}`  \n"
+"Кодовое имя: `{codename}`  \n"
+"\n"
+"> Эвристический планировщик запоминания на основе когнитивных наук.  \n"
+"\n"
+"Сайт: https://ams.pluv27.top  \n"
+"\n"
+"AGPL-3.0 с исключением для локальных API.  \n"
+"\n"
+"Разработчик:  \n"
+"- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27))  \n"
+"\n"
+"Благодарности:  \n"
+"- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2, SM-15  \n"
+"- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS  \n"
+"- [Kazuaki Tanida](https://github.com/slaypni): SM-15 CoffeeScript  \n"
+"- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS  \n"
+"\n"
+"# Окружение\n"
+"\n"
+"Python: {python_version}  \n"
+"Путь: {executable}  \n"
+"Textual: {textual_version}  \n"
+"Терминал: {terminal_info}  \n"
+"ОС: {os_version}  \n"
+"Диск: {disk_usage}  \n"
+"\n"
+"Прикрепите эту информацию к баг-репорту."
+
+msgid "Back to Main"
+msgstr "На главную"
+
+msgid "Unknown"
+msgstr "Неизв."
+
+msgid "Requires a float"
+msgstr "Нужно число с точкой"
+
+msgid "Requires a string"
+msgstr "Нужна строка"
+
+msgid "Requires an integer"
+msgstr "Нужно целое"
+
+msgid "Unknown type"
+msgstr "Неизв. тип"
+
+msgid "No sub-items"
+msgstr "Нет подпунктов"
+
+msgid "Changes are saved immediately when you leave this page, but restart is recommended to ensure the new configuration is applied."
+msgstr "Изменения сохраняются сразу. Рекомендуется перезапуск."
+
+msgid "Previous"
+msgstr "Назад"
+
+msgid "Read Aloud"
+msgstr "Озвучить"
+
+msgid "Favorite"
+msgstr "Избранное"
+
+msgid "Learning"
+msgstr "Обучение"
+
+msgid "Correct"
+msgstr "Верно"
+
+msgid "Incorrect"
+msgstr "Неверно"
+
+msgid "Failed to generate puzzle: {e}"
+msgstr "Ошибка генерации: {e}"
+
+msgid "Favorited"
+msgstr "В избранном"
+
+msgid "Not favorited"
+msgstr "Не в избранном"
+
+msgid "Previous: {ident}"
+msgstr "Пред.: {ident}"
+
+msgid "Are you sure? Press uppercase Q to go back."
+msgstr "Уверены? Нажмите Q для возврата."
+
+msgid "Cannot favorite: no repo associated"
+msgstr "Ошибка: репозиторий не связан"
+
+msgid "Unfavorited: {ident}"
+msgstr "Удалено: {ident}"
+
+msgid "Favorited: {ident}"
+msgstr "Добавлено: {ident}"
+
+msgid "This function is not available during memorization. Please finish or go back first."
+msgstr "Функция недоступна во время запоминания."
+
+msgid "Time resume corrected: {old} -> {new}"
+msgstr "Время скорректировано: {old} -> {new}"
+
+msgid " [Debug Connected]"
+msgstr " [Отладка]"
+
+msgid "Favorites"
+msgstr "Избранное"
+
+msgid "No favorites"
+msgstr "Нет избранного"
+
+msgid "Press * in the memorization screen to add favorites."
+msgstr "Нажмите * для добавления в избранное."
+
+msgid "Total {n} favorite(s)"
+msgstr "Избранного: {n}"
+
+msgid ""
+"  [d]Added: {time}\n"
+"  From {title}[/d]"
+msgstr ""
+"  [d]Добавлено: {time}\n"
+"  Из: {title}[/d]"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Operation failed: invalid button identifier"
+msgstr "Ошибка: неверный ID кнопки"
+
+msgid "Removed favorite: {ident}"
+msgstr "Удалено: {ident}"
+
+msgid "Failed to remove: {ident}"
+msgstr "Ошибка удаления: {ident}"
+
+msgid "Switch"
+msgstr "Переключить"
+
+msgid "Cache Manager"
+msgstr "Кеш"
+
+msgid "Settings Page"
+msgstr "Настройки"
+
+msgid "Sync Tool"
+msgstr "Синхр."
+
+msgid "Exit"
+msgstr "Выход"
+
+msgid "Project Homepage"
+msgstr "Сайт проекта"
+
+msgid ""
+"[b]Select a function to navigate to\n"
+"or a memorization session instance[/b]\n"
+"\n"
+"Tips will be displayed here"
+msgstr ""
+"[b]Выберите функцию\n"
+"или сеанс[/b]\n"
+"\n"
+"Подсказки здесь"
+
+msgid ""
+"Press Enter to switch\n"
+"All sessions will be saved"
+msgstr ""
+"Enter для переключения\n"
+"Сеансы будут сохранены"
+
+msgid "Close (n)"
+msgstr "Закрыть (n)"
+
+msgid "Prepare Repository"
+msgstr "Подготовка"
+
+msgid "Cache"
+msgstr "Кеш"
+
+msgid ""
+"**Ready**: `{title}`\n"
+""
+msgstr ""
+"**Готово**: `{title}`\n"
+""
+
+msgid "Repo path: {path}"
+msgstr "Путь: {path}"
+
+msgid "Progress: {touched}/{total} [{pct}%]"
+msgstr "Прогресс: {touched}/{total} [{pct}%]"
+
+msgid "Scheduling algorithm: {algo} {desc}"
+msgstr "Алгоритм: {algo} {desc}"
+
+msgid ""
+"Study count: {total} = {review} [d][Review][/d] + {new} [d][New][/d]\n"
+""
+msgstr ""
+"Всего: {total} = {review} [d][Повтор][/d] + {new} [d][Новое][/d]\n"
+""
+
+msgid "Start Memorizing"
+msgstr "Начать"
+
+msgid "Manage Cache"
+msgstr "Кеш"
+
+msgid "Sync protocol: {proto}"
+msgstr "Протокол: {proto}"
+
+msgid "Server Configuration:"
+msgstr "Сервер:"
+
+msgid "Remote server:"
+msgstr "Сервер:"
+
+msgid "Remote path:"
+msgstr "Путь:"
+
+msgid "Test Connection"
+msgstr "Тест"
+
+msgid "Start Sync"
+msgstr "Синхр."
+
+msgid "Pause"
+msgstr "Пауза"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Sync Progress"
+msgstr "Прогресс"
+
+msgid "Sync Log"
+msgstr "Лог"
+
+msgid "Not configured"
+msgstr "Не настроено"
+
+msgid "Sync service ready"
+msgstr "Синхр. готова"
+
+msgid "Sync service not configured or not enabled"
+msgstr "Синхр. не настроена"
+
+msgid "Failed to update UI: {error}"
+msgstr "Ошибка UI: {error}"
+
+msgid "Failed to update status: {error}"
+msgstr "Ошибка статуса: {error}"
+
+msgid "Sync service not initialised, please check configuration"
+msgstr "Синхр. не инициализирована"
+
+msgid "Sync service not initialised"
+msgstr "Не инициализирована"
+
+msgid "Testing WebDAV connection..."
+msgstr "Тест WebDAV…"
+
+msgid "Testing connection..."
+msgstr "Тест соединения…"
+
+msgid "Connection test successful"
+msgstr "Тест OK"
+
+msgid "Connection OK"
+msgstr "Соединение OK"
+
+msgid "Connection test failed"
+msgstr "Тест не удался"
+
+msgid "Connection failed"
+msgstr "Ошибка соединения"
+
+msgid "Connection test error: {error}"
+msgstr "Ошибка теста: {error}"
+
+msgid "Connection error"
+msgstr "Ошибка соединения"
+
+msgid "Sync service not initialised, cannot start sync"
+msgstr "Синхр. не иниц., запуск невозможен"
+
+msgid "Sync already in progress"
+msgstr "Синхр. уже выполняется"
+
+msgid "Starting data sync..."
+msgstr "Запуск синхр…"
+
+msgid "Syncing..."
+msgstr "Синхр…"
+
+msgid "Syncing nucleon directory: {dir}"
+msgstr "Синхр. nucleon: {dir}"
+
+msgid "Syncing electron directory: {dir}"
+msgstr "Синхр. electron: {dir}"
+
+msgid "Syncing orbital directory: {dir}"
+msgstr "Синхр. orbital: {dir}"
+
+msgid "nucleon sync complete: uploaded {up}, downloaded {down}"
+msgstr "nucleon: загружено {up}, скачано {down}"
+
+msgid "electron sync complete: uploaded {up}, downloaded {down}"
+msgstr "electron: загружено {up}, скачано {down}"
+
+msgid "orbital sync complete: uploaded {up}, downloaded {down}"
+msgstr "orbital: загружено {up}, скачано {down}"
+
+msgid "Sync complete"
+msgstr "Синхр. завершена"
+
+msgid "All directories synced"
+msgstr "Всё синхронизировано"
+
+msgid "Error during sync: {error}"
+msgstr "Ошибка синхр.: {error}"
+
+msgid "Sync failed"
+msgstr "Синхр. не удалась"
+
+msgid "Sync paused"
+msgstr "Пауза"
+
+msgid "Sync resumed"
+msgstr "Продолжено"
+
+msgid "Sync cancelled"
+msgstr "Отменено"
+
+msgid "Resume"
+msgstr "Продолжить"
+
+msgid "Failed to update button state: {error}"
+msgstr "Ошибка кнопки: {error}"
+
+msgid "Unknown error"
+msgstr "Неизв. ошибка"
+
+msgid "[b]Audio Pre-cache[/b]"
+msgstr "[b]Аудиокеш[/b]"
+
+msgid "Cache rate: {rate:.1f}% ({cached} / {total} units)"
+msgstr "Кеш: {rate:.1f}% ({cached} / {total})"
+
+msgid "Target units from: [b]{desc}[/b]"
+msgstr "Цель: [b]{desc}[/b]"
+
+msgid "Unit count: {n}"
+msgstr "Единиц: {n}"
+
+msgid "Target: all units"
+msgstr "Цель: всё"
+
+msgid "Start Pre-cache"
+msgstr "Начать"
+
+msgid "Cancel Pre-cache"
+msgstr "Отмена"
+
+msgid "Clear Cache"
+msgstr "Очистить"
+
+msgid "Cache path: {path}"
+msgstr "Путь кеша: {path}"
+
+msgid "Files: {n}"
+msgstr "Файлов: {n}"
+
+msgid "Total size: {size}"
+msgstr "Размер: {size}"
+
+msgid "Refresh"
+msgstr "Обновить"
+
+msgid "If you leave this screen, ongoing cache processes will stop automatically."
+msgstr "При выходе кеширование остановится."
+
+msgid "Cache supports \"resume from break\"."
+msgstr "Поддерживается возобновление."
+
+msgid "Ready"
+msgstr "Готово"
+
+msgid "Waiting to start..."
+msgstr "Ожидание…"
+
+msgid "Status: {s}"
+msgstr "Статус: {s}"
+
+msgid "Current item: {item}"
+msgstr "Элемент: {item}"
+
+msgid "Processing ({i}/{total})"
+msgstr "Обработка ({i}/{total})"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "Failed, skipping: {item}"
+msgstr "Ошибка, пропуск: {item}"
+
+msgid "Cancelled"
+msgstr "Отменено"
+
+msgid "Pre-cache cancelled by user"
+msgstr "Отменено пользователем"
+
+msgid "Cleared"
+msgstr "Очищено"
+
+msgid "Audio cache cleared"
+msgstr "Кеш очищен"
+
+msgid "Failed to clear cache: {error}"
+msgstr "Ошибка очистки: {error}"
+
+msgid "Cache info refreshed"
+msgstr "Инфо обновлено"
+
+msgid "This memorization session is finished"
+msgstr "Сеанс завершен"
+
+msgid "Algorithm data {}"
+msgstr "Данные алгоритма{}"
+
+msgid "saved"
+msgstr "сохранено"
+
+msgid "not saved"
+msgstr "не сохранено"
+
+msgid "Back to Menu"
+msgstr "В меню"
+
+msgid "Perfect recall"
+msgstr "Идеально"
+
+msgid "Correct after hesitation"
+msgstr "Верно после паузы"
+
+msgid "Correct with difficulty"
+msgstr "Верно с трудом"
+
+msgid "Wrong but familiar"
+msgstr "Неверно, но знакомо"
+
+msgid "Wrong and unfamiliar"
+msgstr "Неверно и незнакомо"
+
+msgid "Complete blank"
+msgstr "Полный провал"
+
+msgid "Evaluate how well you remember this content: "
+msgstr "Оцените запоминание: "
+
+msgid "### Note: {note}"
+msgstr "### Заметка: {note}"
+
+msgid "I know this"
+msgstr "Знаю"
+
+msgid "Current input: {input}"
+msgstr "Ввод: {input}"
+
+msgid "Backspace"
+msgstr "Забой"
+
+msgid "Sample Label"
+msgstr "Метка"
+
+msgid "Sample Button"
+msgstr "Кнопка"

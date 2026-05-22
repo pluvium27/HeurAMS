@@ -1,0 +1,670 @@
+# Japanese translations for HeurAMS.
+# Copyright (C) 2026 Wang Zhiyu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: heurams 0.5.1\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+msgid "Welcome to the basic user interface!"
+msgstr "基本ユーザーインターフェースへようこそ！"
+
+msgid "Loading config and context... "
+msgstr "設定とコンテキストを読み込み中… "
+
+msgid "Done! ({time}ms)"
+msgstr "完了！（{time}ms）"
+
+msgid "Loading UI framework... "
+msgstr "UI フレームワークを読み込み中… "
+
+msgid "Loading UI layout... "
+msgstr "UI レイアウトを読み込み中… "
+
+msgid "Component directory: {path}"
+msgstr "コンポーネントディレクトリ: {path}"
+
+msgid "Working directory: {path}"
+msgstr "作業ディレクトリ: {path}"
+
+msgid "Pre-work total: {time}ms"
+msgstr "前処理合計: {time}ms"
+
+msgid "Heuristic Auxiliary Memorizing Scheduler"
+msgstr "ヒューリスティック補助記憶スケジューラ"
+
+msgid "Quit"
+msgstr "終了"
+
+msgid "Theme"
+msgstr "テーマ"
+
+msgid "Navigate"
+msgstr "ナビゲート"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "About"
+msgstr "このソフトについて"
+
+msgid "HeurAMS {ver} - Heuristic Auxiliary Memorizing Scheduler"
+msgstr "HeurAMS {ver} - ヒューリスティック補助記憶スケジューラ"
+
+msgid "Listening address"
+msgstr "リッスンアドレス"
+
+msgid "Listening port"
+msgstr "リッスンポート"
+
+msgid "Development mode hot reload"
+msgstr "開発モードのホットリロード"
+
+msgid "Show this help message"
+msgstr "このヘルプを表示"
+
+msgid "unifront API service started: http://{host}:{port}"
+msgstr "unifront API サービス開始: http://{host}:{port}"
+
+msgid "Show the version and exit."
+msgstr "バージョンを表示して終了。"
+
+msgid "Explicitly specify locale (defaults to LANG env)."
+msgstr "UI ロケール（例: en_US, ja）。デフォルトは LANG 環境変数。"
+
+msgid "Launch the built-in user interface (TUI)"
+msgstr "内蔵 UI（TUI）を起動"
+
+msgid "Launch the API service (unifront)"
+msgstr "API サービス（unifront）を起動"
+
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+msgid "Back"
+msgstr "戻る"
+
+msgid "Current daystamp: {ds}"
+msgstr "現在の日付スタンプ: {ds}"
+
+msgid "Timezone offset: UTC+{offset}"
+msgstr "タイムゾーンオフセット: UTC+{offset}"
+
+msgid "Default algorithm: {algo}"
+msgstr "デフォルトアルゴリズム: {algo}"
+
+msgid "Loaded {n} repo(s)"
+msgstr "リポジトリ {n} 個を読み込み"
+
+msgid "Total {n} unit(s)"
+msgstr "ユニット合計 {n}"
+
+msgid "Activated {n} unit(s)"
+msgstr "アクティブ {n} ユニット"
+
+msgid "Version {ver}-{stage}"
+msgstr "バージョン {ver}-{stage}"
+
+msgid "Processed {puzzles} puzzles in {time}s, accuracy {accuracy}, speed {speed} puzzle(s)/s"
+msgstr "{time} 秒で {puzzles} 問処理, 正解率 {accuracy}, 速度 {speed} 問/秒"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid ""
+"No repo directories found in {path}.\n"
+"Please import a repo and restart, or create a new one."
+msgstr ""
+"{path} にリポジトリが見つかりません。\n"
+"リポジトリをインポートして再起動するか、新規作成してください。"
+
+msgid "Start Learning"
+msgstr "学習開始"
+
+msgid ""
+"{title} [{algo}]\n"
+"  [d]Progress: {touched}/{total} ({pct}%)[/d]\n"
+"  [d]{status}[/d]"
+msgstr ""
+"{title} [{algo}]\n"
+"  [d]進捗: {touched}/{total} ({pct}%)[/d]\n"
+"  [d]{status}[/d]"
+
+msgid "Due: {review}R + {new}U"
+msgstr "期限: {review}R + {new}U"
+
+msgid "Not started: 0R + {new}U"
+msgstr "未開始: 0R + {new}U"
+
+msgid "Up to date"
+msgstr "最新"
+
+msgid "[b]About & Version Info[/b]"
+msgstr "[b]バージョン情報[/b]"
+
+msgid ""
+"# About HeurAMS\n"
+"\n"
+"Main library version: `{ver}-python`  \n"
+"UI frontend: `Textual TUI (Basic UI)`  \n"
+"UI version: `{ver}`  \n"
+"API codename: `{codename}`  \n"
+"\n"
+"> A heuristic auxiliary memorizing scheduler based on heuristic algorithms and cognitive science theories, designed to help users memorize and plan learning more efficiently.  \n"
+"> An open, elegant, and extensible spaced repetition scheduler experimental platform, designed to help researchers conduct investigations, experiments, and research on cutting-edge memory algorithms more efficiently.  \n"
+"\n"
+"You can visit the project homepage at https://ams.pluv27.top for user guides, development documentation and software updates, and participate in software development and improvement.  \n"
+"\n"
+"Open source under the GNU Affero General Public License (version 3), with an additional exemption clause for local API calls, used for other frontend to library interface calls.  \n"
+"\n"
+"You are using the built-in terminal user interface, which is the first full-featured frontend implementation and library test suite, located in the interface subdirectory of the library.  \n"
+"\n"
+"Developers:  \n"
+"- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): Project initiator and lead developer  \n"
+"\n"
+"Special thanks to the following individuals and groups; their algorithms and theories form the cornerstone of the current software algorithms:  \n"
+"\n"
+"- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 algorithm and SM-15 algorithm theory  \n"
+"- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS algorithm and spaced repetition theory references  \n"
+"- [Kazuaki Tanida](https://github.com/slaypni): CoffeeScript reverse implementation of SM-15 algorithm  \n"
+"- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS algorithm underlying implementation  \n"
+"\n"
+"# Runtime Environment\n"
+"\n"
+"Python interpreter version: {python_version}  \n"
+"Python interpreter path: {executable}  \n"
+"Textual framework version: {textual_version}  \n"
+"Terminal emulator: {terminal_info}  \n"
+"Operating system version: {os_version}  \n"
+"Disk free space: {disk_usage}  \n"
+"\n"
+"When reporting issues, please copy this information into the issue description and attach `heurams.log` as an attachment to help developers locate the error."
+msgstr ""
+"# HeurAMS について\n"
+"\n"
+"メインライブラリバージョン: `{ver}-python`  \n"
+"UI フロントエンド: `Textual TUI（基本 UI）`  \n"
+"UI バージョン: `{ver}`  \n"
+"API コードネーム: `{codename}`  \n"
+"\n"
+"> ヒューリスティックアルゴリズムと認知科学理論に基づく補助記憶スケジューラ。  \n"
+"> オープンで拡張可能な間隔反復実験プラットフォーム。  \n"
+"\n"
+"プロジェクトHP: https://ams.pluv27.top  \n"
+"\n"
+"GNU AGPL-3.0 で公開。ローカル API 呼び出しの例外条項付き。  \n"
+"\n"
+"開発者:  \n"
+"- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27))  \n"
+"\n"
+"謝辞:  \n"
+"- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2, SM-15  \n"
+"- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS  \n"
+"- [Kazuaki Tanida](https://github.com/slaypni): SM-15 CoffeeScript 実装  \n"
+"- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS 実装  \n"
+"\n"
+"# 実行環境\n"
+"\n"
+"Python: {python_version}  \n"
+"Python パス: {executable}  \n"
+"Textual: {textual_version}  \n"
+"端末: {terminal_info}  \n"
+"OS: {os_version}  \n"
+"空き容量: {disk_usage}  \n"
+"\n"
+"問題報告時はこの情報を添付してください。"
+
+msgid "Back to Main"
+msgstr "メインに戻る"
+
+msgid "Unknown"
+msgstr "不明"
+
+msgid "Requires a float"
+msgstr "浮動小数点数が必要"
+
+msgid "Requires a string"
+msgstr "文字列が必要"
+
+msgid "Requires an integer"
+msgstr "整数が必要"
+
+msgid "Unknown type"
+msgstr "不明な型"
+
+msgid "No sub-items"
+msgstr "サブ項目なし"
+
+msgid "Changes are saved immediately when you leave this page, but restart is recommended to ensure the new configuration is applied."
+msgstr "このページを離れると変更は即保存されますが、確実に適用するには再起動を推奨します。"
+
+msgid "Previous"
+msgstr "前へ"
+
+msgid "Read Aloud"
+msgstr "読み上げ"
+
+msgid "Favorite"
+msgstr "お気に入り"
+
+msgid "Learning"
+msgstr "学習中"
+
+msgid "Correct"
+msgstr "正解"
+
+msgid "Incorrect"
+msgstr "不正解"
+
+msgid "Failed to generate puzzle: {e}"
+msgstr "パズル生成失敗: {e}"
+
+msgid "Favorited"
+msgstr "お気に入り済み"
+
+msgid "Not favorited"
+msgstr "未お気に入り"
+
+msgid "Previous: {ident}"
+msgstr "前: {ident}"
+
+msgid "Are you sure? Press uppercase Q to go back."
+msgstr "よろしいですか？ 大文字 Q で戻ります。"
+
+msgid "Cannot favorite: no repo associated"
+msgstr "お気に入り不可: リポジトリが未関連"
+
+msgid "Unfavorited: {ident}"
+msgstr "お気に入り解除: {ident}"
+
+msgid "Favorited: {ident}"
+msgstr "お気に入り登録: {ident}"
+
+msgid "This function is not available during memorization. Please finish or go back first."
+msgstr "この機能は記憶中は使用できません。終了または戻ってからお試しください。"
+
+msgid "Time resume corrected: {old} -> {new}"
+msgstr "時間再開補正: {old} -> {new}"
+
+msgid " [Debug Connected]"
+msgstr " [デバッグ接続済]"
+
+msgid "Favorites"
+msgstr "お気に入り"
+
+msgid "No favorites"
+msgstr "お気に入りなし"
+
+msgid "Press * in the memorization screen to add favorites."
+msgstr "記憶画面で * キーを押すとお気に入りに追加。"
+
+msgid "Total {n} favorite(s)"
+msgstr "お気に入り合計 {n}"
+
+msgid ""
+"  [d]Added: {time}\n"
+"  From {title}[/d]"
+msgstr ""
+"  [d]追加: {time}\n"
+"  出典: {title}[/d]"
+
+msgid "Remove"
+msgstr "削除"
+
+msgid "Operation failed: invalid button identifier"
+msgstr "操作失敗: 無効なボタンID"
+
+msgid "Removed favorite: {ident}"
+msgstr "お気に入り削除: {ident}"
+
+msgid "Failed to remove: {ident}"
+msgstr "削除失敗: {ident}"
+
+msgid "Switch"
+msgstr "切替"
+
+msgid "Cache Manager"
+msgstr "キャッシュ管理"
+
+msgid "Settings Page"
+msgstr "設定ページ"
+
+msgid "Sync Tool"
+msgstr "同期ツール"
+
+msgid "Exit"
+msgstr "終了"
+
+msgid "Project Homepage"
+msgstr "プロジェクトHP"
+
+msgid ""
+"[b]Select a function to navigate to\n"
+"or a memorization session instance[/b]\n"
+"\n"
+"Tips will be displayed here"
+msgstr ""
+"[b]移動先の機能または\n"
+"記憶セッションを選択[/b]\n"
+"\n"
+"ヒントがここに表示されます"
+
+msgid ""
+"Press Enter to switch\n"
+"All sessions will be saved"
+msgstr ""
+"Enter で切替\n"
+"全セッションは保存されます"
+
+msgid "Close (n)"
+msgstr "閉じる (n)"
+
+msgid "Prepare Repository"
+msgstr "リポジトリ準備"
+
+msgid "Cache"
+msgstr "キャッシュ"
+
+msgid ""
+"**Ready**: `{title}`\n"
+""
+msgstr ""
+"**準備完了**: `{title}`\n"
+""
+
+msgid "Repo path: {path}"
+msgstr "リポジトリパス: {path}"
+
+msgid "Progress: {touched}/{total} [{pct}%]"
+msgstr "進捗: {touched}/{total} [{pct}%]"
+
+msgid "Scheduling algorithm: {algo} {desc}"
+msgstr "スケジュールアルゴリズム: {algo} {desc}"
+
+msgid ""
+"Study count: {total} = {review} [d][Review][/d] + {new} [d][New][/d]\n"
+""
+msgstr ""
+"学習数: {total} = {review} [d][復習][/d] + {new} [d][新規][/d]\n"
+""
+
+msgid "Start Memorizing"
+msgstr "記憶開始"
+
+msgid "Manage Cache"
+msgstr "キャッシュ管理"
+
+msgid "Sync protocol: {proto}"
+msgstr "同期プロトコル: {proto}"
+
+msgid "Server Configuration:"
+msgstr "サーバー設定:"
+
+msgid "Remote server:"
+msgstr "リモートサーバー:"
+
+msgid "Remote path:"
+msgstr "リモートパス:"
+
+msgid "Test Connection"
+msgstr "接続テスト"
+
+msgid "Start Sync"
+msgstr "同期開始"
+
+msgid "Pause"
+msgstr "一時停止"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Sync Progress"
+msgstr "同期進捗"
+
+msgid "Sync Log"
+msgstr "同期ログ"
+
+msgid "Not configured"
+msgstr "未設定"
+
+msgid "Sync service ready"
+msgstr "同期サービス準備完了"
+
+msgid "Sync service not configured or not enabled"
+msgstr "同期サービスが未設定または無効"
+
+msgid "Failed to update UI: {error}"
+msgstr "UI 更新失敗: {error}"
+
+msgid "Failed to update status: {error}"
+msgstr "ステータス更新失敗: {error}"
+
+msgid "Sync service not initialised, please check configuration"
+msgstr "同期サービスが未初期化。設定を確認してください。"
+
+msgid "Sync service not initialised"
+msgstr "同期サービス未初期化"
+
+msgid "Testing WebDAV connection..."
+msgstr "WebDAV 接続テスト中…"
+
+msgid "Testing connection..."
+msgstr "接続テスト中…"
+
+msgid "Connection test successful"
+msgstr "接続テスト成功"
+
+msgid "Connection OK"
+msgstr "接続正常"
+
+msgid "Connection test failed"
+msgstr "接続テスト失敗"
+
+msgid "Connection failed"
+msgstr "接続失敗"
+
+msgid "Connection test error: {error}"
+msgstr "接続テストエラー: {error}"
+
+msgid "Connection error"
+msgstr "接続エラー"
+
+msgid "Sync service not initialised, cannot start sync"
+msgstr "同期サービス未初期化のため開始不可"
+
+msgid "Sync already in progress"
+msgstr "同期は既に実行中"
+
+msgid "Starting data sync..."
+msgstr "データ同期開始…"
+
+msgid "Syncing..."
+msgstr "同期中…"
+
+msgid "Syncing nucleon directory: {dir}"
+msgstr "nucleon ディレクトリ同期中: {dir}"
+
+msgid "Syncing electron directory: {dir}"
+msgstr "electron ディレクトリ同期中: {dir}"
+
+msgid "Syncing orbital directory: {dir}"
+msgstr "orbital ディレクトリ同期中: {dir}"
+
+msgid "nucleon sync complete: uploaded {up}, downloaded {down}"
+msgstr "nucleon 同期完了: アップロード {up}, ダウンロード {down}"
+
+msgid "electron sync complete: uploaded {up}, downloaded {down}"
+msgstr "electron 同期完了: アップロード {up}, ダウンロード {down}"
+
+msgid "orbital sync complete: uploaded {up}, downloaded {down}"
+msgstr "orbital 同期完了: アップロード {up}, ダウンロード {down}"
+
+msgid "Sync complete"
+msgstr "同期完了"
+
+msgid "All directories synced"
+msgstr "全ディレクトリ同期完了"
+
+msgid "Error during sync: {error}"
+msgstr "同期エラー: {error}"
+
+msgid "Sync failed"
+msgstr "同期失敗"
+
+msgid "Sync paused"
+msgstr "同期一時停止"
+
+msgid "Sync resumed"
+msgstr "同期再開"
+
+msgid "Sync cancelled"
+msgstr "同期キャンセル"
+
+msgid "Resume"
+msgstr "再開"
+
+msgid "Failed to update button state: {error}"
+msgstr "ボタン状態更新失敗: {error}"
+
+msgid "Unknown error"
+msgstr "不明なエラー"
+
+msgid "[b]Audio Pre-cache[/b]"
+msgstr "[b]音声プリキャッシュ[/b]"
+
+msgid "Cache rate: {rate:.1f}% ({cached} / {total} units)"
+msgstr "キャッシュ率: {rate:.1f}% ({cached} / {total} ユニット)"
+
+msgid "Target units from: [b]{desc}[/b]"
+msgstr "対象ユニット: [b]{desc}[/b]"
+
+msgid "Unit count: {n}"
+msgstr "ユニット数: {n}"
+
+msgid "Target: all units"
+msgstr "対象: 全ユニット"
+
+msgid "Start Pre-cache"
+msgstr "プリキャッシュ開始"
+
+msgid "Cancel Pre-cache"
+msgstr "プリキャッシュ中止"
+
+msgid "Clear Cache"
+msgstr "キャッシュ消去"
+
+msgid "Cache path: {path}"
+msgstr "キャッシュパス: {path}"
+
+msgid "Files: {n}"
+msgstr "ファイル数: {n}"
+
+msgid "Total size: {size}"
+msgstr "合計サイズ: {size}"
+
+msgid "Refresh"
+msgstr "更新"
+
+msgid "If you leave this screen, ongoing cache processes will stop automatically."
+msgstr "この画面を離れるとキャッシュ処理は自動停止します。"
+
+msgid "Cache supports \"resume from break\"."
+msgstr "中断再開に対応しています。"
+
+msgid "Ready"
+msgstr "準備完了"
+
+msgid "Waiting to start..."
+msgstr "開始待機中…"
+
+msgid "Status: {s}"
+msgstr "ステータス: {s}"
+
+msgid "Current item: {item}"
+msgstr "現在の項目: {item}"
+
+msgid "Processing ({i}/{total})"
+msgstr "処理中 ({i}/{total})"
+
+msgid "Error"
+msgstr "エラー"
+
+msgid "Failed, skipping: {item}"
+msgstr "失敗、スキップ: {item}"
+
+msgid "Cancelled"
+msgstr "キャンセル済"
+
+msgid "Pre-cache cancelled by user"
+msgstr "ユーザーがプリキャッシュをキャンセル"
+
+msgid "Cleared"
+msgstr "消去済"
+
+msgid "Audio cache cleared"
+msgstr "音声キャッシュ消去済"
+
+msgid "Failed to clear cache: {error}"
+msgstr "キャッシュ消去失敗: {error}"
+
+msgid "Cache info refreshed"
+msgstr "キャッシュ情報更新完了"
+
+msgid "This memorization session is finished"
+msgstr "記憶セッション終了"
+
+msgid "Algorithm data {}"
+msgstr "アルゴリズムデータ{}"
+
+msgid "saved"
+msgstr "保存済"
+
+msgid "not saved"
+msgstr "未保存"
+
+msgid "Back to Menu"
+msgstr "メニューに戻る"
+
+msgid "Perfect recall"
+msgstr "完全に想起"
+
+msgid "Correct after hesitation"
+msgstr "ためらい後正解"
+
+msgid "Correct with difficulty"
+msgstr "困難だが正解"
+
+msgid "Wrong but familiar"
+msgstr "間違えたが見覚えあり"
+
+msgid "Wrong and unfamiliar"
+msgstr "間違えて見覚えなし"
+
+msgid "Complete blank"
+msgstr "まったく想起不可"
+
+msgid "Evaluate how well you remember this content: "
+msgstr "この内容の記憶程度を評価: "
+
+msgid "### Note: {note}"
+msgstr "### メモ: {note}"
+
+msgid "I know this"
+msgstr "分かっています"
+
+msgid "Current input: {input}"
+msgstr "現在の入力: {input}"
+
+msgid "Backspace"
+msgstr "BS"
+
+msgid "Sample Label"
+msgstr "サンプルラベル"
+
+msgid "Sample Button"
+msgstr "サンプルボタン"

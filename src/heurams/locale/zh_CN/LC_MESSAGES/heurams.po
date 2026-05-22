@@ -1,0 +1,679 @@
+# Chinese (Simplified) Language Pack for HeurAMS.
+# Copyright (C) 2026 Wang Zhiyu
+# This file is distributed under the same license as the HeurAMS project.
+# Wang Zhiyu <pluvium27@outlook.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: heurams 0.5.1\n"
+"Report-Msgid-Bugs-To: https://github.com/pluvium27/HeurAMS/issues\n"
+"POT-Creation-Date: 2026-05-21 00:00+0000\n"
+"PO-Revision-Date: 2026-05-21 00:00+0000\n"
+"Last-Translator: Wang Zhiyu <pluvium27@outlook.com>\n"
+"Language-Team: Chinese (Simplified) <pluvium27@outlook.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Welcome to the basic user interface!"
+msgstr "欢迎使用基本用户界面!"
+
+msgid "Loading config and context... "
+msgstr "加载配置与上下文... "
+
+msgid "Done! ({time}ms)"
+msgstr "已完成! (耗时: {time}ms)"
+
+msgid "Loading UI framework... "
+msgstr "加载用户界面框架... "
+
+msgid "Loading UI layout... "
+msgstr "加载用户界面布局... "
+
+msgid "Component directory: {path}"
+msgstr "组件目录: {path}"
+
+msgid "Working directory: {path}"
+msgstr "工作目录: {path}"
+
+msgid "Pre-work total: {time}ms"
+msgstr "前置工作共计耗时: {time}ms"
+
+msgid "Heuristic Auxiliary Memorizing Scheduler"
+msgstr "启发式辅助记忆调度器"
+
+msgid "Quit"
+msgstr "退出"
+
+msgid "Theme"
+msgstr "主题"
+
+msgid "Navigate"
+msgstr "导航"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "About"
+msgstr "关于"
+
+msgid "HeurAMS {ver} - Heuristic Auxiliary Memorizing Scheduler"
+msgstr "HeurAMS {ver} - 启发式辅助记忆调度器"
+
+msgid "Listening address"
+msgstr "监听地址"
+
+msgid "Listening port"
+msgstr "监听端口"
+
+msgid "Development mode hot reload"
+msgstr "开发模式热重载"
+
+msgid "Show this help message"
+msgstr "显示此帮助信息"
+
+msgid "unifront API service started: http://{host}:{port}"
+msgstr "unifront API 服务启动: http://{host}:{port}"
+
+msgid "Show the version and exit."
+msgstr "显示版本并退出."
+
+msgid "Explicitly specify locale (defaults to LANG env)."
+msgstr "显式指定语言 (默认使用 LANG 环境变量)."
+
+msgid "Launch the built-in user interface (TUI)"
+msgstr "启动内置基本用户界面 (TUI)"
+
+msgid "Launch the API service (unifront)"
+msgstr "启动 API 服务 (unifront)"
+
+msgid "Dashboard"
+msgstr "仪表盘"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Current daystamp: {ds}"
+msgstr "当前日时间戳: {ds}"
+
+msgid "Timezone offset: UTC+{offset}"
+msgstr "应用时区修正: UTC+{offset}"
+
+msgid "Default algorithm: {algo}"
+msgstr "默认算法设置: {algo}"
+
+msgid "Loaded {n} repo(s)"
+msgstr "已加载 {n} 个单元集"
+
+msgid "Total {n} unit(s)"
+msgstr "共计 {n} 个单元"
+
+msgid "Activated {n} unit(s)"
+msgstr "已激活 {n} 个单元"
+
+msgid "Version {ver}-{stage}"
+msgstr "版本 {ver}-{stage}"
+
+msgid "Processed {puzzles} puzzles in {time}s, accuracy {accuracy}, speed {speed} puzzle(s)/s"
+msgstr "在 {time} 秒内处理了 {puzzles} 个谜题, 正确率 {accuracy}, 平均速度 {speed} 个/秒"
+
+msgid "N/A"
+msgstr "无法求解"
+
+msgid ""
+"No repo directories found in {path}.\n"
+"Please import a repo and restart, or create a new one."
+msgstr ""
+"在 {path} 中未找到任何单元集仓库目录.\n"
+"请导入单元集后重启应用, 或者新建单元集."
+
+msgid "Start Learning"
+msgstr "开始学习"
+
+msgid ""
+"{title} [{algo}]\n"
+"  [d]Progress: {touched}/{total} ({pct}%)[/d]\n"
+"  [d]{status}[/d]"
+msgstr ""
+"{title} [{algo}]\n"
+"  [d]进度: {touched}/{total} ({pct}%)[/d]\n"
+"  [d]{status}[/d]"
+
+msgid "Due: {review}R + {new}U"
+msgstr "需要学习: {review}R + {new}U"
+
+msgid "Not started: 0R + {new}U"
+msgstr "暂未开始: 0R + {new}U"
+
+msgid "Up to date"
+msgstr "无需操作"
+
+msgid "[b]About & Version Info[/b]"
+msgstr "[b]关于与版本信息[/b]"
+
+msgid ""
+"# About HeurAMS\n"
+"\n"
+"Main library version: `{ver}-python`  \n"
+"UI frontend: `Textual TUI (Basic UI)`  \n"
+"UI version: `{ver}`  \n"
+"API codename: `{codename}`  \n"
+"\n"
+"> A heuristic auxiliary memorizing scheduler based on heuristic algorithms and cognitive science theories, designed to help users memorize and plan learning more efficiently.  \n"
+"> An open, elegant, and extensible spaced repetition scheduler experimental platform, designed to help researchers conduct investigations, experiments, and research on cutting-edge memory algorithms more efficiently.  \n"
+"\n"
+"You can visit the project homepage at https://ams.pluv27.top for user guides, development documentation and software updates, and participate in software development and improvement.  \n"
+"\n"
+"Open source under the GNU Affero General Public License (version 3), with an additional exemption clause for local API calls, used for other frontend to library interface calls.  \n"
+"\n"
+"You are using the built-in terminal user interface, which is the first full-featured frontend implementation and library test suite, located in the interface subdirectory of the library.  \n"
+"\n"
+"Developers:  \n"
+"- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): Project initiator and lead developer  \n"
+"\n"
+"Special thanks to the following individuals and groups; their algorithms and theories form the cornerstone of the current software algorithms:  \n"
+"\n"
+"- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 algorithm and SM-15 algorithm theory  \n"
+"- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS algorithm and spaced repetition theory references  \n"
+"- [Kazuaki Tanida](https://github.com/slaypni): CoffeeScript reverse implementation of SM-15 algorithm  \n"
+"- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS algorithm underlying implementation  \n"
+"\n"
+"# Runtime Environment\n"
+"\n"
+"Python interpreter version: {python_version}  \n"
+"Python interpreter path: {executable}  \n"
+"Textual framework version: {textual_version}  \n"
+"Terminal emulator: {terminal_info}  \n"
+"Operating system version: {os_version}  \n"
+"Disk free space: {disk_usage}  \n"
+"\n"
+"When reporting issues, please copy this information into the issue description and attach `heurams.log` as an attachment to help developers locate the error."
+msgstr ""
+"# 关于 HeurAMS\n"
+"\n"
+"主程序库版本: `{ver}-python`  \n"
+"用户界面分支: `Textual TUI (基本用户界面)`  \n"
+"用户界面版本: `{ver}`  \n"
+"API 版本代号: `{codename}`  \n"
+"\n"
+"> 一个基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  \n"
+"> 一个开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  \n"
+"\n"
+"您可在项目主页 https://ams.pluv27.top 获取用户指南, 开发文档与软件更新, 并参与到软件的开发与改进工作.  \n"
+"\n"
+"以 GNU Affero 通用公共许可证 (第3版) 开放源代码, 并有一条豁免本机 API 调用的附加条款, 用于其他前端到程序库的接口调用.  \n"
+"\n"
+"您正使用程序库内置的终端用户界面, 它是第一个全功能前端实现与程序库测试套件, 位于程序库的 interface 子目录.  \n"
+"\n"
+"开发人员列表:  \n"
+"- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): 项目发起与主要开发者  \n"
+"\n"
+"感谢以下人士与团体, 他们的算法与理论构成了此软件现有算法的基石:  \n"
+"\n"
+"- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论  \n"
+"- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS 算法与间隔重复理论文献参考  \n"
+"- [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 逆向实现  \n"
+"- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS 算法底层实现  \n"
+"\n"
+"# 运行环境信息\n"
+"\n"
+"Python 解释器版本: {python_version}  \n"
+"Python 解释器路径: {executable}  \n"
+"Textual 框架版本: {textual_version}  \n"
+"终端模拟器: {terminal_info}  \n"
+"操作系统版本: {os_version}  \n"
+"存储余量: {disk_usage}  \n"
+"\n"
+"报告问题时, 请复制这些信息到问题描述, 并上传软件日志 `heurams.log` 作为附件, 以协助开发者定位错误."
+
+msgid "Back to Main"
+msgstr "返回主界面"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "Requires a float"
+msgstr "要求一个浮点数"
+
+msgid "Requires a string"
+msgstr "要求一个字符串"
+
+msgid "Requires an integer"
+msgstr "要求一个整数"
+
+msgid "Unknown type"
+msgstr "未知类型"
+
+msgid "No sub-items"
+msgstr "无子项"
+
+msgid "Changes are saved immediately when you leave this page, but restart is recommended to ensure the new configuration is applied."
+msgstr "退出页面时, 所作的更改会立即保存, 但仍建议重启软件以确保新的配置得到应用."
+
+msgid "Previous"
+msgstr "查看上一个"
+
+msgid "Read Aloud"
+msgstr "朗读"
+
+msgid "Favorite"
+msgstr "收藏"
+
+msgid "Learning"
+msgstr "学习中"
+
+msgid "Correct"
+msgstr "正确应答"
+
+msgid "Incorrect"
+msgstr "错误应答"
+
+msgid "Failed to generate puzzle: {e}"
+msgstr "无法生成谜题: {e}"
+
+msgid "Favorited"
+msgstr "已收藏"
+
+msgid "Not favorited"
+msgstr "未收藏"
+
+msgid "Previous: {ident}"
+msgstr "上一个: {ident}"
+
+msgid "Are you sure? Press uppercase Q to go back."
+msgstr "确定吗? 按下大写 Q 以返回."
+
+msgid "Cannot favorite: no repo associated"
+msgstr "无法收藏: 未关联仓库"
+
+msgid "Unfavorited: {ident}"
+msgstr "已取消收藏: {ident}"
+
+msgid "Favorited: {ident}"
+msgstr "已收藏: {ident}"
+
+msgid "This function is not available during memorization. Please finish or go back first."
+msgstr "功能在记忆界面中不可用, 完成或返回后再试."
+
+msgid "Time resume corrected: {old} -> {new}"
+msgstr "时间恢复已修正: {old} -> {new}"
+
+msgid " [Debug Connected]"
+msgstr " [调试已连接]"
+
+msgid "Favorites"
+msgstr "收藏夹"
+
+msgid "No favorites"
+msgstr "暂无收藏"
+
+msgid "Press * in the memorization screen to add favorites."
+msgstr "使用 * 键在记忆界面中添加收藏."
+
+msgid "Total {n} favorite(s)"
+msgstr "共 {n} 个收藏项"
+
+msgid ""
+"  [d]Added: {time}\n"
+"  From {title}[/d]"
+msgstr ""
+"  [d]添加于: {time}\n"
+"  来自 {title}[/d]"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Operation failed: invalid button identifier"
+msgstr "操作失败: 无效的按钮标识"
+
+msgid "Removed favorite: {ident}"
+msgstr "已移除收藏: {ident}"
+
+msgid "Failed to remove: {ident}"
+msgstr "移除失败: {ident}"
+
+msgid "Switch"
+msgstr "切换"
+
+msgid "Cache Manager"
+msgstr "缓存管理器"
+
+msgid "Settings Page"
+msgstr "设置页面"
+
+msgid "Sync Tool"
+msgstr "同步工具"
+
+msgid "Exit"
+msgstr "退出程序"
+
+msgid "Project Homepage"
+msgstr "项目主页"
+
+msgid ""
+"[b]Select a function to navigate to\n"
+"or a memorization session instance[/b]\n"
+"\n"
+"Tips will be displayed here"
+msgstr ""
+"[b]请选择要跳转的功能\n"
+"或记忆会话实例[/b]\n"
+"\n"
+"将在此处显示提示"
+
+msgid ""
+"Press Enter to switch\n"
+"All sessions will be saved"
+msgstr ""
+"按下回车以完成切换\n"
+"所有会话将被保存"
+
+msgid "Close (n)"
+msgstr "关闭 (n)"
+
+msgid "Prepare Repository"
+msgstr "准备记忆集"
+
+msgid "Cache"
+msgstr "缓存"
+
+msgid ""
+"**Ready**: `{title}`\n"
+""
+msgstr ""
+"**准备就绪**: `{title}`\n"
+""
+
+msgid "Repo path: {path}"
+msgstr "单元集路径: {path}"
+
+msgid "Progress: {touched}/{total} [{pct}%]"
+msgstr "学习完成度: {touched}/{total} [{pct}%]"
+
+msgid "Scheduling algorithm: {algo} {desc}"
+msgstr "调度算法: {algo} {desc}"
+
+msgid ""
+"Study count: {total} = {review} [d][Review][/d] + {new} [d][New][/d]\n"
+""
+msgstr ""
+"学习数量: {total} = {review} [d][复习][/d] + {new} [d][新识记][/d]\n"
+""
+
+msgid "Start Memorizing"
+msgstr "开始记忆"
+
+msgid "Manage Cache"
+msgstr "管理缓存"
+
+msgid "Sync protocol: {proto}"
+msgstr "同步协议: {proto}"
+
+msgid "Server Configuration:"
+msgstr "服务器配置:"
+
+msgid "Remote server:"
+msgstr "远程服务器:"
+
+msgid "Remote path:"
+msgstr "远程路径:"
+
+msgid "Test Connection"
+msgstr "测试连接"
+
+msgid "Start Sync"
+msgstr "开始同步"
+
+msgid "Pause"
+msgstr "暂停"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Sync Progress"
+msgstr "同步进度"
+
+msgid "Sync Log"
+msgstr "同步日志"
+
+msgid "Not configured"
+msgstr "未配置"
+
+msgid "Sync service ready"
+msgstr "同步服务已就绪"
+
+msgid "Sync service not configured or not enabled"
+msgstr "同步服务未配置或未启用"
+
+msgid "Failed to update UI: {error}"
+msgstr "更新 UI 失败: {error}"
+
+msgid "Failed to update status: {error}"
+msgstr "更新状态失败: {error}"
+
+msgid "Sync service not initialised, please check configuration"
+msgstr "同步服务未初始化, 请检查配置"
+
+msgid "Sync service not initialised"
+msgstr "同步服务未初始化"
+
+msgid "Testing WebDAV connection..."
+msgstr "正在测试 WebDAV 连接..."
+
+msgid "Testing connection..."
+msgstr "正在测试连接..."
+
+msgid "Connection test successful"
+msgstr "连接测试成功"
+
+msgid "Connection OK"
+msgstr "连接正常"
+
+msgid "Connection test failed"
+msgstr "连接测试失败"
+
+msgid "Connection failed"
+msgstr "连接失败"
+
+msgid "Connection test error: {error}"
+msgstr "连接测试异常: {error}"
+
+msgid "Connection error"
+msgstr "连接异常"
+
+msgid "Sync service not initialised, cannot start sync"
+msgstr "同步服务未初始化, 无法开始同步"
+
+msgid "Sync already in progress"
+msgstr "同步已在进行中"
+
+msgid "Starting data sync..."
+msgstr "开始同步数据..."
+
+msgid "Syncing..."
+msgstr "正在同步..."
+
+msgid "Syncing nucleon directory: {dir}"
+msgstr "同步 nucleon 目录: {dir}"
+
+msgid "Syncing electron directory: {dir}"
+msgstr "同步 electron 目录: {dir}"
+
+msgid "Syncing orbital directory: {dir}"
+msgstr "同步 orbital 目录: {dir}"
+
+msgid "nucleon sync complete: uploaded {up}, downloaded {down}"
+msgstr "nucleon 同步完成: 上传 {up} 个, 下载 {down} 个"
+
+msgid "electron sync complete: uploaded {up}, downloaded {down}"
+msgstr "electron 同步完成: 上传 {up} 个, 下载 {down} 个"
+
+msgid "orbital sync complete: uploaded {up}, downloaded {down}"
+msgstr "orbital 同步完成: 上传 {up} 个, 下载 {down} 个"
+
+msgid "Sync complete"
+msgstr "同步完成"
+
+msgid "All directories synced"
+msgstr "所有目录同步完成"
+
+msgid "Error during sync: {error}"
+msgstr "同步过程中发生错误: {error}"
+
+msgid "Sync failed"
+msgstr "同步失败"
+
+msgid "Sync paused"
+msgstr "同步已暂停"
+
+msgid "Sync resumed"
+msgstr "同步已恢复"
+
+msgid "Sync cancelled"
+msgstr "同步已取消"
+
+msgid "Resume"
+msgstr "继续"
+
+msgid "Failed to update button state: {error}"
+msgstr "更新按钮状态失败: {error}"
+
+msgid "Unknown error"
+msgstr "未知错误"
+
+msgid "[b]Audio Pre-cache[/b]"
+msgstr "[b]音频预缓存[/b]"
+
+msgid "Cache rate: {rate:.1f}% ({cached} / {total} units)"
+msgstr "缓存率: {rate:.1f}% (已缓存 {cached} / {total} 个单元)"
+
+msgid "Target units from: [b]{desc}[/b]"
+msgstr "目标单元归属: [b]{desc}[/b]"
+
+msgid "Unit count: {n}"
+msgstr "单元数量: {n}"
+
+msgid "Target: all units"
+msgstr "目标: 所有单元"
+
+msgid "Start Pre-cache"
+msgstr "开始预缓存"
+
+msgid "Cancel Pre-cache"
+msgstr "取消预缓存"
+
+msgid "Clear Cache"
+msgstr "清空缓存"
+
+msgid "Cache path: {path}"
+msgstr "缓存路径: {path}"
+
+msgid "Files: {n}"
+msgstr "文件数: {n}"
+
+msgid "Total size: {size}"
+msgstr "总大小: {size}"
+
+msgid "Refresh"
+msgstr "刷新"
+
+msgid "If you leave this screen, ongoing cache processes will stop automatically."
+msgstr "若您离开此界面, 未完成的缓存进程会自动停止."
+
+msgid "Cache supports \"resume from break\"."
+msgstr "缓存程序支持 [断点续传]."
+
+msgid "Ready"
+msgstr "就绪"
+
+msgid "Waiting to start..."
+msgstr "等待开始..."
+
+msgid "Status: {s}"
+msgstr "状态: {s}"
+
+msgid "Current item: {item}"
+msgstr "当前项目: {item}"
+
+msgid "Processing ({i}/{total})"
+msgstr "正处理 ({i}/{total})"
+
+msgid "Error"
+msgstr "出错"
+
+msgid "Failed, skipping: {item}"
+msgstr "处理失败, 已跳过: {item}"
+
+msgid "Cancelled"
+msgstr "已取消"
+
+msgid "Pre-cache cancelled by user"
+msgstr "预缓存操作被用户取消"
+
+msgid "Cleared"
+msgstr "已清空"
+
+msgid "Audio cache cleared"
+msgstr "音频缓存已清空"
+
+msgid "Failed to clear cache: {error}"
+msgstr "清空缓存失败: {error}"
+
+msgid "Cache info refreshed"
+msgstr "缓存信息已刷新"
+
+msgid "This memorization session is finished"
+msgstr "本次记忆进程结束"
+
+msgid "Algorithm data {}"
+msgstr "算法数据{}"
+
+msgid "saved"
+msgstr "已保存"
+
+msgid "not saved"
+msgstr "未能保存"
+
+msgid "Back to Menu"
+msgstr "返回上一级"
+
+msgid "Perfect recall"
+msgstr "完美回想"
+
+msgid "Correct after hesitation"
+msgstr "犹豫后正确"
+
+msgid "Correct with difficulty"
+msgstr "困难地正确"
+
+msgid "Wrong but familiar"
+msgstr "错误但熟悉"
+
+msgid "Wrong and unfamiliar"
+msgstr "错误且不熟"
+
+msgid "Complete blank"
+msgstr "完全空白"
+
+msgid "Evaluate how well you remember this content: "
+msgstr "请评估你对这个内容的记忆程度: "
+
+msgid "### Note: {note}"
+msgstr "### 笔记: {note}"
+
+msgid "I know this"
+msgstr "我已知晓"
+
+msgid "Current input: {input}"
+msgstr "当前输入: {input}"
+
+msgid "Backspace"
+msgstr "退格"
+
+msgid "Sample Label"
+msgstr "示例标签"
+
+msgid "Sample Button"
+msgstr "示例按钮"

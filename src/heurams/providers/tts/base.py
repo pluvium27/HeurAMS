@@ -12,5 +12,5 @@ class BaseTTS:
     def convert(cls, text: str, path: pathlib.Path | str = "") -> pathlib.Path:
         """path 是可选参数, 不填则自动返回生成文件路径"""
         logger.debug("BaseTTS.convert: text length=%d, path=%s", len(text), path)
-        logger.warning("BaseTTS.convert 是基类方法, 未实现具体功能")
+        logger.warning("BaseTTS.convert is not a functional implementation")
         return path  # type: ignore

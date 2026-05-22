@@ -15,4 +15,4 @@ providers = {
     "edgetts": EdgeTTS,
 }
 
-logger.debug("TTS providers 已注册: %s", list(providers.keys()))
+logger.debug("TTS providers registered: %s", list(providers.keys()))

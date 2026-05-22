@@ -1,4 +1,4 @@
-"""关于界面"""
+"""About screen"""
 
 from textual.app import ComposeResult
 from textual.containers import ScrollableContainer
@@ -8,6 +8,7 @@ from textual import events, on
 
 import heurams.services.version as version
 from heurams.context import *
+from heurams.i18n import _
 import platform
 import shutil
 import os
@@ -16,10 +17,10 @@ import sys
 
 class AboutScreen(Screen):
     BINDINGS = [
-        ("q", "go_back", "返回"),
-        ("z", "go_back", "关于"),
+        ("q", "go_back", _("Back")),
+        ("z", "go_back", _("About")),
     ]
-    SUB_TITLE = "关于"
+    SUB_TITLE = _("About")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,55 +38,64 @@ class AboutScreen(Screen):
                 show_clock=config_var.get()["interface"]["global"]["clock_on_header"]
             )
         with ScrollableContainer(id="about_container"):
-            yield Label("[b]关于与版本信息[/b]")
-            # 获取系统信息
+            yield Label(_("[b]About & Version Info[/b]"))
+            # Get system info
             textual_version = self._get_textual_version()
             terminal_info = self._get_terminal_info()
             python_version = self._get_python_version()
             os_version = self._get_os_version()
             disk_usage = self._get_disk_usage()
 
-            about_text = f"""
-# 关于 HeurAMS "潜进"  
+            about_text = _(
+                """# About HeurAMS
 
-主程序库版本: `{version.ver}-python`  
-用户界面分支: `Textual TUI (基本用户界面)`  
-用户界面版本: `{version.ver}`  
-API 版本代号: `{version.codename.capitalize()}`
+Main library version: `{ver}-python`  
+UI frontend: `Textual TUI (Basic UI)`  
+UI version: `{ver}`  
+API codename: `{codename}`  
 
-> 一个基于启发式算法与认知科学理论的辅助记忆调度器, 旨在帮助用户更高效地进行记忆工作与学习规划.  
-> 一个开放, 优雅, 易于扩展的间隔重复调度器实验平台, 旨在帮助研究者更高效地进行前沿记忆算法的研究.  
+> A heuristic auxiliary memorizing scheduler based on heuristic algorithms and cognitive science theories, designed to help users memorize and plan learning more efficiently.  
+> An open, elegant, and extensible spaced repetition scheduler experimental platform, designed to help researchers conduct investigations, experiments, and research on cutting-edge memory algorithms more efficiently.  
 
-您可在项目主页 https://ams.pluv27.top 获取用户指南, 开发文档与软件更新, 并参与到软件的开发与改进工作.  
+You can visit the project homepage at https://ams.pluv27.top for user guides, development documentation and software updates, and participate in software development and improvement.  
 
-以 GNU Affero 通用公共许可证 (第3版) 开放源代码, 并有一条豁免本机 API 调用的附加条款, 用于其他前端到程序库的接口调用.  
+Open source under the GNU Affero General Public License (version 3), with an additional exemption clause for local API calls, used for other frontend to library interface calls.  
 
-您正使用程序库内置的终端用户界面, 它是第一个全功能前端实现与程序库测试套件, 位于程序库的 interface 子目录.  
+You are using the built-in terminal user interface, which is the first full-featured frontend implementation and library test suite, located in the interface subdirectory of the library.  
 
-开发人员列表:
-- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): 项目发起与主要开发者  
+Developers:  
+- Wang Zhiyu ([@pluvium27](https://github.com/pluvium27)): Project initiator and lead developer  
 
-感谢以下人士与团体, 他们的算法与理论构成了此软件现有算法的基石:  
+Special thanks to the following individuals and groups; their algorithms and theories form the cornerstone of the current software algorithms:  
 
-- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 算法与 SM-15 算法理论
-- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS 算法与间隔重复理论文献参考
-- [Kazuaki Tanida](https://github.com/slaypni): SM-15 算法的 CoffeeScript 逆向实现
-- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS 算法底层实现
+- [Piotr A. Woźniak](https://supermemo.guru/wiki/Piotr_Wozniak): SM-2 algorithm and SM-15 algorithm theory  
+- [Jarrett Ye](https://github.com/L-M-Sherlock): FSRS algorithm and spaced repetition theory references  
+- [Kazuaki Tanida](https://github.com/slaypni): CoffeeScript reverse implementation of SM-15 algorithm  
+- [Open Spaced Repetition](https://github.com/open-spaced-repetition): FSRS algorithm underlying implementation  
 
-# 运行环境信息
+# Runtime Environment
 
-Python 解释器版本: {python_version}  
-Python 解释器路径: {sys.executable}  
-Textual 框架版本: {textual_version}  
-终端模拟器: {terminal_info}  
-操作系统版本: {os_version}  
-存储余量: {disk_usage}  
+Python interpreter version: {python_version}  
+Python interpreter path: {executable}  
+Textual framework version: {textual_version}  
+Terminal emulator: {terminal_info}  
+Operating system version: {os_version}  
+Disk free space: {disk_usage}  
 
-报告问题时, 请复制这些信息到问题描述, 并上传软件日志 `heurams.log` 作为附件, 以协助开发者定位错误  
-"""
+When reporting issues, please copy this information into the issue description and attach `heurams.log` as an attachment to help developers locate the error."""
+            ).format(
+                ver=version.ver,
+                codename=version.codename.capitalize(),
+                python_version=python_version,
+                executable=sys.executable,
+                textual_version=textual_version,
+                terminal_info=terminal_info,
+                os_version=os_version,
+                disk_usage=disk_usage,
+            )
             yield Markdown(about_text, classes="about-markdown")
             yield Button(
-                "返回主界面",
+                _("Back to Main"),
                 id="back_button",
                 variant="primary",
                 flat=True,
@@ -102,22 +112,20 @@ Textual 框架版本: {textual_version}
             self.action_go_back()
 
     def _get_textual_version(self) -> str:
-        """获取 Textual 框架版本"""
         try:
             import textual
 
             return textual.__version__
         except (ImportError, AttributeError):
-            return "未知"
+            return _("Unknown")
 
     def _get_terminal_info(self) -> str:
-        """获取终端模拟器信息"""
         terminal = shutil.which("terminal")
         if terminal:
             return terminal
-        # 尝试从环境变量获取
+        # Try from environment variables
         terminal_env = os.environ.get("TERM_PROGRAM") or os.environ.get("TERM")
-        return terminal_env or "未知"
+        return terminal_env or _("Unknown")
 
     def _get_python_version(self) -> str:
         """获取 Python 解释器版本"""

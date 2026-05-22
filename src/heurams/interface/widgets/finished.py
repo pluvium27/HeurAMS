@@ -1,6 +1,8 @@
 from textual.widget import Widget
 from textual.widgets import Button, Label
 
+from heurams.i18n import _
+
 
 class Finished(Widget):
     def __init__(
@@ -26,9 +28,9 @@ class Finished(Widget):
         )
 
     def compose(self):
-        yield Label("本次记忆进程结束", id="finished_msg")
-        yield Label(f"算法数据{'已保存' if self.is_saved else "未能保存"}")
-        yield Button("返回上一级", flat=True, id="back-to-menu")
+        yield Label(_("This memorization session is finished"), id="finished_msg")
+        yield Label(_("Algorithm data {}").format(_("saved") if self.is_saved else _("not saved")))
+        yield Button(_("Back to Menu"), flat=True, id="back-to-menu")
 
     def on_button_pressed(self, event):
         button_id = event.button.id

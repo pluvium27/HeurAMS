@@ -10,6 +10,7 @@ from textual.events import Key
 import heurams.kernel.particles as pt
 import heurams.kernel.puzzles as pz
 from heurams.services.hasher import hash
+from heurams.i18n import _
 from heurams.services.logger import get_logger
 
 from .base_puzzle_widget import BasePuzzleWidget
@@ -79,7 +80,6 @@ class ClozePuzzle(BasePuzzleWidget):
                 c += 1
                 self.hashmap[h] = i
                 btnid = f"sel000-{h}"
-                logger.debug(f"建立按钮 {btnid}")
                 self.btn_shortcuts[f"{c}"] = btnid
                 btns.append(Button(f"{i}", id=f"{btnid}", classes="cloze-option-btn"))
             for i in range((len(btns) + 1) // 2):
@@ -89,7 +89,7 @@ class ClozePuzzle(BasePuzzleWidget):
                     yield btns[i]
             s.focus()
 
-        yield Button("退格", id="delete")
+        yield Button(_("Backspace"), id="delete")
         self.btn_shortcuts[f"0"] = "delete"
         self.btn_shortcuts[f"backspace"] = "delete"
         self.btn_shortcuts[f"delete"] = "delete"

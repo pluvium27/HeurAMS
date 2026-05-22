@@ -33,7 +33,7 @@ def _get_global_scheduler():
             with open(_SCHEDULER_STATE_FILE, "r", encoding="utf-8") as f:
                 return Scheduler.from_json(f.read())
         except Exception:
-            logger.warning("FSRS Scheduler 状态文件加载失败, 创建新实例")
+            logger.warning("No former FSRS Scheduler file founded, creating new instance")
     return Scheduler()
 
 
@@ -45,7 +45,7 @@ def _save_global_scheduler(scheduler):
         with open(_SCHEDULER_STATE_FILE, "w", encoding="utf-8") as f:
             f.write(data)
     except Exception:
-        logger.exception("FSRS Scheduler 状态保存失败")
+        logger.error("Failed to persist FSRS Scheduler state")
 
 
 def _feedback_to_rating(feedback: int) -> Rating:
@@ -176,14 +176,9 @@ class FSRSAlgorithm(BaseAlgorithm):
             feedback (int): 0-5 的记忆保留率量化参数
             is_new_activation: 是否为全新激活（重置为初始状态）
         """
-        logger.debug(
-            "FSRS.revisor 开始, feedback: %d, is_new_activation: %s",
-            feedback,
-            is_new_activation,
-        )
 
         if feedback == -1:
-            logger.debug("feedback 为 -1, 跳过更新")
+            logger.debug("feedback = -1, update skipped")
             return
 
         scheduler = _get_global_scheduler()
@@ -191,7 +186,7 @@ class FSRSAlgorithm(BaseAlgorithm):
 
         if is_new_activation:
             card = Card()
-            logger.debug("新激活, 创建新 Card")
+            logger.debug("New activation, create new Card")
         else:
             card = cls._algodata_to_card(algodata)
 
@@ -206,7 +201,7 @@ class FSRSAlgorithm(BaseAlgorithm):
             algodata[cls.algo_name]["rept"] += 1
 
         logger.debug(
-            "FSRS.revisor 完成: stability=%s, difficulty=%s, state=%s, " "next_date=%d",
+            "FSRS.revisor finished: stability=%s, difficulty=%s, state=%s, " "next_date=%d",
             card.stability,
             card.difficulty,
             card.state,

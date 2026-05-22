@@ -16,4 +16,4 @@ providers = {
     "openai": OpenAILLM,
 }
 
-logger.debug("LLM providers 已注册: %s", list(providers.keys()))
+logger.debug("LLM providers registered: %s", list(providers.keys()))

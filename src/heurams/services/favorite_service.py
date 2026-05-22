@@ -73,9 +73,9 @@ class FavoriteManager:
                 with open(self._file_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 self._favorites = [FavoriteItem.from_dict(item) for item in data]
-                logger.debug("收藏列表加载成功, 共 %d 项", len(self._favorites))
+                logger.info("Finished loading favlist, %d items in total", len(self._favorites))
             except Exception as e:
-                logger.error("加载收藏列表失败: %s", e)
+                logger.error("Filed to load favlist: %s", e)
                 self._favorites = []
         else:
             self._favorites = []
@@ -86,9 +86,9 @@ class FavoriteManager:
             data = [item.to_dict() for item in self._favorites]
             with open(self._file_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-            logger.debug("收藏列表保存成功, 共 %d 项", len(self._favorites))
+            logger.info("Finished saving favlist, %d items in total", len(self._favorites))
         except Exception as e:
-            logger.error("保存收藏列表失败: %s", e)
+            logger.error("Failed to save favlist: %s", e)
 
     def add(self, repo_path: str, ident: str, tags: List[str] | None = None) -> bool:
         """添加收藏
@@ -103,7 +103,7 @@ class FavoriteManager:
         # 检查是否已存在
         for item in self._favorites:
             if item.repo_path == repo_path and item.ident == ident:
-                logger.debug("收藏已存在: %s/%s", repo_path, ident)
+                logger.info("Favitem already exists: %s/%s", repo_path, ident)
                 return False
         item = FavoriteItem(
             repo_path=repo_path,
@@ -113,7 +113,7 @@ class FavoriteManager:
         )
         self._favorites.append(item)
         self.save()
-        logger.info("添加收藏: %s/%s", repo_path, ident)
+        logger.info("Add favitem: %s/%s", repo_path, ident)
         return True
 
     def remove(self, repo_path: str, ident: str) -> bool:
@@ -126,9 +126,9 @@ class FavoriteManager:
             if item.repo_path == repo_path and item.ident == ident:
                 del self._favorites[idx]
                 self.save()
-                logger.info("移除收藏: %s/%s", repo_path, ident)
+                logger.info("Remove favitem: %s/%s", repo_path, ident)
                 return True
-        logger.debug("收藏不存在: %s/%s", repo_path, ident)
+        logger.error("Non-existed favitem: %s/%s", repo_path, ident)
         return False
 
     def has(self, repo_path: str, ident: str) -> bool:
@@ -150,7 +150,7 @@ class FavoriteManager:
         """清空收藏列表"""
         self._favorites = []
         self.save()
-        logger.info("清空收藏列表")
+        logger.info("Clear favlist")
 
     def count(self) -> int:
         """收藏总数"""

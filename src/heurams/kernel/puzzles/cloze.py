@@ -27,20 +27,20 @@ class ClozePuzzle(BasePuzzle):
         self.wording = "填空题 - 尚未刷新谜题"
         self.answer = ["填空题 - 尚未刷新谜题"]
         self.delimiter = delimiter
-        logger.debug("ClozePuzzle 初始化完成")
+        logger.debug("ClozePuzzle inited")
 
     def refresh(self):  # 刷新谜题
-        logger.debug("ClozePuzzle.refresh 开始")
+        logger.debug("ClozePuzzle.refresh")
         placeholder = "___SLASH___"
         tmp_text = self.text.replace(self.delimiter, placeholder)
         words = tmp_text.split(placeholder)
         if not words:
-            logger.warning("ClozePuzzle.refresh: 无单词可处理")
+            logger.warning("ClozePuzzle.refresh: nothing to proceed")
             return
         words = [word for word in words if word]
-        logger.debug("ClozePuzzle.refresh: 分割出 %d 个单词", len(words))
+        logger.debug("ClozePuzzle.refresh: %d words splited", len(words))
         num_blanks = min(max(1, len(words) // self.min_denominator), len(words))
-        logger.debug("ClozePuzzle.refresh: 需要生成 %d 个填空", num_blanks)
+        logger.debug("ClozePuzzle.refresh: %d blank required", num_blanks)
         indices_to_blank = random.sample(range(len(words)), num_blanks)
         indices_to_blank.sort()
         blanked_words = list(words)
@@ -50,8 +50,7 @@ class ClozePuzzle(BasePuzzle):
             answer.append(words[index])
         self.answer = answer
         self.wording = "".join(blanked_words)
-        logger.debug("ClozePuzzle.refresh 完成, 生成 %d 个填空", len(answer))
+        logger.debug("ClozePuzzle.refresh, %d blanks generated", len(answer))
 
     def __str__(self):
-        logger.debug("ClozePuzzle.__str__ 被调用")
         return f"{self.wording}\n{str(self.answer)}"

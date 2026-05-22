@@ -2,52 +2,53 @@ from time import sleep, perf_counter
 
 # import gc
 # gc.set_threshold(100, 1, 1)
-print("欢迎使用基本用户界面!")
-print("加载配置与上下文... ", end="", flush=True)
+from heurams.i18n import _
+
+print(_("Welcome to the basic user interface!"))
+print(_("Loading config and context... "), end="", flush=True)
 _start_all = perf_counter()
 _start = _start_all
 from heurams.context import rootdir, workdir, config_var
 
 _end = perf_counter()
-print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
+print(_("Done! ({time}ms)").format(time=round(1000 * (_end - _start))))
 
-print("加载用户界面框架... ", end="", flush=True)
+print(_("Loading UI framework... "), end="", flush=True)
 _start = perf_counter()
 from textual.app import App
-from textual.widgets import Button
 
 _end = perf_counter()
-print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
+print(_("Done! ({time}ms)").format(time=round(1000 * (_end - _start))))
 
-print("加载用户界面布局... ", end="", flush=True)
+print(_("Loading UI layout... "), end="", flush=True)
 _start = perf_counter()
-from .screens.about import AboutScreen
 from .screens.dashboard import DashboardScreen
 from .screens.navigator import NavigatorScreen
 from .screens.precache import PrecachingScreen
 from .screens.setting import SettingScreen
 from .screens.synctool import SyncScreen
+from .screens.about import AboutScreen
 from . import shim
 
 _end = perf_counter()
-print(f"已完成! (耗时: {round(1000 * (_end - _start))}ms)")
+print(_("Done! ({time}ms)").format(time=round(1000 * (_end - _start))))
 
-print(f"组件目录: {rootdir}")
-print(f"工作目录: {workdir}")
+print(_("Component directory: {path}").format(path=rootdir))
+print(_("Working directory: {path}").format(path=workdir))
 _end_all = perf_counter()
-print(f"前置工作共计耗时: {round(1000 * (_end_all - _start_all))}ms")
+print(_("Pre-work total: {time}ms").format(time=round(1000 * (_end_all - _start_all))))
 
 
 class HeurAMSApp(App):
-    TITLE = "潜进"
+    TITLE = "HeurAMS"
     CSS_PATH = rootdir / "interface" / "css" / "main.tcss"
-    SUB_TITLE = "启发式辅助记忆调度器"
+    SUB_TITLE = _("Heuristic Auxiliary Memorizing Scheduler")
     BINDINGS = [
-        ("q", "go_back", "退出"),
-        ("d", "toggle_dark", "主题"),
-        ("n", "app.push_screen('navigator')", "导航"),
-        ("s", "app.push_screen('setting')", "设置"),
-        ("z", "app.push_screen('about')", "关于"),
+        ("q", "go_back", _("Quit")),
+        ("d", "toggle_dark", _("Theme")),
+        ("n", "app.push_screen('navigator')", _("Navigate")),
+        ("s", "app.push_screen('setting')", _("Settings")),
+        ("z", "app.push_screen('about')", _("About")),
     ]
     SCREENS = {
         "dashboard": DashboardScreen,

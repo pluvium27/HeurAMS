@@ -84,7 +84,7 @@ class ConfigDict(UserDict):
                 if i.suffix == ".toml":
                     self.data[i.stem] = i
                 else:
-                    logger.debug(f"配置目录中有无效的文件 {i.stem}")  # what's up bro
+                    logger.error(f"Illegal file detected in config: {i.stem}")  # what's up bro
 
     def persist(self):
         if self.is_dir:
@@ -92,7 +92,7 @@ class ConfigDict(UserDict):
                 j = self[i]
                 if isinstance(j, ConfigDict):
                     j.persist()
-            logger.debug("完成配置持久化")
+            logger.info("Data persisted")
             return
 
         with open(self.path, "w+") as f:

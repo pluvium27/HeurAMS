@@ -21,10 +21,10 @@ class EdgeTTS(BaseTTS):
                 text,
                 config_var.get()["providers"]["tts"]["edgetts"]["voice"],
             )
-            logger.debug("EdgeTTS 通信对象创建成功, 正在保存音频")
+            logger.debug("EdgeTTS object created, saving audio")
             communicate.save_sync(str(path))
-            logger.debug("EdgeTTS 音频已保存到: %s", path)
+            logger.debug("EdgeTTS audio saved as %s", path)
             return path  # type: ignore
         except Exception as e:
-            logger.error("EdgeTTS.convert 失败: %s", e)
+            logger.error("EdgeTTS.convert failed: %s", e)
             raise

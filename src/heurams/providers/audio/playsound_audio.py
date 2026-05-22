@@ -11,10 +11,10 @@ logger = get_logger(__name__)
 
 
 def play_by_path(path: pathlib.Path):
-    logger.debug("playsound_audio.play_by_path: 开始播放 %s", path)
+    logger.debug("playsound_audio.play_by_path: playing %s", path)
     try:
         import playsound3
         playsound3.playsound(str(path))
-        logger.debug("播放完成: %s", path)
+        logger.debug("Audio playing finished: %s", path)
     except Exception as e:
-        logger.error("播放失败: %s, 错误: %s", path, e)
+        logger.error("Failed to play: %s, error: %s", path, e)

@@ -11,4 +11,4 @@ __all__ = [
 ]
 
 providers = {"termux": termux_audio, "playsound": playsound_audio}
-logger.debug("音频 providers 已注册: %s", list(providers.keys()))
+logger.debug("Audio providers registered: %s", list(providers.keys()))
