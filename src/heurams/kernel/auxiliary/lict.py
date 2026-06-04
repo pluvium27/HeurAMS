@@ -50,6 +50,11 @@ class Lict(MutableSequence):
             self._list_dirty = False
 
     def __getitem__(self, key):
+        """按键或索引获取值
+
+        Args:
+            key: 字符串键 (字典访问) 或整数索引 (列表访问)
+        """
         if isinstance(key, str):
             return self._dict[key]
         else:
@@ -57,7 +62,12 @@ class Lict(MutableSequence):
             return self._list[key]
 
     def __setitem__(self, key, value):
-        """传入键值对时等同于操作字典, 传入索引+元组时等用于替换某索引的列表值为新元组"""
+        """按键或索引设置值
+
+        Args:
+            key: 字符串键 (字典设置) 或整数索引 (替换列表元组)
+            value: 新值, 索引访问时必须为 (key, value) 元组
+        """
         if isinstance(key, str):
             self._dict[key] = value
             self._list_dirty = True
@@ -81,14 +91,17 @@ class Lict(MutableSequence):
             del self._dict[del_key]
 
     def keys(self):
+        """返回所有键"""
         self._sync_if_needed()
         return self._dict.keys()
 
     def values(self):
+        """返回所有值"""
         self._sync_if_needed()
         return self._dict.values()
 
     def items(self):
+        """返回所有键值对元组列表"""
         self._sync_if_needed()
         return self._list
 
@@ -105,6 +118,14 @@ class Lict(MutableSequence):
         return item in self._list or item in self.keys() or item in self.values()
 
     def append(self, item):
+        """追加键值对元组
+
+        Args:
+            item: (key, value) 格式的元组
+
+        Raises:
+            NotImplementedError: item 不是二元组
+        """
         if item != (item[0], item[1]):
             raise NotImplementedError
         self._sync_if_needed()  # 以防 forced_order
@@ -114,6 +135,14 @@ class Lict(MutableSequence):
         self._sync_if_needed()  # 以防 forced_order
 
     def append_if_it_doesnt_exist_before(self, item: Any):
+        """若键不存在则追加键值对
+
+        Args:
+            item: (key, value) 格式的元组
+
+        Raises:
+            NotImplementedError: item 不是二元组
+        """
         if item != (item[0], item[1]):
             raise NotImplementedError
         self._sync_if_needed()
@@ -162,9 +191,25 @@ class Lict(MutableSequence):
         raise NotImplementedError
 
     def get_itemic_unit(self, ident):
+        """获取指定键的 (key, value) 元组
+
+        Args:
+            ident: 键名
+
+        Returns:
+            (key, value) 格式的元组
+        """
         return (ident, self._dict[ident])
 
     def keys_equal_with(self, other):
+        """比较两个 Lict 的键集合是否相同
+
+        Args:
+            other: 另一个 Lict 实例
+
+        Returns:
+            True 表示键集合相同
+        """
         self._sync_if_needed()
         return self.key_equality(self, other)
 

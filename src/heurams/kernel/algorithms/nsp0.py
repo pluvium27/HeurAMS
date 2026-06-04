@@ -9,6 +9,16 @@ logger = get_logger(__name__)
 
 
 class NSP0Algorithm(BaseAlgorithm):
+    """NSP-0 非间隔重复调度器
+
+    快速筛选用算法, 对低分项目保持每日复习, 高分项目标记为已掌握. 
+    适用于需要快速过滤大量材料的场景. 
+
+    Attributes:
+        algo_name: "NSP-0"
+        desc: 快速筛选用非间隔重复调度器
+    """
+
     algo_name = "NSP-0"
     desc = "快速筛选用非间隔重复调度器"
 
@@ -38,11 +48,13 @@ class NSP0Algorithm(BaseAlgorithm):
         cls, algodata: dict, feedback: int = 5, is_new_activation: bool = False
     ):
         """NSP-0 算法迭代决策机制实现
-        根据 quality(0 ~ 5) 进行参数迭代最佳间隔
-        quality 由主程序评估
+
+        低分 (feedback<=3) 设置间隔为 1 天, 高分标记为已掌握 (间隔无限). 
 
         Args:
-            quality (int): 记忆保留率量化参数
+            algodata: 算法数据字典
+            feedback: 记忆保留率量化参数 (0-5), -1 表示跳过
+            is_new_activation: 是否为首次激活
         """
         logger.debug(
             "NSP0.revisor 开始, feedback: %d, is_new_activation: %s",
@@ -73,6 +85,14 @@ class NSP0Algorithm(BaseAlgorithm):
 
     @classmethod
     def is_due(cls, algodata):
+        """判断是否应该复习
+
+        Args:
+            algodata: 算法数据字典
+
+        Returns:
+            True 表示到期, False 表示未到期
+        """
         result = algodata[cls.algo_name]["next_date"] <= timer.get_daystamp()
         logger.debug(
             "NSP0.is_due: next_date=%d, current_daystamp=%d, result=%s",
@@ -84,12 +104,28 @@ class NSP0Algorithm(BaseAlgorithm):
 
     @classmethod
     def get_rating(cls, algodata):
-        efactor = algodata[cls.algo_name]["efactor"]
-        logger.debug("NSP0.rate: efactor=%f", efactor)
-        return str(efactor)
+        """获取当前 important 标记作为评分信息
+
+        Args:
+            algodata: 算法数据字典
+
+        Returns:
+            important 值的字符串表示
+        """
+        important = algodata[cls.algo_name]["important"]
+        logger.debug("NSP0.rate: important=%d", important)
+        return str(important)
 
     @classmethod
     def nextdate(cls, algodata) -> int:
+        """获取下一次复习日期
+
+        Args:
+            algodata: 算法数据字典
+
+        Returns:
+            下次复习的天数戳
+        """
         next_date = algodata[cls.algo_name]["next_date"]
         logger.debug("NSP0.nextdate: %d", next_date)
         return next_date

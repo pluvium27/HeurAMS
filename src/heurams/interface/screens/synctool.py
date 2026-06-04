@@ -190,7 +190,7 @@ class SyncScreen(Screen):
         self.run_worker(self.perform_sync, thread=True)
 
     def perform_sync(self):
-        """执行同步任务（在后台线程中运行）"""
+        """执行同步任务 (在后台线程中运行) """
         worker = get_current_worker()
 
         try:
@@ -234,7 +234,7 @@ class SyncScreen(Screen):
                         is_error=True,
                     )
 
-            # 同步 orbital 目录（如果存在）
+            # 同步 orbital 目录 (如果存在) 
             orbital_dir = pathlib.Path(paths.get("orbital_dir", "./data/orbital"))
             if orbital_dir.exists():
                 self.log_message(f"同步 orbital 目录: {orbital_dir}")

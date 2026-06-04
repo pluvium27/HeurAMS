@@ -100,20 +100,40 @@ class Procession(Machine):
         return length
 
     def process(self):
+        """获取当前游标位置
+
+        Returns:
+            当前游标索引
+        """
         logger.debug("Procession.process: cursor=%d", self.cursor)
         return self.cursor
 
     def total_length(self):
+        """获取队列总长度 (含已处理的原子)
+
+        Returns:
+            原子总数
+        """
         total = len(self.atoms)
         logger.debug("Procession.total_length: %d", total)
         return total
 
     def is_empty(self):
+        """判断队列是否为空
+
+        Returns:
+            True 表示队列为空
+        """
         empty = len(self.atoms) == 0
         logger.debug("Procession.is_empty: %s", empty)
         return empty
 
     def get_expander(self):
+        """获取当前原子的展开器
+
+        Returns:
+            Expander 实例
+        """
         return Expander(atom=self.current_atom, route=self.route)  # type: ignore
 
     def __repr__(self, style="pipe", ends="\n"):

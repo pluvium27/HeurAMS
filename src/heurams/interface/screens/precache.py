@@ -78,7 +78,7 @@ class PrecachingScreen(Screen):
         for repo in repos:
             try:
                 total += len(repo.ident_index)
-            except:
+            except (AttributeError, TypeError):
                 continue
         return total
 
@@ -278,7 +278,7 @@ class PrecachingScreen(Screen):
                             repo.nucleonic_data_lict.get_itemic_unit(i)
                         )
                     )
-            except:
+            except (KeyError, TypeError, AttributeError):
                 continue
         self.total = len(nucleon_list)
         return self.precache_by_list(nucleon_list)

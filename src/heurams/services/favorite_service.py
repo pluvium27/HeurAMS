@@ -139,7 +139,7 @@ class FavoriteManager:
         return False
 
     def get_all(self) -> List[FavoriteItem]:
-        """获取所有收藏项（按添加时间倒序）"""
+        """获取所有收藏项 (按添加时间倒序) """
         return sorted(self._favorites, key=lambda x: x.added, reverse=True)
 
     def get_by_repo(self, repo_path: str) -> List[FavoriteItem]:

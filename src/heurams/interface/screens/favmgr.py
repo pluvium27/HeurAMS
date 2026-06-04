@@ -128,7 +128,7 @@ class FavoriteManagerScreen(Screen):
         return ListItem(container)
 
     def _get_repo_info(self, repo_path: str, fav: FavoriteItem) -> Optional[dict]:
-        """获取仓库信息（标题、原子内容预览）"""
+        """获取仓库信息 (标题、原子内容预览) """
         try:
             data_repo = Path(config_var.get()["global"]["paths"]["data"]) / "repo"
             repo_dir = data_repo / repo_path
@@ -200,7 +200,7 @@ class FavoriteManagerScreen(Screen):
         # 重新组合
         if not self.favorites:
             container.mount(Label("暂无收藏", classes="empty-label"))
-            container.mount(Static("使用 * 键在记忆界面中添加收藏。"))
+            container.mount(Static("使用 * 键在记忆界面中添加收藏. "))
         else:
             container.mount(
                 Label(f"共 {len(self.favorites)} 个收藏项", classes="count-label")

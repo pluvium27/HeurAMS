@@ -1,4 +1,7 @@
-from heurams.services.logger import get_logger
+"""反应器模块
+
+基于三层嵌套状态机 (Router -> Procession -> Expander) 实现复习流程调度与排程. 
+"""
 
 from .expander import Expander
 from .router import Router

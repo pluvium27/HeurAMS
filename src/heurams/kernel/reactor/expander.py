@@ -14,7 +14,17 @@ logger = get_logger(__name__)
 
 
 class Expander(Machine):
-    """单原子调度展开器"""
+    """单原子调度展开器
+
+    根据轨道策略 (orbital) 将单个原子展开为谜题序列. 
+    包含 exammode (考试模式) 和 retronly (回溯模式) 两个阶段. 
+
+    Attributes:
+        atom: 关联的 Atom 实例
+        route: 当前路由阶段
+        puzzles_inf: 展开后的谜题信息列表
+        min_ratings: 每个谜题的最低评分记录
+    """
 
     def __init__(self, atom: pt.Atom, route=RouterState.RECOGNITION):
         self.route = route
@@ -85,20 +95,47 @@ class Expander(Machine):
         )
 
     def get_puzzles_inf(self):
+        """获取谜题信息列表
+
+        回溯模式下返回识别谜题, 否则返回展开的谜题列表. 
+
+        Returns:
+            谜题信息字典列表
+        """
         if self.state == "retronly":
             return [{"puzzle": puz.puzzles["recognition"], "alia": "Recognition"}]
         return self.puzzles_inf
 
     def get_current_puzzle_inf(self):
+        """获取当前谜题信息
+
+        Returns:
+            当前谜题的信息字典
+        """
         if self.state == "retronly":
             return {"puzzle": puz.puzzles["recognition"], "alia": "Recognition"}
         return self.current_puzzle_inf
 
     def report(self, rating):
+        """报告当前谜题的评分
+
+        Args:
+            rating: 用户评分 (0-5)
+        """
         if self.puzzles_inf:
             self.min_ratings[self.cursor] = min(rating, self.min_ratings[self.cursor])
 
     def get_quality(self):
+        """获取所有谜题的最低评分
+
+        仅在回溯模式 (retronly) 下可用. 
+
+        Returns:
+            所有谜题评分的最小值
+
+        Raises:
+            IndexError: 非回溯模式下调用
+        """
         if self.puzzles_inf:
             if self.is_state("retronly", self):
                 return reduce(lambda x, y: min(x, y), self.min_ratings)

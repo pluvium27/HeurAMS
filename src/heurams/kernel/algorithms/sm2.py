@@ -9,6 +9,16 @@ logger = get_logger(__name__)
 
 
 class SM2Algorithm(BaseAlgorithm):
+    """SuperMemo-2 算法实现
+
+    经典间隔重复算法, 基于 1987 年 Piotr Wozniak 设计的 SM-2. 
+    通过维护 efactor (难度因子) 来调整复习间隔. 
+
+    Attributes:
+        algo_name: "SM-2"
+        desc: SuperMemo2 (1987) 简单间隔重复调度器
+    """
+
     algo_name = "SM-2"
     desc = "SuperMemo2 (1987) 简单间隔重复调度器"
 
@@ -38,11 +48,13 @@ class SM2Algorithm(BaseAlgorithm):
         cls, algodata: dict, feedback: int = 5, is_new_activation: bool = False
     ):
         """SM-2 算法迭代决策机制实现
-        根据 quality(0 ~ 5) 进行参数迭代最佳间隔
-        quality 由主程序评估
+
+        根据 feedback (0-5) 更新 efactor 并计算下次复习间隔. 
 
         Args:
-            quality (int): 记忆保留率量化参数
+            algodata: 算法数据字典
+            feedback: 记忆保留率量化参数 (0-5), -1 表示跳过
+            is_new_activation: 是否为首次激活
         """
         logger.debug(
             "SM2.revisor 开始, feedback: %d, is_new_activation: %s",
@@ -107,6 +119,14 @@ class SM2Algorithm(BaseAlgorithm):
 
     @classmethod
     def is_due(cls, algodata):
+        """判断是否应该复习
+
+        Args:
+            algodata: 算法数据字典
+
+        Returns:
+            True 表示到期, False 表示未到期
+        """
         result = algodata[cls.algo_name]["next_date"] <= timer.get_daystamp()
         logger.debug(
             "SM2.is_due: next_date=%d, current_daystamp=%d, result=%s",
@@ -118,12 +138,28 @@ class SM2Algorithm(BaseAlgorithm):
 
     @classmethod
     def get_rating(cls, algodata):
+        """获取当前 efactor 作为评分信息
+
+        Args:
+            algodata: 算法数据字典
+
+        Returns:
+            efactor 值的字符串表示
+        """
         efactor = algodata[cls.algo_name]["efactor"]
         logger.debug("SM2.rate: efactor=%f", efactor)
         return str(efactor)
 
     @classmethod
     def nextdate(cls, algodata) -> int:
+        """获取下一次复习日期
+
+        Args:
+            algodata: 算法数据字典
+
+        Returns:
+            下次复习的天数戳
+        """
         next_date = algodata[cls.algo_name]["next_date"]
         logger.debug("SM2.nextdate: %d", next_date)
         return next_date

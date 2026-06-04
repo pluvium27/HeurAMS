@@ -38,7 +38,7 @@ class BaseLLM:
         return "BaseLLM 未实现具体功能"
 
     async def chat_stream(self, messages: List[Dict[str, str]], **kwargs):
-        """流式聊天（可选实现）
+        """流式聊天 (可选实现) 
 
         Args:
             messages: 消息列表

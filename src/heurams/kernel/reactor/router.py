@@ -113,6 +113,14 @@ class Router(Machine):
         logger.debug("Router 进入 FINISHED 状态")
 
     def current_procession(self):
+        """获取当前未完成的队列
+
+        遍历所有队列, 返回第一个未完成的 Procession. 
+        若全部完成则切换到 FINISHED 状态并返回占位队列. 
+
+        Returns:
+            当前活跃的 Procession, 或占位 Procession (全部完成时)
+        """
         logger.debug("Router.current_procession 被调用")
         for i in self.processions:
             i: Procession

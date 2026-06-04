@@ -240,7 +240,7 @@ class MemScreen(Screen):
         self.rating = 3
 
     def _get_repo_rel_path(self) -> str:
-        """获取仓库相对路径（相对于 data/repo）"""
+        """获取仓库相对路径 (相对于 data/repo) """
         if self.repo is None:
             return ""
         # self.repo.source 是 Path 对象, 指向仓库目录
@@ -250,7 +250,7 @@ class MemScreen(Screen):
             rel_path = repo_full_path.relative_to(data_repo_path)
             return str(rel_path)
         except ValueError:
-            # 如果不在 data/repo 下, 则返回完整路径（字符串形式）
+            # 如果不在 data/repo 下, 则返回完整路径 (字符串形式) 
             return str(repo_full_path)
 
     def _is_current_atom_favorited(self) -> bool:
@@ -273,7 +273,7 @@ class MemScreen(Screen):
         else:
             favorite_manager.add(repo_path, ident)
             self.app.notify(f"已收藏：{ident}", severity="information")
-        # 更新显示（如果需要）
+        # 更新显示 (如果需要) 
         self.update_display()
 
     def action_block_prompt(self):

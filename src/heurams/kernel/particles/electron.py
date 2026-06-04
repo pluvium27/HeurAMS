@@ -70,7 +70,8 @@ class Electron:
         try:
             result = self.algo.get_rating(self.algodata)
             return result
-        except:
+        except (KeyError, TypeError, AttributeError) as e:
+            logger.warning("获取评分失败 (ident=%s): %s", self.ident, e)
             return 0
 
     def nextdate(self) -> int:

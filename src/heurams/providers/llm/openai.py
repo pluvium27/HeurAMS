@@ -22,7 +22,7 @@ class OpenAILLM(BaseLLM):
         logger.debug("OpenAILLM 初始化完成: base_url=%s", self.base_url)
 
     def _get_client(self):
-        """获取 OpenAI 客户端（延迟导入）"""
+        """获取 OpenAI 客户端 (延迟导入) """
         if self._client is None:
             try:
                 from openai import AsyncOpenAI

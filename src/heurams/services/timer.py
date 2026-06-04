@@ -49,9 +49,9 @@ def daystamp_to_datetime(daystamp: int) -> datetime.datetime:
 
 
 def datetime_to_daystamp(dt: datetime.datetime) -> int:
-    """将 datetime 转换为日戳（从 1970-01-01 起的天数）
+    """将 datetime 转换为日戳 (从 1970-01-01 起的天数) 
 
-    接受带时区或 naive 的 datetime（naive 视为 UTC）。
+    接受带时区或 naive 的 datetime (naive 视为 UTC). 
     """
     epoch = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
     if dt.tzinfo is None:
@@ -61,5 +61,5 @@ def datetime_to_daystamp(dt: datetime.datetime) -> int:
 
 
 def get_now_datetime() -> datetime.datetime:
-    """获取当前时间的 UTC datetime（遵守时间覆盖）"""
+    """获取当前时间的 UTC datetime (遵守时间覆盖) """
     return datetime.datetime.fromtimestamp(get_timestamp(), tz=datetime.timezone.utc)

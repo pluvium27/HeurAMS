@@ -128,7 +128,7 @@ def csv_to_toml(csv_path, toml_path=None, random_seed=None):
         # 添加section标题
         toml_content.append(f"[{ident}]")
 
-        # 添加所有其他列作为键值对（排除ident列）
+        # 添加所有其他列作为键值对 (排除ident列) 
         for key, value in row.items():
             if key == "ident":
                 continue

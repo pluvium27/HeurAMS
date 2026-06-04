@@ -5,7 +5,7 @@ from heurams.context import config_var
 from pathlib import Path
 import atexit
 from heurams.services import timer
-from heurams.services.exceptions import WTFException
+from heurams.services.exceptions import AtticError
 
 logger = get_logger(__name__)
 
@@ -34,7 +34,7 @@ class Attic:
         self.ident = self.ident.replace("<DAYSTAMP>", str(timer.get_daystamp()))
         self.ident = self.ident.replace("<TIMESTAMP>", str(timer.get_timestamp()))
         if "<" in ident or ">" in ident:
-            raise WTFException
+            raise AtticError(f"Attic 标识 '{ident}' 中仍含有未替换的占位符")
         # self.ident = get_md5(self.ident)
         self.pklpath = atticdir / f"{self.ident}.pkl"
         atexit.register(self.save)
@@ -43,7 +43,8 @@ class Attic:
             try:
                 self.load()
                 return
-            except:
+            except (pkl.UnpicklingError, EOFError, ModuleNotFoundError, ImportError) as e:
+                logger.warning("Attic '%s' 加载失败, 将重建: %s", self.ident, e)
                 self.pklpath.unlink(missing_ok=True)
         self.pklpath.touch(exist_ok=True)
 

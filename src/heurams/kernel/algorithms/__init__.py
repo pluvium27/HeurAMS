@@ -1,3 +1,8 @@
+"""算法模块
+
+自动发现并加载所有算法实现, 提供统一的算法注册表. 
+"""
+
 import importlib
 import pkgutil
 from pathlib import Path

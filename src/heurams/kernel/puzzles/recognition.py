@@ -1,4 +1,4 @@
-# mcq.py
+"""识别谜题模块"""
 
 from heurams.services.logger import get_logger
 
@@ -8,11 +8,14 @@ logger = get_logger(__name__)
 
 
 class RecognitionPuzzle(BasePuzzle):
-    """识别占位符"""
+    """识别型谜题
+
+    展示内容供用户识别确认, 无需主动回忆. 
+    常用于复习流程的最后阶段 (retronly 回溯模式). 
+    """
 
     def __init__(self) -> None:
-        logger.debug("RecognitionPuzzle.__init__")
         super().__init__()
 
     def refresh(self):
-        logger.debug("RecognitionPuzzle.refresh(空实现)")
+        """刷新谜题 (识别型无需生成内容)"""

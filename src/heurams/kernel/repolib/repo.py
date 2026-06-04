@@ -10,6 +10,15 @@ from heurams.kernel.auxiliary.lict import Lict
 
 
 class RepoManifest(TypedDict):
+    """仓库清单数据结构
+
+    Attributes:
+        title: 仓库标题
+        author: 作者名称
+        package: 包名标识
+        desc: 仓库描述
+    """
+
     title: str
     author: str
     package: str
@@ -17,8 +26,21 @@ class RepoManifest(TypedDict):
 
 
 class Repo:
-    """只维护仓库本身
-    上层 API 请访问此对象下粒子对象列表"""
+    """记忆单元仓库
+
+    管理单个记忆单元集的所有数据, 包括内容 (payload)、算法状态 (algodata)、
+    复习策略 (schedule) 和元信息 (manifest/typedef). 
+
+    上层 API 请访问此对象下的粒子对象列表 (nucleonic_data_lict 等). 
+
+    Attributes:
+        schedule: 复习策略字典 (轨道定义)
+        payload: 记忆内容 (Lict)
+        algodata: 算法状态数据 (Lict)
+        manifest: 仓库清单信息
+        typedef: 类型定义和谜题配置
+        source: 仓库来源目录路径
+    """
 
     file_mapping = {
         "schedule": "schedule.toml",
@@ -67,12 +89,16 @@ class Repo:
         }
         try:
             self.config.update(dict(config_var.get()["repo"][self.manifest["package"]]))
-        except:
+        except (KeyError, TypeError, ValueError):
             pass
         self._generate_particles_data()
 
     def _generate_particles_data(self):
-        """生成上层的粒子对象组和 API 交互, 会在 init 后自动调用"""
+        """生成上层的粒子数据
+
+        将 payload 转换为 Nucleon 所需格式, 并为每个 ident 初始化
+        algodata 条目. 会在 __init__ 后自动调用. 
+        """
         self.nucleonic_data_lict = Lict(
             initlist=list(map(self._nucleonic_proc, self.payload))
         )
@@ -113,7 +139,7 @@ class Repo:
             with open(source / filename, "w") as f:
                 try:
                     dict_data = self.database[keyname].dicted_data
-                except:
+                except AttributeError:
                     dict_data = dict(self.database[keyname])
                 if filename.endswith("toml"):
                     toml.dump(dict_data, f)
@@ -128,7 +154,14 @@ class Repo:
 
     @classmethod
     def create_new_repo(cls, source=None):
-        """创建新的空单元集"""
+        """创建新的空单元集
+
+        Args:
+            source: 可选的仓库目录路径
+
+        Returns:
+            包含空数据的 Repo 实例
+        """
         default_database = {
             "schedule": {},
             "payload": Lict([]),
@@ -141,7 +174,20 @@ class Repo:
 
     @classmethod
     def from_repodir(cls, source: Path):
-        """从目录创建单元集"""
+        """从目录创建单元集
+
+        读取目录中的 TOML/JSON 文件并构建 Repo 实例. 
+
+        Args:
+            source: 仓库目录路径
+
+        Returns:
+            Repo 实例
+
+        Raises:
+            FileNotFoundError: 目录缺少必要的文件
+            ValueError: 文件格式不支持
+        """
         database = {}
         for keyname, filename in cls.file_mapping.items():
             with open(source / filename, "r") as f:
@@ -163,23 +209,47 @@ class Repo:
 
     @classmethod
     def from_dict(cls, dictdata, source: Path | None = None):
-        """从单一字典创建单元集"""
+        """从单一字典创建单元集
+
+        Args:
+            dictdata: 包含 schedule/payload/algodata/manifest/typedef 的字典
+            source: 可选的仓库目录路径
+
+        Returns:
+            Repo 实例
+        """
         database = dictdata
         database["source"] = source
         return Repo(**database)
 
     @classmethod
     def check_repodir(cls, source: Path):
-        """检测单元集目录合法性"""
+        """检测单元集目录合法性
+
+        尝试从目录加载 Repo, 成功则视为合法. 
+
+        Args:
+            source: 待检测的目录路径
+
+        Returns:
+            True 表示合法, False 表示不合法
+        """
         try:
             cls.from_repodir(source)
             return True
-        except:
+        except (FileNotFoundError, KeyError, ValueError, toml.TomlDecodeError):
             return False
 
     @classmethod
     def probe_valid_repos_in_dir(cls, folder: Path):
-        """返回一个合法的子目录 Path() 列表"""
+        """扫描目录中的所有合法仓库子目录
+
+        Args:
+            folder: 待扫描的父目录路径
+
+        Returns:
+            合法仓库子目录的 Path 列表
+        """
         lst = list()
         for i in folder.iterdir():
             if i.is_dir():

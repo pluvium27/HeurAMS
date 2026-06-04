@@ -643,13 +643,13 @@ class SM15MAlgorithm(BaseAlgorithm):
         lapse: int
         repetition: int
         of_val: float  # O-Factor
-        optimum_interval_days: int  # 最优间隔（天）
+        optimum_interval_days: int  # 最优间隔 (天) 
         afs: list  # A-Factor 历史
         af: float  # 当前 A-Factor
-        # 毫秒精度（子日排程）
+        # 毫秒精度 (子日排程) 
         last_date_ms: int
         next_date_ms: int
-        # BaseAlgorithm 兼容（天精度, 向后兼容）
+        # BaseAlgorithm 兼容 (天精度, 向后兼容) 
         real_rept: int
         rept: int
         interval: int

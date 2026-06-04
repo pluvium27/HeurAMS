@@ -61,7 +61,7 @@ def _feedback_to_rating(feedback: int) -> Rating:
 
 
 def _datetime_to_daystamp(dt: datetime) -> int:
-    """将 datetime 转换为天数戳（从 1970-01-01）"""
+    """将 datetime 转换为天数戳 (从 1970-01-01) """
     epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
     delta = dt - epoch
     return delta.days
@@ -81,7 +81,7 @@ class FSRSAlgorithm(BaseAlgorithm):
         # FSRS 特有字段
         fsrs_state: int  # State 枚举值: 1=Learning, 2=Review, 3=Relearning
         fsrs_step: int  # 当前学习步进索引, -1 表示 None (Review 状态)
-        fsrs_stability: float  # 稳定性（秒）, 0.0 表示尚未计算
+        fsrs_stability: float  # 稳定性 (秒) , 0.0 表示尚未计算
         fsrs_difficulty: float  # 难度 [1.0, 10.0], 0.0 表示尚未计算
         # 标准 BaseAlgorithm 兼容字段
         real_rept: int
@@ -116,11 +116,11 @@ class FSRSAlgorithm(BaseAlgorithm):
         # State: int → IntEnum
         card.state = data.get("fsrs_state", 1)
 
-        # Step: -1 表示 None（Review 状态下的 card.step 为 None）
+        # Step: -1 表示 None (Review 状态下的 card.step 为 None) 
         step = data.get("fsrs_step", -1)
         card.step = None if step == -1 else step
 
-        # Stability: 0.0 表示尚未计算（新卡片）
+        # Stability: 0.0 表示尚未计算 (新卡片) 
         stability = data.get("fsrs_stability", 0.0)
         card.stability = None if stability == 0.0 else stability
 
@@ -170,11 +170,11 @@ class FSRSAlgorithm(BaseAlgorithm):
     ):
         """FSRS 算法迭代决策机制实现
 
-        将 feedback (0-5) 映射为 FSRS Rating 后交由 py-fsrs 调度器处理。
+        将 feedback (0-5) 映射为 FSRS Rating 后交由 py-fsrs 调度器处理. 
 
         Args:
             feedback (int): 0-5 的记忆保留率量化参数
-            is_new_activation: 是否为全新激活（重置为初始状态）
+            is_new_activation: 是否为全新激活 (重置为初始状态) 
         """
         logger.debug(
             "FSRS.revisor 开始, feedback: %d, is_new_activation: %s",
@@ -201,7 +201,7 @@ class FSRSAlgorithm(BaseAlgorithm):
         cls._card_to_algodata(card, algodata)
         # real_rept: 总复习次数
         algodata[cls.algo_name]["real_rept"] += 1
-        # rept: 成功回忆次数（feedback ≥ 3 视为成功）
+        # rept: 成功回忆次数 (feedback ≥ 3 视为成功) 
         if feedback >= 3:
             algodata[cls.algo_name]["rept"] += 1
 
